@@ -1,58 +1,140 @@
-// --- Base de connaissances (démo) ---
-// En production, ceci serait remplacé par un vrai catalogue produit + un LLM.
+// =====================================================================
+// Base de connaissances multilingue (démo)
+// En production : un vrai catalogue produit + un LLM (ex. Claude) à la place.
+// =====================================================================
+const ZONES = {
+  informatique: { x: -3.2, z: -2.2, w: 2.6, d: 2, color: 0xEDEAE0, label: { fr: "Informatique", en: "Computers", es: "Informática" } },
+  audio:        { x:  0,   z: -2.2, w: 2.6, d: 2, color: 0xEDEAE0, label: { fr: "Son & audio", en: "Audio", es: "Audio" } },
+  jeux:         { x:  3.2, z: -2.2, w: 2.6, d: 2, color: 0xEDEAE0, label: { fr: "Jeux vidéo", en: "Video games", es: "Videojuegos" } },
+  livres:       { x: -3.2, z:  2.2, w: 2.6, d: 2, color: 0xEDEAE0, label: { fr: "Livres", en: "Books", es: "Libros" } },
+  photo:        { x:  3.2, z:  2.2, w: 2.6, d: 2, color: 0xEDEAE0, label: { fr: "Photo & vidéo", en: "Photo & video", es: "Foto y vídeo" } },
+  caisses:      { x:  0,   z:  2.2, w: 2.6, d: 2, color: 0xE3DFD3, label: { fr: "Caisses", en: "Checkout", es: "Cajas" } }
+};
+
 const KNOWLEDGE_BASE = [
   {
-    keywords: ["disque dur", "disque", "ssd", "stockage"],
     zone: "informatique",
-    reply: "Vous trouverez les disques durs et SSD au rayon Informatique, en haut à gauche du magasin.",
-    detail: "Nous avons des modèles Western Digital, Seagate et Crucial, de 500 Go à 4 To. Voulez-vous un disque externe ou interne ?"
+    keywords: {
+      fr: ["disque dur", "disque", "ssd", "stockage"],
+      en: ["hard drive", "hard disk", "ssd", "storage"],
+      es: ["disco duro", "disco", "ssd", "almacenamiento"]
+    },
+    reply: {
+      fr: "Vous trouverez les disques durs et SSD au rayon Informatique, au fond à gauche du magasin.",
+      en: "You'll find hard drives and SSDs in the Computers section, at the back left of the store.",
+      es: "Encontrará los discos duros y SSD en la sección de Informática, al fondo a la izquierda."
+    }
   },
   {
-    keywords: ["casque", "écouteur", "audio", "enceinte", "son"],
     zone: "audio",
-    reply: "Le rayon Son & Audio se trouve juste à côté de l'Informatique, au centre du magasin.",
-    detail: "Vous y trouverez des casques Sony, Bose et JBL, ainsi que des enceintes connectées."
+    keywords: {
+      fr: ["casque", "écouteur", "audio", "enceinte", "son"],
+      en: ["headphone", "headphones", "earphone", "speaker", "audio"],
+      es: ["auricular", "auriculares", "altavoz", "audio"]
+    },
+    reply: {
+      fr: "Le rayon Son & Audio se trouve juste à côté, au centre du magasin.",
+      en: "The Audio section is right next to it, in the center of the store.",
+      es: "La sección de Audio está justo al lado, en el centro de la tienda."
+    }
   },
   {
-    keywords: ["console", "jeu vidéo", "jeux vidéo", "playstation", "xbox", "switch"],
     zone: "jeux",
-    reply: "Le rayon Jeux vidéo est situé en haut à droite du magasin.",
-    detail: "PS5, Xbox Series et Switch sont disponibles, avec une sélection de jeux récents en tête de gondole."
+    keywords: {
+      fr: ["console", "jeu vidéo", "jeux vidéo", "playstation", "xbox", "switch"],
+      en: ["console", "video game", "video games", "playstation", "xbox", "switch"],
+      es: ["consola", "videojuego", "videojuegos", "playstation", "xbox", "switch"]
+    },
+    reply: {
+      fr: "Le rayon Jeux vidéo est situé au fond à droite du magasin.",
+      en: "The Video games section is at the back right of the store.",
+      es: "La sección de Videojuegos está al fondo a la derecha."
+    }
   },
   {
-    keywords: ["livre", "roman", "bd", "manga"],
     zone: "livres",
-    reply: "Les livres sont rangés en bas à gauche, dans l'espace Librairie.",
-    detail: "Romans, BD et mangas sont classés par genre, avec les nouveautés en vitrine."
+    keywords: {
+      fr: ["livre", "roman", "bd", "manga"],
+      en: ["book", "novel", "comic", "manga"],
+      es: ["libro", "novela", "cómic", "manga"]
+    },
+    reply: {
+      fr: "Les livres sont rangés à l'avant à gauche, dans l'espace Librairie.",
+      en: "Books are at the front left, in the Bookshop area.",
+      es: "Los libros están en la parte delantera izquierda, en la zona Librería."
+    }
   },
   {
-    keywords: ["photo", "appareil photo", "caméra", "vidéo"],
     zone: "photo",
-    reply: "Le rayon Photo & vidéo se trouve en bas à droite du magasin.",
-    detail: "Nous avons des appareils Canon, Sony et Nikon, ainsi que des accessoires pour créateurs de contenu."
+    keywords: {
+      fr: ["photo", "appareil photo", "caméra", "vidéo"],
+      en: ["camera", "photo", "video camera"],
+      es: ["cámara", "foto", "vídeo"]
+    },
+    reply: {
+      fr: "Le rayon Photo & vidéo se trouve à l'avant à droite du magasin.",
+      en: "The Photo & video section is at the front right of the store.",
+      es: "La sección de Foto y vídeo está en la parte delantera derecha."
+    }
   }
 ];
 
-const DEFAULT_REPLY = "Je ne suis pas certaine de comprendre. Pouvez-vous reformuler, ou préférez-vous qu'un vendeur vienne vous aider ?";
+const DEFAULT_REPLY = {
+  fr: "Je ne suis pas certaine de comprendre. Pouvez-vous reformuler, ou préférez-vous qu'un vendeur vienne vous aider ?",
+  en: "I'm not sure I understood. Could you rephrase, or would you like a staff member to help you instead?",
+  es: "No estoy segura de haber entendido. ¿Puede reformular, o prefiere que un vendedor le ayude?"
+};
 
-function findAnswer(question) {
+const GREETING = {
+  fr: "Bonjour, je suis Jeanne, votre assistante d'accueil. Parlez-moi ou écrivez votre question.",
+  en: "Hello, I'm Jeanne, your welcome assistant. Speak to me, or type your question.",
+  es: "Hola, soy Jeanne, su asistente de acogida. Hábleme o escriba su pregunta."
+};
+
+// --- Détection de langue très simplifiée (mots-outils fréquents) ---
+// En production : laisser le LLM détecter et répondre dans la langue de la question.
+function detectLanguage(text) {
+  const t = " " + text.toLowerCase() + " ";
+  const scores = { fr: 0, en: 0, es: 0 };
+  const markers = {
+    fr: [" le ", " la ", " les ", " où ", " je ", " vous ", " des ", " un ", " une ", "é", "è"],
+    en: [" the ", " where ", " i ", " you ", " a ", " an ", " is ", " are ", " find "],
+    es: [" el ", " la ", " los ", " dónde ", " yo ", " usted ", " un ", " una ", "ñ", "¿"]
+  };
+  for (const lang in markers) {
+    markers[lang].forEach(m => { if (t.includes(m)) scores[lang]++; });
+  }
+  let best = "fr", bestScore = -1;
+  for (const lang in scores) {
+    if (scores[lang] > bestScore) { bestScore = scores[lang]; best = lang; }
+  }
+  return best;
+}
+
+function findAnswer(question, lang) {
   const q = question.toLowerCase();
   for (const entry of KNOWLEDGE_BASE) {
-    if (entry.keywords.some(k => q.includes(k))) return entry;
+    const list = entry.keywords[lang] || entry.keywords.fr;
+    if (list.some(k => q.includes(k))) return entry;
   }
   return null;
 }
 
-// --- Éléments DOM ---
+// =====================================================================
+// DOM
+// =====================================================================
 const chatLog = document.getElementById("chatLog");
 const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
 const avatarCaption = document.getElementById("avatarCaption");
 const micBtn = document.getElementById("micBtn");
+const micLabel = document.getElementById("micLabel");
 const listeningRing = document.getElementById("listeningRing");
 const vendorBtn = document.getElementById("vendorBtn");
 const toast = document.getElementById("toast");
-const mouth = document.getElementById("mouth");
+const langOptions = document.getElementById("langOptions");
+
+let voiceLang = "fr-FR"; // langue choisie pour la RECONNAISSANCE vocale (le navigateur ne la détecte pas seul)
 
 function addMessage(text, from) {
   const div = document.createElement("div");
@@ -62,48 +144,29 @@ function addMessage(text, from) {
   chatLog.scrollTop = chatLog.scrollHeight;
 }
 
-function clearZoneHighlight() {
-  document.querySelectorAll(".zone").forEach(z => z.classList.remove("highlight"));
-}
-
-function highlightZone(zone) {
-  clearZoneHighlight();
-  const el = document.querySelector('.zone[data-zone="' + zone + '"]');
-  if (el) el.classList.add("highlight");
-}
-
-function speak(text) {
+function speak(text, lang) {
   avatarCaption.textContent = text;
-  // Petite animation de "bouche qui parle"
-  let count = 0;
-  const interval = setInterval(() => {
-    mouth.setAttribute("d", count % 2 === 0
-      ? "M148 138 Q160 150 172 138"
-      : "M148 138 Q160 144 172 138");
-    count++;
-    if (count > 5) { clearInterval(interval); mouth.setAttribute("d", "M148 138 Q160 144 172 138"); }
-  }, 150);
-
+  triggerTalkAnimation();
   if ("speechSynthesis" in window) {
     const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = "fr-FR";
+    utter.lang = lang;
     utter.rate = 1.0;
     window.speechSynthesis.speak(utter);
   }
 }
 
 function askJeanne(question) {
+  const lang = detectLanguage(question); // pour le texte tapé ou reconnu, on redétecte la langue réelle
   addMessage(question, "user");
-  const answer = findAnswer(question);
+  const answer = findAnswer(question, lang);
   if (answer) {
-    const full = answer.reply + " " + answer.detail;
-    addMessage(full, "jeanne");
-    speak(answer.reply);
-    highlightZone(answer.zone);
+    addMessage(answer.reply[lang], "jeanne");
+    speak(answer.reply[lang], lang === "fr" ? "fr-FR" : lang === "en" ? "en-US" : "es-ES");
+    highlightZone3D(answer.zone);
   } else {
-    addMessage(DEFAULT_REPLY, "jeanne");
-    speak(DEFAULT_REPLY);
-    clearZoneHighlight();
+    addMessage(DEFAULT_REPLY[lang], "jeanne");
+    speak(DEFAULT_REPLY[lang], lang === "fr" ? "fr-FR" : lang === "en" ? "en-US" : "es-ES");
+    highlightZone3D(null);
   }
 }
 
@@ -119,14 +182,25 @@ document.querySelectorAll(".quick-btn").forEach(btn => {
   btn.addEventListener("click", () => askJeanne(btn.dataset.q));
 });
 
-// --- Reconnaissance vocale (Web Speech API) ---
+langOptions.addEventListener("click", (e) => {
+  const btn = e.target.closest(".lang-btn");
+  if (!btn) return;
+  document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  voiceLang = btn.dataset.lang;
+  if (recognition) recognition.lang = voiceLang;
+});
+
+// =====================================================================
+// Reconnaissance vocale (Web Speech API) — action principale de l'interface
+// =====================================================================
 let recognition = null;
 let listening = false;
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 if (SpeechRecognition) {
   recognition = new SpeechRecognition();
-  recognition.lang = "fr-FR";
+  recognition.lang = voiceLang;
   recognition.interimResults = false;
 
   recognition.onresult = (event) => {
@@ -137,14 +211,15 @@ if (SpeechRecognition) {
     listening = false;
     micBtn.classList.remove("active");
     listeningRing.classList.remove("active");
+    micLabel.textContent = "Parler à Jeanne";
   };
 } else {
-  micBtn.title = "Reconnaissance vocale non disponible dans ce navigateur — utilisez le champ texte.";
+  micLabel.textContent = "Micro non supporté — écrivez ci-dessous";
 }
 
 micBtn.addEventListener("click", () => {
   if (!recognition) {
-    avatarCaption.textContent = "La reconnaissance vocale n'est pas supportée par ce navigateur. Essayez avec Chrome, ou tapez votre question ci-dessous.";
+    avatarCaption.textContent = "La reconnaissance vocale n'est pas supportée par ce navigateur. Essayez avec Chrome, ou écrivez votre question.";
     return;
   }
   if (listening) {
@@ -152,24 +227,289 @@ micBtn.addEventListener("click", () => {
     return;
   }
   listening = true;
+  recognition.lang = voiceLang;
   micBtn.classList.add("active");
   listeningRing.classList.add("active");
+  micLabel.textContent = "Je vous écoute...";
   avatarCaption.textContent = "Je vous écoute...";
   recognition.start();
 });
 
-// --- Simulation de la notification Teams (phase 2) ---
+// =====================================================================
+// Simulation de la notification Teams (phase 2)
+// =====================================================================
 vendorBtn.addEventListener("click", () => {
-  const currentZoneEl = document.querySelector(".zone.highlight .zone-label");
-  const zoneName = currentZoneEl ? currentZoneEl.textContent : "le magasin";
-
+  const zoneName = currentHighlightedZone ? ZONES[currentHighlightedZone].label.fr : "le magasin";
   addMessage("Un vendeur du rayon " + zoneName + " a été prévenu et arrive.", "jeanne");
-  speak("Un vendeur du rayon " + zoneName + " a été prévenu et arrive.");
-
+  speak("Un vendeur du rayon " + zoneName + " a été prévenu et arrive.", "fr-FR");
   toast.textContent = "🔔 Notification Teams envoyée au vendeur — Rayon : " + zoneName;
   toast.classList.add("show");
   setTimeout(() => toast.classList.remove("show"), 4000);
 });
 
-// Message d'accueil
-addMessage("Bonjour, je suis Jeanne, votre assistante d'accueil. Posez-moi une question, ou touchez le micro pour me parler.", "jeanne");
+// =====================================================================
+// AVATAR 3D (Three.js) — personnage stylisé en armure avec écusson Fnac
+// Note démo : formes low-poly, pas un rendu photoréaliste (voir README).
+// =====================================================================
+let avatarScene, avatarCamera, avatarRenderer, avatarGroup, headGroup, jawMesh;
+let talkTimer = null;
+
+function initAvatar() {
+  const canvas = document.getElementById("avatarCanvas");
+  const width = canvas.clientWidth, height = canvas.clientHeight;
+
+  avatarScene = new THREE.Scene();
+  avatarCamera = new THREE.PerspectiveCamera(32, width / height, 0.1, 100);
+  avatarCamera.position.set(0, 1.55, 5.2);
+  avatarCamera.lookAt(0, 1.2, 0);
+
+  avatarRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  avatarRenderer.setSize(width, height);
+  avatarRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const key = new THREE.DirectionalLight(0xffffff, 1.1);
+  key.position.set(2, 4, 3);
+  avatarScene.add(key);
+  const fill = new THREE.DirectionalLight(0xC79A4B, 0.4);
+  fill.position.set(-3, 1, 2);
+  avatarScene.add(fill);
+  avatarScene.add(new THREE.AmbientLight(0x8FA0B0, 0.5));
+
+  avatarGroup = new THREE.Group();
+  avatarScene.add(avatarGroup);
+
+  const steel = new THREE.MeshStandardMaterial({ color: 0xB7C2CD, metalness: 0.75, roughness: 0.3 });
+  const steelDark = new THREE.MeshStandardMaterial({ color: 0x7C8896, metalness: 0.7, roughness: 0.35 });
+  const skin = new THREE.MeshStandardMaterial({ color: 0xE8B98C, roughness: 0.6 });
+  const hair = new THREE.MeshStandardMaterial({ color: 0x4A2F1C, roughness: 0.7 });
+  const cape = new THREE.MeshStandardMaterial({ color: 0x7A1F2B, roughness: 0.8, side: THREE.DoubleSide });
+  const red = new THREE.MeshStandardMaterial({ color: 0xE2231A, roughness: 0.4, metalness: 0.2 });
+
+  // Torse (armure)
+  const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.42, 0.65, 4, 12), steel);
+  torso.position.y = 1.05;
+  avatarGroup.add(torso);
+
+  // Écusson Fnac sur le torse
+  const badge = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.26, 0.06), red);
+  badge.position.set(0, 1.15, 0.42);
+  avatarGroup.add(badge);
+  const badgeText = makeTextSprite("fnac", "#ffffff", 64);
+  badgeText.scale.set(0.34, 0.14, 1);
+  badgeText.position.set(0, 1.15, 0.47);
+  avatarGroup.add(badgeText);
+
+  // Épaulières
+  [-1, 1].forEach(side => {
+    const shoulder = new THREE.Mesh(new THREE.SphereGeometry(0.2, 12, 12), steelDark);
+    shoulder.position.set(side * 0.46, 1.42, 0);
+    avatarGroup.add(shoulder);
+  });
+
+  // Bras
+  [-1, 1].forEach(side => {
+    const arm = new THREE.Mesh(new THREE.CapsuleGeometry(0.11, 0.55, 4, 8), steel);
+    arm.position.set(side * 0.5, 0.95, 0);
+    arm.rotation.z = side * 0.12;
+    avatarGroup.add(arm);
+  });
+
+  // Jambes
+  [-1, 1].forEach(side => {
+    const leg = new THREE.Mesh(new THREE.CapsuleGeometry(0.15, 0.7, 4, 8), steelDark);
+    leg.position.set(side * 0.2, 0.25, 0);
+    avatarGroup.add(leg);
+  });
+
+  // Cape
+  const capeGeo = new THREE.PlaneGeometry(0.9, 1.3, 4, 6);
+  const capeMesh = new THREE.Mesh(capeGeo, cape);
+  capeMesh.position.set(0, 0.75, -0.3);
+  capeMesh.rotation.x = 0.15;
+  avatarGroup.add(capeMesh);
+
+  // Tête + cou
+  headGroup = new THREE.Group();
+  headGroup.position.y = 1.78;
+  avatarGroup.add(headGroup);
+
+  const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.13, 0.18, 10), skin);
+  neck.position.y = -0.1;
+  headGroup.add(neck);
+
+  const head = new THREE.Mesh(new THREE.SphereGeometry(0.26, 20, 20), skin);
+  headGroup.add(head);
+
+  const hairCap = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 12, 0, Math.PI * 2, 0, Math.PI * 0.55), hair);
+  hairCap.position.y = 0.05;
+  headGroup.add(hairCap);
+
+  // Yeux
+  [-1, 1].forEach(side => {
+    const eye = new THREE.Mesh(new THREE.SphereGeometry(0.025, 8, 8), new THREE.MeshStandardMaterial({ color: 0x2A2620 }));
+    eye.position.set(side * 0.09, 0.02, 0.24);
+    headGroup.add(eye);
+  });
+
+  // Mâchoire animée (parle)
+  jawMesh = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.05, 0.08), skin);
+  jawMesh.position.set(0, -0.14, 0.2);
+  headGroup.add(jawMesh);
+
+  animateAvatar();
+  window.addEventListener("resize", resizeAvatar);
+}
+
+function makeTextSprite(text, color, fontSize) {
+  const cnv = document.createElement("canvas");
+  cnv.width = 256; cnv.height = 96;
+  const ctx = cnv.getContext("2d");
+  ctx.fillStyle = "rgba(0,0,0,0)";
+  ctx.fillRect(0, 0, cnv.width, cnv.height);
+  ctx.font = "bold " + fontSize + "px Arial";
+  ctx.fillStyle = color;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(text, cnv.width / 2, cnv.height / 2);
+  const texture = new THREE.CanvasTexture(cnv);
+  const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
+  return new THREE.Sprite(material);
+}
+
+function resizeAvatar() {
+  const canvas = document.getElementById("avatarCanvas");
+  const width = canvas.clientWidth, height = canvas.clientHeight;
+  avatarCamera.aspect = width / height;
+  avatarCamera.updateProjectionMatrix();
+  avatarRenderer.setSize(width, height);
+}
+
+let clock = new THREE.Clock();
+function animateAvatar() {
+  requestAnimationFrame(animateAvatar);
+  const t = clock.getElapsedTime();
+  if (avatarGroup) {
+    avatarGroup.position.y = Math.sin(t * 1.2) * 0.02; // respiration
+    avatarGroup.rotation.y = Math.sin(t * 0.4) * 0.08;  // léger balancement
+  }
+  avatarRenderer.render(avatarScene, avatarCamera);
+}
+
+function triggerTalkAnimation() {
+  if (talkTimer) clearInterval(talkTimer);
+  let open = false;
+  let ticks = 0;
+  talkTimer = setInterval(() => {
+    open = !open;
+    jawMesh.scale.y = open ? 2.2 : 1;
+    ticks++;
+    if (ticks > 10) { clearInterval(talkTimer); jawMesh.scale.y = 1; }
+  }, 130);
+}
+
+// =====================================================================
+// PLAN 3D (Three.js) — vue isométrique du magasin, rayons en relief
+// =====================================================================
+let mapScene, mapCamera, mapRenderer, zoneMeshes = {};
+let currentHighlightedZone = null;
+
+function initMap() {
+  const canvas = document.getElementById("mapCanvas");
+  const width = canvas.clientWidth, height = canvas.clientHeight;
+
+  mapScene = new THREE.Scene();
+  mapScene.background = null;
+
+  const aspect = width / height;
+  const viewSize = 6.5;
+  mapCamera = new THREE.OrthographicCamera(
+    -viewSize * aspect / 2, viewSize * aspect / 2,
+    viewSize / 2, -viewSize / 2, 0.1, 100
+  );
+  mapCamera.position.set(6, 6, 6);
+  mapCamera.lookAt(0, 0, 0);
+
+  mapRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  mapRenderer.setSize(width, height);
+  mapRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  mapScene.add(new THREE.AmbientLight(0xffffff, 0.7));
+  const dl = new THREE.DirectionalLight(0xffffff, 0.6);
+  dl.position.set(4, 8, 2);
+  mapScene.add(dl);
+
+  // Sol
+  const floor = new THREE.Mesh(
+    new THREE.BoxGeometry(9.6, 0.15, 6.8),
+    new THREE.MeshStandardMaterial({ color: 0xF6F3EC })
+  );
+  floor.position.y = -0.1;
+  mapScene.add(floor);
+
+  // Rayons
+  for (const key in ZONES) {
+    const z = ZONES[key];
+    const height = key === "caisses" ? 0.35 : 0.6;
+    const geo = new THREE.BoxGeometry(z.w, height, z.d);
+    const mat = new THREE.MeshStandardMaterial({ color: z.color });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(z.x, height / 2, z.z);
+    mapScene.add(mesh);
+    zoneMeshes[key] = { mesh, baseColor: z.color, baseHeight: height };
+
+    const label = makeTextSprite(z.label.fr, "#2A2620", 40);
+    label.scale.set(1.6, 0.5, 1);
+    label.position.set(z.x, height + 0.4, z.z);
+    mapScene.add(label);
+    zoneMeshes[key].label = label;
+  }
+
+  // Entrée
+  const entranceLabel = makeTextSprite("🚪 Entrée", "#8B94A0", 40);
+  entranceLabel.scale.set(1.6, 0.5, 1);
+  entranceLabel.position.set(4.2, 0.6, 3.6);
+  mapScene.add(entranceLabel);
+
+  animateMap();
+  window.addEventListener("resize", resizeMap);
+}
+
+function resizeMap() {
+  const canvas = document.getElementById("mapCanvas");
+  const width = canvas.clientWidth, height = canvas.clientHeight;
+  const aspect = width / height;
+  const viewSize = 6.5;
+  mapCamera.left = -viewSize * aspect / 2;
+  mapCamera.right = viewSize * aspect / 2;
+  mapCamera.top = viewSize / 2;
+  mapCamera.bottom = -viewSize / 2;
+  mapCamera.updateProjectionMatrix();
+  mapRenderer.setSize(width, height);
+}
+
+function animateMap() {
+  requestAnimationFrame(animateMap);
+  mapRenderer.render(mapScene, mapCamera);
+}
+
+function highlightZone3D(zoneKey) {
+  for (const key in zoneMeshes) {
+    const z = zoneMeshes[key];
+    z.mesh.material.color.set(z.baseColor);
+    z.mesh.scale.y = 1;
+  }
+  currentHighlightedZone = zoneKey;
+  if (zoneKey && zoneMeshes[zoneKey]) {
+    zoneMeshes[zoneKey].mesh.material.color.set(0xE2231A);
+    zoneMeshes[zoneKey].mesh.scale.y = 1.5;
+  }
+}
+
+// =====================================================================
+// Démarrage
+// =====================================================================
+window.addEventListener("load", () => {
+  initAvatar();
+  initMap();
+  addMessage(GREETING.fr, "jeanne");
+});

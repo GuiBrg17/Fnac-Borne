@@ -22,63 +22,47 @@
   <main class="stage">
 
     <section class="avatar-panel">
-      <div class="avatar-frame" id="avatarFrame">
-        <svg viewBox="0 0 320 420" class="avatar-svg" id="avatarSvg">
-          <!-- halo -->
-          <ellipse cx="160" cy="120" rx="95" ry="95" fill="url(#halo)" opacity="0.5"/>
-          <defs>
-            <radialGradient id="halo" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#E8C97A"/>
-              <stop offset="100%" stop-color="#E8C97A" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#DCE3EA"/>
-              <stop offset="100%" stop-color="#94A4B4"/>
-            </linearGradient>
-          </defs>
-          <!-- cape -->
-          <path d="M90 190 Q60 300 85 400 L235 400 Q260 300 230 190 Z" fill="#7A1F2B"/>
-          <!-- body armor -->
-          <path d="M112 175 Q160 155 208 175 L216 300 Q160 320 104 300 Z" fill="url(#steel)" stroke="#5C6B7A" stroke-width="2"/>
-          <!-- shoulder plates -->
-          <ellipse cx="106" cy="185" rx="22" ry="16" fill="#B7C2CD" stroke="#5C6B7A" stroke-width="2"/>
-          <ellipse cx="214" cy="185" rx="22" ry="16" fill="#B7C2CD" stroke="#5C6B7A" stroke-width="2"/>
-          <!-- neck -->
-          <rect x="147" y="150" width="26" height="30" fill="#E8B98C"/>
-          <!-- head -->
-          <circle cx="160" cy="120" r="46" fill="#F1C79A"/>
-          <!-- hair -->
-          <path d="M114 110 Q112 68 160 66 Q208 68 206 110 Q206 90 160 88 Q114 90 114 110 Z" fill="#5A3A22"/>
-          <path d="M114 108 Q108 150 122 168" fill="none" stroke="#5A3A22" stroke-width="10" stroke-linecap="round"/>
-          <path d="M206 108 Q212 150 198 168" fill="none" stroke="#5A3A22" stroke-width="10" stroke-linecap="round"/>
-          <!-- face -->
-          <circle cx="144" cy="120" r="4" fill="#3A2A1E"/>
-          <circle cx="176" cy="120" r="4" fill="#3A2A1E"/>
-          <path id="mouth" d="M148 138 Q160 144 172 138" fill="none" stroke="#8A4A3A" stroke-width="3" stroke-linecap="round"/>
-          <!-- fnac pin on chest -->
-          <rect x="148" y="210" width="24" height="24" rx="4" fill="#E2231A"/>
-          <text x="160" y="227" font-size="12" fill="#fff" text-anchor="middle" font-family="Arial" font-weight="700">f</text>
-        </svg>
+      <div class="avatar-frame">
+        <canvas id="avatarCanvas"></canvas>
         <div class="listening-ring" id="listeningRing"></div>
       </div>
-      <div class="avatar-caption" id="avatarCaption">Bonjour, je m'appelle Jeanne. Posez-moi une question.</div>
-      <button class="mic-btn" id="micBtn" title="Parler">🎙️ Parler à Jeanne</button>
+
+      <div class="avatar-caption" id="avatarCaption">Bonjour, je m'appelle Jeanne. Parlez-moi, ou écrivez votre question.</div>
+
+      <button class="mic-btn-main" id="micBtn" title="Parler">
+        <span class="mic-icon">🎙️</span>
+        <span id="micLabel">Parler à Jeanne</span>
+      </button>
+
+      <div class="lang-switch">
+        <span class="lang-label">Langue de la voix</span>
+        <div class="lang-options" id="langOptions">
+          <button class="lang-btn active" data-lang="fr-FR">FR</button>
+          <button class="lang-btn" data-lang="en-US">EN</button>
+          <button class="lang-btn" data-lang="es-ES">ES</button>
+        </div>
+      </div>
+
+      <details class="text-fallback">
+        <summary>Écrire plutôt que parler</summary>
+        <form class="chat-form" id="chatForm">
+          <input type="text" id="chatInput" placeholder="Ex : où sont les disques durs ?" autocomplete="off">
+          <button type="submit">Envoyer</button>
+        </form>
+      </details>
     </section>
 
     <section class="interaction-panel">
 
       <div class="chat-log" id="chatLog"></div>
 
-      <form class="chat-form" id="chatForm">
-        <input type="text" id="chatInput" placeholder="Ex : où sont les disques durs ?" autocomplete="off">
-        <button type="submit">Envoyer</button>
-      </form>
-
       <div class="quick-actions">
         <button class="quick-btn" data-q="Où puis-je trouver un disque dur ?">📀 Disques durs</button>
         <button class="quick-btn" data-q="Je cherche un casque audio">🎧 Casques audio</button>
         <button class="quick-btn" data-q="Avez-vous des consoles de jeu ?">🎮 Consoles</button>
         <button class="quick-btn" data-q="Je voudrais un livre">📚 Livres</button>
+        <button class="quick-btn" data-q="Where can I find a hard drive?">🌍 Ask in English</button>
+        <button class="quick-btn" data-q="¿Dónde puedo encontrar auriculares?">🌍 Preguntar en español</button>
       </div>
 
       <button class="vendor-btn" id="vendorBtn">🙋 Être accompagné par un vendeur</button>
@@ -87,33 +71,7 @@
 
     <section class="map-panel">
       <div class="map-title">Plan du magasin — Rez-de-chaussée</div>
-      <svg viewBox="0 0 400 300" class="store-map" id="storeMap">
-        <rect x="0" y="0" width="400" height="300" fill="#F6F3EC" stroke="#C9C2B4"/>
-        <!-- zones -->
-        <g class="zone" data-zone="informatique">
-          <rect x="10" y="10" width="120" height="90" fill="#EDEAE0" stroke="#C9C2B4"/>
-          <text x="70" y="60" text-anchor="middle" class="zone-label">Informatique</text>
-        </g>
-        <g class="zone" data-zone="audio">
-          <rect x="140" y="10" width="120" height="90" fill="#EDEAE0" stroke="#C9C2B4"/>
-          <text x="200" y="60" text-anchor="middle" class="zone-label">Son &amp; audio</text>
-        </g>
-        <g class="zone" data-zone="jeux">
-          <rect x="270" y="10" width="120" height="90" fill="#EDEAE0" stroke="#C9C2B4"/>
-          <text x="330" y="60" text-anchor="middle" class="zone-label">Jeux vidéo</text>
-        </g>
-        <g class="zone" data-zone="livres">
-          <rect x="10" y="200" width="120" height="90" fill="#EDEAE0" stroke="#C9C2B4"/>
-          <text x="70" y="250" text-anchor="middle" class="zone-label">Livres</text>
-        </g>
-        <rect x="140" y="110" width="120" height="180" fill="#F0EEE6" stroke="#C9C2B4"/>
-        <text x="200" y="200" text-anchor="middle" class="zone-label" fill="#A39F92">Caisses</text>
-        <g class="zone" data-zone="photo">
-          <rect x="270" y="110" width="120" height="90" fill="#EDEAE0" stroke="#C9C2B4"/>
-          <text x="330" y="160" text-anchor="middle" class="zone-label">Photo &amp; vidéo</text>
-        </g>
-        <text x="340" y="20" class="you-are-here" id="entranceLabel">🚪 Entrée</text>
-      </svg>
+      <canvas id="mapCanvas"></canvas>
     </section>
 
   </main>
@@ -122,6 +80,7 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
