@@ -246,19 +246,19 @@ function initBackground() {
   bgRenderer.setSize(window.innerWidth, window.innerHeight);
   bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  bgScene.add(new THREE.AmbientLight(0xffffff, 0.5));
-  const l1 = new THREE.DirectionalLight(0xC79A4B, 0.8);
+  bgScene.add(new THREE.AmbientLight(0xffffff, 0.35));
+  const l1 = new THREE.DirectionalLight(0x37E6FF, 0.9);
   l1.position.set(5, 5, 5);
   bgScene.add(l1);
-  const l2 = new THREE.DirectionalLight(0xE2231A, 0.5);
+  const l2 = new THREE.DirectionalLight(0xFF2A3C, 0.6);
   l2.position.set(-5, -3, 4);
   bgScene.add(l2);
 
-  // Formes géométriques évoquant les univers Fnac (disque, cube livre, prisme casque, anneau)
+  // Formes géométriques néon (fil de fer + solides sombres) évoquant les univers Fnac
   const materials = [
-    new THREE.MeshStandardMaterial({ color: 0x2C363E, metalness: 0.6, roughness: 0.3 }),
-    new THREE.MeshStandardMaterial({ color: 0xE2231A, metalness: 0.4, roughness: 0.4 }),
-    new THREE.MeshStandardMaterial({ color: 0xC79A4B, metalness: 0.5, roughness: 0.35 })
+    new THREE.MeshStandardMaterial({ color: 0x0C1418, metalness: 0.7, roughness: 0.25, emissive: 0x0B2A33, emissiveIntensity: 0.4 }),
+    new THREE.MeshBasicMaterial({ color: 0xFF2A3C, wireframe: true }),
+    new THREE.MeshBasicMaterial({ color: 0x37E6FF, wireframe: true })
   ];
   const geometries = [
     new THREE.TorusGeometry(0.6, 0.18, 16, 40),     // disque / vinyle
@@ -329,26 +329,26 @@ function initAvatar() {
   avatarRenderer.setSize(width, height);
   avatarRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  const key = new THREE.DirectionalLight(0xffffff, 1.1);
+  const key = new THREE.DirectionalLight(0xffffff, 1.0);
   key.position.set(2, 4, 3);
   avatarScene.add(key);
-  const fill = new THREE.DirectionalLight(0xC79A4B, 0.45);
+  const fill = new THREE.DirectionalLight(0x37E6FF, 0.6);
   fill.position.set(-3, 1, 2);
   avatarScene.add(fill);
-  const rim = new THREE.DirectionalLight(0xE2231A, 0.3);
+  const rim = new THREE.DirectionalLight(0xFF2A3C, 0.5);
   rim.position.set(0, 2, -3);
   avatarScene.add(rim);
-  avatarScene.add(new THREE.AmbientLight(0x8FA0B0, 0.5));
+  avatarScene.add(new THREE.AmbientLight(0x8FA0B0, 0.4));
 
   avatarGroup = new THREE.Group();
   avatarScene.add(avatarGroup);
 
-  const steel = new THREE.MeshStandardMaterial({ color: 0xB7C2CD, metalness: 0.8, roughness: 0.25 });
-  const steelDark = new THREE.MeshStandardMaterial({ color: 0x7C8896, metalness: 0.75, roughness: 0.3 });
+  const steel = new THREE.MeshStandardMaterial({ color: 0xC2CDD6, metalness: 0.85, roughness: 0.2, emissive: 0x0B2A33, emissiveIntensity: 0.15 });
+  const steelDark = new THREE.MeshStandardMaterial({ color: 0x7C8896, metalness: 0.8, roughness: 0.25, emissive: 0x0B2A33, emissiveIntensity: 0.1 });
   const skin = new THREE.MeshStandardMaterial({ color: 0xE8B98C, roughness: 0.6 });
   const hair = new THREE.MeshStandardMaterial({ color: 0x4A2F1C, roughness: 0.7 });
-  const cape = new THREE.MeshStandardMaterial({ color: 0x7A1F2B, roughness: 0.75, side: THREE.DoubleSide });
-  const red = new THREE.MeshStandardMaterial({ color: 0xE2231A, roughness: 0.35, metalness: 0.25 });
+  const cape = new THREE.MeshStandardMaterial({ color: 0x5A0F17, roughness: 0.7, side: THREE.DoubleSide, emissive: 0xFF2A3C, emissiveIntensity: 0.08 });
+  const red = new THREE.MeshStandardMaterial({ color: 0xFF2A3C, roughness: 0.3, metalness: 0.3, emissive: 0xFF2A3C, emissiveIntensity: 0.5 });
 
   const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.42, 0.65, 4, 12), steel);
   torso.position.y = 1.05;
@@ -357,7 +357,7 @@ function initAvatar() {
   const badge = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.26, 0.06), red);
   badge.position.set(0, 1.15, 0.42);
   avatarGroup.add(badge);
-  const badgeText = makeTextSprite("fnac", "#ffffff", 64);
+  const badgeText = makeTextSprite("fnac", "#EAF6FF", 64);
   badgeText.scale.set(0.34, 0.14, 1);
   badgeText.position.set(0, 1.15, 0.47);
   avatarGroup.add(badgeText);
@@ -476,30 +476,57 @@ function initMap() {
   mapRenderer.setSize(width, height);
   mapRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  mapScene.add(new THREE.AmbientLight(0xffffff, 0.75));
-  const dl = new THREE.DirectionalLight(0xffffff, 0.6);
+  mapScene.add(new THREE.AmbientLight(0xffffff, 0.5));
+  const dl = new THREE.DirectionalLight(0x37E6FF, 0.7);
   dl.position.set(4, 8, 2);
   mapScene.add(dl);
 
-  const floor = new THREE.Mesh(new THREE.BoxGeometry(9.6, 0.15, 6.8), new THREE.MeshStandardMaterial({ color: 0xF6F3EC }));
+  const floor = new THREE.Mesh(
+    new THREE.BoxGeometry(9.6, 0.15, 6.8),
+    new THREE.MeshStandardMaterial({ color: 0x0C1418, emissive: 0x0B2A33, emissiveIntensity: 0.3 })
+  );
   floor.position.y = -0.1;
   mapScene.add(floor);
+
+  // Grille néon sur le sol du plan
+  const gridHelper = new THREE.GridHelper(9.6, 16, 0x37E6FF, 0x184049);
+  gridHelper.position.y = -0.02;
+  mapScene.add(gridHelper);
 
   for (const key in ZONES) {
     const z = ZONES[key];
     const h = key === "caisses" ? 0.35 : 0.6;
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(z.w, h, z.d), new THREE.MeshStandardMaterial({ color: z.color }));
+    const mesh = new THREE.Mesh(
+      new THREE.BoxGeometry(z.w, h, z.d),
+      new THREE.MeshStandardMaterial({ color: 0x14232A, emissive: 0x37E6FF, emissiveIntensity: 0.18, metalness: 0.4, roughness: 0.4 })
+    );
     mesh.position.set(z.x, h / 2, z.z);
     mapScene.add(mesh);
-    zoneMeshes[key] = { mesh, baseColor: new THREE.Color(z.color), baseHeight: h, targetColor: new THREE.Color(z.color), targetScaleY: 1 };
 
-    const label = makeTextSprite(z.label.fr, "#2A2620", 40);
+    const edges = new THREE.LineSegments(
+      new THREE.EdgesGeometry(mesh.geometry),
+      new THREE.LineBasicMaterial({ color: 0x37E6FF })
+    );
+    mesh.add(edges);
+
+    zoneMeshes[key] = {
+      mesh,
+      baseColor: new THREE.Color(0x14232A),
+      baseEmissive: new THREE.Color(0x37E6FF),
+      baseEmissiveIntensity: 0.18,
+      targetColor: new THREE.Color(0x14232A),
+      targetEmissive: new THREE.Color(0x37E6FF),
+      targetEmissiveIntensity: 0.18,
+      targetScaleY: 1
+    };
+
+    const label = makeTextSprite(z.label.fr, "#9FE9FF", 40);
     label.scale.set(1.6, 0.5, 1);
     label.position.set(z.x, h + 0.4, z.z);
     mapScene.add(label);
   }
 
-  const entranceLabel = makeTextSprite("🚪 Entrée", "#8B94A0", 40);
+  const entranceLabel = makeTextSprite("🚪 Entrée", "#7C93A6", 40);
   entranceLabel.scale.set(1.6, 0.5, 1);
   entranceLabel.position.set(4.2, 0.6, 3.6);
   mapScene.add(entranceLabel);
@@ -523,10 +550,12 @@ function resizeMap() {
 
 function animateMap() {
   requestAnimationFrame(animateMap);
-  // Transition douce (lerp) des couleurs et hauteurs de rayons
+  // Transition douce (lerp) des couleurs, émissions et hauteurs de rayons
   for (const key in zoneMeshes) {
     const z = zoneMeshes[key];
     z.mesh.material.color.lerp(z.targetColor, 0.12);
+    z.mesh.material.emissive.lerp(z.targetEmissive, 0.12);
+    z.mesh.material.emissiveIntensity += (z.targetEmissiveIntensity - z.mesh.material.emissiveIntensity) * 0.12;
     z.mesh.scale.y += (z.targetScaleY - z.mesh.scale.y) * 0.15;
   }
   mapRenderer.render(mapScene, mapCamera);
@@ -536,11 +565,15 @@ function highlightZone3D(zoneKey) {
   for (const key in zoneMeshes) {
     const z = zoneMeshes[key];
     z.targetColor = z.baseColor.clone();
+    z.targetEmissive = z.baseEmissive.clone();
+    z.targetEmissiveIntensity = z.baseEmissiveIntensity;
     z.targetScaleY = 1;
   }
   currentHighlightedZone = zoneKey;
   if (zoneKey && zoneMeshes[zoneKey]) {
-    zoneMeshes[zoneKey].targetColor = new THREE.Color(0xE2231A);
+    zoneMeshes[zoneKey].targetColor = new THREE.Color(0x2A0A0D);
+    zoneMeshes[zoneKey].targetEmissive = new THREE.Color(0xFF2A3C);
+    zoneMeshes[zoneKey].targetEmissiveIntensity = 0.9;
     zoneMeshes[zoneKey].targetScaleY = 1.5;
   }
 }

@@ -2,18 +2,21 @@
 
 Démo statique (HTML/CSS/JS, sans backend) illustrant l'idée d'une borne d'accueil vocale avec avatar, pour montrer le concept avant de passer à un vrai prototype.
 
-## Ce que fait la démo
+## Ce que fait la démo (version néon / HUD futuriste)
 
-- Un fond 3D animé en pleine page (Three.js) : formes flottantes évoquant les univers Fnac (vinyle, livre, jeu vidéo...), lumière dorée/rouge en écho au logo
-- Des panneaux "flottants" en verre dépoli (glassmorphism), légèrement inclinés en 3D, qui se redressent au survol — plus d'encadré plat
-- Le logo Fnac × Jeanne en relief (effet de profondeur via ombres portées superposées)
+- Une grille de sol animée façon HUD, en perspective, sous toute l'interface
+- Un fond 3D animé en pleine page (Three.js) : formes flottantes en fil de fer et solides sombres, néon cyan/rouge en écho au logo
+- Des panneaux "flottants" en verre dépoli (glassmorphism), bordure dégradée cyan → rouge, légèrement inclinés en 3D, qui se redressent au survol
+- Un léger effet scanlines + vignette pour l'ambiance écran holographique
+- Le logo Fnac × Jeanne en néon lumineux qui pulse doucement
+- Une police technique (Orbitron pour les titres, Rajdhani pour le texte courant)
 - Un avatar "Jeanne d'Arc" en 3D (Three.js), stylisé, en armure avec écusson Fnac, qui respire et parle
 - Des transitions douces partout : apparition des messages, changement de rayon sur le plan (couleur et hauteur interpolées, pas de saut brusque), légende qui fond en fondu
 - Le micro est l'action principale (voix prioritaire) ; écrire reste possible via "Écrire plutôt que parler"
 - Une voix de synthèse plus naturelle : sélection automatique d'une voix féminine disponible dans le navigateur pour chaque langue, avec un réglage de hauteur et de débit pensé pour sonner moins robotique
 - Un sélecteur de langue pour la voix (FR / EN / ES) — voir la section langues ci-dessous
 - Une base de connaissances multilingue (FR/EN/ES) : informatique, audio, jeux vidéo, livres, photo
-- Un plan du magasin en 3D isométrique (Three.js) qui surligne et fait ressortir le bon rayon
+- Un plan du magasin en 3D isométrique (Three.js), grille néon au sol, rayons aux contours lumineux qui s'illuminent en rouge quand ils sont désignés
 - Un bouton "Être accompagné par un vendeur" qui simule l'envoi d'une notification Teams (phase 2 du projet réel)
 
 ## À propos de la voix
