@@ -7,7 +7,7 @@ Prototype autonome d’une borne d’accueil pour une démonstration interne à 
 - Interface borne en français, anglais et espagnol (boutons à drapeaux).
 - Réponses orales avec la synthèse vocale du navigateur, sans clé ni service payant.
 - Bouton micro quand la reconnaissance vocale est disponible (Chrome/Edge sont les plus fiables). Le champ texte reste toujours utilisable.
-- Recherche de cinq catégories fictives, avec rayon, étage et itinéraire visuel de démonstration.
+- Recherche des catégories décrites pour le magasin : téléphonie à l’entrée, puis Apple / son / TV, informatique / écrans / photo et caisses / PC / gaming au sous-sol.
 - Bouton plein écran et affichage adaptable aux écrans plus petits.
 
 ## Lancer localement
@@ -17,6 +17,10 @@ Prototype autonome d’une borne d’accueil pour une démonstration interne à 
 3. Pour une démonstration sur borne, cliquez sur `⛶` puis utilisez les questions suggérées ou le micro.
 
 Il n’y a aucune installation, aucun serveur, aucune API ni donnée envoyée à un tiers par ce prototype.
+
+### Voix de Jeanne
+
+La borne recherche en priorité une voix féminine installée correspondant à la langue (par exemple Amélie, Samantha ou Monica), puis utilise la meilleure voix locale disponible. La liste de voix dépend de l’ordinateur et du navigateur : si la voix entendue reste masculine, installez/activez une voix française féminine dans les réglages d’accessibilité de l’ordinateur, puis rechargez la page. La démo reste ainsi sans abonnement ni API.
 
 ## Publier avec GitHub Pages
 
@@ -30,7 +34,7 @@ Pour le micro, servez la démo depuis GitHub Pages (HTTPS) plutôt qu’en ouvra
 
 ## Ajouter le vrai plan et les vrais emplacements
 
-Les données de démonstration sont dans `products.js`. Chaque fiche comprend :
+Les données de démonstration sont dans `products.js`. Le premier plan déjà saisi reprend la description fournie pour l’entrée et les trois lignes du sous-sol. Chaque fiche comprend :
 
 ```js
 { keywords: ["mots de recherche"], zone: "A", aisle: { fr: "…" }, level: { fr: "…" }, detail: { fr: "…" } }
