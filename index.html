@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#e7173f" />
+    <title>Jeanne • Assistance magasin</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="kiosk-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="Démonstrateur Fnac Jeanne d'Arc">
+          <span class="brand-mark">fnac</span>
+          <div><strong>Jeanne d'Arc</strong><small data-i18n="demoLabel">DÉMONSTRATEUR • TOULOUSE</small></div>
+        </div>
+        <div class="header-actions">
+          <nav class="languages" aria-label="Choisir la langue">
+            <button class="lang active" data-lang="fr" aria-label="Français"><span>🇫🇷</span><b>FR</b></button>
+            <button class="lang" data-lang="en" aria-label="English"><span>🇬🇧</span><b>EN</b></button>
+            <button class="lang" data-lang="es" aria-label="Español"><span>🇪🇸</span><b>ES</b></button>
+          </nav>
+          <button id="fullscreen" class="icon-button" aria-label="Plein écran" title="Plein écran">⛶</button>
+        </div>
+      </header>
+
+      <section class="experience" aria-label="Assistant virtuel">
+        <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+        <section class="avatar-panel">
+          <div class="status"><i></i><span data-i18n="online">Disponible maintenant</span></div>
+          <div id="avatar" class="avatar" aria-label="Jeanne, assistante virtuelle originale">
+            <div class="halo"></div><div class="banner"></div><div class="hair hair-left"></div><div class="hair hair-right"></div>
+            <div class="face"><span class="eye left"></span><span class="eye right"></span><span class="nose"></span><span class="mouth"></span></div>
+            <div class="neck"></div><div class="armor"><span></span></div><div class="cape"></div>
+          </div>
+          <div class="assistant-name"><span>JEANNE</span><small data-i18n="assistantRole">Votre guide en magasin</small></div>
+          <p class="portrait-note" data-i18n="portraitNote">Personnage virtuel original · Maquette interne</p>
+        </section>
+
+        <section class="conversation-panel">
+          <div class="intro">
+            <p class="eyebrow" data-i18n="eyebrow">BIENVENUE À LA FNAC JEANNE D'ARC</p>
+            <h1 data-i18n="title">Comment puis-je vous aider ?</h1>
+            <p data-i18n="subtitle">Dites-moi ce que vous cherchez, je vous guide vers le bon rayon.</p>
+          </div>
+          <div id="conversation" class="conversation" aria-live="polite">
+            <article class="message assistant"><span class="message-label">JEANNE</span><p id="welcome-message">Bonjour ! Je suis Jeanne, votre guide en magasin. Que recherchez-vous aujourd’hui ?</p></article>
+          </div>
+          <div id="location-card" class="location-card hidden" aria-live="polite"></div>
+          <div class="suggestions" id="suggestions"></div>
+          <form id="question-form" class="question-form">
+            <input id="question" type="text" autocomplete="off" data-i18n-placeholder="inputPlaceholder" placeholder="Ex. Où sont les disques durs ?" aria-label="Votre question" />
+            <button id="send" class="send" type="submit" aria-label="Envoyer">↗</button>
+          </form>
+          <button id="microphone" class="microphone" type="button"><span class="mic-icon">●</span><span id="mic-label" data-i18n="microLabel">Appuyez pour parler</span></button>
+          <p id="speech-hint" class="speech-hint" data-i18n="speechHint">Vous pouvez aussi écrire votre question ci-dessus.</p>
+        </section>
+      </section>
+      <footer><span>Prototype personnel · Données fictives à remplacer avant usage magasin</span><button id="toggle-voice" type="button">🔊 <span data-i18n="voiceOn">Voix activée</span></button></footer>
+    </main>
+    <script src="products.js"></script><script src="app.js"></script>
+  </body>
+</html>
