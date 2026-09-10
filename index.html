@@ -22,6 +22,12 @@
       <span class="brand-name">Jeanne</span>
     </div>
     <div class="store-name">Fnac Jeanne d'Arc — Toulouse</div>
+    
+    <div id="langFlags" style="display: flex; gap: 15px; margin-left: auto;">
+      <span class="flag-btn active" data-lang="fr" style="cursor: pointer; font-size: 28px;">🇫🇷</span>
+      <span class="flag-btn" data-lang="en" style="cursor: pointer; font-size: 28px; filter: grayscale(100%);">🇬🇧</span>
+      <span class="flag-btn" data-lang="es" style="cursor: pointer; font-size: 28px; filter: grayscale(100%);">🇪🇸</span>
+    </div>
   </header>
 
   <main class="stage">
@@ -39,15 +45,6 @@
         <span id="micLabel">Parler à Jeanne</span>
       </button>
 
-      <div class="lang-switch">
-        <span class="lang-label">Langue de la voix</span>
-        <div class="lang-options" id="langOptions">
-          <button class="lang-btn active" data-lang="fr-FR">FR</button>
-          <button class="lang-btn" data-lang="en-US">EN</button>
-          <button class="lang-btn" data-lang="es-ES">ES</button>
-        </div>
-      </div>
-
       <details class="text-fallback">
         <summary>Écrire plutôt que parler</summary>
         <form class="chat-form" id="chatForm">
@@ -62,12 +59,12 @@
       <div class="chat-log" id="chatLog"></div>
 
       <div class="quick-actions">
-        <button class="quick-btn" data-q="Où puis-je trouver un disque dur ?">📀 Disques durs</button>
-        <button class="quick-btn" data-q="Je cherche un casque audio">🎧 Casques audio</button>
-        <button class="quick-btn" data-q="Avez-vous des consoles de jeu ?">🎮 Consoles</button>
-        <button class="quick-btn" data-q="Je voudrais un livre">📚 Livres</button>
+        <button class="quick-btn" data-q="Où est l'espace Apple ?">🍏 Apple</button>
+        <button class="quick-btn" data-q="Je cherche un écran de PC Gaming">💻 PC Gaming</button>
+        <button class="quick-btn" data-q="Je voudrais un nouveau smartphone">📱 Téléphonie</button>
+        <button class="quick-btn" data-q="Où sont les jeux vidéo ?">🎮 Jeux Vidéo</button>
         <button class="quick-btn" data-q="Where can I find a hard drive?">🌍 Ask in English</button>
-        <button class="quick-btn" data-q="¿Dónde puedo encontrar auriculares?">🌍 Preguntar en español</button>
+        <button class="quick-btn" data-q="¿Dónde puedo pagar?">🌍 Preguntar en español</button>
       </div>
 
       <button class="vendor-btn" id="vendorBtn">🙋 Être accompagné par un vendeur</button>
@@ -75,7 +72,7 @@
     </section>
 
     <section class="map-panel floaty">
-      <div class="map-title">Plan du magasin — Rez-de-chaussée</div>
+      <div class="map-title">Plan du magasin — Rez-de-chaussée & Sous-sol</div>
       <canvas id="mapCanvas"></canvas>
     </section>
 
@@ -86,6 +83,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/GLTFLoader.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
