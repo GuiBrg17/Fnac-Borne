@@ -8,6 +8,8 @@
 </head>
 <body>
 
+<canvas id="bgCanvas"></canvas>
+
 <div class="kiosk">
 
   <header class="kiosk-header">
@@ -21,7 +23,7 @@
 
   <main class="stage">
 
-    <section class="avatar-panel">
+    <section class="avatar-panel floaty">
       <div class="avatar-frame">
         <canvas id="avatarCanvas"></canvas>
         <div class="listening-ring" id="listeningRing"></div>
@@ -52,7 +54,7 @@
       </details>
     </section>
 
-    <section class="interaction-panel">
+    <section class="interaction-panel floaty">
 
       <div class="chat-log" id="chatLog"></div>
 
@@ -69,7 +71,7 @@
 
     </section>
 
-    <section class="map-panel">
+    <section class="map-panel floaty">
       <div class="map-title">Plan du magasin — Rez-de-chaussée</div>
       <canvas id="mapCanvas"></canvas>
     </section>
