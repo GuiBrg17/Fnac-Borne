@@ -54,20 +54,6 @@ const GREETING = {
   es: "Hola, soy Jeanne, su asistente de acogida. Hábleme o escriba su pregunta."
 };
 
-function detectLanguage(text) {
-  const t = " " + text.toLowerCase() + " ";
-  const scores = { fr: 0, en: 0, es: 0 };
-  const markers = {
-    fr: [" le ", " la ", " les ", " où ", " je ", " vous ", " des ", " un ", " une ", "é", "è"],
-    en: [" the ", " where ", " i ", " you ", " a ", " an ", " is ", " are ", " find "],
-    es: [" el ", " la ", " los ", " dónde ", " yo ", " usted ", " un ", " una ", "ñ", "¿"]
-  };
-  for (const lang in markers) markers[lang].forEach(m => { if (t.includes(m)) scores[lang]++; });
-  let best = "fr", bestScore = -1;
-  for (const lang in scores) if (scores[lang] > bestScore) { bestScore = scores[lang]; best = lang; }
-  return best;
-}
-
 function findAnswer(question, lang) {
   const q = question.toLowerCase();
   for (const entry of KNOWLEDGE_BASE) {
@@ -89,11 +75,16 @@ const micLabel = document.getElementById("micLabel");
 const vendorBtn = document.getElementById("vendorBtn");
 const toast = document.getElementById("toast");
 const langOptions = document.getElementById("langOptions");
+const voiceSelect = document.getElementById("voiceSelect");
 const pathLine = document.getElementById("pathLine");
 const arrivalMarker = document.getElementById("arrivalMarker");
 
-let voiceLang = "fr-FR";
+// La langue affichée/parlée suit le sélecteur FR/EN/ES choisi par l'utilisateur,
+// plutôt qu'une détection automatique peu fiable (surtout sur de la voix reconnue).
+let voiceLang = "fr-FR";       // tag complet, ex. "fr-FR" — utilisé pour la reconnaissance et la synthèse
+let currentLang = "fr";        // code court — utilisé pour choisir les réponses dans KNOWLEDGE_BASE
 let currentHighlightedZone = null;
+let manualVoiceURI = null;     // voix choisie manuellement dans le sélecteur, si renseignée
 
 function addMessage(text, from) {
   const div = document.createElement("div");
@@ -104,7 +95,7 @@ function addMessage(text, from) {
 }
 
 // =====================================================================
-// Voix — sélection d'une voix féminine plus naturelle par langue
+// Voix — liste réelle des voix du navigateur, choix manuel possible
 // =====================================================================
 let availableVoices = [];
 const FEMALE_HINTS = {
@@ -115,19 +106,58 @@ const FEMALE_HINTS = {
 
 function refreshVoices() {
   availableVoices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+  populateVoiceSelect();
 }
 if ("speechSynthesis" in window) {
   refreshVoices();
   window.speechSynthesis.onvoiceschanged = refreshVoices;
 }
 
+function guessFemaleVoice(candidates, lang) {
+  const hints = FEMALE_HINTS[lang] || [];
+  return candidates.find(v => hints.some(h => v.name.toLowerCase().includes(h))) || candidates[0] || null;
+}
+
+function populateVoiceSelect() {
+  const candidates = availableVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith(voiceLang.split("-")[0]));
+  voiceSelect.innerHTML = "";
+
+  if (candidates.length === 0) {
+    const opt = document.createElement("option");
+    opt.textContent = "Aucune voix trouvée pour cette langue";
+    opt.disabled = true;
+    voiceSelect.appendChild(opt);
+    manualVoiceURI = null;
+    return;
+  }
+
+  candidates.forEach(v => {
+    const opt = document.createElement("option");
+    opt.value = v.voiceURI;
+    opt.textContent = v.name + " (" + v.lang + ")";
+    voiceSelect.appendChild(opt);
+  });
+
+  // Présélectionne la meilleure devinette féminine, sinon la première voix dispo
+  const guess = guessFemaleVoice(candidates, voiceLang);
+  if (guess) {
+    voiceSelect.value = guess.voiceURI;
+    manualVoiceURI = guess.voiceURI;
+  }
+}
+
+voiceSelect.addEventListener("change", () => {
+  manualVoiceURI = voiceSelect.value;
+});
+
 function pickVoice(lang) {
+  if (manualVoiceURI) {
+    const chosen = availableVoices.find(v => v.voiceURI === manualVoiceURI);
+    if (chosen) return chosen;
+  }
   const langPrefix = lang.split("-")[0];
   const candidates = availableVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
-  if (candidates.length === 0) return null;
-  const hints = FEMALE_HINTS[lang] || [];
-  const femaleMatch = candidates.find(v => hints.some(h => v.name.toLowerCase().includes(h)));
-  return femaleMatch || candidates[0];
+  return guessFemaleVoice(candidates, lang);
 }
 
 function speak(text, lang) {
@@ -139,7 +169,7 @@ function speak(text, lang) {
   utter.lang = lang;
   const voice = pickVoice(lang);
   if (voice) utter.voice = voice;
-  utter.pitch = 1.12;
+  utter.pitch = 1.15;
   utter.rate = 0.96;
   utter.volume = 1;
   window.speechSynthesis.speak(utter);
@@ -180,17 +210,16 @@ function drawPathToZone(zoneKey) {
 }
 
 function askJeanne(question) {
-  const lang = detectLanguage(question);
   addMessage(question, "user");
+  const lang = currentLang;
   const answer = findAnswer(question, lang);
-  const langTag = lang === "fr" ? "fr-FR" : lang === "en" ? "en-US" : "es-ES";
   if (answer) {
     addMessage(answer.reply[lang], "jeanne");
-    speak(answer.reply[lang], langTag);
+    speak(answer.reply[lang], voiceLang);
     highlightZone(answer.zone);
   } else {
     addMessage(DEFAULT_REPLY[lang], "jeanne");
-    speak(DEFAULT_REPLY[lang], langTag);
+    speak(DEFAULT_REPLY[lang], voiceLang);
     highlightZone(null);
   }
 }
@@ -213,7 +242,9 @@ langOptions.addEventListener("click", (e) => {
   document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
   voiceLang = btn.dataset.lang;
+  currentLang = voiceLang.split("-")[0];
   if (recognition) recognition.lang = voiceLang;
+  populateVoiceSelect();
 });
 
 // =====================================================================

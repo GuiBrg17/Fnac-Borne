@@ -4,16 +4,21 @@ Démo statique (HTML/CSS/JS, sans backend) illustrant l'idée d'une borne d'accu
 
 ## Ce que fait la démo (version affiche Fnac / plan 2D)
 
-- **Palette strictement jaune Fnac / blanc / noir** (plus de rouge ni de néon)
+- **Palette strictement jaune Fnac (#EBB300) / blanc / noir** (plus de rouge ni de néon)
 - **Typographie proche de l'identité Fnac** : Archivo Black (grasse, carrée, sans fioritures) pour les titres, logos et boutons ; Poppins pour le texte courant
+- **Une seule carte à gauche, pleine hauteur** : l'emplacement de l'avatar s'étire pour occuper tout l'espace vertical disponible, le reste (micro, langue, voix, chat) s'organise en dessous
+- **La langue de réponse suit le sélecteur FR/EN/ES**, plutôt qu'une détection automatique du texte — plus fiable, surtout en vocal où la reconnaissance peut déformer les mots
+- **Sélecteur de voix** : liste les voix réellement installées dans le navigateur pour la langue choisie, avec une présélection automatique d'une voix féminine si le nom le suggère — et tu peux la changer toi-même dans le menu déroulant
 - **Plan du magasin en 2D vu du dessus** (SVG), toujours visible
-- **Chemin animé** : un trait noir en pointillés qui défile va de l'entrée jusqu'au rayon demandé, avec un point rouge à l'arrivée
+- **Chemin animé** : un trait noir en pointillés qui défile va de l'entrée jusqu'au rayon demandé, avec un point jaune à l'arrivée
 - **Avatar retiré**, encadré "Avatar 3D — bientôt disponible" en attendant
-- Le micro reste l'action principale (voix prioritaire) ; écrire reste possible via "Écrire plutôt que parler"
-- Une voix de synthèse plus naturelle : sélection automatique d'une voix féminine disponible dans le navigateur pour chaque langue
-- Un sélecteur de langue pour la voix (FR / EN / ES)
 - Une base de connaissances multilingue (FR/EN/ES) : informatique, audio, jeux vidéo, livres, photo
 - Un bouton "Être accompagné par un vendeur" qui simule l'envoi d'une notification Teams (phase 2 du projet réel)
+
+## À propos de la langue et de la voix
+
+- **Langue** : avant, la démo essayait de deviner la langue à partir du texte tapé ou reconnu — peu fiable, surtout au micro (si la reconnaissance vocale déforme un mot anglais en quelque chose qui ressemble à du français, la réponse partait dans la mauvaise langue). Maintenant, la langue de réponse suit directement le sélecteur FR/EN/ES : plus prévisible, et cohérent avec le fait que la reconnaissance vocale du navigateur a de toute façon besoin qu'on lui dise à l'avance dans quelle langue écouter.
+- **Voix féminine** : la démo essaie de deviner une voix féminine parmi celles installées sur le navigateur/l'ordinateur, mais ça dépend entièrement de ce qui est disponible sur la machine qui ouvre la page — certains systèmes (notamment macOS/Safari) n'ont par défaut qu'une seule voix française, parfois masculine. D'où le nouveau sélecteur de voix : il liste les voix réellement disponibles pour choisir manuellement une voix féminine si l'auto-détection se trompe. Si aucune voix féminine française n'apparaît dans la liste, il faut en installer une côté système (Réglages/Paramètres → Accessibilité → Contenu énoncé, ou équivalent selon l'OS).
 
 ## Idées à explorer pour la suite
 
@@ -25,15 +30,6 @@ Démo statique (HTML/CSS/JS, sans backend) illustrant l'idée d'une borne d'accu
 - **Mode accessibilité** : texte plus grand, contraste renforcé, guidage vocal pas à pas pour les personnes malvoyantes
 - **Tableau de bord pour les équipes magasin** : les questions les plus posées à la borne, pour ajuster le merchandising ou anticiper les ruptures
 - **Suggestions croisées** : après une réponse, proposer un produit complémentaire ("un casque avec ce lecteur MP3 ?")
-
-## À propos de la voix
-
-Le rendu dépend des voix installées sur l'ordinateur/le navigateur qui ouvre la page (Chrome sur Windows ou Mac propose en général plusieurs voix françaises, dont des voix féminines type "Google français" ou une voix système). La démo choisit automatiquement la meilleure voix féminine disponible. En production, pour une voix vraiment sur-mesure et homogène sur toutes les bornes (au lieu de dépendre du navigateur), il faudrait un vrai service de synthèse vocale (ElevenLabs, Azure Neural TTS, Google Cloud TTS) avec une voix choisie et calibrée une fois pour toutes pour Jeanne.
-
-## Gestion des langues (FR / EN / ES)
-
-- **Texte tapé** : la démo détecte la langue par mots-clés simples et répond dans la même langue. En production, un vrai LLM (Claude...) fait cette détection nativement, sans configuration, et sur des questions ouvertes (pas juste des mots-clés).
-- **Voix** : la reconnaissance vocale du navigateur ne détecte pas seule la langue parlée — elle doit savoir à l'avance dans quelle langue écouter. D'où le petit sélecteur FR/EN/ES à côté du micro. En production, un service de reconnaissance vocale multilingue (Azure/Google) peut détecter la langue automatiquement, sans que le client ait à la choisir.
 
 ## Ce qui est simulé vs ce qui serait réel en production
 
