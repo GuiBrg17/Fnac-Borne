@@ -8,18 +8,15 @@
 </head>
 <body>
 
-<canvas id="bgCanvas"></canvas>
-<div class="grid-floor"></div>
-<div class="scanlines"></div>
-<div class="vignette"></div>
+<div class="shape shape-1"></div>
+<div class="shape shape-2"></div>
 
 <div class="kiosk">
 
   <header class="kiosk-header">
     <div class="brand">
-      <span class="brand-mark">fnac</span>
-      <span class="brand-sep">×</span>
-      <span class="brand-name">Jeanne</span>
+      <span class="brand-badge">fnac<span class="brand-plus">+</span></span>
+      <span class="brand-name">JEANNE</span>
     </div>
     <div class="store-name">Fnac Jeanne d'Arc — Toulouse</div>
   </header>
@@ -28,10 +25,10 @@
 
     <aside class="sidebar">
 
-      <section class="avatar-panel floaty">
+      <section class="avatar-panel card">
         <div class="avatar-placeholder">
-          <div class="avatar-placeholder-icon">◈</div>
-          <div class="avatar-placeholder-text">Emplacement avatar 3D<br><span>à intégrer plus tard</span></div>
+          <div class="avatar-placeholder-icon">★</div>
+          <div class="avatar-placeholder-text">AVATAR 3D<br><span>bientôt disponible</span></div>
         </div>
 
         <div class="avatar-caption" id="avatarCaption">Bonjour, je m'appelle Jeanne. Parlez-moi, ou écrivez votre question.</div>
@@ -54,12 +51,12 @@
           <summary>Écrire plutôt que parler</summary>
           <form class="chat-form" id="chatForm">
             <input type="text" id="chatInput" placeholder="Ex : où sont les disques durs ?" autocomplete="off">
-            <button type="submit">Envoyer</button>
+            <button type="submit">OK</button>
           </form>
         </details>
       </section>
 
-      <section class="interaction-panel floaty">
+      <section class="interaction-panel card">
 
         <div class="chat-log" id="chatLog"></div>
 
@@ -76,9 +73,55 @@
 
     </aside>
 
-    <section class="map-panel-main floaty">
-      <div class="map-title">Plan du magasin — Rez-de-chaussée</div>
-      <canvas id="mapCanvas"></canvas>
+    <section class="map-panel-main card">
+      <div class="map-title">PLAN DU MAGASIN <span>— Rez-de-chaussée</span></div>
+      <svg viewBox="0 0 800 560" class="store-map-svg" id="storeMapSvg" preserveAspectRatio="xMidYMid meet">
+        <!-- fond -->
+        <rect x="0" y="0" width="800" height="560" fill="#FFFFFF"/>
+
+        <!-- rayons -->
+        <g class="zone" data-zone="informatique">
+          <rect x="20" y="20" width="230" height="180" rx="10" fill="#FFE066" stroke="#111111" stroke-width="5"/>
+          <text x="135" y="115" text-anchor="middle" class="zone-label">INFORMATIQUE</text>
+        </g>
+
+        <g class="zone" data-zone="audio">
+          <rect x="285" y="20" width="230" height="180" rx="10" fill="#FFE066" stroke="#111111" stroke-width="5"/>
+          <text x="400" y="115" text-anchor="middle" class="zone-label">SON &amp; AUDIO</text>
+        </g>
+
+        <g class="zone" data-zone="jeux">
+          <rect x="550" y="20" width="230" height="180" rx="10" fill="#FFE066" stroke="#111111" stroke-width="5"/>
+          <text x="665" y="115" text-anchor="middle" class="zone-label">JEUX VIDÉO</text>
+        </g>
+
+        <g class="zone" data-zone="livres">
+          <rect x="20" y="360" width="230" height="180" rx="10" fill="#FFE066" stroke="#111111" stroke-width="5"/>
+          <text x="135" y="455" text-anchor="middle" class="zone-label">LIVRES</text>
+        </g>
+
+        <g class="zone" data-zone="photo">
+          <rect x="550" y="360" width="230" height="180" rx="10" fill="#FFE066" stroke="#111111" stroke-width="5"/>
+          <text x="665" y="455" text-anchor="middle" class="zone-label">PHOTO &amp; VIDÉO</text>
+        </g>
+
+        <!-- caisses (centre) -->
+        <rect x="285" y="230" width="230" height="100" rx="10" fill="#111111"/>
+        <text x="400" y="286" text-anchor="middle" class="zone-label zone-label-light">CAISSES</text>
+
+        <!-- entrée -->
+        <g id="entranceMarker">
+          <circle cx="740" cy="530" r="14" fill="#111111"/>
+          <circle cx="740" cy="530" r="14" fill="none" stroke="#FFCC00" stroke-width="4"/>
+          <text x="740" y="510" text-anchor="middle" class="entrance-label">ENTRÉE</text>
+        </g>
+
+        <!-- chemin (tracé dynamiquement en JS) -->
+        <path id="pathLine" d="" fill="none" stroke="#111111" stroke-width="6" stroke-dasharray="14 10" stroke-linecap="round"/>
+
+        <!-- marqueur d'arrivée -->
+        <circle id="arrivalMarker" cx="0" cy="0" r="16" fill="#E2231A" opacity="0" />
+      </svg>
     </section>
 
   </main>
@@ -87,7 +130,6 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
