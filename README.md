@@ -4,8 +4,9 @@ Démo statique (HTML/CSS/JS, sans backend) illustrant l'idée d'une borne d'accu
 
 ## Ce que fait la démo (version affiche Fnac / plan 2D)
 
-- **Style repris de l'affiche Black Friday Fnac** : jaune Fnac, noir, blanc, typographie très grasse (Poppins), cartes avec bordure noire épaisse et ombre portée "sticker" façon affiche
-- **Plan du magasin en 2D vu du dessus** (SVG), toujours visible, plus lisible et plus rapide à styliser qu'une vue 3D
+- **Palette strictement jaune Fnac / blanc / noir** (plus de rouge ni de néon)
+- **Typographie proche de l'identité Fnac** : Archivo Black (grasse, carrée, sans fioritures) pour les titres, logos et boutons ; Poppins pour le texte courant
+- **Plan du magasin en 2D vu du dessus** (SVG), toujours visible
 - **Chemin animé** : un trait noir en pointillés qui défile va de l'entrée jusqu'au rayon demandé, avec un point rouge à l'arrivée
 - **Avatar retiré**, encadré "Avatar 3D — bientôt disponible" en attendant
 - Le micro reste l'action principale (voix prioritaire) ; écrire reste possible via "Écrire plutôt que parler"

@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
   --fnac-yellow: #FFCC00;
   --fnac-yellow-soft: #FFE066;
   --black: #111111;
   --white: #FFFFFF;
-  --red: #E2231A;
   --muted: #55524A;
 }
 
@@ -75,8 +74,8 @@ body {
 .brand-badge {
   background: var(--black);
   color: var(--white);
-  font-weight: 900;
-  font-size: 20px;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 18px;
   padding: 8px 16px;
   border-radius: 8px;
   transform: rotate(-4deg);
@@ -85,8 +84,8 @@ body {
 }
 .brand-plus { color: var(--fnac-yellow); }
 .brand-name {
-  font-weight: 900;
-  font-size: 30px;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 28px;
   letter-spacing: 0.5px;
   color: var(--black);
 }
@@ -148,10 +147,10 @@ body {
   color: var(--black);
 }
 .avatar-placeholder-text {
-  font-size: 12.5px;
-  font-weight: 700;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 12px;
   color: var(--black);
-  line-height: 1.4;
+  line-height: 1.5;
   letter-spacing: 0.5px;
 }
 .avatar-placeholder-text span { font-weight: 500; color: var(--muted); font-size: 11px; }
@@ -168,25 +167,25 @@ body {
 
 .mic-btn-main {
   width: 100%;
-  background: var(--red);
+  background: var(--black);
   color: var(--white);
   border: 3px solid var(--black);
   padding: 15px;
   border-radius: 12px;
-  font-size: 15px;
-  font-weight: 800;
-  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-family: 'Archivo Black', sans-serif;
+  letter-spacing: 0.3px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  box-shadow: 4px 4px 0 var(--black);
+  box-shadow: 4px 4px 0 var(--fnac-yellow);
   transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.2s ease;
 }
-.mic-btn-main:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--black); }
-.mic-btn-main:active { transform: translate(0,0); box-shadow: 2px 2px 0 var(--black); }
-.mic-btn-main.active { background: var(--fnac-yellow); color: var(--black); }
+.mic-btn-main:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--fnac-yellow); }
+.mic-btn-main:active { transform: translate(0,0); box-shadow: 2px 2px 0 var(--fnac-yellow); }
+.mic-btn-main.active { background: var(--fnac-yellow); color: var(--black); box-shadow: 4px 4px 0 var(--black); }
 .mic-icon { font-size: 20px; }
 
 .lang-switch {
@@ -206,8 +205,8 @@ body {
   color: var(--black);
   padding: 4px 10px;
   border-radius: 6px;
-  font-size: 12px;
-  font-weight: 800;
+  font-size: 11px;
+  font-family: 'Archivo Black', sans-serif;
   cursor: pointer;
 }
 .lang-btn.active { background: var(--fnac-yellow); }
@@ -242,9 +241,9 @@ body {
   border-radius: 8px;
   background: var(--fnac-yellow);
   color: var(--black);
-  font-weight: 800;
+  font-family: 'Archivo Black', sans-serif;
   cursor: pointer;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .interaction-panel {
@@ -301,9 +300,8 @@ body {
   color: var(--black);
   padding: 8px 12px;
   border-radius: 20px;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-family: 'Archivo Black', sans-serif;
   cursor: pointer;
   transition: background 0.15s, transform 0.1s;
 }
@@ -311,18 +309,17 @@ body {
 
 .vendor-btn {
   margin-top: auto;
-  border: 3px dashed var(--red);
+  border: 3px dashed var(--black);
   background: none;
-  color: var(--red);
+  color: var(--black);
   padding: 12px;
   border-radius: 10px;
-  font-size: 14px;
-  font-weight: 800;
-  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-family: 'Archivo Black', sans-serif;
   cursor: pointer;
   transition: background 0.2s;
 }
-.vendor-btn:hover { background: rgba(226,35,26,0.08); }
+.vendor-btn:hover { background: var(--fnac-yellow-soft); }
 
 .map-panel-main {
   padding: 24px 26px 28px;
@@ -331,13 +328,13 @@ body {
   min-height: 500px;
 }
 .map-title {
-  font-size: 20px;
-  font-weight: 900;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 19px;
   color: var(--black);
   margin-bottom: 14px;
   letter-spacing: 0.5px;
 }
-.map-title span { font-weight: 500; color: var(--muted); font-size: 14px; }
+.map-title span { font-family: 'Poppins', sans-serif; font-weight: 500; color: var(--muted); font-size: 14px; }
 
 .store-map-svg {
   width: 100%;
@@ -347,21 +344,19 @@ body {
   border-radius: 10px;
 }
 .zone-label {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  font-size: 22px;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 20px;
   fill: var(--black);
   transition: fill 0.25s ease;
 }
 .zone-label-light { fill: var(--white); }
 .entrance-label {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: 13px;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 12px;
   fill: var(--black);
 }
 .zone rect { transition: fill 0.25s ease, stroke 0.25s ease; }
-.zone.highlight rect { fill: var(--red) !important; }
+.zone.highlight rect { fill: var(--black) !important; }
 .zone.highlight .zone-label { fill: var(--white); }
 
 #pathLine {
