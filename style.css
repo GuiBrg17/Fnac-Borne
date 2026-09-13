@@ -340,15 +340,15 @@ body {
   flex: 1;
   min-height: 480px;
   grid-template-columns: repeat(6, 1fr);
-  grid-auto-rows: minmax(55px, 1fr);
+  grid-template-rows: repeat(7, minmax(55px, 1fr));
   grid-template-areas:
     "caisse caisse jeuxSociete escalierEtage escalierEtage escalierEtage"
     "sav tablette tablette pcwindows apple apple"
-    "sav stockage stockage pcwindows audio audio"
-    "sav pcgamer pcgamer electromenager tv tv"
-    "cartouches pcgamer pcgamer electromenager tv tv"
-    "gaming ecranpc ecranpc photo photo tv"
-    "trotinette trotinette autreElectro autreElectro photo tv";
+    "sav stockage stockage pcwindows audio tv"
+    "sav pcgamer pcgamer electromenager audio tv"
+    "cartouches pcgamer pcgamer electromenager photo tv"
+    "gaming ecranpc ecranpc autreElectro photo tv"
+    "trotinette trotinette trotinette autreElectro photo tv";
 }
 
 .tile {
