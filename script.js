@@ -1,64 +1,147 @@
 // =====================================================================
-// Zones du magasin — coordonnées dans le repère du SVG (viewBox 800x560)
+// Traductions de toute l'interface (pas seulement les réponses de Jeanne)
+// =====================================================================
+const UI_TEXT = {
+  fr: {
+    avatarRail: "AVATAR JEANNE",
+    chatBoxTitle: "Zone du tchat retransmise à l'écrit",
+    disclaimer: "Bienvenue ! Cette borne vous aide à trouver un produit et à vous repérer dans le magasin. Parlez ou écrivez votre question.",
+    micIdle: "Appuyer ici pour parler",
+    micListening: "Je vous écoute...",
+    micUnsupported: "Micro non supporté — écrivez ci-dessous",
+    micUnsupportedCaption: "La reconnaissance vocale n'est pas supportée par ce navigateur. Essayez avec Chrome, ou écrivez votre question.",
+    chatPlaceholder: "Écrire au lieu de parler...",
+    chatSend: "OK",
+    voiceLabel: "Voix",
+    voiceNone: "Aucune voix féminine trouvée",
+    quickActions: [
+      { zone: "stockage", label: "📀 Disques durs" },
+      { zone: "audio", label: "🎧 Casques audio" },
+      { zone: "gaming", label: "🎮 Consoles" },
+      { zone: "telephonie", label: "📱 Téléphonie" }
+    ],
+    vendorBtn: "🙋 Être accompagné par un vendeur",
+    vendorConfirm: (zone) => "Un vendeur du rayon " + zone + " a été prévenu et arrive.",
+    toastPrefix: "🔔 Notification Teams envoyée au vendeur — Rayon : ",
+    mapTitle: "PLAN DU MAGASIN",
+    mapSubtitle: "— Rez-de-chaussée",
+    greeting: "Bonjour, je suis Jeanne, votre assistante d'accueil. Parlez-moi ou écrivez votre question.",
+    defaultReply: "Je ne suis pas certaine de comprendre. Pouvez-vous reformuler, ou préférez-vous qu'un vendeur vienne vous aider ?",
+    genericZoneReply: (zoneName) => "Vous trouverez ça au rayon " + zoneName + ", indiqué sur le plan.",
+    entree: "— Entrée et Sortie —"
+  },
+  en: {
+    avatarRail: "JEANNE AVATAR",
+    chatBoxTitle: "Chat log shown as text",
+    disclaimer: "Welcome! This kiosk helps you find a product and get around the store. Speak or type your question.",
+    micIdle: "Tap here to talk",
+    micListening: "Listening...",
+    micUnsupported: "Mic not supported — type below",
+    micUnsupportedCaption: "Voice recognition isn't supported by this browser. Try Chrome, or type your question.",
+    chatPlaceholder: "Type instead of speaking...",
+    chatSend: "OK",
+    voiceLabel: "Voice",
+    voiceNone: "No female voice found",
+    quickActions: [
+      { zone: "stockage", label: "📀 Hard drives" },
+      { zone: "audio", label: "🎧 Headphones" },
+      { zone: "gaming", label: "🎮 Consoles" },
+      { zone: "telephonie", label: "📱 Phones" }
+    ],
+    vendorBtn: "🙋 Get help from staff",
+    vendorConfirm: (zone) => "A staff member from " + zone + " has been notified and is on their way.",
+    toastPrefix: "🔔 Teams notification sent to staff — Section: ",
+    mapTitle: "STORE MAP",
+    mapSubtitle: "— Ground floor",
+    greeting: "Hello, I'm Jeanne, your welcome assistant. Speak to me, or type your question.",
+    defaultReply: "I'm not sure I understood. Could you rephrase, or would you like a staff member to help you instead?",
+    genericZoneReply: (zoneName) => "You'll find that in the " + zoneName + " section, shown on the map.",
+    entree: "— Entrance and Exit —"
+  },
+  es: {
+    avatarRail: "AVATAR JEANNE",
+    chatBoxTitle: "Chat retransmitido como texto",
+    disclaimer: "¡Bienvenido! Esta terminal le ayuda a encontrar un producto y a orientarse en la tienda. Hable o escriba su pregunta.",
+    micIdle: "Toque aquí para hablar",
+    micListening: "Escuchando...",
+    micUnsupported: "Micrófono no compatible — escriba abajo",
+    micUnsupportedCaption: "El reconocimiento de voz no es compatible con este navegador. Pruebe con Chrome, o escriba su pregunta.",
+    chatPlaceholder: "Escribir en lugar de hablar...",
+    chatSend: "OK",
+    voiceLabel: "Voz",
+    voiceNone: "No se encontró voz femenina",
+    quickActions: [
+      { zone: "stockage", label: "📀 Discos duros" },
+      { zone: "audio", label: "🎧 Auriculares" },
+      { zone: "gaming", label: "🎮 Consolas" },
+      { zone: "telephonie", label: "📱 Telefonía" }
+    ],
+    vendorBtn: "🙋 Ser atendido por un vendedor",
+    vendorConfirm: (zone) => "Un vendedor de " + zone + " ha sido avisado y está en camino.",
+    toastPrefix: "🔔 Notificación Teams enviada al vendedor — Sección: ",
+    mapTitle: "PLANO DE LA TIENDA",
+    mapSubtitle: "— Planta baja",
+    greeting: "Hola, soy Jeanne, su asistente de acogida. Hábleme o escriba su pregunta.",
+    defaultReply: "No estoy segura de haber entendido. ¿Puede reformular, o prefiere que un vendedor le ayude?",
+    genericZoneReply: (zoneName) => "Lo encontrará en la sección " + zoneName + ", indicada en el plano.",
+    entree: "— Entrada y Salida —"
+  }
+};
+
+// =====================================================================
+// Zones du magasin, basées sur le plan fourni — nom affiché par langue
+// et mots-clés de recherche par langue
 // =====================================================================
 const ZONES = {
-  informatique: { cx: 135, cy: 110, label: { fr: "Informatique", en: "Computers", es: "Informática" } },
-  audio:        { cx: 400, cy: 110, label: { fr: "Son & audio", en: "Audio", es: "Audio" } },
-  jeux:         { cx: 665, cy: 110, label: { fr: "Jeux vidéo", en: "Video games", es: "Videojuegos" } },
-  livres:       { cx: 135, cy: 450, label: { fr: "Livres", en: "Books", es: "Libros" } },
-  photo:        { cx: 665, cy: 450, label: { fr: "Photo & vidéo", en: "Photo & video", es: "Foto y vídeo" } }
+  caisse:            { label: { fr: "Caisse / Adhésion", en: "Checkout / Membership", es: "Caja / Membresía" },
+                        keywords: { fr: ["caisse", "adhésion", "carte fnac", "payer"], en: ["checkout", "membership", "pay", "cashier"], es: ["caja", "membresía", "pagar"] } },
+  jeuxSociete:       { label: { fr: "Jeux de société", en: "Board games", es: "Juegos de mesa" },
+                        keywords: { fr: ["jeu de société", "jeux de société", "jeu de plateau"], en: ["board game", "board games"], es: ["juego de mesa", "juegos de mesa"] } },
+  escalierEtage:     { label: { fr: "Escalier vers l'étage (Lego, figurines POP)", en: "Stairs to upper floor (Lego, POP figures)", es: "Escaleras al piso superior (Lego, figuras POP)" },
+                        keywords: { fr: ["lego", "légo", "figurine pop", "figurines pop", "étage"], en: ["lego", "pop figure", "pop figures", "upper floor"], es: ["lego", "figura pop", "figuras pop", "piso superior"] } },
+  sav:               { label: { fr: "SAV / Retrait commandes", en: "Customer service / Order pickup", es: "Servicio técnico / Recogida de pedidos" },
+                        keywords: { fr: ["sav", "service après-vente", "retrait", "commande", "réparation"], en: ["customer service", "repair", "order pickup", "pickup"], es: ["servicio técnico", "recogida", "pedido", "reparación"] } },
+  tablette:          { label: { fr: "Tablettes Android", en: "Android tablets", es: "Tabletas Android" },
+                        keywords: { fr: ["tablette"], en: ["tablet"], es: ["tableta", "tablet"] } },
+  pcwindows:         { label: { fr: "PC Windows", en: "Windows PCs", es: "PC Windows" },
+                        keywords: { fr: ["pc windows", "ordinateur windows", "pc portable", "laptop"], en: ["windows pc", "windows laptop", "laptop"], es: ["pc windows", "portátil windows", "laptop"] } },
+  apple:             { label: { fr: "Apple (iPad, iPhone, Mac, accessoires)", en: "Apple (iPad, iPhone, Mac, accessories)", es: "Apple (iPad, iPhone, Mac, accesorios)" },
+                        keywords: { fr: ["iphone", "ipad", "macbook", "mac", "apple"], en: ["iphone", "ipad", "macbook", "mac", "apple"], es: ["iphone", "ipad", "macbook", "mac", "apple"] } },
+  stockage:          { label: { fr: "Stockage / Câbles / Imprimantes", en: "Storage / Cables / Printers", es: "Almacenamiento / Cables / Impresoras" },
+                        keywords: { fr: ["disque dur", "disque", "ssd", "clé usb", "câble", "hdmi", "imprimante"], en: ["hard drive", "ssd", "usb key", "cable", "hdmi", "printer"], es: ["disco duro", "ssd", "memoria usb", "cable", "hdmi", "impresora"] } },
+  audio:             { label: { fr: "Audio (casques, enceintes, vinyle)", en: "Audio (headphones, speakers, vinyl)", es: "Audio (auriculares, altavoces, vinilo)" },
+                        keywords: { fr: ["casque", "écouteur", "enceinte", "audio", "vinyle", "platine"], en: ["headphone", "headphones", "speaker", "audio", "vinyl", "turntable"], es: ["auricular", "auriculares", "altavoz", "audio", "vinilo", "tocadiscos"] } },
+  pcgamer:           { label: { fr: "PC Gamer / écran gamer et accessoires", en: "Gaming PC / gaming monitor and accessories", es: "PC gaming / monitor gaming y accesorios" },
+                        keywords: { fr: ["pc gamer", "ordinateur gamer", "écran gamer", "clavier gamer", "souris gamer"], en: ["gaming pc", "gaming monitor", "gaming keyboard", "gaming mouse"], es: ["pc gaming", "monitor gaming", "teclado gaming", "ratón gaming"] } },
+  electromenager:    { label: { fr: "Électroménager (sèche-cheveux, SodaStream...)", en: "Home appliances (hair dryer, SodaStream...)", es: "Electrodomésticos (secador, SodaStream...)" },
+                        keywords: { fr: ["sèche-cheveux", "sodastream", "électroménager"], en: ["hair dryer", "sodastream", "home appliance"], es: ["secador", "sodastream", "electrodoméstico"] } },
+  tv:                { label: { fr: "TV", en: "TV", es: "TV" },
+                        keywords: { fr: ["télé", "télévision", "tv", "écran tv"], en: ["tv", "television"], es: ["televisor", "televisión", "tv"] } },
+  cartouches:        { label: { fr: "Cartouches imprimantes / Accessoires PC", en: "Printer cartridges / PC accessories", es: "Cartuchos de impresora / Accesorios PC" },
+                        keywords: { fr: ["cartouche", "encre imprimante"], en: ["cartridge", "printer ink"], es: ["cartucho", "tinta impresora"] } },
+  ecranpc:           { label: { fr: "Écrans PC", en: "PC monitors", es: "Monitores PC" },
+                        keywords: { fr: ["écran pc", "moniteur"], en: ["pc monitor", "monitor"], es: ["monitor pc", "monitor"] } },
+  autreElectro:      { label: { fr: "Autre électroménager", en: "Other home appliances", es: "Otros electrodomésticos" },
+                        keywords: { fr: ["autre électroménager"], en: ["other appliance"], es: ["otro electrodoméstico"] } },
+  gaming:            { label: { fr: "Gaming (consoles et jeux vidéo)", en: "Gaming (consoles and video games)", es: "Gaming (consolas y videojuegos)" },
+                        keywords: { fr: ["console", "jeu vidéo", "jeux vidéo", "playstation", "xbox", "switch"], en: ["console", "video game", "video games", "playstation", "xbox", "switch"], es: ["consola", "videojuego", "videojuegos", "playstation", "xbox", "switch"] } },
+  photo:             { label: { fr: "Photo / Drones / Micro", en: "Photo / Drones / Microphones", es: "Foto / Drones / Micrófonos" },
+                        keywords: { fr: ["appareil photo", "photo", "drone", "microphone", "micro"], en: ["camera", "photo", "drone", "microphone", "mic"], es: ["cámara", "foto", "dron", "micrófono"] } },
+  telephonie:        { label: { fr: "Téléphonie Android (écouteurs, chargeurs...)", en: "Android phones (earphones, chargers...)", es: "Telefonía Android (auriculares, cargadores...)" },
+                        keywords: { fr: ["téléphone", "smartphone", "android", "chargeur", "écouteurs sans fil"], en: ["phone", "smartphone", "android", "charger", "wireless earphones"], es: ["teléfono", "smartphone", "android", "cargador", "auriculares inalámbricos"] } },
+  trotinette:        { label: { fr: "Trottinettes et figurines POP", en: "Scooters and POP figures", es: "Patinetes y figuras POP" },
+                        keywords: { fr: ["trottinette", "trotinette"], en: ["scooter"], es: ["patinete", "scooter"] } },
+  escalierSousSol:   { label: { fr: "Escalier vers le sous-sol", en: "Stairs to basement", es: "Escaleras al sótano" },
+                        keywords: { fr: ["sous-sol", "sous sol"], en: ["basement"], es: ["sótano"] } }
 };
-const ENTRANCE = { x: 740, y: 530 };
 
-const KNOWLEDGE_BASE = [
-  { zone: "informatique",
-    keywords: { fr: ["disque dur", "disque", "ssd", "stockage"], en: ["hard drive", "hard disk", "ssd", "storage"], es: ["disco duro", "disco", "ssd", "almacenamiento"] },
-    reply: {
-      fr: "Vous trouverez les disques durs et SSD au rayon Informatique, au fond à gauche du magasin.",
-      en: "You'll find hard drives and SSDs in the Computers section, at the back left of the store.",
-      es: "Encontrará los discos duros y SSD en la sección de Informática, al fondo a la izquierda." } },
-  { zone: "audio",
-    keywords: { fr: ["casque", "écouteur", "audio", "enceinte", "son"], en: ["headphone", "headphones", "earphone", "speaker", "audio"], es: ["auricular", "auriculares", "altavoz", "audio"] },
-    reply: {
-      fr: "Le rayon Son & Audio se trouve juste à côté, au centre du magasin.",
-      en: "The Audio section is right next to it, in the center of the store.",
-      es: "La sección de Audio está justo al lado, en el centro de la tienda." } },
-  { zone: "jeux",
-    keywords: { fr: ["console", "jeu vidéo", "jeux vidéo", "playstation", "xbox", "switch"], en: ["console", "video game", "video games", "playstation", "xbox", "switch"], es: ["consola", "videojuego", "videojuegos", "playstation", "xbox", "switch"] },
-    reply: {
-      fr: "Le rayon Jeux vidéo est situé au fond à droite du magasin.",
-      en: "The Video games section is at the back right of the store.",
-      es: "La sección de Videojuegos está al fondo a la derecha." } },
-  { zone: "livres",
-    keywords: { fr: ["livre", "roman", "bd", "manga"], en: ["book", "novel", "comic", "manga"], es: ["libro", "novela", "cómic", "manga"] },
-    reply: {
-      fr: "Les livres sont rangés à l'avant à gauche, dans l'espace Librairie.",
-      en: "Books are at the front left, in the Bookshop area.",
-      es: "Los libros están en la parte delantera izquierda, en la zona Librería." } },
-  { zone: "photo",
-    keywords: { fr: ["photo", "appareil photo", "caméra", "vidéo"], en: ["camera", "photo", "video camera"], es: ["cámara", "foto", "vídeo"] },
-    reply: {
-      fr: "Le rayon Photo & vidéo se trouve à l'avant à droite du magasin.",
-      en: "The Photo & video section is at the front right of the store.",
-      es: "La sección de Foto y vídeo está en la parte delantera derecha." } }
-];
-
-const DEFAULT_REPLY = {
-  fr: "Je ne suis pas certaine de comprendre. Pouvez-vous reformuler, ou préférez-vous qu'un vendeur vienne vous aider ?",
-  en: "I'm not sure I understood. Could you rephrase, or would you like a staff member to help you instead?",
-  es: "No estoy segura de haber entendido. ¿Puede reformular, o prefiere que un vendedor le ayude?"
-};
-const GREETING = {
-  fr: "Bonjour, je suis Jeanne, votre assistante d'accueil. Parlez-moi ou écrivez votre question.",
-  en: "Hello, I'm Jeanne, your welcome assistant. Speak to me, or type your question.",
-  es: "Hola, soy Jeanne, su asistente de acogida. Hábleme o escriba su pregunta."
-};
+const ENTRANCE_ZONE = "entree";
 
 function findAnswer(question, lang) {
   const q = question.toLowerCase();
-  for (const entry of KNOWLEDGE_BASE) {
-    const list = entry.keywords[lang] || entry.keywords.fr;
-    if (list.some(k => q.includes(k))) return entry;
+  for (const key in ZONES) {
+    const list = ZONES[key].keywords[lang] || ZONES[key].keywords.fr;
+    if (list.some(k => q.includes(k))) return key;
   }
   return null;
 }
@@ -69,22 +152,33 @@ function findAnswer(question, lang) {
 const chatLog = document.getElementById("chatLog");
 const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
-const avatarCaption = document.getElementById("avatarCaption");
+const chatSendBtn = document.getElementById("chatSendBtn");
 const micBtn = document.getElementById("micBtn");
 const micLabel = document.getElementById("micLabel");
 const vendorBtn = document.getElementById("vendorBtn");
 const toast = document.getElementById("toast");
-const langOptions = document.getElementById("langOptions");
+const flagsRow = document.getElementById("flagsRow");
 const voiceSelect = document.getElementById("voiceSelect");
+const voiceLabel = document.getElementById("voiceLabel");
 const pathLine = document.getElementById("pathLine");
 const arrivalMarker = document.getElementById("arrivalMarker");
+const pathOverlay = document.getElementById("pathOverlay");
+const mapGrid = document.getElementById("mapGrid");
+const avatarRailText = document.getElementById("avatarRailText");
+const chatBoxTitle = document.getElementById("chatBoxTitle");
+const disclaimerText = document.getElementById("disclaimerText");
+const chatPlaceholderInput = document.getElementById("chatInput");
+const quickActions = document.getElementById("quickActions");
+const mapTitle = document.getElementById("mapTitle");
+const mapSubtitle = document.getElementById("mapSubtitle");
+const entreeTile = document.getElementById("entreeTile");
 
-// La langue affichée/parlée suit le sélecteur FR/EN/ES choisi par l'utilisateur,
-// plutôt qu'une détection automatique peu fiable (surtout sur de la voix reconnue).
-let voiceLang = "fr-FR";       // tag complet, ex. "fr-FR" — utilisé pour la reconnaissance et la synthèse
-let currentLang = "fr";        // code court — utilisé pour choisir les réponses dans KNOWLEDGE_BASE
+let voiceLang = "fr-FR";
+let currentLang = "fr";
 let currentHighlightedZone = null;
-let manualVoiceURI = null;     // voix choisie manuellement dans le sélecteur, si renseignée
+let manualVoiceURI = null;
+
+function t() { return UI_TEXT[currentLang]; }
 
 function addMessage(text, from) {
   const div = document.createElement("div");
@@ -95,13 +189,56 @@ function addMessage(text, from) {
 }
 
 // =====================================================================
-// Voix — liste réelle des voix du navigateur, choix manuel possible
+// Traduction complète de l'interface au changement de langue
+// =====================================================================
+function applyTranslations() {
+  const dict = t();
+  avatarRailText.textContent = dict.avatarRail;
+  chatBoxTitle.textContent = dict.chatBoxTitle;
+  disclaimerText.textContent = dict.disclaimer;
+  micLabel.textContent = listening ? dict.micListening : (recognition ? dict.micIdle : dict.micUnsupported);
+  chatPlaceholderInput.placeholder = dict.chatPlaceholder;
+  chatSendBtn.textContent = dict.chatSend;
+  voiceLabel.textContent = dict.voiceLabel;
+  vendorBtn.textContent = dict.vendorBtn;
+  mapTitle.childNodes[0].textContent = dict.mapTitle + " ";
+  mapSubtitle.textContent = dict.mapSubtitle;
+  entreeTile.textContent = dict.entree;
+
+  // Boutons rapides
+  quickActions.innerHTML = "";
+  dict.quickActions.forEach(qa => {
+    const btn = document.createElement("button");
+    btn.className = "quick-btn";
+    btn.dataset.zone = qa.zone;
+    btn.textContent = qa.label;
+    btn.addEventListener("click", () => askAboutZone(qa.zone));
+    quickActions.appendChild(btn);
+  });
+
+  // Libellés des rayons sur le plan
+  document.querySelectorAll(".tile[data-zone]").forEach(tile => {
+    const key = tile.dataset.zone;
+    if (ZONES[key]) {
+      const label = ZONES[key].label[currentLang] || ZONES[key].label.fr;
+      const parts = label.split(" (");
+      if (parts.length > 1) {
+        tile.innerHTML = parts[0] + "<br><span>(" + parts[1];
+      } else {
+        tile.textContent = label;
+      }
+    }
+  });
+}
+
+// =====================================================================
+// Voix — uniquement des voix féminines (filtre par nom, best-effort)
 // =====================================================================
 let availableVoices = [];
 const FEMALE_HINTS = {
-  "fr-FR": ["amelie", "audrey", "aurelie", "female", "femme", "google français", "julie", "léa", "lea"],
-  "en-US": ["samantha", "female", "zira", "google us english", "aria", "jenny"],
-  "es-ES": ["monica", "mónica", "female", "google español", "elvira", "lucia", "lucía"]
+  "fr-FR": ["amelie", "amélie", "audrey", "aurelie", "aurélie", "female", "femme", "google français", "julie", "léa", "lea", "virginie", "marie", "chantal"],
+  "en-US": ["samantha", "female", "zira", "google us english", "aria", "jenny", "susan", "victoria", "karen", "moira", "tessa"],
+  "es-ES": ["monica", "mónica", "female", "google español", "elvira", "lucia", "lucía", "paulina", "conchita"]
 };
 
 function refreshVoices() {
@@ -113,18 +250,22 @@ if ("speechSynthesis" in window) {
   window.speechSynthesis.onvoiceschanged = refreshVoices;
 }
 
-function guessFemaleVoice(candidates, lang) {
+function femaleVoicesFor(lang) {
+  const langPrefix = lang.split("-")[0];
   const hints = FEMALE_HINTS[lang] || [];
-  return candidates.find(v => hints.some(h => v.name.toLowerCase().includes(h))) || candidates[0] || null;
+  return availableVoices.filter(v =>
+    v.lang && v.lang.toLowerCase().startsWith(langPrefix) &&
+    hints.some(h => v.name.toLowerCase().includes(h))
+  );
 }
 
 function populateVoiceSelect() {
-  const candidates = availableVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith(voiceLang.split("-")[0]));
+  const candidates = femaleVoicesFor(voiceLang);
   voiceSelect.innerHTML = "";
 
   if (candidates.length === 0) {
     const opt = document.createElement("option");
-    opt.textContent = "Aucune voix trouvée pour cette langue";
+    opt.textContent = t().voiceNone;
     opt.disabled = true;
     voiceSelect.appendChild(opt);
     manualVoiceURI = null;
@@ -138,36 +279,25 @@ function populateVoiceSelect() {
     voiceSelect.appendChild(opt);
   });
 
-  // Présélectionne la meilleure devinette féminine, sinon la première voix dispo
-  const guess = guessFemaleVoice(candidates, voiceLang);
-  if (guess) {
-    voiceSelect.value = guess.voiceURI;
-    manualVoiceURI = guess.voiceURI;
-  }
+  voiceSelect.value = candidates[0].voiceURI;
+  manualVoiceURI = candidates[0].voiceURI;
 }
 
 voiceSelect.addEventListener("change", () => {
   manualVoiceURI = voiceSelect.value;
 });
 
-function pickVoice(lang) {
-  if (manualVoiceURI) {
-    const chosen = availableVoices.find(v => v.voiceURI === manualVoiceURI);
-    if (chosen) return chosen;
-  }
-  const langPrefix = lang.split("-")[0];
-  const candidates = availableVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith(langPrefix));
-  return guessFemaleVoice(candidates, lang);
+function pickVoice() {
+  if (!manualVoiceURI) return null;
+  return availableVoices.find(v => v.voiceURI === manualVoiceURI) || null;
 }
 
-function speak(text, lang) {
-  avatarCaption.style.opacity = 0;
-  setTimeout(() => { avatarCaption.textContent = text; avatarCaption.style.opacity = 1; }, 150);
+function speak(text) {
   if (!("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = lang;
-  const voice = pickVoice(lang);
+  utter.lang = voiceLang;
+  const voice = pickVoice();
   if (voice) utter.voice = voice;
   utter.pitch = 1.15;
   utter.rate = 0.96;
@@ -176,19 +306,25 @@ function speak(text, lang) {
 }
 
 // =====================================================================
-// Plan 2D — surlignage de zone + tracé de chemin
+// Plan — surlignage de zone + tracé de chemin dynamique (grille CSS)
 // =====================================================================
 function clearHighlight() {
-  document.querySelectorAll(".zone").forEach(z => z.classList.remove("highlight"));
+  document.querySelectorAll(".tile").forEach(z => z.classList.remove("highlight"));
 }
 
-function highlightZone(zoneKey) {
-  clearHighlight();
-  currentHighlightedZone = zoneKey;
-  if (!zoneKey) { hidePath(); return; }
-  const el = document.querySelector('.zone[data-zone="' + zoneKey + '"]');
-  if (el) el.classList.add("highlight");
-  drawPathToZone(zoneKey);
+function resizePathOverlay() {
+  pathOverlay.setAttribute("width", mapGrid.clientWidth);
+  pathOverlay.setAttribute("height", mapGrid.clientHeight);
+  pathOverlay.setAttribute("viewBox", "0 0 " + mapGrid.clientWidth + " " + mapGrid.clientHeight);
+}
+
+function tileCenter(tile, container) {
+  const tRect = tile.getBoundingClientRect();
+  const cRect = container.getBoundingClientRect();
+  return {
+    x: tRect.left - cRect.left + tRect.width / 2,
+    y: tRect.top - cRect.top + tRect.height / 2
+  };
 }
 
 function hidePath() {
@@ -197,29 +333,60 @@ function hidePath() {
 }
 
 function drawPathToZone(zoneKey) {
-  const target = ZONES[zoneKey];
-  if (!target) { hidePath(); return; }
-  // Chemin en coude : entrée -> point d'angle -> rayon
-  const d = "M " + ENTRANCE.x + " " + ENTRANCE.y +
-            " L " + target.cx + " " + ENTRANCE.y +
-            " L " + target.cx + " " + target.cy;
+  const entreeEl = document.querySelector('.tile[data-zone="' + ENTRANCE_ZONE + '"]');
+  const targetEl = document.querySelector('.tile[data-zone="' + zoneKey + '"]');
+  if (!entreeEl || !targetEl) { hidePath(); return; }
+
+  resizePathOverlay();
+  const from = tileCenter(entreeEl, mapGrid);
+  const to = tileCenter(targetEl, mapGrid);
+
+  const d = "M " + from.x + " " + from.y + " L " + to.x + " " + from.y + " L " + to.x + " " + to.y;
   pathLine.setAttribute("d", d);
-  arrivalMarker.setAttribute("cx", target.cx);
-  arrivalMarker.setAttribute("cy", target.cy);
+  arrivalMarker.setAttribute("cx", to.x);
+  arrivalMarker.setAttribute("cy", to.y);
   arrivalMarker.setAttribute("opacity", "1");
 }
 
+function highlightZone(zoneKey) {
+  clearHighlight();
+  currentHighlightedZone = zoneKey;
+  if (!zoneKey) { hidePath(); return; }
+  const el = document.querySelector('.tile[data-zone="' + zoneKey + '"]');
+  if (el) el.classList.add("highlight");
+  drawPathToZone(zoneKey);
+}
+
+window.addEventListener("resize", () => {
+  if (currentHighlightedZone) drawPathToZone(currentHighlightedZone);
+});
+
+// =====================================================================
+// Interaction
+// =====================================================================
+function askAboutZone(zoneKey) {
+  const dict = t();
+  const zoneName = (ZONES[zoneKey] && ZONES[zoneKey].label[currentLang]) || zoneKey;
+  addMessage(zoneName, "user");
+  const reply = dict.genericZoneReply(zoneName);
+  addMessage(reply, "jeanne");
+  speak(reply);
+  highlightZone(zoneKey);
+}
+
 function askJeanne(question) {
+  const dict = t();
   addMessage(question, "user");
-  const lang = currentLang;
-  const answer = findAnswer(question, lang);
-  if (answer) {
-    addMessage(answer.reply[lang], "jeanne");
-    speak(answer.reply[lang], voiceLang);
-    highlightZone(answer.zone);
+  const zoneKey = findAnswer(question, currentLang);
+  if (zoneKey) {
+    const zoneName = ZONES[zoneKey].label[currentLang];
+    const reply = dict.genericZoneReply(zoneName);
+    addMessage(reply, "jeanne");
+    speak(reply);
+    highlightZone(zoneKey);
   } else {
-    addMessage(DEFAULT_REPLY[lang], "jeanne");
-    speak(DEFAULT_REPLY[lang], voiceLang);
+    addMessage(dict.defaultReply, "jeanne");
+    speak(dict.defaultReply);
     highlightZone(null);
   }
 }
@@ -232,19 +399,16 @@ chatForm.addEventListener("submit", (e) => {
   chatInput.value = "";
 });
 
-document.querySelectorAll(".quick-btn").forEach(btn => {
-  btn.addEventListener("click", () => askJeanne(btn.dataset.q));
-});
-
-langOptions.addEventListener("click", (e) => {
-  const btn = e.target.closest(".lang-btn");
+flagsRow.addEventListener("click", (e) => {
+  const btn = e.target.closest(".flag-btn");
   if (!btn) return;
-  document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".flag-btn").forEach(b => b.classList.remove("active"));
   btn.classList.add("active");
   voiceLang = btn.dataset.lang;
   currentLang = voiceLang.split("-")[0];
   if (recognition) recognition.lang = voiceLang;
   populateVoiceSelect();
+  applyTranslations();
 });
 
 // =====================================================================
@@ -262,23 +426,20 @@ if (SpeechRecognition) {
   recognition.onend = () => {
     listening = false;
     micBtn.classList.remove("active");
-    micLabel.textContent = "Parler à Jeanne";
+    micLabel.textContent = t().micIdle;
   };
-} else {
-  micLabel.textContent = "Micro non supporté — écrivez ci-dessous";
 }
 
 micBtn.addEventListener("click", () => {
   if (!recognition) {
-    avatarCaption.textContent = "La reconnaissance vocale n'est pas supportée par ce navigateur. Essayez avec Chrome, ou écrivez votre question.";
+    addMessage(t().micUnsupportedCaption, "jeanne");
     return;
   }
   if (listening) { recognition.stop(); return; }
   listening = true;
   recognition.lang = voiceLang;
   micBtn.classList.add("active");
-  micLabel.textContent = "Je vous écoute...";
-  avatarCaption.textContent = "Je vous écoute...";
+  micLabel.textContent = t().micListening;
   recognition.start();
 });
 
@@ -286,10 +447,14 @@ micBtn.addEventListener("click", () => {
 // Notification Teams simulée
 // =====================================================================
 vendorBtn.addEventListener("click", () => {
-  const zoneName = currentHighlightedZone ? ZONES[currentHighlightedZone].label.fr : "le magasin";
-  addMessage("Un vendeur du rayon " + zoneName + " a été prévenu et arrive.", "jeanne");
-  speak("Un vendeur du rayon " + zoneName + " a été prévenu et arrive.", "fr-FR");
-  toast.textContent = "🔔 Notification Teams envoyée au vendeur — Rayon : " + zoneName;
+  const dict = t();
+  const zoneName = currentHighlightedZone && ZONES[currentHighlightedZone]
+    ? ZONES[currentHighlightedZone].label[currentLang]
+    : (currentLang === "fr" ? "le magasin" : currentLang === "en" ? "the store" : "la tienda");
+  const msg = dict.vendorConfirm(zoneName);
+  addMessage(msg, "jeanne");
+  speak(msg);
+  toast.textContent = dict.toastPrefix + zoneName;
   toast.classList.add("show");
   setTimeout(() => toast.classList.remove("show"), 4000);
 });
@@ -297,4 +462,8 @@ vendorBtn.addEventListener("click", () => {
 // =====================================================================
 // Démarrage
 // =====================================================================
-addMessage(GREETING.fr, "jeanne");
+if (!SpeechRecognition) {
+  micLabel.textContent = UI_TEXT.fr.micUnsupported;
+}
+applyTranslations();
+addMessage(UI_TEXT.fr.greeting, "jeanne");

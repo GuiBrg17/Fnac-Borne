@@ -8,122 +8,97 @@
 </head>
 <body>
 
-<div class="shape shape-1"></div>
-<div class="shape shape-2"></div>
-
 <div class="kiosk">
 
-  <header class="kiosk-header">
-    <div class="brand">
-      <span class="brand-badge">fnac<span class="brand-plus">+</span></span>
-      <span class="brand-name">JEANNE</span>
-    </div>
-    <div class="store-name">Fnac Jeanne d'Arc — Toulouse</div>
-  </header>
+  <div class="store-name-badge" id="storeNameBadge">FNAC JEANNE D'ARC — TOULOUSE</div>
 
-  <main class="stage-v2">
+  <main class="stage-v3">
 
-    <aside class="sidebar">
+    <!-- Bandeau avatar vertical, pleine hauteur -->
+    <aside class="avatar-rail">
+      <span class="avatar-rail-text" id="avatarRailText">AVATAR JEANNE</span>
+    </aside>
 
-      <section class="avatar-panel card">
-        <div class="avatar-placeholder">
-          <div class="avatar-placeholder-icon">★</div>
-          <div class="avatar-placeholder-text">AVATAR 3D<br><span>bientôt disponible</span></div>
-        </div>
+    <!-- Colonne de contrôle : drapeaux, tchat, micro/texte -->
+    <section class="control-column">
 
-        <div class="avatar-caption" id="avatarCaption">Bonjour, je m'appelle Jeanne. Parlez-moi, ou écrivez votre question.</div>
+      <div class="flags-row" id="flagsRow">
+        <button class="flag-btn active" data-lang="fr-FR" title="Français">🇫🇷</button>
+        <button class="flag-btn" data-lang="en-US" title="English">🇬🇧</button>
+        <button class="flag-btn" data-lang="es-ES" title="Español">🇪🇸</button>
+      </div>
 
+      <div class="dark-box chat-box">
+        <div class="dark-box-title" id="chatBoxTitle">Zone du tchat retransmis à l'écrit</div>
+        <p class="disclaimer" id="disclaimerText">Bienvenue ! Cette borne vous aide à trouver un produit et à vous repérer dans le magasin. Parlez ou écrivez votre question.</p>
+        <div class="chat-log" id="chatLog"></div>
+      </div>
+
+      <div class="dark-box control-box">
         <button class="mic-btn-main" id="micBtn" title="Parler">
           <span class="mic-icon">🎙️</span>
-          <span id="micLabel">Parler à Jeanne</span>
+          <span id="micLabel">Appuyer ici pour parler</span>
         </button>
 
-        <div class="lang-switch">
-          <span class="lang-label">Langue</span>
-          <div class="lang-options" id="langOptions">
-            <button class="lang-btn active" data-lang="fr-FR">FR</button>
-            <button class="lang-btn" data-lang="en-US">EN</button>
-            <button class="lang-btn" data-lang="es-ES">ES</button>
-          </div>
-        </div>
+        <form class="chat-form" id="chatForm">
+          <input type="text" id="chatInput" placeholder="Écrire au lieu de parler..." autocomplete="off">
+          <button type="submit" id="chatSendBtn">OK</button>
+        </form>
 
         <div class="voice-switch">
-          <span class="lang-label">Voix</span>
+          <span class="lang-label" id="voiceLabel">Voix</span>
           <select id="voiceSelect" class="voice-select"></select>
         </div>
 
-        <details class="text-fallback">
-          <summary>Écrire plutôt que parler</summary>
-          <form class="chat-form" id="chatForm">
-            <input type="text" id="chatInput" placeholder="Ex : où sont les disques durs ?" autocomplete="off">
-            <button type="submit">OK</button>
-          </form>
-        </details>
-
-        <div class="sidebar-divider"></div>
-
-        <div class="chat-log" id="chatLog"></div>
-
-        <div class="quick-actions">
-          <button class="quick-btn" data-q="Où puis-je trouver un disque dur ?">📀 Disques durs</button>
-          <button class="quick-btn" data-q="Je cherche un casque audio">🎧 Casques audio</button>
-          <button class="quick-btn" data-q="Avez-vous des consoles de jeu ?">🎮 Consoles</button>
-          <button class="quick-btn" data-q="Je voudrais un livre">📚 Livres</button>
+        <div class="quick-actions" id="quickActions">
+          <button class="quick-btn" data-zone="informatique">📀 Disques durs</button>
+          <button class="quick-btn" data-zone="audio">🎧 Casques audio</button>
+          <button class="quick-btn" data-zone="gaming">🎮 Consoles</button>
+          <button class="quick-btn" data-zone="telephonie">📱 Téléphonie</button>
         </div>
 
         <button class="vendor-btn" id="vendorBtn">🙋 Être accompagné par un vendeur</button>
-      </section>
+      </div>
 
-    </aside>
+    </section>
 
-    <section class="map-panel-main card">
-      <div class="map-title">PLAN DU MAGASIN <span>— Rez-de-chaussée</span></div>
-      <svg viewBox="0 0 800 560" class="store-map-svg" id="storeMapSvg" preserveAspectRatio="xMidYMid meet">
-        <!-- fond -->
-        <rect x="0" y="0" width="800" height="560" fill="#FFFFFF"/>
+    <!-- Plan du magasin -->
+    <section class="map-panel-main">
+      <div class="map-title" id="mapTitle">PLAN DU MAGASIN <span id="mapSubtitle">— Rez-de-chaussée</span></div>
 
-        <!-- rayons -->
-        <g class="zone" data-zone="informatique">
-          <rect x="20" y="20" width="230" height="180" rx="10" fill="#F5CE4D" stroke="#111111" stroke-width="5"/>
-          <text x="135" y="115" text-anchor="middle" class="zone-label">INFORMATIQUE</text>
-        </g>
+      <div class="map-grid" id="mapGrid">
+        <div class="tile" data-zone="caisse" style="grid-area: caisse;">Caisse / Adhésion</div>
+        <div class="tile" data-zone="jeuxSociete" style="grid-area: jeuxSociete;">Jeux de société</div>
+        <div class="tile tile-note" data-zone="escalierEtage" style="grid-area: escalierEtage;">Escalier vers étage<br><span>Légos et figurines POP</span></div>
 
-        <g class="zone" data-zone="audio">
-          <rect x="285" y="20" width="230" height="180" rx="10" fill="#F5CE4D" stroke="#111111" stroke-width="5"/>
-          <text x="400" y="115" text-anchor="middle" class="zone-label">SON &amp; AUDIO</text>
-        </g>
+        <div class="tile" data-zone="sav" style="grid-area: sav;">SAV<br>Retrait commandes</div>
+        <div class="tile" data-zone="tablette" style="grid-area: tablette;">Tablette Android</div>
+        <div class="tile" data-zone="pcwindows" style="grid-area: pcwindows;">PC Windows</div>
+        <div class="tile" data-zone="apple" style="grid-area: apple;">Apple<br><span>iPad / iPhone / Mac / accessoires</span></div>
 
-        <g class="zone" data-zone="jeux">
-          <rect x="550" y="20" width="230" height="180" rx="10" fill="#F5CE4D" stroke="#111111" stroke-width="5"/>
-          <text x="665" y="115" text-anchor="middle" class="zone-label">JEUX VIDÉO</text>
-        </g>
+        <div class="tile" data-zone="stockage" style="grid-area: stockage;">Stockage / Câbles<br>Imprimantes</div>
+        <div class="tile" data-zone="audio" style="grid-area: audio;">Audio<br><span>Casques / enceintes / vinyle</span></div>
 
-        <g class="zone" data-zone="livres">
-          <rect x="20" y="360" width="230" height="180" rx="10" fill="#F5CE4D" stroke="#111111" stroke-width="5"/>
-          <text x="135" y="455" text-anchor="middle" class="zone-label">LIVRES</text>
-        </g>
+        <div class="tile tile-big" data-zone="pcgamer" style="grid-area: pcgamer;">PC Gamer / écran gamer<br>et accessoires gamer</div>
+        <div class="tile" data-zone="electromenager" style="grid-area: electromenager;">Électroménager<br><span>Sèche-cheveux, SodaStream...</span></div>
+        <div class="tile tile-tall" data-zone="tv" style="grid-area: tv;">TV</div>
 
-        <g class="zone" data-zone="photo">
-          <rect x="550" y="360" width="230" height="180" rx="10" fill="#F5CE4D" stroke="#111111" stroke-width="5"/>
-          <text x="665" y="455" text-anchor="middle" class="zone-label">PHOTO &amp; VIDÉO</text>
-        </g>
+        <div class="tile" data-zone="cartouches" style="grid-area: cartouches;">Cartouches imprimantes<br>Accessoires PC</div>
+        <div class="tile" data-zone="ecranpc" style="grid-area: ecranpc;">Écran PC</div>
+        <div class="tile" data-zone="autreElectro" style="grid-area: autreElectro;">Autre électroménager</div>
 
-        <!-- caisses (centre) -->
-        <rect x="285" y="230" width="230" height="100" rx="10" fill="#111111"/>
-        <text x="400" y="286" text-anchor="middle" class="zone-label zone-label-light">CAISSES</text>
+        <div class="tile" data-zone="gaming" style="grid-area: gaming;">Gaming<br><span>Consoles et jeux vidéo</span></div>
+        <div class="tile" data-zone="photo" style="grid-area: photo;">Photo / Drones / Micro</div>
+        <div class="tile" data-zone="telephonie" style="grid-area: telephonie;">Téléphonie Android<br><span>Écouteurs, chargeurs...</span></div>
 
-        <!-- entrée -->
-        <g id="entranceMarker">
-          <circle cx="740" cy="530" r="14" fill="#111111"/>
-          <circle cx="740" cy="530" r="14" fill="none" stroke="#EBB300" stroke-width="4"/>
-          <text x="740" y="510" text-anchor="middle" class="entrance-label">ENTRÉE</text>
-        </g>
+        <div class="tile" data-zone="trotinette" style="grid-area: trotinette;">Trotinette et figurines POP</div>
+        <div class="tile tile-dark" data-zone="escalierSousSol" style="grid-area: escalierSousSol;">Escalier vers sous-sol</div>
+        <div class="tile tile-entree" data-zone="entree" style="grid-area: entree;" id="entreeTile">— Entrée et Sortie —</div>
+      </div>
 
-        <!-- chemin (tracé dynamiquement en JS) -->
-        <path id="pathLine" d="" fill="none" stroke="#111111" stroke-width="6" stroke-dasharray="14 10" stroke-linecap="round"/>
-
-        <!-- marqueur d'arrivée -->
-        <circle id="arrivalMarker" cx="0" cy="0" r="16" fill="#EBB300" stroke="#111111" stroke-width="4" opacity="0" />
+      <svg class="path-overlay" id="pathOverlay">
+        <path id="pathLine" d="" fill="none" stroke="#111111" stroke-width="5" stroke-dasharray="12 9" stroke-linecap="round"/>
+        <circle id="arrivalMarker" cx="0" cy="0" r="13" fill="#EBB300" stroke="#111111" stroke-width="3" opacity="0" />
       </svg>
     </section>
 
