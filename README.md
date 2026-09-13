@@ -13,11 +13,11 @@ Démo statique (HTML/CSS/JS, sans backend), version 4.
 
 ## Important à savoir sur le plan
 
-Le plan que tu m'as envoyé a des blocs de tailles très irrégulières (bento box). Je l'ai reproduit avec une grille CSS qui capture l'agencement général et les tailles relatives, mais ce n'est **pas un calque pixel-perfect** de ton PDF — les proportions exactes de chaque bloc sont approximatives.
+Cette version reprend fidèlement ton plan détaillé (`Plan___version_portrait.png`) : SAV et Retrait de commandes sont bien deux zones distinctes, le stockage est éclaté en trois (clés USB/disque dur, câbles, imprimantes), et les étiquettes "Haut des escaliers" / "Bas des escaliers" apparaissent sur les escaliers correspondants.
 
-Les deux niveaux sont maintenant **séparés et empilés verticalement** : le rez-de-chaussée (Téléphonie, Escalier vers le sous-sol, Entrée/Sortie) en haut, le sous-sol (tous les autres rayons) juste en dessous, reliés par une flèche. Le chemin tracé quand on cherche un produit traverse les deux niveaux automatiquement si besoin (il part de l'entrée, descend visuellement vers le sous-sol, puis rejoint le rayon).
+**Changement technique important** : le plan n'utilise plus de zones nommées (`grid-template-areas`) mais un placement par coordonnées numériques (`grid-column` / `grid-row`). C'est le format le plus robuste en CSS Grid — impossible d'avoir une "forme non rectangulaire invalide" qui casse toute la grille, contrairement à ce qui s'est passé avec la version précédente. Chaque bloc a sa position et sa taille définies indépendamment des autres.
 
-Le sous-sol a lui-même un "⬆ Escalier vers l'étage" qui suggère un troisième niveau (avec les Lego et figurines POP) que je n'ai pas modélisé avec son propre plan — pour l'instant c'est juste une zone cliquable sans plan associé, comme la borne ne desservirait que le rez-de-chaussée et le sous-sol.
+Les deux niveaux sont empilés verticalement : Étage 0 (Téléphonie, Escalier vers Sous-Sol, Entrée/Sortie) en haut, Étage -1 (tous les autres rayons) en dessous, reliés par une flèche. Le chemin tracé vers un rayon traverse les deux niveaux automatiquement si besoin.
 
 ## À propos des voix féminines
 

@@ -68,40 +68,42 @@
 
       <div class="map-floors" id="mapFloors">
 
-        <div class="floor-label" id="floorLabelRdc">REZ-DE-CHAUSSÉE</div>
+        <div class="floor-label" id="floorLabelRdc">ÉTAGE 0</div>
         <div class="map-grid map-grid-ground" id="groundGrid">
-          <div class="tile tile-wide" data-zone="telephonie" style="grid-area: telephonie;">Téléphonie Android<br><span>Écouteurs, chargeurs...</span></div>
-          <div class="tile tile-dark" data-zone="escalierSousSol" style="grid-area: escalierSousSol;">⬇ Escalier vers sous-sol</div>
-          <div class="tile tile-entree" data-zone="entree" style="grid-area: entree;" id="entreeTile">— Entrée et Sortie —</div>
+          <div class="tile tile-wide" data-zone="telephonie" style="grid-column: 1 / 3; grid-row: 1 / 3;">Téléphonie Android<br><span>Écouteurs filaires, chargeurs...</span></div>
+          <div class="tile tile-dark" data-zone="escalierSousSol" style="grid-column: 3 / 4; grid-row: 1 / 3;">⬇ Escalier vers Sous-Sol<br><span>Haut des escaliers</span></div>
+          <div class="tile tile-entree" data-zone="entree" style="grid-column: 1 / 4; grid-row: 3 / 4;" id="entreeTile">— Entrée et Sortie —</div>
         </div>
 
         <div class="floor-connector">⬇</div>
 
-        <div class="floor-label" id="floorLabelSs">SOUS-SOL</div>
+        <div class="floor-label" id="floorLabelSs">ÉTAGE -1</div>
         <div class="map-grid map-grid-basement" id="basementGrid">
-          <div class="tile" data-zone="caisse" style="grid-area: caisse;">Caisse / Adhésion</div>
-          <div class="tile" data-zone="jeuxSociete" style="grid-area: jeuxSociete;">Jeux de société</div>
-          <div class="tile tile-note" data-zone="escalierEtage" style="grid-area: escalierEtage;">⬆ Escalier vers étage<br><span>Légos et figurines POP</span></div>
+          <div class="tile" data-zone="caisse" style="grid-column: 1 / 3; grid-row: 1 / 2;">Caisse / Adhésion</div>
+          <div class="tile" data-zone="jeuxSociete" style="grid-column: 3 / 4; grid-row: 1 / 2;">Jeux de société</div>
+          <div class="tile tile-note" data-zone="escalierEtage" style="grid-column: 4 / 5; grid-row: 1 / 2;">⬆ Escalier vers l'étage<br><span>LEGO et figurines POP — Bas des escaliers</span></div>
 
-          <div class="tile" data-zone="sav" style="grid-area: sav;">SAV<br>Retrait commandes</div>
-          <div class="tile" data-zone="tablette" style="grid-area: tablette;">Tablette Android</div>
-          <div class="tile" data-zone="pcwindows" style="grid-area: pcwindows;">PC Windows</div>
-          <div class="tile" data-zone="apple" style="grid-area: apple;">Apple<br><span>iPad / iPhone / Mac / accessoires</span></div>
+          <div class="tile" data-zone="sav" style="grid-column: 1 / 2; grid-row: 2 / 3;">SAV</div>
+          <div class="tile" data-zone="retraitCommandes" style="grid-column: 1 / 2; grid-row: 3 / 4;">Retrait de commandes</div>
+          <div class="tile" data-zone="cartouches" style="grid-column: 1 / 2; grid-row: 4 / 7;">Cartouches d'imprimantes<br><span>et accessoires PC</span></div>
+          <div class="tile" data-zone="gaming" style="grid-column: 1 / 2; grid-row: 7 / 10;">Gaming<br><span>Consoles et jeux vidéo</span></div>
+          <div class="tile" data-zone="trotinette" style="grid-column: 1 / 2; grid-row: 10 / 11;">Trottinettes et figurines POP</div>
 
-          <div class="tile" data-zone="stockage" style="grid-area: stockage;">Stockage / Câbles<br>Imprimantes</div>
-          <div class="tile" data-zone="audio" style="grid-area: audio;">Audio<br><span>Casques / enceintes / vinyle</span></div>
+          <div class="tile" data-zone="tablette" style="grid-column: 2 / 3; grid-row: 2 / 3;">Tablette Android</div>
+          <div class="tile" data-zone="stockageCles" style="grid-column: 2 / 3; grid-row: 3 / 4;">Stockage<br><span>Clés USB / disque dur</span></div>
+          <div class="tile" data-zone="cables" style="grid-column: 2 / 3; grid-row: 4 / 5;">Câbles<br><span>HDMI, RJ45, USB...</span></div>
+          <div class="tile" data-zone="imprimantes" style="grid-column: 2 / 3; grid-row: 5 / 6;">Imprimantes</div>
+          <div class="tile tile-big" data-zone="pcgamer" style="grid-column: 2 / 3; grid-row: 6 / 9;">PC gamer / écran gamer<br>et accessoires gamer</div>
+          <div class="tile" data-zone="autreElectro" style="grid-column: 2 / 3; grid-row: 9 / 11;">Autre électroménager</div>
 
-          <div class="tile tile-big" data-zone="pcgamer" style="grid-area: pcgamer;">PC Gamer / écran gamer<br>et accessoires gamer</div>
-          <div class="tile" data-zone="electromenager" style="grid-area: electromenager;">Électroménager<br><span>Sèche-cheveux, SodaStream...</span></div>
-          <div class="tile tile-tall" data-zone="tv" style="grid-area: tv;">TV</div>
+          <div class="tile tile-big" data-zone="pcwindows" style="grid-column: 3 / 4; grid-row: 2 / 6;">PC Windows</div>
+          <div class="tile" data-zone="ecranpc" style="grid-column: 3 / 4; grid-row: 6 / 7;">Écran PC</div>
+          <div class="tile" data-zone="electromenager" style="grid-column: 3 / 4; grid-row: 7 / 10;">Électroménager<br><span>Sèche-cheveux, SodaStream...</span></div>
+          <div class="tile" data-zone="photo" style="grid-column: 3 / 4; grid-row: 10 / 11;">Photo / Drones / Micros</div>
 
-          <div class="tile" data-zone="cartouches" style="grid-area: cartouches;">Cartouches imprimantes<br>Accessoires PC</div>
-          <div class="tile" data-zone="ecranpc" style="grid-area: ecranpc;">Écran PC</div>
-          <div class="tile" data-zone="autreElectro" style="grid-area: autreElectro;">Autre électroménager</div>
-
-          <div class="tile" data-zone="gaming" style="grid-area: gaming;">Gaming<br><span>Consoles et jeux vidéo</span></div>
-          <div class="tile" data-zone="photo" style="grid-area: photo;">Photo / Drones / Micro</div>
-          <div class="tile" data-zone="trotinette" style="grid-area: trotinette;">Trotinette et figurines POP</div>
+          <div class="tile tile-big" data-zone="apple" style="grid-column: 4 / 5; grid-row: 2 / 6;">Apple<br><span>iPad / iPhone / Mac / accessoires</span></div>
+          <div class="tile" data-zone="audio" style="grid-column: 4 / 5; grid-row: 6 / 8;">Audio<br><span>Casques / enceintes / vinyle</span></div>
+          <div class="tile tile-tall" data-zone="tv" style="grid-column: 4 / 5; grid-row: 8 / 12;">TV</div>
         </div>
 
         <svg class="path-overlay" id="pathOverlay">
