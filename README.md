@@ -8,7 +8,8 @@ Démo statique (HTML/CSS/JS, sans backend), version 4.
 - **Plan basé sur tes deux documents** (`Plan_FNAC_Micro.pdf` et le plan général) : Caisse/Adhésion, Jeux de société, Escalier vers l'étage (Lego/figurines POP), SAV/Retrait commandes, Tablettes Android, PC Windows, Apple, Stockage/Câbles/Imprimantes, Audio, PC Gamer, Électroménager, TV, Cartouches imprimantes, Écrans PC, Autre électroménager, Gaming, Photo/Drones/Micro, Téléphonie Android, Trottinettes/figurines POP, Escalier vers le sous-sol, Entrée/Sortie
 - **Traduction complète de l'interface** : cliquer sur un drapeau change la langue de TOUT le site (titres, boutons, placeholder du champ texte, boutons rapides, libellés des rayons sur le plan, message d'accueil), pas seulement les réponses de Jeanne
 - **Voix féminines uniquement** : le sélecteur de voix ne liste que les voix dont le nom correspond à une voix féminine connue pour la langue choisie. S'il n'y en a aucune sur ta machine pour une langue donnée, le menu l'indique clairement plutôt que d'afficher une voix masculine par défaut
-- Le chemin vers le rayon demandé se trace dynamiquement sur la grille du plan (calculé à partir de la position réelle des blocs à l'écran, donc il s'adapte si tu modifies la taille du plan)
+- La zone concernée se surligne directement sur le plan quand on cherche un produit (et défile automatiquement à l'écran si besoin) — le tracé de chemin animé a été retiré, jugé pas assez lisible
+- La zone "Stockage & Connectique" regroupe désormais clés USB, disques durs, câbles HDMI et Ethernet en une seule zone (comme dans le magasin)
 - Un bouton "Être accompagné par un vendeur" qui simule l'envoi d'une notification Teams
 
 ## Important à savoir sur le plan
@@ -17,7 +18,7 @@ Cette version reprend fidèlement ton plan détaillé (`Plan___version_portrait.
 
 **Changement technique important** : le plan n'utilise plus de zones nommées (`grid-template-areas`) mais un placement par coordonnées numériques (`grid-column` / `grid-row`). C'est le format le plus robuste en CSS Grid — impossible d'avoir une "forme non rectangulaire invalide" qui casse toute la grille, contrairement à ce qui s'est passé avec la version précédente. Chaque bloc a sa position et sa taille définies indépendamment des autres.
 
-Les deux niveaux sont empilés verticalement : Étage 0 (Téléphonie, Escalier vers Sous-Sol, Entrée/Sortie) en haut, Étage -1 (tous les autres rayons) en dessous, reliés par une flèche. Le chemin tracé vers un rayon traverse les deux niveaux automatiquement si besoin.
+Les deux niveaux sont empilés verticalement : Étage 0 (Téléphonie, Escalier vers Sous-Sol, Entrée/Sortie) en haut, Étage -1 (tous les autres rayons) en dessous, reliés par une flèche.
 
 ## À propos des voix féminines
 
@@ -29,7 +30,7 @@ Le navigateur ne fournit pas d'information fiable sur le genre d'une voix — la
 |---|---|
 | Base de connaissances par mots-clés, codée en dur | Vrai catalogue produit + un LLM (ex: Claude) pour des questions ouvertes, dans n'importe quelle langue |
 | Plan en grille CSS approximative | Plan vectoriel fidèle au vrai magasin (import du relevé réel) |
-| Chemin en ligne brisée simple (un coude) | Vrai algorithme de pathfinding avec obstacles (murs, rayons) |
+| Surbrillance de zone, sans calcul d'itinéraire | Vrai plan interactif avec calcul d'itinéraire (pathfinding) si souhaité plus tard |
 | Voix du navigateur, filtrées par nom | Voix de synthèse dédiée et calibrée pour Jeanne (ElevenLabs, Azure/Google Neural TTS) |
 | Reconnaissance vocale du navigateur, langue choisie manuellement | Service de reconnaissance vocale multilingue avec détection automatique |
 | Notification Teams simulée (toast visuel) | Vrai webhook Microsoft Graph vers le canal Teams du vendeur du rayon |
@@ -38,9 +39,8 @@ Le navigateur ne fournit pas d'information fiable sur le genre d'une voix — la
 ## Idées à explorer pour la suite
 
 - Bouton pour changer d'étage (rez-de-chaussée / étage / sous-sol) avec un plan différent par niveau
-- Chemins multi-étapes si plusieurs produits demandés d'affilée
-- Distance/temps de marche estimé affiché à côté du chemin
-- QR code pour envoyer le chemin sur son téléphone
+- Chemins multi-étapes ou calcul d'itinéraire si plusieurs produits demandés d'affilée
+- QR code pour envoyer la position du rayon sur son téléphone
 - Disponibilité en stock en temps réel si connecté à la caisse
 - Mode accessibilité (texte agrandi, guidage vocal pas à pas)
 - Tableau de bord équipe magasin : questions les plus posées

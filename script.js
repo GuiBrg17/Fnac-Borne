@@ -15,7 +15,7 @@ const UI_TEXT = {
     voiceLabel: "Voix",
     voiceNone: "Aucune voix féminine trouvée",
     quickActions: [
-      { zone: "stockageCles", label: "📀 Disques durs" },
+      { zone: "stockageConnectique", label: "📀 Disques durs" },
       { zone: "audio", label: "🎧 Casques audio" },
       { zone: "gaming", label: "🎮 Consoles" },
       { zone: "telephonie", label: "📱 Téléphonie" }
@@ -45,7 +45,7 @@ const UI_TEXT = {
     voiceLabel: "Voice",
     voiceNone: "No female voice found",
     quickActions: [
-      { zone: "stockageCles", label: "📀 Hard drives" },
+      { zone: "stockageConnectique", label: "📀 Hard drives" },
       { zone: "audio", label: "🎧 Headphones" },
       { zone: "gaming", label: "🎮 Consoles" },
       { zone: "telephonie", label: "📱 Phones" }
@@ -75,7 +75,7 @@ const UI_TEXT = {
     voiceLabel: "Voz",
     voiceNone: "No se encontró voz femenina",
     quickActions: [
-      { zone: "stockageCles", label: "📀 Discos duros" },
+      { zone: "stockageConnectique", label: "📀 Discos duros" },
       { zone: "audio", label: "🎧 Auriculares" },
       { zone: "gaming", label: "🎮 Consolas" },
       { zone: "telephonie", label: "📱 Telefonía" }
@@ -115,10 +115,8 @@ const ZONES = {
                         keywords: { fr: ["pc windows", "ordinateur windows", "pc portable", "laptop"], en: ["windows pc", "windows laptop", "laptop"], es: ["pc windows", "portátil windows", "laptop"] } },
   apple:             { label: { fr: "Apple (iPad, iPhone, Mac, accessoires)", en: "Apple (iPad, iPhone, Mac, accessories)", es: "Apple (iPad, iPhone, Mac, accesorios)" },
                         keywords: { fr: ["iphone", "ipad", "macbook", "mac", "apple"], en: ["iphone", "ipad", "macbook", "mac", "apple"], es: ["iphone", "ipad", "macbook", "mac", "apple"] } },
-  stockageCles:      { label: { fr: "Stockage (clés USB, disque dur)", en: "Storage (USB keys, hard drives)", es: "Almacenamiento (USB, disco duro)" },
-                        keywords: { fr: ["disque dur", "disque", "ssd", "clé usb"], en: ["hard drive", "ssd", "usb key", "usb drive"], es: ["disco duro", "ssd", "memoria usb"] } },
-  cables:            { label: { fr: "Câbles (HDMI, RJ45, USB...)", en: "Cables (HDMI, RJ45, USB...)", es: "Cables (HDMI, RJ45, USB...)" },
-                        keywords: { fr: ["câble", "hdmi", "rj45"], en: ["cable", "hdmi", "rj45"], es: ["cable", "hdmi", "rj45"] } },
+  stockageConnectique: { label: { fr: "Stockage & Connectique (clés USB, disque dur, câbles HDMI/Ethernet)", en: "Storage & Cables (USB keys, hard drives, HDMI/Ethernet cables)", es: "Almacenamiento y Conectividad (USB, disco duro, cables HDMI/Ethernet)" },
+                        keywords: { fr: ["disque dur", "disque", "ssd", "clé usb", "câble", "hdmi", "ethernet", "rj45"], en: ["hard drive", "ssd", "usb key", "usb drive", "cable", "hdmi", "ethernet", "rj45"], es: ["disco duro", "ssd", "memoria usb", "cable", "hdmi", "ethernet", "rj45"] } },
   imprimantes:       { label: { fr: "Imprimantes", en: "Printers", es: "Impresoras" },
                         keywords: { fr: ["imprimante"], en: ["printer"], es: ["impresora"] } },
   audio:             { label: { fr: "Audio (casques, enceintes, vinyle)", en: "Audio (headphones, speakers, vinyl)", es: "Audio (auriculares, altavoces, vinilo)" },
@@ -147,7 +145,6 @@ const ZONES = {
                         keywords: { fr: ["sous-sol", "sous sol"], en: ["basement"], es: ["sótano"] } }
 };
 
-const ENTRANCE_ZONE = "entree";
 
 function findAnswer(question, lang) {
   const q = question.toLowerCase();
@@ -172,10 +169,6 @@ const toast = document.getElementById("toast");
 const flagsRow = document.getElementById("flagsRow");
 const voiceSelect = document.getElementById("voiceSelect");
 const voiceLabel = document.getElementById("voiceLabel");
-const pathLine = document.getElementById("pathLine");
-const arrivalMarker = document.getElementById("arrivalMarker");
-const pathOverlay = document.getElementById("pathOverlay");
-const mapGrid = document.getElementById("mapFloors");
 const avatarRailText = document.getElementById("avatarRailText");
 const chatBoxTitle = document.getElementById("chatBoxTitle");
 const disclaimerText = document.getElementById("disclaimerText");
@@ -322,60 +315,22 @@ function speak(text) {
 }
 
 // =====================================================================
-// Plan — surlignage de zone + tracé de chemin dynamique (grille CSS)
+// Plan — surlignage de la zone où trouver le produit
 // =====================================================================
 function clearHighlight() {
   document.querySelectorAll(".tile").forEach(z => z.classList.remove("highlight"));
 }
 
-function resizePathOverlay() {
-  pathOverlay.setAttribute("width", mapGrid.clientWidth);
-  pathOverlay.setAttribute("height", mapGrid.clientHeight);
-  pathOverlay.setAttribute("viewBox", "0 0 " + mapGrid.clientWidth + " " + mapGrid.clientHeight);
-}
-
-function tileCenter(tile, container) {
-  const tRect = tile.getBoundingClientRect();
-  const cRect = container.getBoundingClientRect();
-  return {
-    x: tRect.left - cRect.left + tRect.width / 2,
-    y: tRect.top - cRect.top + tRect.height / 2
-  };
-}
-
-function hidePath() {
-  pathLine.setAttribute("d", "");
-  arrivalMarker.setAttribute("opacity", "0");
-}
-
-function drawPathToZone(zoneKey) {
-  const entreeEl = document.querySelector('.tile[data-zone="' + ENTRANCE_ZONE + '"]');
-  const targetEl = document.querySelector('.tile[data-zone="' + zoneKey + '"]');
-  if (!entreeEl || !targetEl) { hidePath(); return; }
-
-  resizePathOverlay();
-  const from = tileCenter(entreeEl, mapGrid);
-  const to = tileCenter(targetEl, mapGrid);
-
-  const d = "M " + from.x + " " + from.y + " L " + to.x + " " + from.y + " L " + to.x + " " + to.y;
-  pathLine.setAttribute("d", d);
-  arrivalMarker.setAttribute("cx", to.x);
-  arrivalMarker.setAttribute("cy", to.y);
-  arrivalMarker.setAttribute("opacity", "1");
-}
-
 function highlightZone(zoneKey) {
   clearHighlight();
   currentHighlightedZone = zoneKey;
-  if (!zoneKey) { hidePath(); return; }
+  if (!zoneKey) return;
   const el = document.querySelector('.tile[data-zone="' + zoneKey + '"]');
-  if (el) el.classList.add("highlight");
-  drawPathToZone(zoneKey);
+  if (el) {
+    el.classList.add("highlight");
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 }
-
-window.addEventListener("resize", () => {
-  if (currentHighlightedZone) drawPathToZone(currentHighlightedZone);
-});
 
 // =====================================================================
 // Interaction
