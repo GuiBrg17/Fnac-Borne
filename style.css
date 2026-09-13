@@ -381,12 +381,6 @@ body {
 }
 .tile.highlight span { color: #C9C4B8 !important; }
 
-.path-overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
 .toast {
   position: fixed;
   bottom: 30px;
