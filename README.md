@@ -1,61 +1,44 @@
 # Jeanne — Démo de borne d'accueil IA (Fnac Jeanne d'Arc, Toulouse)
 
-Démo statique (HTML/CSS/JS, sans backend) illustrant l'idée d'une borne d'accueil vocale avec avatar, pour montrer le concept avant de passer à un vrai prototype.
+Démo statique (HTML/CSS/JS, sans backend), version 4.
 
-## Ce que fait la démo (version affiche Fnac / plan 2D)
+## Ce que fait cette version
 
-- **Palette strictement jaune Fnac (#EBB300) / blanc / noir** (plus de rouge ni de néon)
-- **Typographie proche de l'identité Fnac** : Archivo Black (grasse, carrée, sans fioritures) pour les titres, logos et boutons ; Poppins pour le texte courant
-- **Une seule carte à gauche, pleine hauteur** : l'emplacement de l'avatar s'étire pour occuper tout l'espace vertical disponible, le reste (micro, langue, voix, chat) s'organise en dessous
-- **La langue de réponse suit le sélecteur FR/EN/ES**, plutôt qu'une détection automatique du texte — plus fiable, surtout en vocal où la reconnaissance peut déformer les mots
-- **Sélecteur de voix** : liste les voix réellement installées dans le navigateur pour la langue choisie, avec une présélection automatique d'une voix féminine si le nom le suggère — et tu peux la changer toi-même dans le menu déroulant
-- **Plan du magasin en 2D vu du dessus** (SVG), toujours visible
-- **Chemin animé** : un trait noir en pointillés qui défile va de l'entrée jusqu'au rayon demandé, avec un point jaune à l'arrivée
-- **Avatar retiré**, encadré "Avatar 3D — bientôt disponible" en attendant
-- Une base de connaissances multilingue (FR/EN/ES) : informatique, audio, jeux vidéo, livres, photo
-- Un bouton "Être accompagné par un vendeur" qui simule l'envoi d'une notification Teams (phase 2 du projet réel)
+- **Disposition reprise de ton croquis** : bandeau noir vertical "Avatar Jeanne" en pleine hauteur à gauche, drapeaux FR/UK/ES en haut de la colonne de contrôle, un bloc noir pour le tchat (avec le texte d'accueil qui explique la borne), un bloc noir pour le micro/le texte, et le plan du magasin en grand à droite
+- **Plan basé sur tes deux documents** (`Plan_FNAC_Micro.pdf` et le plan général) : Caisse/Adhésion, Jeux de société, Escalier vers l'étage (Lego/figurines POP), SAV/Retrait commandes, Tablettes Android, PC Windows, Apple, Stockage/Câbles/Imprimantes, Audio, PC Gamer, Électroménager, TV, Cartouches imprimantes, Écrans PC, Autre électroménager, Gaming, Photo/Drones/Micro, Téléphonie Android, Trottinettes/figurines POP, Escalier vers le sous-sol, Entrée/Sortie
+- **Traduction complète de l'interface** : cliquer sur un drapeau change la langue de TOUT le site (titres, boutons, placeholder du champ texte, boutons rapides, libellés des rayons sur le plan, message d'accueil), pas seulement les réponses de Jeanne
+- **Voix féminines uniquement** : le sélecteur de voix ne liste que les voix dont le nom correspond à une voix féminine connue pour la langue choisie. S'il n'y en a aucune sur ta machine pour une langue donnée, le menu l'indique clairement plutôt que d'afficher une voix masculine par défaut
+- Le chemin vers le rayon demandé se trace dynamiquement sur la grille du plan (calculé à partir de la position réelle des blocs à l'écran, donc il s'adapte si tu modifies la taille du plan)
+- Un bouton "Être accompagné par un vendeur" qui simule l'envoi d'une notification Teams
 
-## À propos de la langue et de la voix
+## Important à savoir sur le plan
 
-- **Langue** : avant, la démo essayait de deviner la langue à partir du texte tapé ou reconnu — peu fiable, surtout au micro (si la reconnaissance vocale déforme un mot anglais en quelque chose qui ressemble à du français, la réponse partait dans la mauvaise langue). Maintenant, la langue de réponse suit directement le sélecteur FR/EN/ES : plus prévisible, et cohérent avec le fait que la reconnaissance vocale du navigateur a de toute façon besoin qu'on lui dise à l'avance dans quelle langue écouter.
-- **Voix féminine** : la démo essaie de deviner une voix féminine parmi celles installées sur le navigateur/l'ordinateur, mais ça dépend entièrement de ce qui est disponible sur la machine qui ouvre la page — certains systèmes (notamment macOS/Safari) n'ont par défaut qu'une seule voix française, parfois masculine. D'où le nouveau sélecteur de voix : il liste les voix réellement disponibles pour choisir manuellement une voix féminine si l'auto-détection se trompe. Si aucune voix féminine française n'apparaît dans la liste, il faut en installer une côté système (Réglages/Paramètres → Accessibilité → Contenu énoncé, ou équivalent selon l'OS).
+Le plan que tu m'as envoyé a des blocs de tailles très irrégulières (bento box). Je l'ai reproduit avec une grille CSS à 6 colonnes qui capture l'agencement général et les tailles relatives (SAV en colonne haute à gauche, PC Gamer en bloc central large, TV en colonne haute à droite, etc.), mais ce n'est **pas un calque pixel-perfect** de ton PDF — les proportions exactes de chaque bloc sont approximatives. Si tu veux un calque exact, il faudrait me donner les dimensions réelles ou une image que je peux découper zone par zone.
 
-## Idées à explorer pour la suite
+J'ai aussi fusionné mentalement tes deux pages (rez-de-chaussée + le petit encart téléphonie/escalier sous-sol) sur un seul plan, pour rester sur une borne à un seul niveau. Si le sous-sol a son propre plan détaillé, on peut ajouter un bouton "changer d'étage" qui swap le plan affiché.
 
-- **Chemins multi-étapes** : si le client demande plusieurs produits d'affilée, tracer un seul parcours optimisé qui passe par tous les rayons demandés, dans le bon ordre
-- **Distance/temps estimé** affiché à côté du chemin ("environ 40 secondes de marche")
-- **Historique de session** : petits badges cliquables des dernières recherches, pour y revenir sans reformuler
-- **QR code "envoyer le chemin sur mon téléphone"** : pratique pour un grand magasin, évite de devoir mémoriser le trajet
-- **Disponibilité en stock en temps réel** ("il en reste 3 en rayon" / "en rupture, mais disponible en 2h") si la borne est connectée au système de caisse/stock
-- **Mode accessibilité** : texte plus grand, contraste renforcé, guidage vocal pas à pas pour les personnes malvoyantes
-- **Tableau de bord pour les équipes magasin** : les questions les plus posées à la borne, pour ajuster le merchandising ou anticiper les ruptures
-- **Suggestions croisées** : après une réponse, proposer un produit complémentaire ("un casque avec ce lecteur MP3 ?")
+## À propos des voix féminines
+
+Le navigateur ne fournit pas d'information fiable sur le genre d'une voix — la démo se base sur une liste de noms de voix connus pour être féminins (Amélie, Audrey, Samantha, Google français, etc.). Si aucune voix de ta liste système ne correspond à ces noms, le menu affichera "Aucune voix féminine trouvée" pour cette langue. Dans ce cas, il faut ajouter une voix féminine côté système (Réglages → Accessibilité → Contenu énoncé sur Mac, ou Paramètres → Heure et langue → Voix sur Windows).
 
 ## Ce qui est simulé vs ce qui serait réel en production
 
 | Dans la démo | En production |
 |---|---|
-| Base de connaissances codée en dur dans `script.js` | Vrai catalogue produit + un LLM (ex: Claude) pour répondre à des questions ouvertes, dans n'importe quelle langue |
-| Pas d'avatar (emplacement réservé) | Avatar 3D réaliste (ex: ReadyPlayerMe, Unreal MetaHuman) ou avatar vidéo généré par IA (HeyGen, D-ID), à ajouter dans l'emplacement prévu |
-| Chemin calculé en dur (ligne droite + un coude) | Vrai algorithme de recherche de chemin (pathfinding) basé sur un plan réel du magasin avec obstacles |
-| Plan 2D dessiné à la main en SVG | Plan fidèle au vrai magasin (import du relevé réel des rayons) |
-| Synthèse vocale du navigateur, voix choisie parmi celles installées sur la machine | Voix de synthèse dédiée et calibrée pour Jeanne (ElevenLabs, Azure/Google Neural TTS), identique sur toutes les bornes |
-| Reconnaissance vocale du navigateur + sélecteur de langue manuel | Service de reconnaissance vocale multilingue avec détection automatique de la langue parlée |
+| Base de connaissances par mots-clés, codée en dur | Vrai catalogue produit + un LLM (ex: Claude) pour des questions ouvertes, dans n'importe quelle langue |
+| Plan en grille CSS approximative | Plan vectoriel fidèle au vrai magasin (import du relevé réel) |
+| Chemin en ligne brisée simple (un coude) | Vrai algorithme de pathfinding avec obstacles (murs, rayons) |
+| Voix du navigateur, filtrées par nom | Voix de synthèse dédiée et calibrée pour Jeanne (ElevenLabs, Azure/Google Neural TTS) |
+| Reconnaissance vocale du navigateur, langue choisie manuellement | Service de reconnaissance vocale multilingue avec détection automatique |
 | Notification Teams simulée (toast visuel) | Vrai webhook Microsoft Graph vers le canal Teams du vendeur du rayon |
+| Un seul niveau de magasin affiché | Plusieurs plans (rez-de-chaussée, étage, sous-sol) avec bascule |
 
-## Lancer la démo
+## Idées à explorer pour la suite
 
-Ouvrir simplement `index.html` dans un navigateur (Chrome recommandé pour la reconnaissance vocale), ou héberger le dossier sur GitHub Pages :
-
-1. Créer un dépôt GitHub, y pousser ces fichiers
-2. Dans les paramètres du dépôt → Pages → choisir la branche `main` et le dossier racine
-3. Le site sera disponible à une URL du type `https://<utilisateur>.github.io/<depot>/`
-
-## Questions à tester
-
-- « Où puis-je trouver un disque dur ? »
-- « Je cherche un casque audio »
-- « Avez-vous des consoles de jeu ? »
-- « Je voudrais un livre »
-- « Where can I find a hard drive? » (pense à passer le sélecteur de voix sur EN pour tester au micro)
-- « ¿Dónde puedo encontrar auriculares? » (sélecteur de voix sur ES pour le micro)
+- Bouton pour changer d'étage (rez-de-chaussée / étage / sous-sol) avec un plan différent par niveau
+- Chemins multi-étapes si plusieurs produits demandés d'affilée
+- Distance/temps de marche estimé affiché à côté du chemin
+- QR code pour envoyer le chemin sur son téléphone
+- Disponibilité en stock en temps réel si connecté à la caisse
+- Mode accessibilité (texte agrandi, guidage vocal pas à pas)
+- Tableau de bord équipe magasin : questions les plus posées
