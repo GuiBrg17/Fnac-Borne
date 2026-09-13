@@ -15,7 +15,7 @@ const UI_TEXT = {
     voiceLabel: "Voix",
     voiceNone: "Aucune voix féminine trouvée",
     quickActions: [
-      { zone: "stockage", label: "📀 Disques durs" },
+      { zone: "stockageCles", label: "📀 Disques durs" },
       { zone: "audio", label: "🎧 Casques audio" },
       { zone: "gaming", label: "🎮 Consoles" },
       { zone: "telephonie", label: "📱 Téléphonie" }
@@ -45,7 +45,7 @@ const UI_TEXT = {
     voiceLabel: "Voice",
     voiceNone: "No female voice found",
     quickActions: [
-      { zone: "stockage", label: "📀 Hard drives" },
+      { zone: "stockageCles", label: "📀 Hard drives" },
       { zone: "audio", label: "🎧 Headphones" },
       { zone: "gaming", label: "🎮 Consoles" },
       { zone: "telephonie", label: "📱 Phones" }
@@ -75,7 +75,7 @@ const UI_TEXT = {
     voiceLabel: "Voz",
     voiceNone: "No se encontró voz femenina",
     quickActions: [
-      { zone: "stockage", label: "📀 Discos duros" },
+      { zone: "stockageCles", label: "📀 Discos duros" },
       { zone: "audio", label: "🎧 Auriculares" },
       { zone: "gaming", label: "🎮 Consolas" },
       { zone: "telephonie", label: "📱 Telefonía" }
@@ -103,18 +103,24 @@ const ZONES = {
                         keywords: { fr: ["caisse", "adhésion", "carte fnac", "payer"], en: ["checkout", "membership", "pay", "cashier"], es: ["caja", "membresía", "pagar"] } },
   jeuxSociete:       { label: { fr: "Jeux de société", en: "Board games", es: "Juegos de mesa" },
                         keywords: { fr: ["jeu de société", "jeux de société", "jeu de plateau"], en: ["board game", "board games"], es: ["juego de mesa", "juegos de mesa"] } },
-  escalierEtage:     { label: { fr: "⬆ Escalier vers l'étage (Lego, figurines POP)", en: "⬆ Stairs to upper floor (Lego, POP figures)", es: "⬆ Escaleras al piso superior (Lego, figuras POP)" },
+  escalierEtage:     { label: { fr: "⬆ Escalier vers l'étage (LEGO, figurines POP — Bas des escaliers)", en: "⬆ Stairs to upper floor (LEGO, POP figures — Bottom of stairs)", es: "⬆ Escaleras al piso superior (LEGO, figuras POP — Parte inferior)" },
                         keywords: { fr: ["lego", "légo", "figurine pop", "figurines pop", "étage"], en: ["lego", "pop figure", "pop figures", "upper floor"], es: ["lego", "figura pop", "figuras pop", "piso superior"] } },
-  sav:               { label: { fr: "SAV / Retrait commandes", en: "Customer service / Order pickup", es: "Servicio técnico / Recogida de pedidos" },
-                        keywords: { fr: ["sav", "service après-vente", "retrait", "commande", "réparation"], en: ["customer service", "repair", "order pickup", "pickup"], es: ["servicio técnico", "recogida", "pedido", "reparación"] } },
+  sav:               { label: { fr: "SAV", en: "Customer service", es: "Servicio técnico" },
+                        keywords: { fr: ["sav", "service après-vente", "réparation", "garantie"], en: ["customer service", "repair", "warranty"], es: ["servicio técnico", "reparación", "garantía"] } },
+  retraitCommandes:  { label: { fr: "Retrait de commandes", en: "Order pickup", es: "Recogida de pedidos" },
+                        keywords: { fr: ["retrait", "retrait de commande", "commande"], en: ["order pickup", "pickup", "click and collect"], es: ["recogida", "pedido"] } },
   tablette:          { label: { fr: "Tablettes Android", en: "Android tablets", es: "Tabletas Android" },
                         keywords: { fr: ["tablette"], en: ["tablet"], es: ["tableta", "tablet"] } },
   pcwindows:         { label: { fr: "PC Windows", en: "Windows PCs", es: "PC Windows" },
                         keywords: { fr: ["pc windows", "ordinateur windows", "pc portable", "laptop"], en: ["windows pc", "windows laptop", "laptop"], es: ["pc windows", "portátil windows", "laptop"] } },
   apple:             { label: { fr: "Apple (iPad, iPhone, Mac, accessoires)", en: "Apple (iPad, iPhone, Mac, accessories)", es: "Apple (iPad, iPhone, Mac, accesorios)" },
                         keywords: { fr: ["iphone", "ipad", "macbook", "mac", "apple"], en: ["iphone", "ipad", "macbook", "mac", "apple"], es: ["iphone", "ipad", "macbook", "mac", "apple"] } },
-  stockage:          { label: { fr: "Stockage / Câbles / Imprimantes", en: "Storage / Cables / Printers", es: "Almacenamiento / Cables / Impresoras" },
-                        keywords: { fr: ["disque dur", "disque", "ssd", "clé usb", "câble", "hdmi", "imprimante"], en: ["hard drive", "ssd", "usb key", "cable", "hdmi", "printer"], es: ["disco duro", "ssd", "memoria usb", "cable", "hdmi", "impresora"] } },
+  stockageCles:      { label: { fr: "Stockage (clés USB, disque dur)", en: "Storage (USB keys, hard drives)", es: "Almacenamiento (USB, disco duro)" },
+                        keywords: { fr: ["disque dur", "disque", "ssd", "clé usb"], en: ["hard drive", "ssd", "usb key", "usb drive"], es: ["disco duro", "ssd", "memoria usb"] } },
+  cables:            { label: { fr: "Câbles (HDMI, RJ45, USB...)", en: "Cables (HDMI, RJ45, USB...)", es: "Cables (HDMI, RJ45, USB...)" },
+                        keywords: { fr: ["câble", "hdmi", "rj45"], en: ["cable", "hdmi", "rj45"], es: ["cable", "hdmi", "rj45"] } },
+  imprimantes:       { label: { fr: "Imprimantes", en: "Printers", es: "Impresoras" },
+                        keywords: { fr: ["imprimante"], en: ["printer"], es: ["impresora"] } },
   audio:             { label: { fr: "Audio (casques, enceintes, vinyle)", en: "Audio (headphones, speakers, vinyl)", es: "Audio (auriculares, altavoces, vinilo)" },
                         keywords: { fr: ["casque", "écouteur", "enceinte", "audio", "vinyle", "platine"], en: ["headphone", "headphones", "speaker", "audio", "vinyl", "turntable"], es: ["auricular", "auriculares", "altavoz", "audio", "vinilo", "tocadiscos"] } },
   pcgamer:           { label: { fr: "PC Gamer / écran gamer et accessoires", en: "Gaming PC / gaming monitor and accessories", es: "PC gaming / monitor gaming y accesorios" },
@@ -123,7 +129,7 @@ const ZONES = {
                         keywords: { fr: ["sèche-cheveux", "sodastream", "électroménager"], en: ["hair dryer", "sodastream", "home appliance"], es: ["secador", "sodastream", "electrodoméstico"] } },
   tv:                { label: { fr: "TV", en: "TV", es: "TV" },
                         keywords: { fr: ["télé", "télévision", "tv", "écran tv"], en: ["tv", "television"], es: ["televisor", "televisión", "tv"] } },
-  cartouches:        { label: { fr: "Cartouches imprimantes / Accessoires PC", en: "Printer cartridges / PC accessories", es: "Cartuchos de impresora / Accesorios PC" },
+  cartouches:        { label: { fr: "Cartouches d'imprimantes / Accessoires PC", en: "Printer cartridges / PC accessories", es: "Cartuchos de impresora / Accesorios PC" },
                         keywords: { fr: ["cartouche", "encre imprimante"], en: ["cartridge", "printer ink"], es: ["cartucho", "tinta impresora"] } },
   ecranpc:           { label: { fr: "Écrans PC", en: "PC monitors", es: "Monitores PC" },
                         keywords: { fr: ["écran pc", "moniteur"], en: ["pc monitor", "monitor"], es: ["monitor pc", "monitor"] } },
@@ -133,11 +139,11 @@ const ZONES = {
                         keywords: { fr: ["console", "jeu vidéo", "jeux vidéo", "playstation", "xbox", "switch"], en: ["console", "video game", "video games", "playstation", "xbox", "switch"], es: ["consola", "videojuego", "videojuegos", "playstation", "xbox", "switch"] } },
   photo:             { label: { fr: "Photo / Drones / Micro", en: "Photo / Drones / Microphones", es: "Foto / Drones / Micrófonos" },
                         keywords: { fr: ["appareil photo", "photo", "drone", "microphone", "micro"], en: ["camera", "photo", "drone", "microphone", "mic"], es: ["cámara", "foto", "dron", "micrófono"] } },
-  telephonie:        { label: { fr: "Téléphonie Android (écouteurs, chargeurs...)", en: "Android phones (earphones, chargers...)", es: "Telefonía Android (auriculares, cargadores...)" },
+  telephonie:        { label: { fr: "Téléphonie Android (écouteurs filaires, chargeurs...)", en: "Android phones (wired earphones, chargers...)", es: "Telefonía Android (auriculares con cable, cargadores...)" },
                         keywords: { fr: ["téléphone", "smartphone", "android", "chargeur", "écouteurs sans fil"], en: ["phone", "smartphone", "android", "charger", "wireless earphones"], es: ["teléfono", "smartphone", "android", "cargador", "auriculares inalámbricos"] } },
   trotinette:        { label: { fr: "Trottinettes et figurines POP", en: "Scooters and POP figures", es: "Patinetes y figuras POP" },
                         keywords: { fr: ["trottinette", "trotinette"], en: ["scooter"], es: ["patinete", "scooter"] } },
-  escalierSousSol:   { label: { fr: "⬇ Escalier vers le sous-sol", en: "⬇ Stairs to basement", es: "⬇ Escaleras al sótano" },
+  escalierSousSol:   { label: { fr: "⬇ Escalier vers Sous-Sol (Haut des escaliers)", en: "⬇ Stairs to Basement (Top of stairs)", es: "⬇ Escaleras al Sótano (Parte superior)" },
                         keywords: { fr: ["sous-sol", "sous sol"], en: ["basement"], es: ["sótano"] } }
 };
 
@@ -233,7 +239,7 @@ function applyTranslations() {
       const label = ZONES[key].label[currentLang] || ZONES[key].label.fr;
       const parts = label.split(" (");
       if (parts.length > 1) {
-        tile.innerHTML = parts[0] + "<br><span>(" + parts[1];
+        tile.innerHTML = parts[0] + "<br><span>(" + parts[1] + "</span>";
       } else {
         tile.textContent = label;
       }
