@@ -64,42 +64,51 @@
 
     <!-- Plan du magasin -->
     <section class="map-panel-main">
-      <div class="map-title" id="mapTitle">PLAN DU MAGASIN <span id="mapSubtitle">— Rez-de-chaussée</span></div>
+      <div class="map-title" id="mapTitle">PLAN DU MAGASIN <span id="mapSubtitle">— 2 niveaux</span></div>
 
-      <div class="map-grid" id="mapGrid">
-        <div class="tile" data-zone="caisse" style="grid-area: caisse;">Caisse / Adhésion</div>
-        <div class="tile" data-zone="jeuxSociete" style="grid-area: jeuxSociete;">Jeux de société</div>
-        <div class="tile tile-note" data-zone="escalierEtage" style="grid-area: escalierEtage;">Escalier vers étage<br><span>Légos et figurines POP</span></div>
+      <div class="map-floors" id="mapFloors">
 
-        <div class="tile" data-zone="sav" style="grid-area: sav;">SAV<br>Retrait commandes</div>
-        <div class="tile" data-zone="tablette" style="grid-area: tablette;">Tablette Android</div>
-        <div class="tile" data-zone="pcwindows" style="grid-area: pcwindows;">PC Windows</div>
-        <div class="tile" data-zone="apple" style="grid-area: apple;">Apple<br><span>iPad / iPhone / Mac / accessoires</span></div>
+        <div class="floor-label" id="floorLabelRdc">REZ-DE-CHAUSSÉE</div>
+        <div class="map-grid map-grid-ground" id="groundGrid">
+          <div class="tile tile-wide" data-zone="telephonie" style="grid-area: telephonie;">Téléphonie Android<br><span>Écouteurs, chargeurs...</span></div>
+          <div class="tile tile-dark" data-zone="escalierSousSol" style="grid-area: escalierSousSol;">⬇ Escalier vers sous-sol</div>
+          <div class="tile tile-entree" data-zone="entree" style="grid-area: entree;" id="entreeTile">— Entrée et Sortie —</div>
+        </div>
 
-        <div class="tile" data-zone="stockage" style="grid-area: stockage;">Stockage / Câbles<br>Imprimantes</div>
-        <div class="tile" data-zone="audio" style="grid-area: audio;">Audio<br><span>Casques / enceintes / vinyle</span></div>
+        <div class="floor-connector">⬇</div>
 
-        <div class="tile tile-big" data-zone="pcgamer" style="grid-area: pcgamer;">PC Gamer / écran gamer<br>et accessoires gamer</div>
-        <div class="tile" data-zone="electromenager" style="grid-area: electromenager;">Électroménager<br><span>Sèche-cheveux, SodaStream...</span></div>
-        <div class="tile tile-tall" data-zone="tv" style="grid-area: tv;">TV</div>
+        <div class="floor-label" id="floorLabelSs">SOUS-SOL</div>
+        <div class="map-grid map-grid-basement" id="basementGrid">
+          <div class="tile" data-zone="caisse" style="grid-area: caisse;">Caisse / Adhésion</div>
+          <div class="tile" data-zone="jeuxSociete" style="grid-area: jeuxSociete;">Jeux de société</div>
+          <div class="tile tile-note" data-zone="escalierEtage" style="grid-area: escalierEtage;">⬆ Escalier vers étage<br><span>Légos et figurines POP</span></div>
 
-        <div class="tile" data-zone="cartouches" style="grid-area: cartouches;">Cartouches imprimantes<br>Accessoires PC</div>
-        <div class="tile" data-zone="ecranpc" style="grid-area: ecranpc;">Écran PC</div>
-        <div class="tile" data-zone="autreElectro" style="grid-area: autreElectro;">Autre électroménager</div>
+          <div class="tile" data-zone="sav" style="grid-area: sav;">SAV<br>Retrait commandes</div>
+          <div class="tile" data-zone="tablette" style="grid-area: tablette;">Tablette Android</div>
+          <div class="tile" data-zone="pcwindows" style="grid-area: pcwindows;">PC Windows</div>
+          <div class="tile" data-zone="apple" style="grid-area: apple;">Apple<br><span>iPad / iPhone / Mac / accessoires</span></div>
 
-        <div class="tile" data-zone="gaming" style="grid-area: gaming;">Gaming<br><span>Consoles et jeux vidéo</span></div>
-        <div class="tile" data-zone="photo" style="grid-area: photo;">Photo / Drones / Micro</div>
-        <div class="tile" data-zone="telephonie" style="grid-area: telephonie;">Téléphonie Android<br><span>Écouteurs, chargeurs...</span></div>
+          <div class="tile" data-zone="stockage" style="grid-area: stockage;">Stockage / Câbles<br>Imprimantes</div>
+          <div class="tile" data-zone="audio" style="grid-area: audio;">Audio<br><span>Casques / enceintes / vinyle</span></div>
 
-        <div class="tile" data-zone="trotinette" style="grid-area: trotinette;">Trotinette et figurines POP</div>
-        <div class="tile tile-dark" data-zone="escalierSousSol" style="grid-area: escalierSousSol;">Escalier vers sous-sol</div>
-        <div class="tile tile-entree" data-zone="entree" style="grid-area: entree;" id="entreeTile">— Entrée et Sortie —</div>
+          <div class="tile tile-big" data-zone="pcgamer" style="grid-area: pcgamer;">PC Gamer / écran gamer<br>et accessoires gamer</div>
+          <div class="tile" data-zone="electromenager" style="grid-area: electromenager;">Électroménager<br><span>Sèche-cheveux, SodaStream...</span></div>
+          <div class="tile tile-tall" data-zone="tv" style="grid-area: tv;">TV</div>
+
+          <div class="tile" data-zone="cartouches" style="grid-area: cartouches;">Cartouches imprimantes<br>Accessoires PC</div>
+          <div class="tile" data-zone="ecranpc" style="grid-area: ecranpc;">Écran PC</div>
+          <div class="tile" data-zone="autreElectro" style="grid-area: autreElectro;">Autre électroménager</div>
+
+          <div class="tile" data-zone="gaming" style="grid-area: gaming;">Gaming<br><span>Consoles et jeux vidéo</span></div>
+          <div class="tile" data-zone="photo" style="grid-area: photo;">Photo / Drones / Micro</div>
+          <div class="tile" data-zone="trotinette" style="grid-area: trotinette;">Trotinette et figurines POP</div>
+        </div>
+
+        <svg class="path-overlay" id="pathOverlay">
+          <path id="pathLine" d="" fill="none" stroke="#111111" stroke-width="5" stroke-dasharray="12 9" stroke-linecap="round"/>
+          <circle id="arrivalMarker" cx="0" cy="0" r="13" fill="#EBB300" stroke="#111111" stroke-width="3" opacity="0" />
+        </svg>
       </div>
-
-      <svg class="path-overlay" id="pathOverlay">
-        <path id="pathLine" d="" fill="none" stroke="#111111" stroke-width="5" stroke-dasharray="12 9" stroke-linecap="round"/>
-        <circle id="arrivalMarker" cx="0" cy="0" r="13" fill="#EBB300" stroke="#111111" stroke-width="3" opacity="0" />
-      </svg>
     </section>
 
   </main>
