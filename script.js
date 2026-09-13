@@ -24,11 +24,13 @@ const UI_TEXT = {
     vendorConfirm: (zone) => "Un vendeur du rayon " + zone + " a été prévenu et arrive.",
     toastPrefix: "🔔 Notification Teams envoyée au vendeur — Rayon : ",
     mapTitle: "PLAN DU MAGASIN",
-    mapSubtitle: "— Rez-de-chaussée",
+    mapSubtitle: "— Rez-de-chaussée + Sous-sol",
     greeting: "Bonjour, je suis Jeanne, votre assistante d'accueil. Parlez-moi ou écrivez votre question.",
     defaultReply: "Je ne suis pas certaine de comprendre. Pouvez-vous reformuler, ou préférez-vous qu'un vendeur vienne vous aider ?",
     genericZoneReply: (zoneName) => "Vous trouverez ça au rayon " + zoneName + ", indiqué sur le plan.",
-    entree: "— Entrée et Sortie —"
+    entree: "— Entrée et Sortie —",
+    floorRdc: "REZ-DE-CHAUSSÉE",
+    floorSs: "SOUS-SOL"
   },
   en: {
     avatarRail: "JEANNE AVATAR",
@@ -52,11 +54,13 @@ const UI_TEXT = {
     vendorConfirm: (zone) => "A staff member from " + zone + " has been notified and is on their way.",
     toastPrefix: "🔔 Teams notification sent to staff — Section: ",
     mapTitle: "STORE MAP",
-    mapSubtitle: "— Ground floor",
+    mapSubtitle: "— Ground floor + Basement",
     greeting: "Hello, I'm Jeanne, your welcome assistant. Speak to me, or type your question.",
     defaultReply: "I'm not sure I understood. Could you rephrase, or would you like a staff member to help you instead?",
     genericZoneReply: (zoneName) => "You'll find that in the " + zoneName + " section, shown on the map.",
-    entree: "— Entrance and Exit —"
+    entree: "— Entrance and Exit —",
+    floorRdc: "GROUND FLOOR",
+    floorSs: "BASEMENT"
   },
   es: {
     avatarRail: "AVATAR JEANNE",
@@ -80,11 +84,13 @@ const UI_TEXT = {
     vendorConfirm: (zone) => "Un vendedor de " + zone + " ha sido avisado y está en camino.",
     toastPrefix: "🔔 Notificación Teams enviada al vendedor — Sección: ",
     mapTitle: "PLANO DE LA TIENDA",
-    mapSubtitle: "— Planta baja",
+    mapSubtitle: "— Planta baja + Sótano",
     greeting: "Hola, soy Jeanne, su asistente de acogida. Hábleme o escriba su pregunta.",
     defaultReply: "No estoy segura de haber entendido. ¿Puede reformular, o prefiere que un vendedor le ayude?",
     genericZoneReply: (zoneName) => "Lo encontrará en la sección " + zoneName + ", indicada en el plano.",
-    entree: "— Entrada y Salida —"
+    entree: "— Entrada y Salida —",
+    floorRdc: "PLANTA BAJA",
+    floorSs: "SÓTANO"
   }
 };
 
@@ -97,7 +103,7 @@ const ZONES = {
                         keywords: { fr: ["caisse", "adhésion", "carte fnac", "payer"], en: ["checkout", "membership", "pay", "cashier"], es: ["caja", "membresía", "pagar"] } },
   jeuxSociete:       { label: { fr: "Jeux de société", en: "Board games", es: "Juegos de mesa" },
                         keywords: { fr: ["jeu de société", "jeux de société", "jeu de plateau"], en: ["board game", "board games"], es: ["juego de mesa", "juegos de mesa"] } },
-  escalierEtage:     { label: { fr: "Escalier vers l'étage (Lego, figurines POP)", en: "Stairs to upper floor (Lego, POP figures)", es: "Escaleras al piso superior (Lego, figuras POP)" },
+  escalierEtage:     { label: { fr: "⬆ Escalier vers l'étage (Lego, figurines POP)", en: "⬆ Stairs to upper floor (Lego, POP figures)", es: "⬆ Escaleras al piso superior (Lego, figuras POP)" },
                         keywords: { fr: ["lego", "légo", "figurine pop", "figurines pop", "étage"], en: ["lego", "pop figure", "pop figures", "upper floor"], es: ["lego", "figura pop", "figuras pop", "piso superior"] } },
   sav:               { label: { fr: "SAV / Retrait commandes", en: "Customer service / Order pickup", es: "Servicio técnico / Recogida de pedidos" },
                         keywords: { fr: ["sav", "service après-vente", "retrait", "commande", "réparation"], en: ["customer service", "repair", "order pickup", "pickup"], es: ["servicio técnico", "recogida", "pedido", "reparación"] } },
@@ -131,7 +137,7 @@ const ZONES = {
                         keywords: { fr: ["téléphone", "smartphone", "android", "chargeur", "écouteurs sans fil"], en: ["phone", "smartphone", "android", "charger", "wireless earphones"], es: ["teléfono", "smartphone", "android", "cargador", "auriculares inalámbricos"] } },
   trotinette:        { label: { fr: "Trottinettes et figurines POP", en: "Scooters and POP figures", es: "Patinetes y figuras POP" },
                         keywords: { fr: ["trottinette", "trotinette"], en: ["scooter"], es: ["patinete", "scooter"] } },
-  escalierSousSol:   { label: { fr: "Escalier vers le sous-sol", en: "Stairs to basement", es: "Escaleras al sótano" },
+  escalierSousSol:   { label: { fr: "⬇ Escalier vers le sous-sol", en: "⬇ Stairs to basement", es: "⬇ Escaleras al sótano" },
                         keywords: { fr: ["sous-sol", "sous sol"], en: ["basement"], es: ["sótano"] } }
 };
 
@@ -163,7 +169,7 @@ const voiceLabel = document.getElementById("voiceLabel");
 const pathLine = document.getElementById("pathLine");
 const arrivalMarker = document.getElementById("arrivalMarker");
 const pathOverlay = document.getElementById("pathOverlay");
-const mapGrid = document.getElementById("mapGrid");
+const mapGrid = document.getElementById("mapFloors");
 const avatarRailText = document.getElementById("avatarRailText");
 const chatBoxTitle = document.getElementById("chatBoxTitle");
 const disclaimerText = document.getElementById("disclaimerText");
@@ -172,6 +178,8 @@ const quickActions = document.getElementById("quickActions");
 const mapTitle = document.getElementById("mapTitle");
 const mapSubtitle = document.getElementById("mapSubtitle");
 const entreeTile = document.getElementById("entreeTile");
+const floorLabelRdc = document.getElementById("floorLabelRdc");
+const floorLabelSs = document.getElementById("floorLabelSs");
 
 let voiceLang = "fr-FR";
 let currentLang = "fr";
@@ -204,6 +212,8 @@ function applyTranslations() {
   mapTitle.childNodes[0].textContent = dict.mapTitle + " ";
   mapSubtitle.textContent = dict.mapSubtitle;
   entreeTile.textContent = dict.entree;
+  floorLabelRdc.textContent = dict.floorRdc;
+  floorLabelSs.textContent = dict.floorSs;
 
   // Boutons rapides
   quickActions.innerHTML = "";
