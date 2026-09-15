@@ -73,7 +73,8 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   pointer-events: none;
   border-radius: 0;
   overflow: hidden;
-  transition: left 0.95s var(--ease-out), top 0.95s var(--ease-out), width 0.95s var(--ease-out), height 0.95s var(--ease-out), border-radius 0.95s var(--ease-out);
+  opacity: 1;
+  transition: opacity 0.5s ease, left 0.95s var(--ease-out), top 0.95s var(--ease-out), width 0.95s var(--ease-out), height 0.95s var(--ease-out), border-radius 0.95s var(--ease-out);
 }
 .is-app .avatar-stage { border-radius: var(--radius-l); }
 #avatarCanvas {
@@ -170,6 +171,28 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   position: relative;
   margin: -4.5vh 0;
 }
+/* Photo de Jeanne sur l'écran de veille (remplace l'avatar 3D à cet endroit). */
+.idle-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* L'image est affichée comme une affiche, cadrée sur Jeanne. */
+  object-position: 42% top;
+  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+  animation: photo-life 24s ease-in-out infinite alternate;
+}
+.idle-photo[hidden] { display: none; }
+@keyframes photo-life {
+  from { transform: scale(1) translateY(0); }
+  to { transform: scale(1.045) translateY(-0.6%); }
+}
+/* En mode photo : pas d'avatar 3D ni de bulle sur la veille (la bulle est dans l'image). */
+.has-idle-photo.is-idle .avatar-stage { opacity: 0; }
+/* La bulle est déjà incrustée dans l'image : on masque celle de la borne. */
+.has-idle-photo .idle-bubble { display: none; }
+
 .idle-bubble {
   position: absolute;
   z-index: 6;
@@ -345,6 +368,10 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 }
 .langs button svg { width: 1.6rem; height: 1.07rem; border-radius: 0.18rem; stroke: none; }
 .langs button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+
+/* Pendant un signe en LSF, la scène 3D s'agrandit : on efface le nom pour la laisser respirer. */
+.is-signing .jeanne-id, .is-signing .chat { opacity: 0; transition: opacity 0.3s ease; }
+.jeanne-id, .chat { transition: opacity 0.4s ease; }
 
 .jeanne { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.1rem; }
 .jeanne-slot {
@@ -566,8 +593,9 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .floor {
   position: absolute;
   inset: 0;
+  container-type: size;
   display: grid;
-  gap: 0.5rem;
+  place-items: center;
   opacity: 0;
   visibility: hidden;
   transform: translateY(2.5rem);
@@ -576,19 +604,30 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .map-stage[data-dir="down"] .floor:not(.is-active) { transform: translateY(-2.5rem); }
 .floor.is-active { opacity: 1; visibility: visible; transform: none; }
 
-.floor-0 {
-  inset: 4% 12% 4%;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  grid-template-rows: 1fr 1fr 1fr 0.8fr;
-  gap: 0.7rem;
+/* Chaque plan garde les proportions du plan d'architecte ; les cases sont
+   positionnées en pourcentage à l'intérieur (voir index.html). */
+.plan {
+  position: relative;
+  border-radius: 0.9rem;
+  outline: 0.13rem dashed rgba(255, 255, 255, 0.18);
+  outline-offset: 0.4rem;
 }
-.floor-m1 {
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  grid-template-rows: repeat(11, minmax(0, 1fr));
+/* Le plan garde ses proportions et tient toujours dans le cadre :
+   la hauteur est la plus petite entre la hauteur disponible et
+   la largeur disponible divisée par le rapport du plan. */
+.plan-0 {
+  aspect-ratio: 396 / 567;
+  width: min(100cqw, calc(100cqh * 396 / 567));
+  height: auto;
+}
+.plan-m1 {
+  aspect-ratio: 822 / 434;
+  width: min(100cqw, calc(100cqh * 822 / 434));
+  height: auto;
 }
 
 .tile {
-  position: relative;
+  position: absolute;
   min-width: 0;
   min-height: 0;
   display: flex;
@@ -608,16 +647,25 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .tile-icon { width: 1.25rem; height: 1.25rem; margin-top: 0.05rem; }
 .tile-text { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
 .tile-name {
-  font-size: 0.98rem;
+  /* La taille suit celle de la case : le texte ne déborde plus. */
+  font-size: clamp(0.58rem, min(8.5cqw, 19cqh), 1.15rem);
   font-weight: 800;
   font-stretch: 104%;
   line-height: 1.08;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
-.tile-detail { font-size: 0.8rem; font-weight: 550; line-height: 1.15; color: #3d3520; }
+.tile-detail { font-size: clamp(0.48rem, min(6cqw, 12cqh), 0.85rem); font-weight: 550; line-height: 1.15; color: #3d3520; }
 @container (max-height: 3.4rem) {
   .tile { align-items: center; }
   .tile-detail { display: none; }
+}
+/* Cases étroites : on masque le détail puis l'icône, pour garder le nom lisible. */
+@container (max-width: 8.5rem) {
+  .tile-detail { display: none; }
+}
+@container (max-width: 6rem) {
+  .tile-icon { display: none; }
 }
 @container (min-height: 7rem) {
   .tile { flex-direction: column; justify-content: space-between; }
@@ -625,9 +673,7 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   .tile-name { font-size: 1.15rem; }
   .tile-detail { font-size: 0.88rem; }
 }
-.floor-0 .tile-name { font-size: 1.5rem; }
-.floor-0 .tile-detail { font-size: 1rem; }
-.floor-0 .tile-icon { width: 2rem; height: 2rem; }
+.plan-0 .tile-icon { width: 1.5rem; height: 1.5rem; }
 
 .tile-ghost { pointer-events: none; }
 .tile-stairs, .tile-entrance { background: var(--yellow-light); }
@@ -652,9 +698,11 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 
 /* Vous êtes ici */
 .here {
+  position: absolute;
   z-index: 3;
-  align-self: center;
-  justify-self: end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -809,6 +857,20 @@ dialog[open] { animation: msg-in 0.4s var(--ease-out) both; }
 }
 
 .settings { width: min(54rem, 94vw); max-height: 92vh; overflow-y: auto; user-select: auto; }
+.settings label.check { display: flex; align-items: center; gap: 0.8rem; font-weight: 600; }
+.settings label.check input { width: 1.5rem; height: 1.5rem; min-height: 0; accent-color: var(--ink); flex: none; }
+.neural { margin-top: 1.6rem; padding-top: 1.4rem; border-top: 0.13rem solid var(--line); }
+.neural h3 { margin: 0 0 0.8rem; font-size: 1.3rem; font-weight: 900; font-stretch: 112%; }
+.neural-status { margin: 0.9rem 0; font-size: 0.95rem; line-height: 1.5; color: var(--text-muted); }
+.neural-download {
+  min-height: 3rem;
+  padding: 0 1.2rem;
+  border: 0.13rem solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  font-weight: 750;
+}
+.neural-download[disabled] { opacity: 0.5; }
 .stats { margin-top: 1.6rem; padding-top: 1.4rem; border-top: 0.13rem solid var(--line); }
 .stats h3 { margin: 0 0 0.6rem; font-size: 1.3rem; font-weight: 900; font-stretch: 112%; }
 .stats h4 { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 800; }

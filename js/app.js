@@ -1,10 +1,14 @@
 // =====================================================================
 // Borne Jeanne — logique de l'interface
 // =====================================================================
-import { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE } from "./data.js";
-import { findZoneDetailed, findIntent, normalize, displayKeyword } from "./search.js";
-import { NEWS } from "./news.js";
-import { recordSession, recordQuestion, readStats, resetStats } from "./stats.js";
+// La version (?v=N de index.html) est reportée sur chaque fichier :
+// une mise en ligne remplace donc bien toutes les copies en cache.
+const VERSION = new URL(import.meta.url).search;
+const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE } = await import("./data.js" + VERSION);
+const { findZoneDetailed, findIntent, normalize, displayKeyword } = await import("./search.js" + VERSION);
+const { NEWS } = await import("./news.js" + VERSION);
+const { recordSession, recordQuestion, readStats, resetStats } = await import("./stats.js" + VERSION);
+const voice = await import("./voice.js" + VERSION);
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -35,7 +39,8 @@ const store = {
 };
 const settings = {
   voices: store.get("voices", {}),
-  idleSeconds: store.get("idleSeconds", 60)
+  idleSeconds: store.get("idleSeconds", 60),
+  neuralVoice: store.get("neuralVoice", true)
 };
 
 const state = { screen: "idle", lang: "fr", floor: "0", zone: null, a11y: false, listening: false, speaking: false };
@@ -57,8 +62,10 @@ const els = {
   routeTarget: $("#routeTarget"), routeIcon: $("#routeIcon use"),
   warning: $("#idleWarning"), warningBody: $("#idleWarningBody"), warningButton: $("#idleWarningButton"),
   settings: $("#settings"), idleSeconds: $("#idleSeconds"), testVoice: $("#testVoice"),
+  neuralToggle: $("#neuralToggle"), voiceStatus: $("#voiceStatus"), voiceDownload: $("#voiceDownload"),
   toast: $("#toast"),
-  otherStore: $("#otherStore"), otherStoreClose: $("#otherStoreClose"), otherStoreAddress: $("#otherStoreAddress")
+  otherStore: $("#otherStore"), otherStoreClose: $("#otherStoreClose"), otherStoreAddress: $("#otherStoreAddress"),
+  idlePhoto: $("#idlePhoto")
 };
 
 // =====================================================================
@@ -86,27 +93,61 @@ function pickVoice(lang) {
   const wanted = LANGS[lang].speech.toLowerCase();
   let best = null;
   let bestScore = -Infinity;
-  for (const voice of voices) {
-    const voiceLang = (voice.lang || "").replace("_", "-").toLowerCase();
+  for (const candidate of voices) {
+    const voiceLang = (candidate.lang || "").replace("_", "-").toLowerCase();
     if (!voiceLang.startsWith(wanted.slice(0, 2))) continue;
-    const name = normalize(voice.name);
+    const name = normalize(candidate.name);
     let score = voiceLang === wanted ? 4 : 0;
     const rank = FEMALE_VOICES[lang].findIndex((n) => name.includes(n));
     if (rank >= 0) score += 20 - rank * 0.2;
     if (MALE_VOICES.some((n) => new RegExp(`(^| )${n}( |$)`).test(name))) score -= 30;
     if (/natural|online|neural|premium|enhanced/.test(name)) score += 3;
-    if (score > bestScore) { bestScore = score; best = voice; }
+    if (score > bestScore) { bestScore = score; best = candidate; }
   }
   return best;
 }
 
+// Voix neuronale Piper si elle est prête, sinon voix du navigateur.
+let lastEngine = "aucune lecture pour l'instant";
+
 function speak(text, lang = state.lang) {
-  if (!("speechSynthesis" in window)) return;
+  stopSpeaking();
+  if (settings.neuralVoice && voice.isReady(lang)) {
+    lastEngine = `voix neuronale Piper (${lang})`;
+    updateVoiceStatus();
+    voice.speak(text, lang, {
+      rate: state.a11y ? 0.88 : 1,
+      onStart: () => setSpeaking(true),
+      onLevel: (level) => { if (avatar) avatar.setLevel(level); },
+      onEnd: () => {
+        setSpeaking(false);
+        if (avatar) avatar.setLevel(null);
+      }
+    }).then((handled) => {
+      if (!handled) {
+        lastEngine = `voix du navigateur (${lang}) — Piper indisponible`;
+        updateVoiceStatus();
+        speakWithBrowser(text, lang);
+      }
+    });
+    return;
+  }
+  speakWithBrowser(text, lang);
+}
+
+function speakWithBrowser(text, lang = state.lang) {
+  if (!("speechSynthesis" in window)) {
+    lastEngine = "aucune voix disponible sur cet appareil";
+    updateVoiceStatus();
+    return;
+  }
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = LANGS[lang].speech;
-  const voice = pickVoice(lang);
-  if (voice) utterance.voice = voice;
+  const chosen = pickVoice(lang);
+  if (chosen) utterance.voice = chosen;
+  lastEngine = `voix du navigateur : ${chosen ? chosen.name : "voix par défaut"} (${lang})`;
+  updateVoiceStatus();
   utterance.rate = state.a11y ? 0.86 : 1;
   utterance.pitch = 1.05;
   utterance.onstart = () => setSpeaking(true);
@@ -118,8 +159,46 @@ function speak(text, lang = state.lang) {
 }
 
 function stopSpeaking() {
+  voice.stop();
+  if (avatar) avatar.setLevel(null);
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   setSpeaking(false);
+}
+
+// --- Voix neuronale : téléchargement et état ------------------------------
+const VOICE_LANG_NAMES = { fr: "Français", en: "Anglais", es: "Espagnol" };
+
+function updateVoiceStatus() {
+  if (!els.voiceStatus) return;
+  const lines = ["fr", "en", "es"].map((lang) => {
+    const name = VOICE_LANG_NAMES[lang];
+    if (!voice.supports(lang)) return `${name} : voix du navigateur (pas de voix Piper féminine disponible)`;
+    if (voice.isReady(lang)) return `${name} : voix neuronale prête`;
+    if (voice.isDownloading(lang)) return `${name} : téléchargement en cours…`;
+    return `${name} : voix neuronale non téléchargée`;
+  });
+  els.voiceStatus.textContent = lines.join(" · ") + ` — Dernière lecture : ${lastEngine}.`;
+  els.voiceDownload.disabled = ["fr", "en"].every((lang) => voice.isReady(lang) || voice.isDownloading(lang));
+}
+
+async function downloadVoices(langs = ["fr", "en"]) {
+  for (const lang of langs) {
+    if (!settings.neuralVoice || !voice.supports(lang) || voice.isReady(lang)) continue;
+    updateVoiceStatus();
+    await voice.ensure(lang, () => updateVoiceStatus());
+    updateVoiceStatus();
+  }
+}
+
+async function initVoice() {
+  try {
+    await voice.init();
+    updateVoiceStatus();
+    if (settings.neuralVoice) await downloadVoices(["fr"]);
+  } catch (error) {
+    console.info("Voix neuronale indisponible :", error && error.message ? error.message : error);
+    updateVoiceStatus();
+  }
 }
 
 function setSpeaking(on) {
@@ -226,7 +305,11 @@ function ask(text, source = "text") {
   // Les « bonjour » / « merci » comptent comme questions, pas comme questions sans réponse.
   recordQuestion({ text: intent ? null : text, zone, lang: state.lang, source });
   if (zone) { answerZone(zone, match.fuzzy ? t().didYouMean(displayKeyword(match.keyword)) : ""); return; }
-  if (intent) { reply(t()[intent]); return; }
+  if (intent) {
+    reply(t()[intent]);
+    if (intent === "thanks") signLSF("merci");
+    return;
+  }
   clearZone();
   reply(t().notFound);
 }
@@ -252,8 +335,15 @@ let floorTimer = null;
 
 function renderTiles() {
   $$(".tile").forEach((tile) => {
-    if (tile.classList.contains("tile-ghost")) return;
     const zone = ZONES[tile.dataset.zone];
+    // Sécurité : une case sans rayon connu (fichiers dépareillés) est ignorée
+    // au lieu de bloquer toute la borne.
+    if (!zone) {
+      console.warn("Rayon inconnu sur le plan :", tile.dataset.zone);
+      tile.hidden = true;
+      return;
+    }
+    tile.hidden = false;
     const detail = zone.detail[state.lang];
     tile.innerHTML = `<svg class="tile-icon" aria-hidden="true"><use href="#i-${zone.icon}"/></svg><span class="tile-text"><span class="tile-name"></span>${detail ? '<span class="tile-detail"></span>' : ""}</span>`;
     tile.querySelector(".tile-name").textContent = zone.label[state.lang];
@@ -282,23 +372,23 @@ let routeAnimation = null;
 function routePoints(floor, id) {
   const zone = ZONES[id];
   if (!zone || id === "entree") return null;
-  const floorEl = $(`.floor[data-floor="${floor}"]`);
-  const box = floorEl.getBoundingClientRect();
+  const planEl = $(`.floor[data-floor="${floor}"] .plan`);
+  const box = planEl.getBoundingClientRect();
   const centre = (el) => {
     const r = el.getBoundingClientRect();
     return { x: r.left - box.left + r.width / 2, y: r.top - box.top + r.height / 2, bottom: r.bottom - box.top };
   };
   if (floor === "0") {
-    const start = centre($(".floor-0 .here svg"));
+    const start = centre($(".plan-0 .here svg"));
     const target = zone.floors.includes("0")
-      ? $(`.floor-0 .tile[data-zone="${id}"]:not(.tile-ghost)`)
-      : $('.floor-0 .tile[data-zone="escalier"]');
+      ? $(`.plan-0 .tile[data-zone="${id}"]`)
+      : $('.plan-0 .tile[data-zone="escalier"]');
     const end = centre(target);
     return [start, { x: end.x, y: start.y }, end];
   }
   if (id === "escalier" || !zone.floors.includes("-1")) return null;
-  const stairs = centre($('.floor-m1 .tile[data-zone="escalier"]'));
-  const end = centre($(`.floor-m1 .tile[data-zone="${id}"]`));
+  const stairs = centre($('.plan-m1 .tile[data-zone="escalier"]'));
+  const end = centre($(`.plan-m1 .tile[data-zone="${id}"]`));
   const start = { x: stairs.x, y: stairs.bottom };
   return [start, { x: start.x, y: end.y }, end];
 }
@@ -390,7 +480,7 @@ function showZone(id) {
   const basementOnly = !zone.floors.includes("0");
 
   $$(".tile").forEach((tile) => tile.classList.toggle("is-hit", tile.dataset.zone === id));
-  $$('.floor-0 .tile[data-zone="escalier"]').forEach((tile) => tile.classList.toggle("is-route", basementOnly));
+  $$('.plan-0 .tile[data-zone="escalier"]').forEach((tile) => tile.classList.toggle("is-route", basementOnly));
   els.mapStage.classList.add("has-focus");
   renderRoute();
   scheduleRouteDraw(true);
@@ -467,6 +557,7 @@ function setLang(lang) {
   abortMic();
   state.lang = lang;
   applyLang();
+  if (settings.neuralVoice && voice.supports(lang) && !voice.isReady(lang)) downloadVoices([lang]);
   reply(t().switched);
 }
 
@@ -501,6 +592,7 @@ const GREETING_MS = 5200;
 const NEWS_MS = 8500;
 let idleStep = 0;
 let newsIndex = 0;
+let greetings = 0;
 let idleCycle = null;
 
 function setIdleLang(lang) {
@@ -545,21 +637,52 @@ function startIdleCycle() {
       if (isNews) showNews(NEWS[newsIndex++ % NEWS.length]);
       else showGreeting(IDLE_ORDER[idleStep]);
       els.idle.classList.remove("is-swapping");
-      if (idleStep === 0 && avatar) avatar.wave();
+      // Un tour sur deux : « Bonjour » en langue des signes plutôt qu'un signe de la main.
+      if (idleStep === 0 && avatar) {
+        greetings += 1;
+        if (greetings % 2 !== 0 || !signLSF("bonjour")) avatar.wave();
+      }
       idleCycle = setTimeout(next, isNews ? NEWS_MS : GREETING_MS);
     }, 420);
   };
   idleCycle = setTimeout(next, GREETING_MS);
 }
 
-function placeAvatar() {
+// expand > 1 : agrandit temporairement la scène 3D autour de son emplacement
+// (utile pour qu'un signe en LSF reste visible sur la page principale).
+function placeAvatar(expand = 1) {
   const slot = state.screen === "app" ? els.dockSlot : els.idleSlot;
   const r = slot.getBoundingClientRect();
+  const width = r.width * expand;
+  const height = r.height * expand;
+  const margin = 8;
+  // La scène grandit vers le bas et la droite pour ne pas sortir du panneau.
+  const left = Math.max(margin, Math.min(window.innerWidth - width - margin, r.left));
+  const top = Math.max(margin, Math.min(window.innerHeight - height - margin, r.top));
   const s = els.stageEl.style;
-  s.left = r.left + "px";
-  s.top = r.top + "px";
-  s.width = r.width + "px";
-  s.height = r.height + "px";
+  s.left = left + "px";
+  s.top = top + "px";
+  s.width = width + "px";
+  s.height = height + "px";
+}
+
+// Signe en langue des signes. Sur la page principale, la scène s'agrandit
+// le temps du geste pour que la main soit visible.
+let signTimer = null;
+function signLSF(name) {
+  if (!avatar) return false;
+  const duration = avatar.sign(name);
+  if (!duration) return false;
+  if (state.screen === "app") {
+    clearTimeout(signTimer);
+    document.body.classList.add("is-signing");
+    placeAvatar(1.95);
+    signTimer = setTimeout(() => {
+      document.body.classList.remove("is-signing");
+      placeAvatar();
+    }, duration);
+  }
+  return true;
 }
 
 function enterApp() {
@@ -712,7 +835,7 @@ let avatar = null;
 async function initAvatar() {
   placeAvatar();
   try {
-    const { createAvatar } = await import("./avatar.js");
+    const { createAvatar } = await import("./avatar.js" + VERSION);
     const optionsFor = (file) => ({
       reducedMotion: motionReduced(),
       shirtLogo: "assets/fnac-logo.svg",
@@ -785,6 +908,8 @@ els.logo.addEventListener("click", () => {
     logoTaps = [];
     fillVoiceSettings();
     renderStats();
+    els.neuralToggle.checked = settings.neuralVoice;
+    updateVoiceStatus();
     els.idleSeconds.value = settings.idleSeconds;
     els.settings.showModal();
   }
@@ -794,6 +919,11 @@ els.settings.addEventListener("change", (e) => {
     settings.voices[e.target.dataset.voice] = e.target.value || undefined;
     store.set("voices", settings.voices);
   }
+  if (e.target === els.neuralToggle) {
+    settings.neuralVoice = els.neuralToggle.checked;
+    store.set("neuralVoice", settings.neuralVoice);
+    updateVoiceStatus();
+  }
   if (e.target === els.idleSeconds) {
     settings.idleSeconds = Math.min(600, Math.max(20, Number(els.idleSeconds.value) || 60));
     els.idleSeconds.value = settings.idleSeconds;
@@ -802,6 +932,7 @@ els.settings.addEventListener("change", (e) => {
 });
 els.testVoice.addEventListener("click", () => speak(t().hello));
 els.statsReset.addEventListener("click", handleStatsReset);
+els.voiceDownload.addEventListener("click", () => downloadVoices());
 
 let resizeTimer = null;
 window.addEventListener("resize", () => {
@@ -819,5 +950,25 @@ els.app.inert = true;
 $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); });
 applyLang();
 startIdleCycle();
+// Photo de Jeanne sur l'écran de veille : utilisée seulement si le fichier existe.
+els.idlePhoto.addEventListener("load", () => {
+  els.idlePhoto.hidden = false;
+  document.body.classList.add("has-idle-photo");
+});
+els.idlePhoto.addEventListener("error", () => { els.idlePhoto.remove(); });
+
 document.fonts.ready.then(placeAvatar);
 initAvatar();
+initVoice();
+
+// Aide au réglage : ouvrir la borne avec ?debug pour déclencher les gestes à la main
+// depuis la console du navigateur (jeanne.sign(), jeanne.wave(), jeanne.glance()).
+if (new URLSearchParams(location.search).has("debug")) {
+  window.jeanne = {
+    pose: (values) => avatar && avatar.setOverride(values),
+    state: () => avatar && avatar.debugState(),
+    sign: (name) => signLSF(name || "bonjour"),
+    wave: () => avatar && avatar.wave(),
+    glance: () => avatar && avatar.glance()
+  };
+}

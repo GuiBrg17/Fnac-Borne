@@ -9,7 +9,7 @@
 // 2. Si rien n'est trouvé, recherche tolérante aux fautes :
 //    « aifone », « playstasion », « télévition », « trotinete »…
 // =====================================================================
-import { ZONES, INTENTS } from "./data.js";
+const { ZONES, INTENTS } = await import("./data.js" + new URL(import.meta.url).search);
 
 const STOPWORDS = new Set([
   // français

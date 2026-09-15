@@ -18,6 +18,37 @@ const FRAMING = {
 
 const WAVE_SECONDS = 2.6;
 const GLANCE_SECONDS = 2.8;
+// « Bonjour » en langue des signes française : main plate, bout des doigts
+// près du menton, paume vers soi, puis la main part vers l'avant et vers le bas.
+// L'expression du visage (sourire) fait partie du signe.
+const SIGN_SECONDS = 3.4;
+
+// Positions clés réglées à l'écran (rotations des os du bras droit, en radians).
+// « bonjour » : main plate près du menton, paume vers le visage, puis vers l'avant et le bas.
+// « merci » : main plate qui part des lèvres et avance vers l'interlocuteur, paume vers le haut,
+// avec un léger hochement de tête.
+const SIGNS = {
+  bonjour: {
+    nod: 0,
+    stops: [
+      { at: 0, upperZ: null, upperX: 0, upperY: 0, lowerZ: 0.12, lowerY: 0 },
+      { at: 0.75, upperZ: 1.3, upperX: -0.15, upperY: 1.05, lowerZ: -1.95, lowerY: -1.4 },
+      { at: 1.15, upperZ: 1.32, upperX: -0.18, upperY: 1.05, lowerZ: -1.98, lowerY: -1.4 },
+      { at: 2.1, upperZ: 1.0, upperX: -0.8, upperY: 0.6, lowerZ: -1.0, lowerY: 0.4 },
+      { at: SIGN_SECONDS, upperZ: null, upperX: 0, upperY: 0, lowerZ: 0.12, lowerY: 0 }
+    ]
+  },
+  merci: {
+    nod: 0.12,
+    stops: [
+      { at: 0, upperZ: null, upperX: 0, upperY: 0, lowerZ: 0.12, lowerY: 0 },
+      { at: 0.7, upperZ: 1.25, upperX: -0.2, upperY: 1.15, lowerZ: -2.15, lowerY: -1.2 },
+      { at: 1.0, upperZ: 1.25, upperX: -0.22, upperY: 1.15, lowerZ: -2.18, lowerY: -1.2 },
+      { at: 2.0, upperZ: 0.95, upperX: -0.95, upperY: 0.5, lowerZ: -0.85, lowerY: 0.9 },
+      { at: SIGN_SECONDS, upperZ: null, upperX: 0, upperY: 0, lowerZ: 0.12, lowerY: 0 }
+    ]
+  }
+};
 const X = new THREE.Vector3(1, 0, 0);
 const Y = new THREE.Vector3(0, 1, 0);
 const Z = new THREE.Vector3(0, 0, 1);
@@ -57,21 +88,28 @@ export async function createAvatar(canvas, url, options = {}) {
   let framing = "hero";
   let reduced = !!options.reducedMotion;
 
-  function frame() {
-    const { width, height } = canvas.getBoundingClientRect();
-    if (!width || !height) return;
-    renderer.setSize(width, height, false);
-    camera.aspect = width / height;
+  // zoom : 1 = cadrage normal, > 1 = caméra reculée (pour voir les mains pendant un signe).
+  let zoom = 1;
+
+  function placeCamera() {
     const f = FRAMING[framing];
     const vFov = THREE.MathUtils.degToRad(camera.fov);
     // Garantit que la largeur des épaules (≈ 0,5 m) reste visible sur un cadre étroit.
-    const visible = Math.max(f.height, 0.52 / camera.aspect);
+    const visible = Math.max(f.height, 0.52 / camera.aspect) * zoom;
     const dist = visible / 2 / Math.tan(vFov / 2);
     const y = headWorld.y + f.lift * (visible / f.height) * 0.5;
     camera.position.set(headWorld.x, y + 0.02, headWorld.z + dist);
     camera.lookAt(headWorld.x, y, headWorld.z);
     camera.updateProjectionMatrix();
     lookBase.copy(camera.position);
+  }
+
+  function frame() {
+    const { width, height } = canvas.getBoundingClientRect();
+    if (!width || !height) return;
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    placeCamera();
   }
   const lookBase = new THREE.Vector3();
   const lookPoint = new THREE.Vector3();
@@ -89,8 +127,13 @@ export async function createAvatar(canvas, url, options = {}) {
   let blinkStart = -1;
   let waveStart = -10;
   let glanceStart = -10;
+  let signStart = -10;
+  let signName = "bonjour";
+  let override = null; // réglage manuel du bras droit (mise au point des signes)
   let happy = 0;
   let happyTarget = 0.25;
+  // Volume du son quand la voix neuronale parle (null = bouche animée toute seule).
+  let level = null;
 
   function tick() {
     timer.update();
@@ -100,11 +143,20 @@ export async function createAvatar(canvas, url, options = {}) {
 
     const w = t - waveStart;
     const waveProgress = !reduced && w >= 0 && w < WAVE_SECONDS ? w : -1;
+    const s = t - signStart;
+    const signProgress = s >= 0 && s < SIGN_SECONDS ? s : -1;
+    const sign = signProgress >= 0 ? { name: signName, at: signProgress } : null;
     // Regard vers le plan (à droite de l'écran) : montée rapide, maintien, retour doux.
     const g = t - glanceStart;
     const glanceRaw = g < 0 || g > GLANCE_SECONDS ? 0 : Math.min(1, g / 0.35, (GLANCE_SECONDS - g) / 0.6);
     const glance = glanceRaw * glanceRaw * (3 - 2 * glanceRaw) * (reduced ? 0.5 : 1);
-    rig.pose({ t, amp, speaking, wave: waveProgress, glance });
+    // Pendant le signe, la caméra recule pour montrer la main.
+    const targetZoom = sign || override ? 1.7 : 1;
+    if (Math.abs(zoom - targetZoom) > 0.002) {
+      zoom = THREE.MathUtils.lerp(zoom, targetZoom, 1 - Math.exp(-dt * 3.5));
+      placeCamera();
+    }
+    rig.pose({ t, amp, speaking, wave: waveProgress, glance, sign, override });
     rig.lookAt(lookPoint.copy(lookBase).addScaledVector(X, glance * 1.6));
 
     if (t > nextBlink && blinkStart < 0) blinkStart = t;
@@ -116,7 +168,7 @@ export async function createAvatar(canvas, url, options = {}) {
     }
 
     mouthKick = Math.max(0, mouthKick - dt * 5);
-    const target = speaking ? 0.18 + 0.5 * Math.abs(Math.sin(t * 17)) * (0.6 + 0.4 * Math.sin(t * 5.3)) + mouthKick * 0.3 : 0;
+    const target = level !== null ? Math.min(0.85, level * 0.95) : speaking ? 0.18 + 0.5 * Math.abs(Math.sin(t * 17)) * (0.6 + 0.4 * Math.sin(t * 5.3)) + mouthKick * 0.3 : 0;
     mouth = THREE.MathUtils.lerp(mouth, Math.min(target, 0.85), 1 - Math.exp(-dt * 22));
     happy = THREE.MathUtils.lerp(happy, happyTarget, 1 - Math.exp(-dt * 3));
 
@@ -132,12 +184,25 @@ export async function createAvatar(canvas, url, options = {}) {
       speaking = on;
       happyTarget = on ? 0.18 : 0.25;
     },
+    setLevel(value) {
+      level = value;
+    },
     pulse() {
       mouthKick = 1;
       vowel = ["aa", "oh", "ee", "aa"][Math.floor(Math.random() * 4)];
     },
     glance() {
       glanceStart = timer.getElapsed();
+    },
+    // Signe en langue des signes française (avatars VRM uniquement).
+    // Renvoie la durée du geste en millisecondes, ou 0 si l'avatar ne peut pas signer.
+    sign(name = "bonjour") {
+      if (!rig.canSign || !SIGNS[name]) return 0;
+      signName = name;
+      signStart = timer.getElapsed();
+      happyTarget = 0.55;
+      setTimeout(() => { happyTarget = 0.25; }, SIGN_SECONDS * 1000);
+      return SIGN_SECONDS * 1000;
     },
     wave() {
       waveStart = timer.getElapsed();
@@ -149,6 +214,18 @@ export async function createAvatar(canvas, url, options = {}) {
       frame();
     },
     setReducedMotion(on) { reduced = on; },
+    // Mise au point des gestes (borne ouverte avec ?debug).
+    setOverride(values) { override = values; },
+    debugState() {
+      const r = (b) => b ? [b.rotation.x, b.rotation.y, b.rotation.z].map((v) => Math.round(v * 100) / 100) : null;
+      return {
+        sign: signName,
+        signProgress: Math.round((timer.getElapsed() - signStart) * 100) / 100,
+        canSign: rig.canSign,
+        upperArm: r(rig.bones && rig.bones.rUpperArm),
+        lowerArm: r(rig.bones && rig.bones.rLowerArm)
+      };
+    },
     refresh: frame,
     dispose() {
       cancelAnimationFrame(raf);
@@ -207,12 +284,21 @@ function createVrmRig(gltf) {
 
   return {
     root: vrm.scene,
+    bones,
     anchor: { chest: raw("upperChest") || raw("chest"), neck: raw("neck") },
     meshes,
     headWorld,
     lookAt(position) { lookTarget.position.copy(position); },
-    pose({ t, amp, speaking, wave, glance = 0 }) {
+    canSign: true,
+    pose({ t, amp, speaking, wave, glance = 0, sign = null, override = null }) {
       rest();
+      if (override) {
+        const o = override;
+        bones.rUpperArm.rotation.set(o.upperX || 0, o.upperY || 0, o.upperZ ?? ARM);
+        bones.rLowerArm.rotation.set(o.lowerX || 0, o.lowerY || 0, o.lowerZ ?? 0.12);
+        if (bones.rHand) bones.rHand.rotation.set(o.handX || 0, o.handY || 0, o.handZ || 0);
+        return;
+      }
       const breath = Math.sin(t * 1.55);
       if (bones.spine) bones.spine.rotation.set(breath * 0.012 * amp, Math.sin(t * 0.21) * 0.03 * amp + glance * 0.12, 0);
       if (bones.chest) bones.chest.rotation.set(breath * 0.018 * amp, 0, Math.sin(t * 0.33) * 0.012 * amp);
@@ -224,7 +310,20 @@ function createVrmRig(gltf) {
       if (bones.lUpperArm) bones.lUpperArm.rotation.z = -ARM + breath * 0.012 * amp;
       if (bones.rUpperArm) bones.rUpperArm.rotation.z = ARM - breath * 0.012 * amp;
 
-      if (wave >= 0 && bones.rUpperArm && bones.rLowerArm) {
+      if (sign && bones.rUpperArm && bones.rLowerArm) {
+        const { stops, nod } = SIGNS[sign.name];
+        let k = 1;
+        while (k < stops.length - 1 && sign.at > stops[k].at) k++;
+        const from = stops[k - 1];
+        const to = stops[k];
+        const raw = Math.min(1, Math.max(0, (sign.at - from.at) / (to.at - from.at)));
+        const e = raw * raw * (3 - 2 * raw);
+        const mix = (a, b) => THREE.MathUtils.lerp(a === null ? ARM : a, b === null ? ARM : b, e);
+        bones.rUpperArm.rotation.set(mix(from.upperX, to.upperX), mix(from.upperY, to.upperY), mix(from.upperZ, to.upperZ));
+        bones.rLowerArm.rotation.set(0, mix(from.lowerY, to.lowerY), mix(from.lowerZ, to.lowerZ));
+        // Hochement de tête (le visage fait partie du signe).
+        if (nod && bones.neck) bones.neck.rotation.x += nod * Math.sin(Math.min(1, sign.at / SIGN_SECONDS) * Math.PI);
+      } else if (wave >= 0 && bones.rUpperArm && bones.rLowerArm) {
         const ease = waveEase(wave);
         bones.rUpperArm.rotation.z = THREE.MathUtils.lerp(ARM, 0.95, ease);
         bones.rUpperArm.rotation.x = THREE.MathUtils.lerp(0, -0.35, ease);
@@ -335,6 +434,7 @@ function createGlbRig(gltf) {
     meshes,
     headWorld,
     lookAt() { /* regard fixe vers l'avant : l'avatar fait face à la caméra */ },
+    canSign: false,
     pose({ t, amp, speaking, wave, glance = 0 }) {
       restore();
       const breath = Math.sin(t * 1.55);
