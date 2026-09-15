@@ -2,117 +2,268 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jeanne — Borne d'accueil Fnac</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Jeanne — Borne d'accueil Fnac Jeanne d'Arc</title>
+<link rel="icon" href="assets/fnac-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
+<link rel="stylesheet" href="css/kiosk.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/",
+    "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3.5.5/lib/three-vrm.module.min.js"
+  }
+}
+</script>
+<script type="module" src="js/app.js"></script>
 </head>
-<body>
+<body class="is-idle">
 
-<div class="kiosk">
+<!-- Icônes (dessinées une fois, réutilisées partout) -->
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 10.5a6.5 6.5 0 0 0 13 0M12 17v4.5M8.5 21.5h7"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12h15M13 5.5 19.5 12 13 18.5"/></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.8"/><path d="M4.5 21c.6-4.2 3.6-6.8 7.5-6.8s6.9 2.6 7.5 6.8"/></symbol>
+  <symbol id="i-access" viewBox="0 0 24 24"><circle cx="12" cy="4.2" r="1.9"/><path d="M4.5 8.5 12 10l7.5-1.5M12 10v5M8.5 21.5 12 15l3.5 6.5"/></symbol>
+  <symbol id="i-exit" viewBox="0 0 24 24"><path d="M14 4.5h4.5a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H14M10 16.5 5.5 12 10 7.5M5.5 12H15"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21.5s6.5-5.8 6.5-11.2a6.5 6.5 0 1 0-13 0c0 5.4 6.5 11.2 6.5 11.2z"/><circle cx="12" cy="10.2" r="2.3"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5zM4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5.5 6.5 6.5L9 18.5"/></symbol>
+  <symbol id="i-smartphone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18h3"/></symbol>
+  <symbol id="i-stairs" viewBox="0 0 24 24"><path d="M3.5 20.5h4.5v-4.5h4.5v-4.5h4.5V7h3.5"/></symbol>
+  <symbol id="i-door" viewBox="0 0 24 24"><path d="M5.5 21V4.5A1.5 1.5 0 0 1 7 3h10a1.5 1.5 0 0 1 1.5 1.5V21M3.5 21h17"/><circle cx="14.8" cy="12" r=".6"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6 14.5h4"/></symbol>
+  <symbol id="i-dice" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3.5"/><circle cx="8.5" cy="8.5" r=".6"/><circle cx="15.5" cy="15.5" r=".6"/><circle cx="12" cy="12" r=".6"/></symbol>
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 0-5.3 5.3L3.5 17.5l3 3 5.7-5.7a4 4 0 0 0 5.3-5.3l-2.6 2.6-2.4-.6-.6-2.4z"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24"><path d="M20.5 7.5 12 3 3.5 7.5v9L12 21l8.5-4.5z"/><path d="m3.5 7.5 8.5 4.5 8.5-4.5M12 12v9"/></symbol>
+  <symbol id="i-printer" viewBox="0 0 24 24"><path d="M6.5 9V3.5h11V9M6.5 17.5h-2a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2h15a2 2 0 0 1 2 2v4.5a2 2 0 0 1-2 2h-2"/><rect x="6.5" y="14" width="11" height="6.5" rx="1"/></symbol>
+  <symbol id="i-gamepad" viewBox="0 0 24 24"><path d="M7.5 7h9a5 5 0 0 1 4.9 6l-.7 3.6a2.4 2.4 0 0 1-4.1 1.2L14.5 15.5h-5l-2.1 2.3a2.4 2.4 0 0 1-4.1-1.2L2.6 13a5 5 0 0 1 4.9-6z"/><path d="M8 9.5v4M6 11.5h4"/><circle cx="15.5" cy="10.5" r=".6"/><circle cx="17.5" cy="12.5" r=".6"/></symbol>
+  <symbol id="i-scooter" viewBox="0 0 24 24"><circle cx="5.5" cy="18" r="2.5"/><circle cx="18.5" cy="18" r="2.5"/><path d="M8 18h8M16.5 18 13.5 4.5h3.5"/></symbol>
+  <symbol id="i-tablet" viewBox="0 0 24 24"><rect x="4" y="2.5" width="16" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
+  <symbol id="i-drive" viewBox="0 0 24 24"><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M5.5 13 8 4.5h8l2.5 8.5M7 16.5h.01M10.5 16.5h.01"/></symbol>
+  <symbol id="i-cable" viewBox="0 0 24 24"><path d="M7 3.5v4M11 3.5v4M5 7.5h8v3.5a4 4 0 0 1-8 0zM9 15v2.5a3.5 3.5 0 0 0 7 0V7a3 3 0 0 1 6 0"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2.5" y="3.5" width="19" height="12.5" rx="2"/><path d="M12 16v4.5M8 20.5h8"/></symbol>
+  <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 2.5v5M15 2.5v5M6 7.5h12v3a6 6 0 0 1-12 0zM12 16.5v5"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4.5" y="4.5" width="15" height="10.5" rx="1.5"/><path d="M2 19h20"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24"><path d="M12 7.5c-1.4-1.3-4.9-1.6-6.4 1.2-1.6 3 .2 8.2 2.5 10.6 1.1 1.1 2.2 1 3.9.3 1.7.7 2.8.8 3.9-.3 1.6-1.6 2.7-4 3-5.8-2.6-1-3-4.8-.7-6.1-1.6-1.9-4.9-1.4-6.2.1zM12 7.5c0-2.2 1.3-3.8 3.3-4.2"/></symbol>
+  <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3.5 17v-5a8.5 8.5 0 0 1 17 0v5"/><rect x="2.5" y="13.5" width="5" height="7.5" rx="2"/><rect x="16.5" y="13.5" width="5" height="7.5" rx="2"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2.5" y="4.5" width="19" height="13" rx="2"/><path d="M8 21h8"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3.5 8.5a2 2 0 0 1 2-2h2.3l1.7-2.5h5l1.7 2.5h2.3a2 2 0 0 1 2 2v9.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.6"/></symbol>
+  <symbol id="flag-fr" viewBox="0 0 30 20"><rect width="10" height="20" fill="#002654"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ED2939"/></symbol>
+  <symbol id="flag-en" viewBox="0 0 30 20"><rect width="30" height="20" fill="#012169"/><path d="M0 0l30 20M30 0 0 20" stroke="#fff" stroke-width="4"/><path d="M0 0l30 20M30 0 0 20" stroke="#C8102E" stroke-width="1.6"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6.5"/><path d="M15 0v20M0 10h30" stroke="#C8102E" stroke-width="3.5"/></symbol>
+  <symbol id="flag-es" viewBox="0 0 30 20"><rect width="30" height="20" fill="#AA151B"/><rect y="5" width="30" height="10" fill="#F1BF00"/></symbol>
+</svg>
 
-  <div class="store-name-badge" id="storeNameBadge">FNAC JEANNE D'ARC — TOULOUSE</div>
-
-  <main class="stage-v3">
-
-    <!-- Bandeau avatar vertical, pleine hauteur -->
-    <aside class="avatar-rail">
-      <span class="avatar-rail-text" id="avatarRailText">AVATAR JEANNE</span>
-    </aside>
-
-    <!-- Colonne de contrôle : drapeaux, tchat, micro/texte -->
-    <section class="control-column">
-
-      <div class="flags-row" id="flagsRow">
-        <button class="flag-btn active" data-lang="fr-FR" title="Français">🇫🇷</button>
-        <button class="flag-btn" data-lang="en-US" title="English">🇬🇧</button>
-        <button class="flag-btn" data-lang="es-ES" title="Español">🇪🇸</button>
-      </div>
-
-      <div class="dark-box chat-box">
-        <div class="dark-box-title" id="chatBoxTitle">Zone du tchat retransmis à l'écrit</div>
-        <p class="disclaimer" id="disclaimerText">Bienvenue ! Cette borne vous aide à trouver un produit et à vous repérer dans le magasin. Parlez ou écrivez votre question.</p>
-        <div class="chat-log" id="chatLog"></div>
-      </div>
-
-      <div class="dark-box control-box">
-        <button class="mic-btn-main" id="micBtn" title="Parler">
-          <span class="mic-icon">🎙️</span>
-          <span id="micLabel">Appuyer ici pour parler</span>
-        </button>
-
-        <form class="chat-form" id="chatForm">
-          <input type="text" id="chatInput" placeholder="Écrire au lieu de parler..." autocomplete="off">
-          <button type="submit" id="chatSendBtn">OK</button>
-        </form>
-
-        <div class="voice-switch">
-          <span class="lang-label" id="voiceLabel">Voix</span>
-          <select id="voiceSelect" class="voice-select"></select>
-        </div>
-
-        <div class="quick-actions" id="quickActions">
-          <button class="quick-btn" data-zone="informatique">📀 Disques durs</button>
-          <button class="quick-btn" data-zone="audio">🎧 Casques audio</button>
-          <button class="quick-btn" data-zone="gaming">🎮 Consoles</button>
-          <button class="quick-btn" data-zone="telephonie">📱 Téléphonie</button>
-        </div>
-
-        <button class="vendor-btn" id="vendorBtn">🙋 Être accompagné par un vendeur</button>
-      </div>
-
-    </section>
-
-    <!-- Plan du magasin -->
-    <section class="map-panel-main">
-      <div class="map-title" id="mapTitle">PLAN DU MAGASIN <span id="mapSubtitle">— 2 niveaux</span></div>
-
-      <div class="map-floors" id="mapFloors">
-
-        <div class="floor-label" id="floorLabelRdc">ÉTAGE 0</div>
-        <div class="map-grid map-grid-ground" id="groundGrid">
-          <div class="tile tile-wide" data-zone="telephonie" style="grid-column: 1 / 3; grid-row: 1 / 3;">Téléphonie Android<br><span>Écouteurs filaires, chargeurs...</span></div>
-          <div class="tile tile-dark" data-zone="escalierSousSol" style="grid-column: 3 / 4; grid-row: 1 / 3;">⬇ Escalier vers Sous-Sol<br><span>Haut des escaliers</span></div>
-          <div class="tile tile-entree" data-zone="entree" style="grid-column: 1 / 4; grid-row: 3 / 4;" id="entreeTile">— Entrée et Sortie —</div>
-        </div>
-
-        <div class="floor-connector">⬇</div>
-
-        <div class="floor-label" id="floorLabelSs">ÉTAGE -1</div>
-        <div class="map-grid map-grid-basement" id="basementGrid">
-          <div class="tile" data-zone="caisse" style="grid-column: 1 / 3; grid-row: 1 / 2;">Caisse / Adhésion</div>
-          <div class="tile" data-zone="jeuxSociete" style="grid-column: 3 / 4; grid-row: 1 / 2;">Jeux de société</div>
-          <div class="tile tile-note" data-zone="escalierEtage" style="grid-column: 4 / 5; grid-row: 1 / 2;">⬆ Escalier vers l'étage<br><span>LEGO et figurines POP — Bas des escaliers</span></div>
-
-          <div class="tile" data-zone="sav" style="grid-column: 1 / 2; grid-row: 2 / 3;">SAV</div>
-          <div class="tile" data-zone="retraitCommandes" style="grid-column: 1 / 2; grid-row: 3 / 4;">Retrait de commandes</div>
-          <div class="tile" data-zone="cartouches" style="grid-column: 1 / 2; grid-row: 4 / 7;">Cartouches d'imprimantes<br><span>et accessoires PC</span></div>
-          <div class="tile" data-zone="gaming" style="grid-column: 1 / 2; grid-row: 7 / 10;">Gaming<br><span>Consoles et jeux vidéo</span></div>
-          <div class="tile" data-zone="trotinette" style="grid-column: 1 / 2; grid-row: 10 / 11;">Trottinettes et figurines POP</div>
-
-          <div class="tile" data-zone="tablette" style="grid-column: 2 / 3; grid-row: 2 / 3;">Tablette Android</div>
-          <div class="tile" data-zone="stockageConnectique" style="grid-column: 2 / 3; grid-row: 3 / 5;">Stockage &amp; Connectique<br><span>Clés USB, disque dur, câbles HDMI/Ethernet</span></div>
-          <div class="tile" data-zone="imprimantes" style="grid-column: 2 / 3; grid-row: 5 / 6;">Imprimantes</div>
-          <div class="tile tile-big" data-zone="pcgamer" style="grid-column: 2 / 3; grid-row: 6 / 9;">PC gamer / écran gamer<br>et accessoires gamer</div>
-          <div class="tile" data-zone="autreElectro" style="grid-column: 2 / 3; grid-row: 9 / 11;">Autre électroménager</div>
-
-          <div class="tile tile-big" data-zone="pcwindows" style="grid-column: 3 / 4; grid-row: 2 / 6;">PC Windows</div>
-          <div class="tile" data-zone="ecranpc" style="grid-column: 3 / 4; grid-row: 6 / 7;">Écran PC</div>
-          <div class="tile" data-zone="electromenager" style="grid-column: 3 / 4; grid-row: 7 / 10;">Électroménager<br><span>Sèche-cheveux, SodaStream...</span></div>
-          <div class="tile" data-zone="photo" style="grid-column: 3 / 4; grid-row: 10 / 11;">Photo / Drones / Micros</div>
-
-          <div class="tile tile-big" data-zone="apple" style="grid-column: 4 / 5; grid-row: 2 / 6;">Apple<br><span>iPad / iPhone / Mac / accessoires</span></div>
-          <div class="tile" data-zone="audio" style="grid-column: 4 / 5; grid-row: 6 / 8;">Audio<br><span>Casques / enceintes / vinyle</span></div>
-          <div class="tile tile-tall" data-zone="tv" style="grid-column: 4 / 5; grid-row: 8 / 12;">TV</div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <div class="toast" id="toast"></div>
-
+<!-- Jeanne en 3D : une seule scène qui passe de l'écran de veille à la page principale -->
+<div class="avatar-stage" id="avatarStage" aria-hidden="true">
+  <canvas id="avatarCanvas"></canvas>
+  <div class="avatar-fallback" id="avatarFallback"><span>J</span></div>
 </div>
 
-<script src="script.js"></script>
+<!-- ============ ÉCRAN DE VEILLE ============ -->
+<section class="idle" id="idleScreen" aria-label="Accueil — touchez l'écran pour commencer">
+  <header class="idle-top">
+    <span class="logo" role="img" aria-label="Fnac"></span>
+    <span class="store">Jeanne d'Arc · Toulouse</span>
+  </header>
+
+  <div class="idle-copy" id="idleCopy">
+    <div class="idle-greet" id="idleGreet">
+      <p class="idle-hello" data-i18n="idleHello">Bonjour !</p>
+      <h1 class="idle-title" data-i18n="idleTitle">Je suis Jeanne, votre guide à la Fnac Jeanne d'Arc.</h1>
+      <p class="idle-sub" data-i18n="idleSub">Dites-moi ce que vous cherchez, je vous montre le rayon.</p>
+    </div>
+    <article class="idle-news" id="idleNews" hidden>
+      <img class="idle-news-image" id="idleNewsImage" alt="" hidden>
+      <h2 class="idle-news-title" id="idleNewsTitle"></h2>
+      <p class="idle-news-text" id="idleNewsText"></p>
+      <p class="idle-news-date"><svg aria-hidden="true"><use href="#i-calendar"/></svg><span id="idleNewsDate"></span><span class="idle-news-example" id="idleNewsExample" hidden>Exemple à remplacer</span></p>
+    </article>
+  </div>
+
+  <div class="idle-avatar-slot" id="idleAvatarSlot">
+    <p class="idle-bubble" data-i18n="idleBubble">Bienvenue ! En quoi puis-je vous aider ?</p>
+  </div>
+
+  <div class="idle-cta">
+    <span class="ripple" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="idle-cta-dot" aria-hidden="true"></span>
+    <span data-i18n="idleCta">Touchez l'écran pour commencer</span>
+  </div>
+
+  <ul class="idle-langs" aria-hidden="true">
+    <li data-lang="fr"><svg><use href="#flag-fr"/></svg>Français</li>
+    <li data-lang="en"><svg><use href="#flag-en"/></svg>English</li>
+    <li data-lang="es"><svg><use href="#flag-es"/></svg>Español</li>
+  </ul>
+</section>
+
+<!-- ============ PAGE PRINCIPALE ============ -->
+<main class="app" id="appScreen" inert>
+
+  <aside class="assistant">
+    <div class="assistant-top">
+      <button class="logo-button" id="logoButton" type="button" aria-label="Fnac"><span class="logo"></span></button>
+      <div class="langs" role="group" aria-label="Langue / Language / Idioma" id="langSwitch">
+        <button type="button" data-lang="fr" aria-pressed="true"><svg><use href="#flag-fr"/></svg><span>FR</span></button>
+        <button type="button" data-lang="en" aria-pressed="false"><svg><use href="#flag-en"/></svg><span>EN</span></button>
+        <button type="button" data-lang="es" aria-pressed="false"><svg><use href="#flag-es"/></svg><span>ES</span></button>
+      </div>
+    </div>
+
+    <div class="jeanne">
+      <div class="jeanne-slot" id="dockAvatarSlot"></div>
+      <div class="jeanne-id">
+        <p class="jeanne-name">Jeanne</p>
+        <p class="jeanne-status" id="status"><span class="status-dot"></span><span id="statusText">Posez votre question</span></p>
+      </div>
+    </div>
+
+    <div class="chat" id="chatLog" role="log" aria-live="polite"></div>
+
+    <div class="suggestions">
+      <p class="suggestions-title" data-i18n="suggestionsTitle">Recherches fréquentes</p>
+      <div class="chips" id="suggestions"></div>
+    </div>
+
+    <div class="composer">
+      <button class="mic" id="micButton" type="button" aria-pressed="false">
+        <span class="mic-icon"><svg><use href="#i-mic"/></svg></span>
+        <span class="mic-label" id="micLabel">Appuyez pour parler</span>
+        <span class="mic-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      </button>
+      <form class="ask" id="askForm" autocomplete="off">
+        <label class="visually-hidden" for="askInput" data-i18n="placeholder">Ou écrivez ici</label>
+        <input id="askInput" type="text" enterkeyhint="send" placeholder="Ou écrivez ici : casque, PS5, iPhone…">
+        <button type="submit" id="askSend" aria-label="Envoyer"><svg><use href="#i-send"/></svg></button>
+      </form>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="action action-vendor" id="vendorButton"><svg><use href="#i-person"/></svg><span data-i18n="vendor">Appeler un vendeur</span></button>
+      <button type="button" class="action" id="a11yButton" aria-pressed="false"><svg><use href="#i-access"/></svg><span data-i18n="accessibility">Accessibilité</span></button>
+      <button type="button" class="action" id="endButton"><svg><use href="#i-exit"/></svg><span data-i18n="end">Terminer</span></button>
+    </div>
+  </aside>
+
+  <section class="map" aria-labelledby="mapTitle">
+    <header class="map-head">
+      <h2 id="mapTitle" data-i18n="mapTitle">Plan du magasin</h2>
+      <div class="floors" role="tablist" id="floorTabs">
+        <button type="button" role="tab" data-floor="0" aria-selected="true"><b>0</b><span data-i18n="floor0">Étage 0</span></button>
+        <button type="button" role="tab" data-floor="-1" aria-selected="false"><b>−1</b><span data-i18n="floorM1">Sous-sol</span></button>
+      </div>
+    </header>
+
+    <div class="map-stage" id="mapStage">
+      <!-- Étage 0 -->
+      <div class="floor floor-0 is-active" data-floor="0" role="tabpanel">
+        <button type="button" class="tile tile-ghost" data-zone="telephonie" tabindex="-1" aria-hidden="true" style="grid-area: 1 / 1 / 2 / 8"></button>
+        <button type="button" class="tile" data-zone="telephonie" style="grid-area: 1 / 1 / 4 / 5"></button>
+        <button type="button" class="tile tile-stairs" data-zone="escalier" style="grid-area: 2 / 5 / 4 / 8"></button>
+        <button type="button" class="tile tile-entrance" data-zone="entree" style="grid-area: 4 / 1 / 5 / 5"></button>
+        <span class="here" style="grid-area: 4 / 1 / 5 / 5"><svg><use href="#i-pin"/></svg><span data-i18n="youAreHere">Vous êtes ici</span></span>
+        <svg class="route-layer" aria-hidden="true"></svg>
+      </div>
+
+      <!-- Sous-sol -->
+      <div class="floor floor-m1" data-floor="-1" role="tabpanel">
+        <button type="button" class="tile" data-zone="caisse" style="grid-area: 1 / 1 / 2 / 3"></button>
+        <button type="button" class="tile" data-zone="jeuxSociete" style="grid-area: 1 / 3 / 2 / 5"></button>
+        <button type="button" class="tile tile-stairs" data-zone="escalier" style="grid-area: 1 / 5 / 2 / 9"></button>
+
+        <button type="button" class="tile" data-zone="sav" style="grid-area: 2 / 1 / 3 / 3"></button>
+        <button type="button" class="tile" data-zone="retrait" style="grid-area: 3 / 1 / 5 / 3"></button>
+        <button type="button" class="tile" data-zone="cartouches" style="grid-area: 5 / 1 / 8 / 3"></button>
+        <button type="button" class="tile" data-zone="gaming" style="grid-area: 8 / 1 / 11 / 3"></button>
+
+        <button type="button" class="tile" data-zone="tablette" style="grid-area: 2 / 3 / 3 / 5"></button>
+        <button type="button" class="tile" data-zone="stockage" style="grid-area: 3 / 3 / 4 / 5"></button>
+        <button type="button" class="tile" data-zone="cables" style="grid-area: 4 / 3 / 5 / 5"></button>
+        <button type="button" class="tile" data-zone="imprimantes" style="grid-area: 5 / 3 / 6 / 5"></button>
+        <button type="button" class="tile" data-zone="pcgamer" style="grid-area: 6 / 3 / 8 / 5"></button>
+        <button type="button" class="tile" data-zone="autreElectro" style="grid-area: 8 / 3 / 10 / 5"></button>
+
+        <button type="button" class="tile" data-zone="pcwindows" style="grid-area: 2 / 5 / 6 / 7"></button>
+        <button type="button" class="tile" data-zone="ecranpc" style="grid-area: 6 / 5 / 7 / 7"></button>
+        <button type="button" class="tile" data-zone="electromenager" style="grid-area: 7 / 5 / 10 / 7"></button>
+
+        <button type="button" class="tile" data-zone="apple" style="grid-area: 2 / 7 / 6 / 9"></button>
+        <button type="button" class="tile" data-zone="audio" style="grid-area: 6 / 7 / 8 / 9"></button>
+        <button type="button" class="tile" data-zone="tv" style="grid-area: 8 / 7 / 12 / 9"></button>
+
+        <button type="button" class="tile" data-zone="trottinettes" style="grid-area: 11 / 1 / 12 / 4"></button>
+        <button type="button" class="tile" data-zone="photo" style="grid-area: 10 / 4 / 12 / 7"></button>
+        <svg class="route-layer" aria-hidden="true"></svg>
+      </div>
+
+      <!-- Produits éditoriaux : direction la Fnac Wilson -->
+      <div class="other-store" id="otherStore" role="status" hidden>
+        <svg class="other-store-icon" aria-hidden="true"><use href="#i-book"/></svg>
+        <h3 class="other-store-title" id="otherStoreName">Fnac Wilson</h3>
+        <p class="other-store-what" data-i18n="otherStoreWhat">Livres, BD, manuels scolaires, CD, vinyles, DVD</p>
+        <p class="other-store-address" id="otherStoreAddress"></p>
+        <p class="other-store-near"><svg aria-hidden="true"><use href="#i-pin"/></svg><span data-i18n="otherStoreNear">Près de Jean-Jaurès</span></p>
+        <button type="button" class="other-store-close" id="otherStoreClose" data-i18n="otherStoreClose">Retour au plan</button>
+      </div>
+    </div>
+
+    <footer class="map-foot" id="mapFoot">
+      <p class="route-hint" id="routeHint" data-i18n="routeHint">Touchez un rayon du plan pour savoir ce qu'on y trouve.</p>
+      <ol class="route" id="route" hidden>
+        <li class="route-step"><svg><use href="#i-pin"/></svg><span data-i18n="stepEntrance">Entrée</span></li>
+        <li class="route-step" id="routeStairs"><svg><use href="#i-stairs"/></svg><span data-i18n="stepStairs">Escalier</span></li>
+        <li class="route-step route-target"><svg id="routeIcon"><use href="#i-pin"/></svg><span id="routeTarget"></span></li>
+      </ol>
+    </footer>
+  </section>
+</main>
+
+<!-- Retour automatique à l'accueil -->
+<dialog class="idle-warning" id="idleWarning">
+  <p class="idle-warning-title" data-i18n="idleWarnTitle">Vous êtes toujours là ?</p>
+  <p class="idle-warning-body" id="idleWarningBody"></p>
+  <button type="button" id="idleWarningButton" data-i18n="idleWarnButton">Je continue</button>
+</dialog>
+
+<!-- Réglages réservés au personnel : toucher 5 fois le logo de la page principale -->
+<dialog class="settings" id="settings">
+  <form method="dialog">
+    <h2>Réglages de la borne</h2>
+    <label>Voix française<select data-voice="fr"></select></label>
+    <label>Voix anglaise<select data-voice="en"></select></label>
+    <label>Voix espagnole<select data-voice="es"></select></label>
+    <label>Retour à l'accueil après (secondes)<input type="number" id="idleSeconds" min="20" max="600" step="10"></label>
+
+    <section class="stats" aria-labelledby="statsTitle">
+      <h3 id="statsTitle">Statistiques de la borne</h3>
+      <p class="stats-summary" id="statsSummary"></p>
+      <div class="stats-cols">
+        <div>
+          <h4>Rayons les plus demandés</h4>
+          <ol class="stats-list" id="statsZones"></ol>
+        </div>
+        <div>
+          <h4>Questions sans réponse</h4>
+          <ol class="stats-list" id="statsMisses"></ol>
+        </div>
+      </div>
+      <p class="stats-note">Données anonymes, enregistrées uniquement sur cette borne. Les questions sans réponse aident à compléter les mots-clés.</p>
+      <button type="button" class="stats-reset" id="statsReset">Remettre les statistiques à zéro</button>
+    </section>
+
+    <div class="settings-buttons">
+      <button type="button" id="testVoice">Tester la voix</button>
+      <button type="submit">Fermer</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
 </body>
 </html>
