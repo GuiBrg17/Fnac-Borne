@@ -171,14 +171,29 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   position: relative;
   margin: -4.5vh 0;
 }
-/* Vidéo de Jeanne en boucle sur l'écran de veille. */
+/* Vidéo de Jeanne en boucle sur l'écran de veille.
+   Le fond de la vidéo est le jaune de la page : Jeanne semble posée
+   directement dessus, sans cadre visible. L'élément est dimensionné à la
+   vidéo elle-même (et non à toute la colonne) pour que l'estompage des
+   bords ci-dessous tombe au bon endroit. */
 .idle-video {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  right: 0;
+  bottom: 0;
   height: 100%;
+  width: auto;
   object-fit: contain;
-  object-position: right bottom;
+  /* Les bords droit et bas touchent le bord de l'écran ; les bords gauche et
+     haut sont en pleine page, donc estompés : même si le jaune de la vidéo
+     sort décalé d'un point selon le navigateur, aucun trait ne se voit. */
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 5%),
+    linear-gradient(to bottom, transparent 0, #000 5%);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 5%),
+    linear-gradient(to bottom, transparent 0, #000 5%);
+  -webkit-mask-composite: source-in;
 }
 .idle-video[hidden] { display: none; }
 /* Quand la vidéo est là, la photo et l'avatar 3D s'effacent. */
