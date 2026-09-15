@@ -24,6 +24,11 @@ function avatarFile() {
   return requested && /^[\w-]+(\/[\w-]+)*\.(glb|vrm)$/i.test(requested) ? "assets/avatar/" + requested : AVATAR_FILE;
 }
 const WARNING_SECONDS = 15;
+// Visuel de l'écran de veille :
+//   "3d"    → l'avatar animé (il respire, cligne des yeux, salue, signe)
+//   "photo" → assets/jeanne-accueil.png
+//   "video" → assets/jeanne-accueil.mp4, avec la photo en secours
+const IDLE_VISUAL = "3d";
 
 // --- Réglages enregistrés sur la borne ---------------------------------
 const store = {
@@ -693,7 +698,7 @@ function enterApp() {
   document.body.classList.replace("is-idle", "is-app");
   els.idle.inert = true;
   els.app.inert = false;
-  if (els.idleVideo && !els.idleVideo.hidden) els.idleVideo.pause();
+  if (els.idleVideo && els.idleVideo.isConnected && !els.idleVideo.hidden) els.idleVideo.pause();
   state.lang = "fr";
   applyLang();
   placeAvatar();
@@ -722,7 +727,7 @@ function exitToIdle() {
   if (state.a11y) toggleA11y(false);
   placeAvatar();
   if (avatar) avatar.setFraming("hero");
-  if (els.idleVideo && !els.idleVideo.hidden) els.idleVideo.play().catch(() => {});
+  if (els.idleVideo && els.idleVideo.isConnected && !els.idleVideo.hidden) els.idleVideo.play().catch(() => {});
   startIdleCycle();
   setTimeout(() => { els.chat.textContent = ""; }, 600);
 }
@@ -953,26 +958,36 @@ $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); }
 applyLang();
 startIdleCycle();
 // Vidéo de Jeanne en boucle : utilisée si le fichier existe, sinon la photo.
+if (IDLE_VISUAL === "3d") {
+  // L'avatar 3D occupe l'écran de veille : ni photo ni vidéo à charger.
+  els.idleVideo.remove();
+  els.idlePhoto.remove();
+} else if (IDLE_VISUAL !== "video") {
+  els.idleVideo.remove();
+}
+
 function useIdleVideo() {
   els.idleVideo.hidden = false;
   document.body.classList.add("has-idle-video");
   els.idleVideo.play().catch(() => { /* lecture refusée : la photo reste affichée */ });
 }
-els.idleVideo.addEventListener("canplay", useIdleVideo, { once: true });
-els.idleVideo.addEventListener("error", () => { els.idleVideo.remove(); });
+if (els.idleVideo.isConnected) {
+  els.idleVideo.addEventListener("canplay", useIdleVideo, { once: true });
+  els.idleVideo.addEventListener("error", () => { els.idleVideo.remove(); });
+  els.idleVideo.src = els.idleVideo.dataset.src;
+}
 
 // Photo de Jeanne sur l'écran de veille : utilisée seulement si le fichier existe.
 function useIdlePhoto() {
   els.idlePhoto.hidden = false;
   document.body.classList.add("has-idle-photo");
 }
-els.idlePhoto.addEventListener("load", useIdlePhoto);
-els.idlePhoto.addEventListener("error", () => { els.idlePhoto.remove(); });
-// L'image peut déjà être chargée (cache, réseau rapide) : dans ce cas
-// l'événement "load" ne se déclenche plus, on vérifie donc directement.
-if (els.idlePhoto.complete) {
-  if (els.idlePhoto.naturalWidth > 0) useIdlePhoto();
-  else els.idlePhoto.remove();
+if (els.idlePhoto.isConnected) {
+  els.idlePhoto.addEventListener("load", useIdlePhoto);
+  els.idlePhoto.addEventListener("error", () => { els.idlePhoto.remove(); });
+  els.idlePhoto.src = els.idlePhoto.dataset.src;
+  // L'image peut déjà être en cache : dans ce cas "load" ne se déclenche pas.
+  if (els.idlePhoto.complete && els.idlePhoto.naturalWidth > 0) useIdlePhoto();
 }
 
 document.fonts.ready.then(placeAvatar);

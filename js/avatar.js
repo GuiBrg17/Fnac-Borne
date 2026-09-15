@@ -75,10 +75,16 @@ export async function createAvatar(canvas, url, options = {}) {
   } else {
     // Rendu réaliste (peau, tissus) pour les avatars .glb.
     renderer.toneMapping = THREE.NeutralToneMapping;
+    renderer.toneMappingExposure = 1.15;
     const pmrem = new THREE.PMREMGenerator(renderer);
     scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    scene.environmentIntensity = 0.7;
-    key.intensity = 1.6;
+    scene.environmentIntensity = 1.15;
+    key.intensity = 2.2;
+    // Lumière d'appoint froide côté opposé : évite les teintes verdâtres
+    // sur les cheveux et adoucit les ombres du visage.
+    const fill = new THREE.DirectionalLight(0xdfe8ff, 0.9);
+    fill.position.set(-1.2, 0.8, 1.4);
+    scene.add(fill);
     rig = createGlbRig(gltf);
   }
   scene.add(rig.root);
