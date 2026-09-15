@@ -206,7 +206,17 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .has-idle-video.is-idle .avatar-stage { opacity: 0; }
 /* La bulle de l'image d'origine est hors cadre : la borne affiche la sienne,
    qui change de langue. */
-.has-idle-photo .idle-bubble, .has-idle-video .idle-bubble { top: 6%; left: 4%; }
+.has-idle-photo .idle-bubble { top: 6%; left: 4%; }
+/* Avec la vidéo, Jeanne est dans un panneau sombre à droite : la bulle se
+   pose dessus, à gauche de son visage, et reste assez large pour ne pas
+   couper les mots. */
+.has-idle-video .idle-bubble {
+  top: 8%;
+  left: auto;
+  right: 68%;
+  max-width: 19ch;
+  text-wrap: balance;
+}
 
 .idle-bubble {
   position: absolute;

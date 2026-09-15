@@ -28,7 +28,7 @@ const WARNING_SECONDS = 15;
 //   "3d"    → l'avatar animé (il respire, cligne des yeux, salue, signe)
 //   "photo" → assets/jeanne-accueil.png
 //   "video" → assets/jeanne-accueil.mp4, avec la photo en secours
-const IDLE_VISUAL = "3d";
+const IDLE_VISUAL = "video";
 
 // --- Réglages enregistrés sur la borne ---------------------------------
 const store = {
@@ -966,19 +966,37 @@ if (IDLE_VISUAL === "3d") {
   els.idleVideo.remove();
 }
 
+// En mode vidéo, la photo ne sert que de secours : on ne l'affiche pas tout
+// de suite, sinon elle apparaît une seconde puis saute quand la vidéo démarre.
+// Son image d'attente (poster) couvre déjà le temps de chargement.
+let photoIsBackup = IDLE_VISUAL === "video" && els.idleVideo.isConnected;
+let photoReady = false;
+
 function useIdleVideo() {
   els.idleVideo.hidden = false;
   document.body.classList.add("has-idle-video");
-  els.idleVideo.play().catch(() => { /* lecture refusée : la photo reste affichée */ });
+  photoIsBackup = false;
+  els.idleVideo.play().catch(() => { /* lecture refusée : l'image d'attente reste */ });
+}
+function fallbackToPhoto() {
+  els.idleVideo.remove();
+  document.body.classList.remove("has-idle-video");
+  photoIsBackup = false;
+  if (photoReady) useIdlePhoto();
 }
 if (els.idleVideo.isConnected) {
   els.idleVideo.addEventListener("canplay", useIdleVideo, { once: true });
-  els.idleVideo.addEventListener("error", () => { els.idleVideo.remove(); });
+  els.idleVideo.addEventListener("error", fallbackToPhoto);
+  // Si la vidéo n'est toujours pas prête (fichier absent, connexion lente),
+  // la photo reprend la main.
+  setTimeout(() => { if (photoIsBackup) fallbackToPhoto(); }, 6000);
   els.idleVideo.src = els.idleVideo.dataset.src;
 }
 
 // Photo de Jeanne sur l'écran de veille : utilisée seulement si le fichier existe.
 function useIdlePhoto() {
+  photoReady = true;
+  if (photoIsBackup) return;
   els.idlePhoto.hidden = false;
   document.body.classList.add("has-idle-photo");
 }
