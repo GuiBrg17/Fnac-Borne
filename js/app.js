@@ -987,9 +987,9 @@ function fallbackToPhoto() {
 if (els.idleVideo.isConnected) {
   els.idleVideo.addEventListener("canplay", useIdleVideo, { once: true });
   els.idleVideo.addEventListener("error", fallbackToPhoto);
-  // Si la vidéo n'est toujours pas prête (fichier absent, connexion lente),
-  // la photo reprend la main.
-  setTimeout(() => { if (photoIsBackup) fallbackToPhoto(); }, 6000);
+  // Si la vidéo n'est toujours pas prête (fichier absent, connexion très
+  // lente), la photo reprend la main. Délai large : le fichier fait 6 Mo.
+  setTimeout(() => { if (photoIsBackup) fallbackToPhoto(); }, 15000);
   els.idleVideo.src = els.idleVideo.dataset.src;
 }
 
