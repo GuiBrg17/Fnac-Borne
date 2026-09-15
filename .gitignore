@@ -2,3 +2,5 @@
 .claude/
 .DS_Store
 assets/avatar/dev/
+# Rushes vidéo : jamais publiés sur le site
+assets/source/

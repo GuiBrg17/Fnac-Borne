@@ -23,7 +23,10 @@ export const UI = {
     idleHello: "Bonjour !",
     idleTitle: "Je suis Jeanne, votre guide à la Fnac Jeanne d'Arc.",
     idleSub: "Dites-moi ce que vous cherchez, je vous montre le rayon.",
-    idleBubble: "Bienvenue ! En quoi puis-je vous aider ?",
+    // Trait d'union et espaces insécables (U+2011, U+202F) : la bulle est
+    // étroite, sans eux la ligne se coupait sur « puis-je » et le « ? »
+    // partait seul à la ligne.
+    idleBubble: "Bienvenue ! En quoi puis‑je vous aider ?",
     idleCta: "Touchez l'écran pour commencer",
     greeting: "Bonjour et bienvenue à la Fnac Jeanne d'Arc ! Dites-moi ce que vous cherchez, je vous montre le rayon sur le plan.",
     switched: "Très bien, je continue en français. Que cherchez-vous ?",

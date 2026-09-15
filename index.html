@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=10">
+<link rel="stylesheet" href="css/kiosk.css?v=11">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=10"></script>
+<script type="module" src="js/app.js?v=11"></script>
 </head>
 <body class="is-idle">
 
@@ -94,7 +94,7 @@
          1. vidéo en boucle (assets/jeanne-accueil.mp4)
          2. photo (assets/jeanne-accueil.png)
          3. avatar 3D, si aucun des deux fichiers n'existe. -->
-    <video class="idle-video" id="idleVideo" data-src="assets/jeanne-accueil.mp4" muted loop playsinline aria-hidden="true" hidden></video>
+    <video class="idle-video" id="idleVideo" data-src="assets/jeanne-accueil.mp4" poster="assets/jeanne-accueil-poster.jpg" muted loop playsinline aria-hidden="true" hidden></video>
     <img class="idle-photo" id="idlePhoto" data-src="assets/jeanne-accueil.png" alt="Jeanne, votre guide à la Fnac Jeanne d'Arc" hidden>
     <p class="idle-bubble" data-i18n="idleBubble">Bienvenue ! En quoi puis-je vous aider ?</p>
   </div>
