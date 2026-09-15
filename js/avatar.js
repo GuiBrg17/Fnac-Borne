@@ -12,8 +12,8 @@ import { VRMLoaderPlugin, VRMUtils } from "@pixiv/three-vrm";
 
 const FRAMING = {
   // Hauteur visible (en mètres) autour de la tête, et décalage vertical du cadre.
-  hero: { height: 0.7, lift: -0.2 },
-  docked: { height: 0.4, lift: -0.06 }
+  hero: { height: 1.05, lift: -0.42 },
+  docked: { height: 0.52, lift: -0.12 }
 };
 
 const WAVE_SECONDS = 2.6;
@@ -407,10 +407,17 @@ function createGlbRig(gltf) {
   const root = gltf.scene;
   const find = (name) => root.getObjectByName(name) || root.getObjectByName("mixamorig" + name) || root.getObjectByName("mixamorig:" + name);
   const bones = {
+    hips: find("Hips"),
     spine: find("Spine1") || find("Spine"), chest: find("Spine2") || find("Spine1"), neck: find("Neck"), head: find("Head"),
+    lShoulder: find("LeftShoulder"), rShoulder: find("RightShoulder"),
     lArm: find("LeftArm"), lFore: find("LeftForeArm"), lHand: find("LeftHand"),
-    rArm: find("RightArm"), rFore: find("RightForeArm"), rHand: find("RightHand")
+    rArm: find("RightArm"), rFore: find("RightForeArm"), rHand: find("RightHand"),
+    lEye: find("LeftEye"), rEye: find("RightEye")
   };
+  // Premières phalanges : elles suffisent à faire vivre les mains.
+  const fingers = ["Index1", "Middle1", "Ring1", "Pinky1", "Thumb1"]
+    .flatMap((f) => [find("LeftHand" + f), find("RightHand" + f)])
+    .filter(Boolean);
   if (!bones.head || !bones.neck) throw new Error("Squelette de l'avatar non reconnu.");
 
   const meshes = [];
@@ -439,7 +446,7 @@ function createGlbRig(gltf) {
   arm(bones.lArm, bones.lFore, bones.lHand, 1);
   arm(bones.rArm, bones.rFore, bones.rHand, -1);
 
-  const animated = Object.values(bones).filter(Boolean);
+  const animated = [...Object.values(bones).filter(Boolean), ...fingers];
   const rest = new Map(animated.map((b) => [b, b.quaternion.clone()]));
   const restore = () => { for (const [b, quat] of rest) b.quaternion.copy(quat); root.updateMatrixWorld(true); };
 
@@ -468,6 +475,7 @@ function createGlbRig(gltf) {
   }));
 
   const aimed = new THREE.Quaternion();
+  const gaze = { x: 0, y: 0, cx: 0, cy: 0, until: 0 };
   return {
     root,
     readMorphs,
@@ -479,12 +487,45 @@ function createGlbRig(gltf) {
     pose({ t, amp, speaking, wave, glance = 0, sign = null }) {
       restore();
       const breath = Math.sin(t * 1.55);
+      // Appui sur une jambe puis sur l'autre, très lent : c'est ce qui enlève
+      // l'effet mannequin. Le buste compense en sens inverse.
+      const sway = Math.sin(t * 0.33);
+      const sway2 = Math.sin(t * 0.21 + 1.1);
+      rotateWorld(bones.hips, Z, sway * 0.035 * amp);
+      rotateWorld(bones.hips, Y, sway2 * 0.03 * amp);
+      rotateWorld(bones.spine, Z, -sway * 0.02 * amp);
       rotateWorld(bones.spine, X, breath * 0.01 * amp);
       rotateWorld(bones.spine, Y, Math.sin(t * 0.21) * 0.025 * amp + glance * 0.12);
+      // Épaules : respiration et balancement
+      rotateWorld(bones.lShoulder, Z, (breath * 0.02 + sway * 0.015) * amp);
+      rotateWorld(bones.rShoulder, Z, (-breath * 0.02 + sway * 0.015) * amp);
+      // Bras et avant-bras : oscillations lentes et désynchronisées
+      rotateWorld(bones.lArm, X, Math.sin(t * 0.47) * 0.05 * amp);
+      rotateWorld(bones.lArm, Z, (sway * 0.05 + 0.02) * amp);
+      rotateWorld(bones.rArm, X, Math.sin(t * 0.41 + 2.1) * 0.05 * amp);
+      rotateWorld(bones.rArm, Z, (sway * 0.05 - 0.02) * amp);
+      rotateWorld(bones.lFore, X, Math.sin(t * 0.63 + 0.7) * 0.04 * amp);
+      rotateWorld(bones.rFore, X, Math.sin(t * 0.57 + 1.9) * 0.04 * amp);
+      rotateWorld(bones.lHand, Z, Math.sin(t * 0.8) * 0.05 * amp);
+      rotateWorld(bones.rHand, Z, Math.sin(t * 0.73 + 1.2) * 0.05 * amp);
+      // Mains : les doigts se referment et se relâchent doucement
+      fingers.forEach((f, i) => rotateWorld(f, Z, (0.05 + Math.sin(t * 0.6 + i * 0.7) * 0.05) * amp));
       rotateWorld(bones.chest, Z, Math.sin(t * 0.33) * 0.01 * amp);
       rotateWorld(bones.neck, X, (Math.sin(t * 0.47) * 0.03 + (speaking ? Math.sin(t * 3.1) * 0.015 : 0)) * amp);
       rotateWorld(bones.neck, Y, (Math.sin(t * 0.31) * 0.07 + Math.sin(t * 0.87) * 0.02) * amp * (1 - glance) + glance * 0.45);
       rotateWorld(bones.neck, Z, Math.sin(t * 0.27) * 0.03 * amp);
+      // Regard : petites saccades, comme quelqu'un qui observe la pièce
+      if (t > gaze.until) {
+        gaze.until = t + 1.2 + Math.random() * 2.6;
+        gaze.x = (Math.random() - 0.5) * 0.28;
+        gaze.y = (Math.random() - 0.5) * 0.14;
+      }
+      gaze.cx += (gaze.x - gaze.cx) * 0.12;
+      gaze.cy += (gaze.y - gaze.cy) * 0.12;
+      rotateWorld(bones.lEye, Y, gaze.cx + glance * 0.35);
+      rotateWorld(bones.rEye, Y, gaze.cx + glance * 0.35);
+      rotateWorld(bones.lEye, X, gaze.cy);
+      rotateWorld(bones.rEye, X, gaze.cy);
 
       if (sign && GLB_SIGNS[sign.name] && bones.rArm && bones.rFore && bones.rHand) {
         const { stops, nod } = GLB_SIGNS[sign.name];
