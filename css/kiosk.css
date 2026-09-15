@@ -177,10 +177,10 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  /* L'image est affichée comme une affiche, cadrée sur Jeanne. */
-  object-position: 42% top;
-  border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+  /* Image recadrée sur Jeanne : elle est posée en bas du cadre, en entier. */
+  object-fit: contain;
+  object-position: right bottom;
+  border-radius: 0;
   animation: photo-life 24s ease-in-out infinite alternate;
 }
 .idle-photo[hidden] { display: none; }
@@ -190,8 +190,9 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 }
 /* En mode photo : pas d'avatar 3D ni de bulle sur la veille (la bulle est dans l'image). */
 .has-idle-photo.is-idle .avatar-stage { opacity: 0; }
-/* La bulle est déjà incrustée dans l'image : on masque celle de la borne. */
-.has-idle-photo .idle-bubble { display: none; }
+/* La bulle de l'image d'origine est hors cadre : la borne affiche la sienne,
+   qui change de langue. */
+.has-idle-photo .idle-bubble { top: 6%; left: 4%; }
 
 .idle-bubble {
   position: absolute;
