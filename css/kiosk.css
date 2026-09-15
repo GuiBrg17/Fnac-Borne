@@ -171,6 +171,19 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   position: relative;
   margin: -4.5vh 0;
 }
+/* Vidéo de Jeanne en boucle sur l'écran de veille. */
+.idle-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: right bottom;
+}
+.idle-video[hidden] { display: none; }
+/* Quand la vidéo est là, la photo et l'avatar 3D s'effacent. */
+.has-idle-video .idle-photo { display: none; }
+
 /* Photo de Jeanne sur l'écran de veille (remplace l'avatar 3D à cet endroit). */
 .idle-photo {
   position: absolute;
@@ -189,10 +202,11 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   to { transform: scale(1.045) translateY(-0.6%); }
 }
 /* En mode photo : pas d'avatar 3D ni de bulle sur la veille (la bulle est dans l'image). */
-.has-idle-photo.is-idle .avatar-stage { opacity: 0; }
+.has-idle-photo.is-idle .avatar-stage,
+.has-idle-video.is-idle .avatar-stage { opacity: 0; }
 /* La bulle de l'image d'origine est hors cadre : la borne affiche la sienne,
    qui change de langue. */
-.has-idle-photo .idle-bubble { top: 6%; left: 4%; }
+.has-idle-photo .idle-bubble, .has-idle-video .idle-bubble { top: 6%; left: 4%; }
 
 .idle-bubble {
   position: absolute;

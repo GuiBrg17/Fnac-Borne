@@ -78,34 +78,22 @@ Modifier `js/news.js`. Chaque actualité comporte un titre, un texte court, une 
 
 ## Avatar de Jeanne
 
-**En attendant la version définitive**, la borne utilise l'avatar d'essai `placeholder.vrm`, retouché automatiquement : cheveux blond doré, yeux bleus et logo Fnac sur le T-shirt (réglage `PLACEHOLDER_LOOK` dans `js/app.js`).
+La borne utilise **`assets/avatar/Jeanne.glb`**, créé sur [MetaPerson Creator](https://metaperson.avatarsdk.com) (Avatar SDK). Le fichier à charger est indiqué par `AVATAR_FILE` dans `js/app.js`.
 
-**Version définitive, avec VRoid Studio** (gratuit, sans photo, tous droits) :
+Ce que l'export gratuit contient et que la borne exploite :
 
-1. Créer une femme au visage adulte et européen : yeux plus petits, visage ovale, cheveux blond doré, iris bleus, T-shirt uni.
-2. Exporter en **VRM 1.0** en autorisant l'usage commercial par les entreprises.
-3. Nommer le fichier `Jeanne.vrm` et le placer dans `assets/avatar/`.
-4. Pour le tester, ouvrir la borne avec `?avatar=Jeanne.vrm` à la fin de l'adresse.
-5. Pour l'adopter, dans `js/app.js`, remplacer `const AVATAR_FILE = "assets/avatar/placeholder.vrm";` par `"assets/avatar/Jeanne.vrm"`.
+- **squelette complet** (type Mixamo) : tête, cou, bras, mains — c'est lui qui porte les gestes et les signes ;
+- **formes de visage ARKit** : `jawOpen` (bouche, pilotée par le volume de la voix), `eyeBlinkLeft/Right` (clignements), `mouthSmileLeft/Right`, `mouthPucker`, `mouthFunnel`. Les « Visemes » payants ne sont **pas nécessaires** ;
+- le **logo Fnac** est ajouté automatiquement sur le vêtement (matériau `outfit`).
 
-Le logo Fnac est ajouté automatiquement sur la poitrine de tout avatar. Les avatars `.glb` à squelette Mixamo (Avaturn, MetaPerson…) sont aussi acceptés. Si l'avatar ne peut pas se charger, la borne revient à l'avatar d'essai. Si la 3D elle-même est indisponible, un médaillon « J » s'affiche et le reste de la borne fonctionne normalement.
+⚠️ **Licence** : l'export gratuit de MetaPerson est marqué **non commercial**. Il convient pour un prototype et une démonstration interne, mais **pas pour une borne ouverte au public**. Pour une mise en service, il faut une licence commerciale chez Avatar SDK, ou un avatar créé dans **VRoid Studio** (gratuit, tous droits, format `.vrm`).
 
-## Voix de Jeanne
+Autres formats acceptés sans rien changer au code :
 
-La borne utilise en priorité une **voix neuronale Piper**, bien plus naturelle que les voix classiques du navigateur :
+- `.vrm` (VRoid Studio) — l'avatar d'essai `placeholder.vrm` reste dans le dossier ;
+- `.glb` à squelette Mixamo (Avaturn type T2, MetaPerson).
 
-| Langue | Voix | Taille | Remarque |
-|---|---|---|---|
-| Français | `fr_FR-upmc-medium` (Jessica) | ≈ 77 Mo | téléchargée automatiquement au premier lancement |
-| Anglais | `en_GB-jenny_dioco-medium` (Jenny) | ≈ 63 Mo | téléchargée au premier passage en anglais |
-| Espagnol | voix du navigateur | — | les voix espagnoles de Piper sont masculines ou de genre incertain |
-
-- Les modèles sont gardés dans le stockage privé du site : **après le premier téléchargement, la voix fonctionne hors ligne**.
-- La synthèse tourne dans un fil séparé, donc l'avatar continue de bouger. Comptez environ **1 seconde avant que Jeanne commence à parler**.
-- Le volume du son pilote l'ouverture de la bouche de Jeanne, ce qui donne un mouvement des lèvres fidèle à la parole.
-- Si la voix neuronale est absente ou coupée, la borne repasse sur la voix du navigateur (sous Windows, Edge propose les voix « Natural » Denise ou Vivienne).
-- Dans les réglages du personnel : case pour activer ou couper la voix neuronale, état des téléchargements et bouton pour les lancer.
-- Pour changer de voix, modifier `PIPER_VOICES` dans `js/voice.js`. La liste complète est sur [huggingface.co/diffusionstudio/piper-voices](https://huggingface.co/diffusionstudio/piper-voices) (par exemple `fr_FR-siwis-medium` en français).
+Pour tester un autre fichier sans modifier le code, ouvrir la borne avec `?avatar=NomDuFichier.glb`. Si l'avatar ne charge pas, la borne revient sur `placeholder.vrm` ; si la 3D est indisponible, un médaillon « J » s'affiche et le reste fonctionne.
 
 ## Langue des signes française (LSF)
 
@@ -120,7 +108,7 @@ Un sourire accompagne les deux gestes : en LSF, l'expression du visage fait part
 
 - Chaque geste dure environ 3,4 s. La caméra recule pendant le signe pour que la main soit visible. Sur la page principale, la scène 3D s'agrandit et le nom de Jeanne s'efface le temps du geste.
 - Réglages dans `js/avatar.js`, table `SIGNS` (valeurs mises au point à l'écran).
-- Disponible avec les avatars **VRM**. Les avatars `.glb` (squelette Mixamo) font le signe de la main à la place.
+- Disponible avec les avatars **VRM** et `.glb` (les positions sont réglées séparément : table `SIGNS` pour le VRM, `GLB_SIGNS` pour le GLB).
 - ⚠️ **Les gestes sont des approximations à faire valider par une personne qui pratique la LSF.** Ils ont été réglés d'après des descriptions écrites. La forme de la main reste celle du modèle 3D (main détendue, pas parfaitement plate). « Bonjour » et « merci » se ressemblent beaucoup dans les descriptions consultées : c'est le premier point à vérifier.
 - Pour ajouter un signe, il faut une **référence fiable** (vidéo ou personne signant) : les descriptions écrites ne suffisent pas. C'est pourquoi « bienvenue » n'est pas encore animé.
 - Mise au point : ouvrir la borne avec `?debug`, puis dans la console du navigateur `jeanne.sign("bonjour")`, `jeanne.sign("merci")`, `jeanne.wave()`, `jeanne.glance()`, `jeanne.pose({upperZ, upperX, upperY, lowerZ, lowerY})` et `jeanne.state()`.
@@ -153,7 +141,7 @@ Les réglages et les statistiques sont enregistrés uniquement sur la borne : ri
 | « Appeler un vendeur » affiche une confirmation, mais **aucune notification n'est réellement envoyée** | Brancher un vrai webhook Microsoft Teams ou Graph vers l'équipe du rayon |
 | Compréhension par mots-clés | Possible évolution vers une IA (nécessite un serveur) |
 | Micro du navigateur | Service de reconnaissance vocale dédié |
-| Avatar d'essai retouché (blonde, logo Fnac) | Avatar « Jeanne » créé dans VRoid Studio |
+| Avatar MetaPerson sous licence non commerciale | Licence commerciale Avatar SDK, ou avatar VRoid Studio |
 
 ## Tester en local
 
