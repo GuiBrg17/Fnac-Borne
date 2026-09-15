@@ -219,11 +219,12 @@ export async function createAvatar(canvas, url, options = {}) {
     debugState() {
       const r = (b) => b ? [b.rotation.x, b.rotation.y, b.rotation.z].map((v) => Math.round(v * 100) / 100) : null;
       return {
+        morphs: rig.readMorphs ? rig.readMorphs(["jawOpen", "eyeBlinkLeft", "mouthSmileLeft", "mouthPucker"]) : null,
         sign: signName,
         signProgress: Math.round((timer.getElapsed() - signStart) * 100) / 100,
         canSign: rig.canSign,
-        upperArm: r(rig.bones && rig.bones.rUpperArm),
-        lowerArm: r(rig.bones && rig.bones.rLowerArm)
+        upperArm: r(rig.bones && (rig.bones.rUpperArm || rig.bones.rArm)),
+        lowerArm: r(rig.bones && (rig.bones.rLowerArm || rig.bones.rFore))
       };
     },
     refresh: frame,
@@ -341,8 +342,33 @@ function createVrmRig(gltf) {
   };
 }
 
+// Signes pour les avatars .glb : direction du bras et de l'avant-bras
+// dans l'espace du monde (le personnage fait face à la caméra, +Z).
+const GLB_SIGNS = {
+  bonjour: {
+    nod: 0,
+    stops: [
+      { at: 0, arm: null, fore: null },
+      { at: 0.75, arm: [-0.30, -0.80, 0.30], fore: [0.30, 0.85, 0.42] },
+      { at: 1.15, arm: [-0.32, -0.80, 0.32], fore: [0.32, 0.84, 0.44] },
+      { at: 2.1, arm: [-0.45, -0.75, 0.45], fore: [0.10, 0.25, 0.96] },
+      { at: SIGN_SECONDS, arm: null, fore: null }
+    ]
+  },
+  merci: {
+    nod: 0.12,
+    stops: [
+      { at: 0, arm: null, fore: null },
+      { at: 0.7, arm: [-0.26, -0.85, 0.28], fore: [0.34, 0.80, 0.50] },
+      { at: 1.0, arm: [-0.28, -0.85, 0.30], fore: [0.34, 0.78, 0.52] },
+      { at: 2.0, arm: [-0.42, -0.70, 0.55], fore: [0.05, 0.10, 0.99] },
+      { at: SIGN_SECONDS, arm: null, fore: null }
+    ]
+  }
+};
+
 // =====================================================================
-// Avatar GLB (Avaturn, squelette de type Mixamo)
+// Avatar GLB (Avaturn, MetaPerson, squelette de type Mixamo)
 // Les rotations sont calculées dans l'espace du monde : elles ne dépendent
 // pas de l'orientation propre à chaque os.
 // =====================================================================
@@ -426,16 +452,25 @@ function createGlbRig(gltf) {
     }
   };
   const VISEMES = { aa: "viseme_aa", oh: "viseme_O", ee: "viseme_E" };
+  // Lecture des formes du visage (mise au point avec ?debug).
+  const readMorphs = (names) => Object.fromEntries(names.map((name) => {
+    for (const m of morphMeshes) {
+      const index = m.morphTargetDictionary[name];
+      if (index !== undefined) return [name, Math.round(m.morphTargetInfluences[index] * 100) / 100];
+    }
+    return [name, null];
+  }));
 
   const aimed = new THREE.Quaternion();
   return {
     root,
+    readMorphs,
     anchor: { chest: bones.chest, neck: bones.neck },
     meshes,
     headWorld,
     lookAt() { /* regard fixe vers l'avant : l'avatar fait face à la caméra */ },
-    canSign: false,
-    pose({ t, amp, speaking, wave, glance = 0 }) {
+    canSign: true,
+    pose({ t, amp, speaking, wave, glance = 0, sign = null }) {
       restore();
       const breath = Math.sin(t * 1.55);
       rotateWorld(bones.spine, X, breath * 0.01 * amp);
@@ -445,7 +480,34 @@ function createGlbRig(gltf) {
       rotateWorld(bones.neck, Y, (Math.sin(t * 0.31) * 0.07 + Math.sin(t * 0.87) * 0.02) * amp * (1 - glance) + glance * 0.45);
       rotateWorld(bones.neck, Z, Math.sin(t * 0.27) * 0.03 * amp);
 
-      if (wave >= 0 && bones.rArm && bones.rFore && bones.rHand) {
+      if (sign && GLB_SIGNS[sign.name] && bones.rArm && bones.rFore && bones.rHand) {
+        const { stops, nod } = GLB_SIGNS[sign.name];
+        let k = 1;
+        while (k < stops.length - 1 && sign.at > stops[k].at) k++;
+        const from = stops[k - 1];
+        const to = stops[k];
+        const raw = Math.min(1, Math.max(0, (sign.at - from.at) / (to.at - from.at)));
+        const e = raw * raw * (3 - 2 * raw);
+        // Direction de repos du bras droit, quand une étape ne la précise pas.
+        const restArm = [-0.16, -1, 0.04];
+        const restFore = [-0.08, -1, 0.14];
+        const mixDir = (a, b, fallbackA, fallbackB) => {
+          const x = a || fallbackA;
+          const y = b || fallbackB;
+          return new THREE.Vector3(
+            THREE.MathUtils.lerp(x[0], y[0], e),
+            THREE.MathUtils.lerp(x[1], y[1], e),
+            THREE.MathUtils.lerp(x[2], y[2], e)
+          );
+        };
+        aimQuaternion(bones.rArm, bones.rFore, mixDir(from.arm, to.arm, restArm, restArm), aimed);
+        bones.rArm.quaternion.copy(aimed);
+        bones.rArm.updateMatrixWorld(true);
+        aimQuaternion(bones.rFore, bones.rHand, mixDir(from.fore, to.fore, restFore, restFore), aimed);
+        bones.rFore.quaternion.copy(aimed);
+        bones.rFore.updateMatrixWorld(true);
+        if (nod && bones.neck) rotateWorld(bones.neck, X, nod * Math.sin(Math.min(1, sign.at / SIGN_SECONDS) * Math.PI));
+      } else if (wave >= 0 && bones.rArm && bones.rFore && bones.rHand) {
         const ease = waveEase(wave);
         aimQuaternion(bones.rArm, bones.rFore, new THREE.Vector3(-0.8, -0.45, 0.35), aimed);
         bones.rArm.quaternion.slerp(aimed, ease);
@@ -458,10 +520,15 @@ function createGlbRig(gltf) {
     face({ blink, mouth, vowel, happy }) {
       setMorph("eyeBlinkLeft", blink);
       setMorph("eyeBlinkRight", blink);
-      setMorph("jawOpen", mouth * 0.45);
+      // Bouche : ouverture de la mâchoire, plus une forme selon la voyelle.
+      setMorph("jawOpen", Math.min(0.8, mouth * 1.35));
+      setMorph("mouthPucker", vowel === "oh" ? mouth * 0.6 : 0);
+      setMorph("mouthFunnel", vowel === "oh" ? mouth * 0.3 : 0);
+      const smile = happy * 0.6 + (vowel === "ee" ? mouth * 0.35 : 0);
+      setMorph("mouthSmileLeft", Math.min(1, smile));
+      setMorph("mouthSmileRight", Math.min(1, smile));
+      // Visèmes payants : utilisés s'ils existent, ignorés sinon.
       for (const [key, name] of Object.entries(VISEMES)) setMorph(name, key === vowel ? mouth : 0);
-      setMorph("mouthSmileLeft", happy * 0.6);
-      setMorph("mouthSmileRight", happy * 0.6);
     },
     update() { /* pas de physique à mettre à jour */ }
   };
@@ -500,7 +567,7 @@ async function addShirtLogo(rig, logoUrl) {
   const y = chestPos.y + (neckPos.y - chestPos.y) * 0.3;
 
   // Cherche la surface du vêtement devant la poitrine.
-  const clothes = meshes.filter((m) => /look|top|shirt|cloth/i.test(m.name + " " + (m.material && m.material.name)));
+  const clothes = meshes.filter((m) => /look|top|shirt|cloth|outfit/i.test(m.name + " " + (m.material && m.material.name)));
   const targets = clothes.length ? clothes : meshes;
   const raycaster = new THREE.Raycaster(new THREE.Vector3(chestPos.x, y, chestPos.z + 1), new THREE.Vector3(0, 0, -1));
   const hit = raycaster.intersectObjects(targets, false)[0];

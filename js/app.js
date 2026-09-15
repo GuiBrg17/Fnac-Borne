@@ -14,7 +14,7 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
 // Avatar de la borne. Quand Jeanne est prête, remplacer par "assets/avatar/Jeanne.vrm".
-const AVATAR_FILE = "assets/avatar/placeholder.vrm";
+const AVATAR_FILE = "assets/avatar/Jeanne.glb";
 const FALLBACK_AVATAR = "assets/avatar/placeholder.vrm";
 // Retouches de l'avatar d'essai : cheveux blond doré et yeux bleus (non appliquées aux autres avatars).
 const PLACEHOLDER_LOOK = { hair: "golden", eyes: "blue" };
@@ -65,7 +65,7 @@ const els = {
   neuralToggle: $("#neuralToggle"), voiceStatus: $("#voiceStatus"), voiceDownload: $("#voiceDownload"),
   toast: $("#toast"),
   otherStore: $("#otherStore"), otherStoreClose: $("#otherStoreClose"), otherStoreAddress: $("#otherStoreAddress"),
-  idlePhoto: $("#idlePhoto")
+  idlePhoto: $("#idlePhoto"), idleVideo: $("#idleVideo")
 };
 
 // =====================================================================
@@ -693,6 +693,7 @@ function enterApp() {
   document.body.classList.replace("is-idle", "is-app");
   els.idle.inert = true;
   els.app.inert = false;
+  if (els.idleVideo && !els.idleVideo.hidden) els.idleVideo.pause();
   state.lang = "fr";
   applyLang();
   placeAvatar();
@@ -721,6 +722,7 @@ function exitToIdle() {
   if (state.a11y) toggleA11y(false);
   placeAvatar();
   if (avatar) avatar.setFraming("hero");
+  if (els.idleVideo && !els.idleVideo.hidden) els.idleVideo.play().catch(() => {});
   startIdleCycle();
   setTimeout(() => { els.chat.textContent = ""; }, 600);
 }
@@ -950,6 +952,15 @@ els.app.inert = true;
 $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); });
 applyLang();
 startIdleCycle();
+// Vidéo de Jeanne en boucle : utilisée si le fichier existe, sinon la photo.
+function useIdleVideo() {
+  els.idleVideo.hidden = false;
+  document.body.classList.add("has-idle-video");
+  els.idleVideo.play().catch(() => { /* lecture refusée : la photo reste affichée */ });
+}
+els.idleVideo.addEventListener("canplay", useIdleVideo, { once: true });
+els.idleVideo.addEventListener("error", () => { els.idleVideo.remove(); });
+
 // Photo de Jeanne sur l'écran de veille : utilisée seulement si le fichier existe.
 function useIdlePhoto() {
   els.idlePhoto.hidden = false;
