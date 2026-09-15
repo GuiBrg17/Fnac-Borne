@@ -951,11 +951,18 @@ $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); }
 applyLang();
 startIdleCycle();
 // Photo de Jeanne sur l'écran de veille : utilisée seulement si le fichier existe.
-els.idlePhoto.addEventListener("load", () => {
+function useIdlePhoto() {
   els.idlePhoto.hidden = false;
   document.body.classList.add("has-idle-photo");
-});
+}
+els.idlePhoto.addEventListener("load", useIdlePhoto);
 els.idlePhoto.addEventListener("error", () => { els.idlePhoto.remove(); });
+// L'image peut déjà être chargée (cache, réseau rapide) : dans ce cas
+// l'événement "load" ne se déclenche plus, on vérifie donc directement.
+if (els.idlePhoto.complete) {
+  if (els.idlePhoto.naturalWidth > 0) useIdlePhoto();
+  else els.idlePhoto.remove();
+}
 
 document.fonts.ready.then(placeAvatar);
 initAvatar();
