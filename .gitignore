@@ -1,0 +1,4 @@
+# Configuration locale de Claude Code (serveur de test)
+.claude/
+.DS_Store
+assets/avatar/dev/
