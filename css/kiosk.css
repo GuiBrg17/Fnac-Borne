@@ -863,12 +863,12 @@ html.a11y .has-focus .bm-shape:not(.is-hit):not(.is-zone) { opacity: 0.12; }
 .other-store {
   position: absolute;
   z-index: 6;
-  inset: 6% 16%;
+  inset: 4% 6%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 2.4rem 2.8rem;
+  padding: 2rem 2.4rem;
   border-radius: var(--radius-xl);
   background: var(--yellow);
   color: var(--ink);
@@ -876,10 +876,35 @@ html.a11y .has-focus .bm-shape:not(.is-hit):not(.is-zone) { opacity: 0.12; }
   animation: msg-in 0.5s var(--ease-out) both;
 }
 .other-store[hidden] { display: none; }
+/* Adresse à gauche, QR code d'itinéraire à droite. */
+.other-store:not([hidden]) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 2.4rem;
+}
+.other-store-info { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; }
+.other-store-qr { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
+.other-store-qr img {
+  display: block;
+  width: clamp(8.5rem, 12vw, 12rem);
+  height: auto;
+  padding: 0.6rem;
+  border-radius: var(--radius-l);
+  background: var(--paper);
+}
+.other-store-qr figcaption {
+  max-width: 13rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: center;
+  text-wrap: balance;
+}
 .other-store-icon { width: 3rem; height: 3rem; margin-bottom: 1rem; }
-.other-store-title { margin: 0; font-size: 3.6rem; font-weight: 900; font-stretch: 122%; line-height: 1; letter-spacing: -0.03em; }
+.other-store-title { margin: 0; font-size: clamp(2.4rem, 3.2vw, 3.6rem); font-weight: 900; font-stretch: 122%; line-height: 1; letter-spacing: -0.03em; }
 .other-store-what { margin: 0.9rem 0 0; font-size: 1.35rem; font-weight: 600; }
-.other-store-address { margin: 1.6rem 0 0; font-size: 1.7rem; font-weight: 800; line-height: 1.25; }
+.other-store-address { margin: 1.2rem 0 0; font-size: clamp(1.3rem, 1.6vw, 1.7rem); font-weight: 800; line-height: 1.2; }
 .other-store-near {
   display: flex;
   align-items: center;
@@ -895,7 +920,7 @@ html.a11y .has-focus .bm-shape:not(.is-hit):not(.is-zone) { opacity: 0.12; }
 .other-store-near svg { color: var(--yellow); }
 .other-store-close {
   min-height: 3.4rem;
-  margin-top: 1.8rem;
+  margin-top: 1.4rem;
   padding: 0 1.8rem;
   border: 0.13rem solid var(--ink);
   border-radius: 999px;

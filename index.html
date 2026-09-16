@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=20">
+<link rel="stylesheet" href="css/kiosk.css?v=21">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=20"></script>
+<script type="module" src="js/app.js?v=21"></script>
 </head>
 <body class="is-idle">
 
@@ -191,12 +191,19 @@
 
       <!-- Produits éditoriaux : direction la Fnac Wilson -->
       <div class="other-store" id="otherStore" role="status" hidden>
-        <svg class="other-store-icon" aria-hidden="true"><use href="#i-book"/></svg>
-        <h3 class="other-store-title" id="otherStoreName">Fnac Wilson</h3>
-        <p class="other-store-what" data-i18n="otherStoreWhat">Livres, BD, manuels scolaires, CD, vinyles, DVD</p>
-        <p class="other-store-address" id="otherStoreAddress"></p>
-        <p class="other-store-near"><svg aria-hidden="true"><use href="#i-pin"/></svg><span data-i18n="otherStoreNear">Près de Jean-Jaurès</span></p>
-        <button type="button" class="other-store-close" id="otherStoreClose" data-i18n="otherStoreClose">Retour au plan</button>
+        <div class="other-store-info">
+          <svg class="other-store-icon" aria-hidden="true"><use href="#i-book"/></svg>
+          <h3 class="other-store-title" id="otherStoreName">Fnac Wilson</h3>
+          <p class="other-store-what" data-i18n="otherStoreWhat">Livres, BD, manuels scolaires, CD, vinyles, DVD</p>
+          <p class="other-store-address" id="otherStoreAddress"></p>
+          <p class="other-store-near"><svg aria-hidden="true"><use href="#i-pin"/></svg><span data-i18n="otherStoreNear">Près de Jean-Jaurès</span></p>
+          <button type="button" class="other-store-close" id="otherStoreClose" data-i18n="otherStoreClose">Retour au plan</button>
+        </div>
+        <!-- Itinéraire à pied dans Google Maps (tools/qr/itineraire.py) -->
+        <figure class="other-store-qr">
+          <img src="assets/qr-itineraire-wilson.svg" alt="" width="180" height="180">
+          <figcaption data-i18n="otherStoreQr">Itinéraire sur votre téléphone</figcaption>
+        </figure>
       </div>
     </div>
 
