@@ -4,8 +4,8 @@
 // La version (?v=N de index.html) est reportée sur chaque fichier :
 // une mise en ligne remplace donc bien toutes les copies en cache.
 const VERSION = new URL(import.meta.url).search;
-const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE } = await import("./data.js" + VERSION);
-const { findZoneDetailed, findIntent, normalize, displayKeyword } = await import("./search.js" + VERSION);
+const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE, INFO } = await import("./data.js" + VERSION);
+const { findZoneDetailed, findIntent, findInfo, normalize, displayKeyword } = await import("./search.js" + VERSION);
 const { NEWS } = await import("./news.js" + VERSION);
 const { recordSession, recordQuestion, readStats, resetStats } = await import("./stats.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
@@ -304,6 +304,15 @@ function ask(text, source = "text") {
   addMessage("user", text);
   bump();
   hideOtherStore();
+  // Les questions pratiques passent avant les rayons : « les horaires » ou
+  // « les toilettes » ne sont pas des produits.
+  const info = findInfo(text);
+  if (info) {
+    recordQuestion({ text: null, zone: null, lang: state.lang, source });
+    clearZone();
+    reply(INFO[info].answer[state.lang]);
+    return;
+  }
   const match = findZoneDetailed(text, state.lang);
   const zone = match ? match.id : null;
   const intent = zone ? null : findIntent(text);

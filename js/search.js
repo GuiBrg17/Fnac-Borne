@@ -9,7 +9,7 @@
 // 2. Si rien n'est trouvé, recherche tolérante aux fautes :
 //    « aifone », « playstasion », « télévition », « trotinete »…
 // =====================================================================
-const { ZONES, INTENTS } = await import("./data.js" + new URL(import.meta.url).search);
+const { ZONES, INTENTS, INFO } = await import("./data.js" + new URL(import.meta.url).search);
 
 const STOPWORDS = new Set([
   // français
@@ -114,6 +114,19 @@ export function findZoneDetailed(text, lang) {
 export function findZone(text, lang) {
   const match = findZoneDetailed(text, lang);
   return match ? match.id : null;
+}
+
+// Questions pratiques (horaires, toilettes, parking) : ni produit, ni rayon.
+const INFO_MATCHERS = Object.fromEntries(
+  Object.entries(INFO).map(([name, entry]) => [
+    name,
+    Object.values(entry.keywords).flat().map(phraseRe)
+  ]));
+
+export function findInfo(text) {
+  const query = clean(text);
+  if (!query) return null;
+  return Object.keys(INFO_MATCHERS).find((name) => INFO_MATCHERS[name].some((re) => re.test(query))) || null;
 }
 
 export function findIntent(text) {
