@@ -9,7 +9,7 @@ const { findZoneDetailed, findIntent, findInfo, normalize, displayKeyword } = aw
 const { NEWS } = await import("./news.js" + VERSION);
 const { recordSession, recordQuestion, readStats, resetStats } = await import("./stats.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
-const { BASEMENT, routeTo } = await import("./plan.js" + VERSION);
+const { BASEMENT, routeTo, stairsDrawing } = await import("./plan.js" + VERSION);
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -375,13 +375,13 @@ function buildBasement() {
   if (!svg) return;
   svg.textContent = "";
   svgEl("path", { d: BASEMENT.outline, class: "bm-floor" }, svg);
-  const st = BASEMENT.stairs;
+  // Escalier en courbe : marches en haut à droite, palier qui descend vers le bas à gauche.
+  const drawing = stairsDrawing();
   const stairs = svgEl("g", { class: "bm-stairs", "data-zone": "escalier" }, svg);
-  svgEl("rect", { x: st.x, y: st.y, width: st.w, height: st.h, rx: 6 }, stairs);
-  for (let i = 1; i < 6; i++) {
-    const y = st.y + (i * st.h) / 6;
-    svgEl("line", { x1: st.x + 5, x2: st.x + st.w - 5, y1: y, y2: y }, stairs);
-  }
+  svgEl("path", { d: drawing.band, class: "bm-stairs-band" }, stairs);
+  for (const [x1, y1, x2, y2] of drawing.lines) svgEl("line", { x1, y1, x2, y2 }, stairs);
+  const { x, y, heading } = drawing.arrow;
+  svgEl("path", { d: "M-6 -5 L6 0 L-6 5 Z", class: "bm-stairs-arrow", transform: `translate(${x} ${y}) rotate(${heading})` }, stairs);
   for (const shape of BASEMENT.shapes) {
     const owner = SPOT_OWNER.get(shape.id);
     const attrs = {

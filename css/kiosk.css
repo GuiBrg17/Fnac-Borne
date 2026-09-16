@@ -759,8 +759,9 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 }
 .bm-counter { fill: var(--yellow-light); }
 .bm-stairs { cursor: pointer; }
-.bm-stairs rect { fill: var(--yellow-light); stroke: var(--ink); stroke-width: 1px; vector-effect: non-scaling-stroke; }
-.bm-stairs line { stroke: rgba(18, 18, 18, 0.45); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.bm-stairs-band { fill: var(--yellow-light); stroke: var(--ink); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.bm-stairs line { stroke: rgba(18, 18, 18, 0.5); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.bm-stairs-arrow { fill: var(--ink); stroke: none; }
 .bm-label {
   fill: var(--paper);
   font-size: 12.5px;
@@ -776,8 +777,9 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 }
 
 /* Rayon trouvé : ses meubles s'allument, le reste s'efface. */
-.has-focus .bm-shape:not(.is-hit):not(.is-zone),
-.has-focus .bm-stairs:not(.is-hit) { opacity: 0.22; }
+.has-focus .bm-shape:not(.is-hit):not(.is-zone) { opacity: 0.22; }
+/* L'escalier fait partie de chaque trajet : il reste bien visible. */
+.has-focus .bm-stairs:not(.is-hit) { opacity: 0.75; }
 .has-focus .bm-label:not(.is-hit) { opacity: 0.3; }
 .bm-shape.is-zone { opacity: 0.75; }
 .bm-shape.is-hit {
@@ -786,7 +788,7 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   stroke-width: 3px;
   animation: bm-hit 1.6s ease-in-out infinite;
 }
-.bm-stairs.is-hit rect { fill: var(--paper); stroke: var(--yellow); stroke-width: 3px; }
+.bm-stairs.is-hit .bm-stairs-band { fill: var(--paper); stroke: var(--yellow); stroke-width: 3px; }
 .bm-label.is-hit { fill: var(--yellow); font-size: 14px; }
 @keyframes bm-hit { 50% { fill: var(--yellow-light); } }
 .plan-m1 .route-casing, .plan-m1 .route-line { vector-effect: non-scaling-stroke; }

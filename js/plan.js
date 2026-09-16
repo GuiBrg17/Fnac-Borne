@@ -13,10 +13,14 @@ export const BASEMENT = {
   height: 434,
 
   // Contour de la surface de vente (dans le sens des aiguilles d'une montre).
+  // À droite, le mur suit la courbe extérieure de l'escalier.
   outline: "M40 432 L40 300 L8 300 L8 238 L36 238 L36 92 L92 12 L300 12 L300 32 L588 32 L588 4 L648 4 L648 36 " +
-           "L690 4 L782 126 L782 150 Q 742 236 778 296 L820 296 L820 346 L772 346 Q 700 374 606 398 L606 432 Z",
+           "L690 4 L782 126 L782 150 Q 742 236 781 297 L818 297 A 116 98 0 0 1 702 395 L606 400 L606 432 Z",
 
-  stairs: { x: 776, y: 292, w: 42, h: 54 },
+  // Escalier en courbe (« SS 4UP ») : un quart d'ellipse centré en (cx, cy).
+  // On arrive de l'étage 0 en haut à droite (angle 0°), les marches descendent
+  // jusqu'à 34°, puis le palier s'enroule jusqu'en bas à gauche (90°).
+  stairs: { cx: 702, cy: 297, inner: [79, 60], outer: [116, 98], stepsEnd: 34, treads: 12 },
 
   shapes: [
     // --- Murales ---
@@ -110,7 +114,7 @@ export const BASEMENT = {
   // Allées : la grande allée courbe devant la rangée du bas, l'allée du haut
   // sous les murales, et les allées verticales entre les meubles.
   aisles: {
-    start: [772, 322],   // arrivée de l'escalier
+    exit: [690, 376],    // sortie du palier, vers la grande allée
     main: 322,
     top: 80,
     columns: [60, 97, 137, 170, 207, 258, 308, 357, 407, 455, 505, 565, 628, 690]
@@ -122,11 +126,51 @@ export const shape = (id) => byId.get(id);
 
 export const centre = (s) => [s.x + s.w / 2, s.y + s.h / 2];
 
+// Point de l'escalier : angle en degrés, "t" de 0 (bord intérieur) à 1 (bord extérieur).
+function stairPoint(angle, t) {
+  const { cx, cy, inner, outer } = BASEMENT.stairs;
+  const a = (angle * Math.PI) / 180;
+  const rx = inner[0] + (outer[0] - inner[0]) * t;
+  const ry = inner[1] + (outer[1] - inner[1]) * t;
+  return [cx + rx * Math.cos(a), cy + ry * Math.sin(a)];
+}
+
+// Dessin de l'escalier : la bande (marches + palier), les marches, et la flèche de descente.
+export function stairsDrawing() {
+  const { inner, outer, stepsEnd, treads } = BASEMENT.stairs;
+  const r = (n) => n.toFixed(1);
+  const [ox0, oy0] = stairPoint(0, 1), [ox1, oy1] = stairPoint(90, 1);
+  const [ix0, iy0] = stairPoint(0, 0), [ix1, iy1] = stairPoint(90, 0);
+  const band = `M${r(ix0)} ${r(iy0)} L${r(ox0)} ${r(oy0)} A ${outer[0]} ${outer[1]} 0 0 1 ${r(ox1)} ${r(oy1)} ` +
+               `L${r(ix1)} ${r(iy1)} A ${inner[0]} ${inner[1]} 0 0 0 ${r(ix0)} ${r(iy0)} Z`;
+  const lines = [];
+  for (let i = 1; i <= treads; i++) {
+    const angle = (stepsEnd * i) / treads;
+    const [x1, y1] = stairPoint(angle, 0);
+    const [x2, y2] = stairPoint(angle, 1);
+    lines.push([x1, y1, x2, y2]);
+  }
+  // Flèche au milieu du palier, dans le sens de la descente (angle croissant).
+  const [ax, ay] = stairPoint(58, 0.5);
+  const [bx, by] = stairPoint(66, 0.5);
+  const heading = (Math.atan2(by - ay, bx - ax) * 180) / Math.PI;
+  return { band, lines, arrow: { x: ax, y: ay, heading } };
+}
+
+// Descente de l'escalier : du haut des marches jusqu'au bout du palier.
+function stairsRoute() {
+  const points = [];
+  for (let angle = 0; angle <= 90; angle += 6) points.push(stairPoint(angle, 0.5));
+  return points;
+}
+
 // Trajet depuis l'escalier jusqu'à un meuble, en suivant les allées.
 export function routeTo(id) {
   const s = byId.get(id);
   if (!s) return null;
-  const { start, main, top, columns } = BASEMENT.aisles;
+  const { exit, main, top, columns } = BASEMENT.aisles;
+  // Le trajet descend l'escalier, sort du palier et rejoint la grande allée.
+  const start = [...stairsRoute(), exit, [exit[0], main]];
   const [cx, cy] = centre(s);
   const nearest = (x) => columns.reduce((best, c) => (Math.abs(c - x) < Math.abs(best - x) ? c : best), columns[0]);
   const [ax, ay] = s.access || [null, null];
@@ -135,16 +179,16 @@ export function routeTo(id) {
   if (s.y > main) {
     const x = ax ?? cx;
     const y = ay ?? s.y - 4;
-    return [start, [x, main], [x, y]];
+    return [...start, [x, main], [x, y]];
   }
   // Murales et comptoirs du haut : par l'allée du haut.
   if (ay !== null && ay < top) {
     const column = nearest(ax);
-    return [start, [column, main], [column, top], [ax, top], [ax, ay]];
+    return [...start, [column, main], [column, top], [ax, top], [ax, ay]];
   }
   // Meuble au sol ou murale de côté : allée verticale la plus proche, puis on le longe.
   const column = nearest(ax ?? cx);
-  if (ax !== null) return [start, [column, main], [column, ay], [ax, ay]];
+  if (ax !== null) return [...start, [column, main], [column, ay], [ax, ay]];
   const edge = column < cx ? s.x - 3 : s.x + s.w + 3;
-  return [start, [column, main], [column, cy], [edge, cy]];
+  return [...start, [column, main], [column, cy], [edge, cy]];
 }
