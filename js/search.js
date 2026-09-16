@@ -209,10 +209,61 @@ function fuzzyMatch(query, lang) {
   return best ? best.matcher : null;
 }
 
+// ---------------------------------------------------------------------
+// Pannes, retours et colis : le SAV passe avant le produit cité.
+// « mon iPhone ne marche plus » parle d'un iPhone, mais le client doit aller
+// au SAV, pas au rayon Apple. Les mots-clés seuls ne suffisent pas (le client
+// dit « il marche plus », « l'écran est fissuré », « je veux le rapporter »),
+// donc on reconnaît la tournure de la phrase. On travaille sur le texte avec
+// ses petits mots (mon, ma, est…), qui disent si l'objet est déjà à lui.
+// ---------------------------------------------------------------------
+const OBJECT = "(?:mon|ma|mes|ce|cet|cette|ces|le|la|les|l|un|une|des|son|sa|ses|notre|nos|votre|vos|article|produit|achat|cadeau|appareil)";
+const PROBLEM_PATTERNS = [
+  // « il marche plus », « ne s'allume pas », « ne charge toujours pas »
+  // (mais pas « charge plus vite », « tient plus longtemps », « pas cher »)
+  /\b(?:marche|marchent|marchait|fonctionne|fonctionnent|fonctionnait|allume|allument|allumait|charge|chargent|recharge|demarre|demarrent|connecte|connectent|affiche|repond|lit|lisent|capte|detecte|reconnait|synchronise|imprime|aspire|chauffe|sonne|ouvre|eteint|tient|tourne|lance|s allume|s eteint|s ouvre|s affiche|se connecte|se charge|se lance)(?: [a-z]+)? (?:pas|plus)\b(?! (?:vite|rapide|rapidement|longtemps|fort|puissant|de|d|que|grand|cher|chere|mal|trop|beaucoup|chaud|lourd|leger|petit|gros|loin|facilement|bien|longue)\b)/,
+  /\b(?:n a plus|n y a plus|n ai plus|plus aucun|plus aucune|plus rien|rien ne marche|rien ne fonctionne|a plus de (?:son|image|reseau|connexion|wifi|bluetooth|signal))\b/,
+  // état de l'appareil
+  /\b(?:casse|cassee|casses|cassees|pete|petee|brise|brisee|fissure|fissuree|fele|felee|raye|rayee|rayure|rayures|abime|abimee|abimes|endommage|endommagee|defectueux|defectueuse|hs|bloque|bloquee|fige|figee|gele|oxyde|oxydee|gonfle|gonflee|foutu|foutue|bousille|bousillee|flingue|flinguee|explose|explosee|crame|cramee|mouille|mouillee|noye|noyee|panne|pannes|bug|bugue|beug|beugue|freeze|drift|fuit|fuite|gresille|gresillent|gresillement|crepite|surchauffe|pixel mort|pixels morts)\b/,
+  /\b(?:(?:est|sont|s est) grill(?:e|ee|es)|(?:est|suis|a|ai|fait|faire|fais) tomb(?:e|ee|es|er)|tombe (?:par terre|dans|a l eau))\b/,
+  /\b(?:ca|il|elle|ils|elles|tout) (?:rame|plante|bug|bugue|beugue|freeze|lag|lague|saute|coupe|redemarre)\b/,
+  /\b(?:bruit bizarre|bruit anormal|fait du bruit|fait un bruit|chauffe trop|chauffe beaucoup|des lignes|une ligne|ecran noir|ecran blanc|ecran bleu|ecran fissure|dans l eau|probleme avec|souci avec|un probleme|un souci|code oublie|mot de passe oublie|oublie (?:mon|le|ma) (?:code|mot de passe|schema|identifiant)|code pin|code puk|compte bloque|icloud bloque)\b/,
+  // retours, échanges, remboursements
+  /\b(?:sav|service apres vente|apres vente|reparation|reparations|reparer|repare|reparee|rembourse|remboursement|garantie|pour un retour|faire un retour|retour (?:de|d|du|pour|sur)|s eteint tout|s allume tout|s eteint (?:sans arret|tout le temps)|se coupe|s arrete tout|redemarre tout)\b(?! (?:5|2|3|ans?)\b)/,
+  new RegExp(`\\b(?:rendre|rapporter|ramener|retourner|renvoyer|echanger|deposer|recuperer|reprendre|reparer|rembourser)(?: [a-z]+)? ${OBJECT}\\b(?! monnaie)`),
+  /\b(?:le rapporter|la rapporter|les rapporter|le rendre|la rendre|les rendre|l echanger|les echanger|me faire rembourser|se faire rembourser|faire reparer|remboursement|reparation|pas satisfait|pas satisfaite|pas content|pas contente|me plait pas|ne convient pas|convient pas|mauvais modele|mauvaise taille|pas compatible|en double|sous garantie)\b/,
+  // commandes et colis
+  /\b(?:viens|venu|venue|venus|passe|suis la pour|je dois) (?:chercher|recuperer|retirer|prendre) (?:mon|ma|mes|notre|nos)\b/,
+  /\b(?:ma commande|mon colis|mes colis|mon paquet|j ai commande|a commande|commande sur|commande en ligne|commande internet|achete sur internet|achete sur le site|fnac com|recu un sms|recu un mail|recu un email|recu un message|code de retrait|numero de commande|bon de retrait|retrait 1h|click and collect|click collect)\b/,
+  // anglais
+  /\b(?:doesn t|does not|don t|do not|won t|will not|isn t|is not|stopped|can t|cannot|not)(?: [a-z]+)? (?:work|working|turn on|turning on|switch on|charge|charging|connect|connecting|start|starting|boot|power on|respond|responding|load|loading)\b/,
+  /\b(?:broken|cracked|damaged|faulty|defective|smashed|shattered|stuck|frozen|overheating|water damage|out of order|dropped (?:it|my))\b/,
+  /\b(?:return|exchange|refund|repair|fix|pick up|collect|drop off)(?: [a-z]+)? (?:my|this|these|those|it|them)\b/,
+  /\b(?:my order|my parcel|my package|ordered online|bought online)\b/,
+  // espagnol
+  /\bno (?:me |se |le )?(?:funciona|funcionan|enciende|encienden|carga|cargan|arranca|conecta|responde|va|sirve|suena|lee|enciende)\b/,
+  /\b(?:roto|rota|rotos|rotas|estropeado|estropeada|averiado|averiada|danado|danada|defectuoso|defectuosa|bloqueado|bloqueada|se ha caido|se me cayo|se cayo|mojado|mojada|pantalla rota)\b/,
+  /\b(?:devolver|cambiar|reparar|arreglar|recoger|reembolsar)(?: [a-z]+)? (?:mi|mis|este|esta|estos|estas)\b/,
+  /\b(?:mi pedido|mi paquete|pedido online|pedi por internet|compre por internet)\b/
+];
+// Mots composés qui contiennent un mot de panne sans en être une.
+const NOT_PROBLEMS = /\b(?:casse tete|casse tetes|grille pain|tombe pile|rendre la monnaie|rendre service)\b/g;
+
+export function findProblem(text) {
+  const plain = normalize(text).replace(NOT_PROBLEMS, " ");
+  for (const re of PROBLEM_PATTERNS) {
+    const m = plain.match(re);
+    if (m) return m[0].trim();
+  }
+  return null;
+}
+
 // Renvoie { id, place, keyword, fuzzy } ou null (place : emplacement précis, ou null).
 export function findZoneDetailed(text, lang) {
   const query = clean(text);
   if (!query) return null;
+  const problem = findProblem(text);
+  if (problem) return { id: "savRetrait", place: null, keyword: problem, fuzzy: false };
   const exact = exactMatch(query, lang) || exactMatch(query, null);
   if (exact) return { id: exact.id, place: exact.place, keyword: exact.word, fuzzy: false };
   const fuzzy = fuzzyMatch(query, lang) || fuzzyMatch(query, null);
@@ -233,7 +284,8 @@ const INFO_MATCHERS = Object.fromEntries(
 
 export function findInfo(text) {
   const query = clean(text);
-  if (!query) return null;
+  // « mon colis est ouvert » ou « l'appli s'est fermée » : c'est un souci, pas les horaires.
+  if (!query || findProblem(text)) return null;
   return Object.keys(INFO_MATCHERS).find((name) => INFO_MATCHERS[name].some((re) => re.test(query))) || null;
 }
 
