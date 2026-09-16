@@ -28,4 +28,10 @@ from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 ChatterboxMultilingualTTS.from_pretrained(device="cpu")
 print("modèle prêt")
 PY
+echo "Voix de femme de référence (démonstration Resemble AI)…"
+mkdir -p "$DIR/references"
+for lang in fr en es; do
+  curl -sfL -o "$DIR/references/${lang}_f1.flac" \
+    "https://storage.googleapis.com/chatterbox-demo-samples/mtl_prompts/${lang}_f1.flac"
+done
 echo "Installation terminée."

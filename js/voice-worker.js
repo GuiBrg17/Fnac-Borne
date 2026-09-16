@@ -12,7 +12,7 @@ async function load() {
 }
 
 self.onmessage = async (event) => {
-  const { id, type, voiceId, text } = event.data;
+  const { id, type, voiceId, text, speakerId } = event.data;
   try {
     const tts = await load();
     if (type === "stored") {
@@ -25,7 +25,7 @@ self.onmessage = async (event) => {
       });
       self.postMessage({ id, ok: true });
     } else if (type === "predict") {
-      const blob = await tts.predict({ text, voiceId });
+      const blob = await tts.predict(speakerId === undefined ? { text, voiceId } : { text, voiceId, speakerId });
       const buffer = await blob.arrayBuffer();
       self.postMessage({ id, ok: true, result: buffer }, [buffer]);
     } else {
