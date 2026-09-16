@@ -1,6 +1,6 @@
 // Vérifie que les phrases des clients mènent au bon rayon.
 // Lancer depuis le dossier du projet :  node tests/search.test.mjs
-import { findZone, findInfo, findIntent } from "../js/search.js";
+import { findZone, findZoneDetailed, findInfo, findIntent, findClarify, pickClarifyOption } from "../js/search.js";
 
 const cases = [
   // [langue, phrase, rayon attendu]
@@ -358,7 +358,60 @@ const infoCases = [
   ["fr", "une machine à laver", "largeAppliances"],
   ["en", "a washing machine", "largeAppliances"],
   ["es", "una lavadora", "largeAppliances"],
-  ["fr", "mon colis est ouvert", null]
+  ["fr", "mon colis est ouvert", null],
+  // Ascenseur (réservé aux personnes qui en ont besoin)
+  ["fr", "il y a un ascenseur ?", "elevator"],
+  ["fr", "je suis en fauteuil roulant", "elevator"],
+  ["en", "is there a lift", "elevator"],
+  ["es", "¿hay ascensor?", "elevator"],
+  ["fr", "un fauteuil gamer", null]
+];
+
+// Demandes vagues : Jeanne pose une question (valeur = premier mot vague de la question),
+// sauf si la phrase précise déjà (valeur = rayon).
+const clarifyCases = [
+  ["fr", "un casque", "?casque"],
+  ["fr", "je cherche un casque pour mon fils", "?casque"],
+  ["fr", "un casque JBL", "audio"],
+  ["fr", "un casque pour jouer", "accessoiresGaming"],
+  ["fr", "casque gamer", "accessoiresGaming"],
+  ["fr", "un chargeur", "?chargeur"],
+  ["fr", "un chargeur Samsung", "telephonie"],
+  ["fr", "un chargeur d'iPhone", "apple"],
+  ["fr", "un câble", "?câble"],
+  ["fr", "un câble pour ma télé", "informatique"],
+  ["fr", "un écran", "?écran"],
+  ["fr", "mon écran est cassé", "savRetrait"],
+  ["fr", "une tablette", "?tablette"],
+  ["fr", "un ordinateur", "?ordinateur"],
+  ["fr", "un ordinateur pour jouer", "accessoiresGaming"],
+  ["fr", "un jeu", "?jeu"],
+  ["fr", "un jeu de société", "jeuxSociete"],
+  ["fr", "une carte", "?carte"],
+  ["fr", "une carte cadeau", "caisse"],
+  ["fr", "un aspirateur", "?aspirateur"],
+  ["fr", "un aspirateur robot", "electromenager"],
+  ["fr", "une machine à café", "?machine à café"],
+  ["en", "a charger", "?chargeur"],
+  ["es", "una batería", "?batterie"]
+];
+// Réponses du client à la question (au micro) : [mot vague, réponse, rayon choisi]
+const answerCases = [
+  ["un casque", "pour écouter de la musique", "audio"],
+  ["un casque", "c'est pour jouer", "accessoiresGaming"],
+  ["un casque", "pour mon vélo", "trottinettes"],
+  ["un chargeur", "c'est pour un Samsung", "telephonie"],
+  ["une tablette", "un iPad", "apple"],
+  ["une carte", "une carte cadeau", "caisse"],
+  ["une machine à café", "à capsules", "electromenager"],
+  ["un casque", "je ne sais pas", null]
+];
+// Précommandes et produits à venir
+const upcomingCases = [
+  ["fr", "je veux précommander GTA 6", "gaming"],
+  ["fr", "l'iPhone dix-huit", "apple"],
+  ["fr", "le Galaxy S26 Ultra", "telephonie"],
+  ["fr", "la PS6", "gaming"]
 ];
 // Demandes sans produit précis : un vendeur conseillera mieux.
 const intentCases = [
@@ -384,12 +437,28 @@ for (const [lang, text, expected] of intentCases) {
   if (!ok) failures++;
   console.log(`${ok ? "✓" : "✗"} [${lang}] ${text} → ${got}${ok ? "" : `   (attendu : ${expected})`}`);
 }
-for (const [lang, text, expected] of cases) {
+for (const [lang, text, expected] of clarifyCases) {
+  const match = findZoneDetailed(text, lang);
+  const question = findClarify(text, match);
+  const got = question ? "?" + question.words.fr[0] : match && match.id;
+  const ok = got === expected;
+  if (!ok) failures++;
+  console.log(`${ok ? "✓" : "✗"} [${lang}] ${text} → ${got}${ok ? "" : `   (attendu : ${expected})`}`);
+}
+for (const [first, answer, expected] of answerCases) {
+  const question = findClarify(first, findZoneDetailed(first, "fr"));
+  const option = question && pickClarifyOption(answer, question);
+  const got = option ? option.zone : null;
+  const ok = got === expected;
+  if (!ok) failures++;
+  console.log(`${ok ? "✓" : "✗"} [fr] ${first} → « ${answer} » → ${got}${ok ? "" : `   (attendu : ${expected})`}`);
+}
+for (const [lang, text, expected] of [...upcomingCases, ...cases]) {
   const got = findZone(text, lang);
   const ok = got === expected;
   if (!ok) failures++;
   console.log(`${ok ? "✓" : "✗"} [${lang}] ${text} → ${got}${ok ? "" : `   (attendu : ${expected})`}`);
 }
-const total = cases.length + infoCases.length + intentCases.length;
+const total = cases.length + infoCases.length + intentCases.length + clarifyCases.length + answerCases.length + upcomingCases.length;
 console.log(`\n${total - failures}/${total} réussis`);
 process.exit(failures ? 1 : 0);

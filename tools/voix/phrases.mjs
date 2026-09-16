@@ -2,7 +2,7 @@
 // node tools/voix/phrases.mjs  →  tools/voix/phrases.json
 // À relancer (avec tools/voix/generer.py) dès qu'un texte change dans js/data.js.
 import { writeFileSync } from "node:fs";
-import { UI, ZONES, INFO } from "../../js/data.js";
+import { UI, ZONES, INFO, CLARIFY } from "../../js/data.js";
 
 const phrases = [];
 for (const lang of Object.keys(UI)) {
@@ -11,6 +11,8 @@ for (const lang of Object.keys(UI)) {
   [t.greeting, t.switched, t.hello, t.thanks, t.human, t.notFound, t.otherStore,
    t.foundStairs, t.foundEntrance, t.micUnsupported, t.micDenied, t.micError].forEach(add);
   for (const entry of Object.values(INFO)) add(entry.answer[lang]);
+  for (const entry of CLARIFY) add(entry.question[lang]);
+  [t.surveyAsk, t.surveyThanksYes, t.surveyThanksNo, t.a11yOn, t.a11yOff].forEach(add);
   add(t.vendorConfirm(null));
   for (const [id, zone] of Object.entries(ZONES)) {
     if (zone.external) continue;

@@ -5,9 +5,9 @@
 // une mise en ligne remplace donc bien toutes les copies en cache.
 const VERSION = new URL(import.meta.url).search;
 const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE, INFO } = await import("./data.js" + VERSION);
-const { findZoneDetailed, findIntent, findInfo, normalize, displayKeyword } = await import("./search.js" + VERSION);
+const { findZoneDetailed, findIntent, findInfo, findClarify, pickClarifyOption, normalize, displayKeyword } = await import("./search.js" + VERSION);
 const { NEWS } = await import("./news.js" + VERSION);
-const { recordSession, recordQuestion, readStats, resetStats } = await import("./stats.js" + VERSION);
+const { recordSession, recordQuestion, recordFeedback, readStats, resetStats } = await import("./stats.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
 const { BASEMENT, GROUND, box, routeTo, routeGround, stairsDrawing } = await import("./plan.js" + VERSION);
 
@@ -49,7 +49,11 @@ const settings = {
   neuralVoice: store.get("neuralVoice", true)
 };
 
-const state = { screen: "idle", lang: "fr", floor: "0", zone: null, place: null, a11y: false, listening: false, speaking: false };
+const state = { screen: "idle", lang: "fr", floor: "0", zone: null, place: null, a11y: false, listening: false, speaking: false,
+  // clarify : question en attente (« Quel genre de casque ? »), avec la source de la demande
+  clarify: null, clarifySource: null,
+  // visite en cours : nombre de demandes, dernière demande, sondage déjà répondu
+  visit: { count: 0, last: null, surveyed: false } };
 const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const motionReduced = () => prefersReduced || state.a11y;
 const t = () => UI[state.lang];
@@ -67,6 +71,8 @@ const els = {
   mapStage: $("#mapStage"), route: $("#route"), routeHint: $("#routeHint"), routeStairs: $("#routeStairs"),
   routeTarget: $("#routeTarget"), routeIcon: $("#routeIcon use"),
   warning: $("#idleWarning"), warningBody: $("#idleWarningBody"), warningButton: $("#idleWarningButton"),
+  survey: $("#survey"), surveyTitle: $("#surveyTitle"), surveyButtons: $("#surveyButtons"),
+  statsSatisfaction: $("#statsSatisfaction"), statsUnhappy: $("#statsUnhappy"),
   settings: $("#settings"), idleSeconds: $("#idleSeconds"), testVoice: $("#testVoice"),
   neuralToggle: $("#neuralToggle"), voiceStatus: $("#voiceStatus"), voiceDownload: $("#voiceDownload"),
   toast: $("#toast"),
@@ -343,13 +349,54 @@ function updateStatus() {
 // =====================================================================
 // Conversation
 // =====================================================================
+function appendToChat(node) {
+  els.chat.append(node);
+  while (els.chat.children.length > 40) els.chat.firstElementChild.remove();
+  els.chat.scrollTo({ top: els.chat.scrollHeight, behavior: motionReduced() ? "auto" : "smooth" });
+}
+
 function addMessage(role, text) {
   const message = document.createElement("p");
   message.className = `msg msg-${role}`;
   message.textContent = text;
-  els.chat.append(message);
-  while (els.chat.children.length > 40) els.chat.firstElementChild.remove();
-  els.chat.scrollTo({ top: els.chat.scrollHeight, behavior: motionReduced() ? "auto" : "smooth" });
+  appendToChat(message);
+}
+
+// Boutons de réponse dans la conversation (choix d'une question, sondage).
+// choices : [{ label, onChoose }]. Un seul choix possible, ensuite les boutons se figent.
+function addChoices(choices, { className = "", ariaLabel = "" } = {}) {
+  const group = document.createElement("div");
+  group.className = `msg-choices ${className}`.trim();
+  group.setAttribute("role", "group");
+  if (ariaLabel) group.setAttribute("aria-label", ariaLabel);
+  for (const choice of choices) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "choice";
+    button.textContent = choice.label;
+    button.addEventListener("click", () => {
+      if (group.classList.contains("is-done")) return;
+      closeChoices();
+      button.classList.add("is-chosen");
+      choice.onChoose();
+    });
+    group.append(button);
+  }
+  appendToChat(group);
+  return group;
+}
+
+function closeChoices() {
+  state.clarify = null;
+  $$(".msg-choices:not(.is-done)", els.chat).forEach((group) => {
+    group.classList.add("is-done");
+    group.querySelectorAll("button").forEach((b) => { b.disabled = true; });
+  });
+}
+
+function noteVisit(text) {
+  state.visit.count += 1;
+  state.visit.last = text;
 }
 
 function reply(text, prefix = "") {
@@ -361,24 +408,42 @@ function ask(text, source = "text") {
   addMessage("user", text);
   bump();
   hideOtherStore();
+  // Réponse à la question de Jeanne : « pour jouer », « Samsung », « l'iPad »…
+  if (state.clarify) {
+    const entry = state.clarify;
+    const pending = state.clarifySource;
+    closeChoices();
+    const option = pickClarifyOption(text, entry);
+    if (option) { chooseOption(option, pending); return; }
+  }
   // Les questions pratiques passent avant les rayons : « les horaires » ou
   // « les toilettes » ne sont pas des produits.
   const info = findInfo(text);
   if (info) {
+    noteVisit(text);
     recordQuestion({ text: null, zone: null, lang: state.lang, source });
     clearZone();
     reply(INFO[info].answer[state.lang]);
     return;
   }
   const match = findZoneDetailed(text, state.lang);
+  // Demande vague (« un casque ») : Jeanne demande lequel au lieu de deviner.
+  const clarify = findClarify(text, match);
+  if (clarify) { noteVisit(text); askClarify(clarify, source); return; }
   const zone = match ? match.id : null;
   const intent = zone ? null : findIntent(text);
+  // « bonjour » et « merci » ne sont pas des demandes : ils ne comptent pas pour le sondage.
+  if (!intent) noteVisit(text);
   // Les « bonjour » / « merci » comptent comme questions, pas comme questions sans réponse.
   recordQuestion({ text: intent ? null : text, zone, lang: state.lang, source });
   if (zone) { answerZone(zone, match.fuzzy ? t().didYouMean(displayKeyword(match.keyword)) : "", match.place); return; }
   if (intent) {
     reply(t()[intent]);
-    if (intent === "thanks") signLSF("merci");
+    if (intent === "thanks") {
+      signLSF("merci");
+      // « Merci » arrive souvent en fin de visite : c'est le moment du sondage.
+      offerSurvey();
+    }
     return;
   }
   clearZone();
@@ -386,6 +451,82 @@ function ask(text, source = "text") {
 }
 
 const zoneLabel = (id) => ZONES[id].label[state.lang];
+
+function askClarify(entry, source) {
+  clearZone();
+  reply(entry.question[state.lang]);
+  addChoices(entry.options.map((option) => ({
+    label: option.label[state.lang],
+    onChoose: () => {
+      addMessage("user", option.label[state.lang]);
+      chooseOption(option, source);
+    }
+  })), { className: "is-options", ariaLabel: t().choose });
+  // Posé après addChoices, qui remet la question en attente à zéro.
+  state.clarify = entry;
+  state.clarifySource = source;
+}
+
+function chooseOption(option, source) {
+  recordQuestion({ zone: option.zone, lang: state.lang, source });
+  answerZone(option.zone, "", option.place || null);
+}
+
+// =====================================================================
+// Sondage de fin de visite : « Avez-vous trouvé ce que vous cherchiez ? »
+// Dans la conversation après un « merci », ou en fenêtre quand on touche
+// « Terminer ». Une seule réponse par visite, et seulement si le client
+// a demandé quelque chose. Résultats : réglages du personnel (5 touches sur le logo).
+// =====================================================================
+function answerSurvey(found) {
+  state.visit.surveyed = true;
+  recordFeedback({ found, question: state.visit.last, zone: state.zone });
+}
+
+function offerSurvey() {
+  if (!state.visit.count || state.visit.surveyed) return;
+  addMessage("jeanne", t().surveyAsk);
+  addChoices([
+    { label: "👍 " + t().surveyYes, onChoose: () => { answerSurvey(true); reply(t().surveyThanksYes); } },
+    { label: "👎 " + t().surveyNo, onChoose: () => { answerSurvey(false); reply(t().surveyThanksNo); } }
+  ], { className: "is-survey", ariaLabel: t().surveyAsk });
+}
+
+let surveyTimer = null;
+function endVisit() {
+  if (!state.visit.count || state.visit.surveyed) { exitToIdle(); return; }
+  closeWarning();
+  clearTimeout(inactivityTimer);
+  els.surveyTitle.textContent = t().surveyAsk;
+  els.surveyButtons.hidden = false;
+  els.survey.showModal();
+  speak(t().surveyAsk);
+  // Personne ne répond : retour à l'accueil sans rien compter.
+  clearTimeout(surveyTimer);
+  surveyTimer = setTimeout(exitToIdle, 20000);
+}
+
+function closeSurvey() {
+  clearTimeout(surveyTimer);
+  if (els.survey.open) els.survey.close();
+}
+
+function handleSurveyChoice(choice) {
+  clearTimeout(surveyTimer);
+  if (choice === "skip") { exitToIdle(); return; }
+  answerSurvey(choice === "yes");
+  if (choice === "yes") {
+    els.surveyTitle.textContent = t().surveyThanksYes;
+    els.surveyButtons.hidden = true;
+    speak(t().surveyThanksYes);
+    surveyTimer = setTimeout(exitToIdle, 3200);
+  } else {
+    // Pas trouvé : on reste sur la page, Jeanne propose un vendeur.
+    closeSurvey();
+    reply(t().surveyThanksNo);
+    bump();
+  }
+}
 
 function answerZone(id, prefix = "", place = null) {
   if (ZONES[id].external) {
@@ -707,6 +848,8 @@ function renderSuggestions() {
     chip.innerHTML = `<svg aria-hidden="true"><use href="#i-${suggestion.icon}"/></svg><span></span>`;
     chip.querySelector("span").textContent = suggestion.label[state.lang];
     chip.addEventListener("click", () => {
+      closeChoices();
+      noteVisit(suggestion.label[state.lang]);
       addMessage("user", suggestion.label[state.lang]);
       recordQuestion({ zone: suggestion.zone, lang: state.lang, source: "chip" });
       answerZone(suggestion.zone);
@@ -736,6 +879,7 @@ function setLang(lang) {
   if (lang === state.lang) return;
   abortMic();
   state.lang = lang;
+  closeChoices();
   applyLang();
   preloadLanguage(lang);
   if (settings.neuralVoice && !clipManifest[lang] && voice.supports(lang) && !voice.isReady(lang)) downloadVoices([lang]);
@@ -747,7 +891,7 @@ function toggleA11y(force) {
   document.documentElement.classList.toggle("a11y", state.a11y);
   els.a11y.setAttribute("aria-pressed", String(state.a11y));
   if (avatar) avatar.setReducedMotion(motionReduced());
-  requestAnimationFrame(placeAvatar);
+  requestAnimationFrame(() => placeAvatar());
 }
 
 function callVendor() {
@@ -876,6 +1020,7 @@ function enterApp() {
   els.app.inert = false;
   if (els.idleVideo && els.idleVideo.isConnected && !els.idleVideo.hidden) els.idleVideo.pause();
   state.lang = "fr";
+  state.visit = { count: 0, last: null, surveyed: false };
   applyLang();
   placeAvatar();
   if (avatar) avatar.setFraming("docked");
@@ -889,6 +1034,8 @@ function enterApp() {
 
 function exitToIdle() {
   closeWarning();
+  closeSurvey();
+  closeChoices();
   clearTimeout(inactivityTimer);
   abortMic();
   stopSpeaking();
@@ -921,6 +1068,7 @@ function bump() {
 
 function checkInactivity() {
   if (state.speaking || state.listening) { bump(); return; }
+  if (els.survey.open) return;
   let left = WARNING_SECONDS;
   const render = () => { els.warningBody.textContent = t().idleWarnBody(left); };
   render();
@@ -990,6 +1138,15 @@ function renderStats() {
   const misses = Object.entries(s.misses).sort((a, b) => b[1] - a[1]).slice(0, 15);
   fillStatsList(els.statsZones, zones, "Aucune recherche pour l'instant");
   fillStatsList(els.statsMisses, misses, "Aucune question sans réponse");
+  // Sondage de fin de visite
+  const yes = s.feedback.yes;
+  const no = s.feedback.no;
+  const answers = yes + no;
+  els.statsSatisfaction.textContent = answers
+    ? `${Math.round((yes / answers) * 100)} % de clients satisfaits : ${yes} ont trouvé 👍, ${no} n'ont pas trouvé 👎 (${answers} réponse${answers > 1 ? "s" : ""} au sondage).`
+    : "Personne n'a encore répondu au sondage de fin de visite.";
+  const unhappy = Object.entries(s.unhappy).sort((a, b) => b[1] - a[1]).slice(0, 15);
+  fillStatsList(els.statsUnhappy, unhappy, "Aucun client mécontent pour l'instant");
 }
 
 function handleStatsReset() {
@@ -1060,8 +1217,16 @@ els.form.addEventListener("submit", (e) => {
 });
 els.vendor.addEventListener("click", callVendor);
 els.otherStoreClose.addEventListener("click", hideOtherStore);
-els.a11y.addEventListener("click", () => toggleA11y());
-els.end.addEventListener("click", exitToIdle);
+els.a11y.addEventListener("click", () => {
+  toggleA11y();
+  reply(state.a11y ? t().a11yOn : t().a11yOff);
+});
+els.end.addEventListener("click", endVisit);
+els.surveyButtons.addEventListener("click", (e) => {
+  const button = e.target.closest("button[data-answer]");
+  if (button) handleSurveyChoice(button.dataset.answer);
+});
+els.survey.addEventListener("cancel", (e) => { e.preventDefault(); handleSurveyChoice("skip"); });
 
 $("#langSwitch").addEventListener("click", (e) => {
   const button = e.target.closest("button[data-lang]");
@@ -1077,6 +1242,8 @@ $("#floorTabs").addEventListener("click", (e) => {
 els.mapStage.addEventListener("click", (e) => {
   const target = e.target.closest(".tile[data-zone], .plan-svg [data-zone]");
   if (!target) return;
+  closeChoices();
+  noteVisit(ZONES[target.dataset.zone] ? zoneLabel(target.dataset.zone) : target.dataset.zone);
   recordQuestion({ zone: target.dataset.zone, lang: state.lang, source: "map" });
   answerZone(target.dataset.zone, "", target.dataset.place || null);
 });
@@ -1187,7 +1354,7 @@ if (els.idlePhoto.isConnected) {
   if (els.idlePhoto.complete && els.idlePhoto.naturalWidth > 0) useIdlePhoto();
 }
 
-document.fonts.ready.then(placeAvatar);
+document.fonts.ready.then(() => placeAvatar());
 initAvatar();
 initVoice();
 

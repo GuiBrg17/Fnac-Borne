@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=23">
+<link rel="stylesheet" href="css/kiosk.css?v=24">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=23"></script>
+<script type="module" src="js/app.js?v=24"></script>
 </head>
 <body class="is-idle">
 
@@ -218,6 +218,16 @@
   </section>
 </main>
 
+<!-- Sondage de fin de visite (bouton « Terminer ») -->
+<dialog class="survey" id="survey" aria-labelledby="surveyTitle">
+  <p class="survey-title" id="surveyTitle">Avant de partir : avez-vous trouvé ce que vous cherchiez ?</p>
+  <div class="survey-buttons" id="surveyButtons">
+    <button type="button" class="survey-yes" data-answer="yes"><span aria-hidden="true">👍</span><span data-i18n="surveyYes">Oui</span></button>
+    <button type="button" class="survey-no" data-answer="no"><span aria-hidden="true">👎</span><span data-i18n="surveyNo">Non</span></button>
+    <button type="button" class="survey-skip" data-answer="skip" data-i18n="surveySkip">Passer</button>
+  </div>
+</dialog>
+
 <!-- Retour automatique à l'accueil -->
 <dialog class="idle-warning" id="idleWarning">
   <p class="idle-warning-title" data-i18n="idleWarnTitle">Vous êtes toujours là ?</p>
@@ -252,6 +262,14 @@
         <div>
           <h4>Questions sans réponse</h4>
           <ol class="stats-list" id="statsMisses"></ol>
+        </div>
+      </div>
+      <h4 class="stats-subtitle">Sondage de fin de visite</h4>
+      <p class="stats-summary" id="statsSatisfaction"></p>
+      <div class="stats-cols">
+        <div>
+          <h4>Pas trouvé : leur dernière demande</h4>
+          <ol class="stats-list" id="statsUnhappy"></ol>
         </div>
       </div>
       <p class="stats-note">Données anonymes, enregistrées uniquement sur cette borne. Les questions sans réponse aident à compléter les mots-clés.</p>

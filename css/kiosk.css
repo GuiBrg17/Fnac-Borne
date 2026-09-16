@@ -27,7 +27,8 @@ html {
   -webkit-text-size-adjust: 100%;
   touch-action: manipulation;
 }
-html.a11y { font-size: clamp(15px, 1.02vw + 0.42vh, 26px); }
+/* Mode accessibilité : texte nettement plus grand (≈ +25 %), voir aussi la fin du fichier. */
+html.a11y { font-size: clamp(15px, 1.06vw + 0.44vh, 28px); }
 
 body {
   margin: 0;
@@ -468,6 +469,29 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .msg-jeanne { align-self: flex-start; border-radius: 0.35rem 1.2rem 1.2rem 1.2rem; background: var(--mist); }
 .msg-user { align-self: flex-end; border-radius: 1.2rem 0.35rem 1.2rem 1.2rem; background: var(--ink); color: var(--paper); font-weight: 600; }
 @keyframes msg-in { from { opacity: 0; transform: translateY(0.7rem); filter: blur(0.25rem); } }
+
+/* Choix dans la conversation : réponses à une question de Jeanne, sondage */
+.msg-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  max-width: 94%;
+  animation: msg-in 0.45s var(--ease-out) 0.08s both;
+}
+.choice {
+  min-height: 3.3rem;
+  padding: 0 1.15rem;
+  border: 0.15rem solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  font-size: 1.05rem;
+  font-weight: 750;
+  transition: background 0.2s ease, color 0.2s ease, opacity 0.25s ease, transform 0.15s ease;
+}
+.choice:active { transform: scale(0.97); }
+.msg-choices.is-options .choice { background: var(--yellow); border-color: var(--yellow); }
+.msg-choices.is-done .choice { opacity: 0.35; cursor: default; }
+.msg-choices.is-done .choice.is-chosen { opacity: 1; background: var(--ink); border-color: var(--ink); color: var(--paper); }
 
 /* --- Suggestions --- */
 .suggestions-title { margin: 0 0 0.5rem; font-size: 0.9rem; font-weight: 700; color: var(--text-muted); }
@@ -998,6 +1022,36 @@ dialog::backdrop { background: rgba(18, 18, 18, 0.55); }
 dialog[open] { animation: msg-in 0.4s var(--ease-out) both; }
 
 .idle-warning { width: min(34rem, 90vw); text-align: center; }
+
+.survey { width: min(40rem, 92vw); text-align: center; }
+.survey-title { margin: 0 0 1.6rem; font-size: 2rem; font-weight: 900; font-stretch: 115%; line-height: 1.12; text-wrap: balance; }
+.survey-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.survey-buttons[hidden] { display: none; }
+.survey-yes, .survey-no {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 8rem;
+  border: 0.18rem solid var(--ink);
+  border-radius: var(--radius-l);
+  background: var(--paper);
+  font-size: 1.5rem;
+  font-weight: 850;
+}
+.survey-yes { background: var(--yellow); border-color: var(--yellow); }
+.survey-yes span:first-child, .survey-no span:first-child { font-size: 2.8rem; line-height: 1; }
+.survey-yes:active, .survey-no:active { transform: scale(0.98); }
+.survey-skip {
+  grid-column: 1 / -1;
+  min-height: 3.2rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--mist);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
 .idle-warning-title { margin: 0; font-size: 2.2rem; font-weight: 900; font-stretch: 120%; line-height: 1.05; }
 .idle-warning-body { margin: 0.8rem 0 1.6rem; font-size: 1.25rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
 .idle-warning button, .settings-buttons button {
@@ -1036,6 +1090,7 @@ dialog[open] { animation: msg-in 0.4s var(--ease-out) both; }
 .stats-list li span { overflow-wrap: anywhere; }
 .stats-list b { font-variant-numeric: tabular-nums; }
 .stats-list .is-empty { color: var(--text-muted); border-bottom: 0; }
+.stats-subtitle { margin-top: 1.4rem !important; font-size: 1.1rem !important; }
 .stats-note { margin: 1rem 0 0.8rem; font-size: 0.85rem; color: var(--text-muted); }
 .stats-reset {
   min-height: 3rem;
@@ -1085,10 +1140,50 @@ dialog[open] { animation: msg-in 0.4s var(--ease-out) both; }
 /* =====================================================================
    Mode accessibilité et mouvements réduits
    ===================================================================== */
-html.a11y .msg-jeanne { background: var(--paper); box-shadow: inset 0 0 0 0.13rem var(--ink); }
-html.a11y .jeanne-status, html.a11y .suggestions-title, html.a11y .tile-detail { color: var(--ink); }
+/* Contraste renforcé : noir sur blanc ou sur jaune, bordures épaisses, aucun gris. */
+html.a11y {
+  --text-muted: #121212;
+  --on-ink-muted: #FFFFFF;
+  --line: #121212;
+  --mist: #FFFFFF;
+}
+html.a11y .msg { font-size: 1.25rem; font-weight: 650; line-height: 1.42; }
+html.a11y .msg-jeanne { background: var(--paper); box-shadow: inset 0 0 0 0.2rem var(--ink); }
+html.a11y .msg-user { background: var(--ink); color: var(--paper); font-weight: 800; }
+html.a11y .jeanne-status, html.a11y .suggestions-title, html.a11y .tile-detail { color: var(--ink); font-weight: 800; }
 html.a11y .route-hint, html.a11y .floors button { color: var(--paper); }
 html.a11y .suggestions { display: none; }
+/* La conversation prend plus de largeur ; photo et nom de Jeanne réduits. */
+html.a11y .app { grid-template-columns: minmax(0, 45fr) minmax(0, 55fr); }
+html.a11y .assistant { gap: 0.7rem; }
+html.a11y .jeanne-slot { width: 4.6rem; height: 4.6rem; }
+html.a11y .jeanne-name { font-size: 1.7rem; }
+html.a11y .langs button { padding: 0 0.7rem 0 0.55rem; }
+html.a11y .mic { min-height: 4rem; }
+html.a11y .actions { grid-template-columns: 1.25fr 1fr 1fr; gap: 0.4rem; }
+html.a11y .action { padding: 0 0.5rem; font-size: 0.9rem; }
+html.a11y .floors button { gap: 0.4rem; padding: 0 0.9rem 0 0.35rem; }
+html.a11y .floors button[aria-selected="true"] { color: var(--ink); }
+html.a11y .map-head h2 { font-size: 1.7rem; white-space: nowrap; }
+html.a11y .action, html.a11y .ask input, html.a11y .langs {
+  box-shadow: inset 0 0 0 0.18rem var(--ink);
+  font-weight: 850;
+}
+html.a11y .action[aria-pressed="true"] { background: var(--yellow); box-shadow: inset 0 0 0 0.26rem var(--ink); }
+html.a11y .ask input::placeholder { color: var(--ink); opacity: 0.8; }
+html.a11y .choice { border-width: 0.22rem; font-size: 1.2rem; font-weight: 850; }
+html.a11y .msg-choices.is-options .choice { border-color: var(--ink); }
+html.a11y .msg-choices.is-done .choice:not(.is-chosen) { opacity: 0.5; }
+html.a11y :focus-visible { outline-width: 0.35rem; }
+/* Plan : noms des rayons plus gros, tracé plus épais, rayon trouvé très visible. */
+html.a11y .map { background: #000; }
+html.a11y .bm-label { font-size: 14px; stroke-width: 4.5px; }
+html.a11y .plan-0 .bm-label { font-size: 13px; stroke-width: 4px; }
+html.a11y .bm-label.is-hit, html.a11y .plan-0 .bm-label.is-hit { font-size: 17px; }
+html.a11y .has-focus .bm-label:not(.is-hit) { opacity: 0.55; }
+html.a11y .bm-shape.is-hit { stroke-width: 5px; }
+html.a11y .route-line { stroke-width: 0.55rem; }
+
 html.a11y .has-focus .tile:not(.is-hit):not(.is-route) { opacity: 0.25; }
 
 html.a11y *, html.a11y *::before, html.a11y *::after {

@@ -9,7 +9,7 @@
 // 2. Si rien n'est trouvé, recherche tolérante aux fautes :
 //    « aifone », « playstasion », « télévition », « trotinete »…
 // =====================================================================
-const { ZONES, INTENTS, INFO } = await import("./data.js" + new URL(import.meta.url).search);
+const { ZONES, INTENTS, INFO, CLARIFY } = await import("./data.js" + new URL(import.meta.url).search);
 
 const STOPWORDS = new Set([
   // français
@@ -152,6 +152,9 @@ const matchersFor = (id, zone, place, keywords) =>
       sound: phonetic(clean(word).replace(/ /g, ""))
     })));
 
+// Mots vagues qui déclenchent une question (CLARIFY, data.js).
+const VAGUE = new Set(CLARIFY.flatMap((entry) => Object.values(entry.words).flat()).map((w) => clean(w)));
+
 const MATCHERS = Object.entries(ZONES).flatMap(([id, zone]) => [
   ...matchersFor(id, zone, null, zone.keywords),
   ...Object.entries(zone.places || {}).flatMap(([place, entry]) => matchersFor(id, zone, place, entry.keywords))
@@ -177,11 +180,33 @@ function editDistance(a, b, max) {
   return previous[b.length];
 }
 
-function exactMatch(query, lang) {
+function exactMatches(query, lang) {
   const forms = variants(query);
   return MATCHERS
     .filter((m) => (!lang || m.lang === lang) && forms.some((form) => m.re.test(form)))
-    .sort((a, b) => b.weight - a.weight)[0] || null;
+    .sort((a, b) => b.weight - a.weight);
+}
+
+// Le mot-clé retenu. Si c'est un mot vague (« casque », « câble »), le reste
+// de la phrase peut suffire à choisir :
+//  1. la phrase désigne un des choix de la question (« câble pour la télé »,
+//     « chargeur Samsung ») ;
+//  2. sinon, un mot précis de la phrase (« un casque JBL ») l'emporte, à
+//     condition que tous les mots précis désignent le même rayon (les mots
+//     contenus dans le mot vague, « portable » dans « ordinateur portable »,
+//     ne comptent pas).
+// Sinon on garde le mot vague, et Jeanne posera la question.
+function bestMatch(text, query, lang) {
+  const found = exactMatches(query, lang);
+  const top = found[0];
+  if (!top || !VAGUE.has(clean(top.word))) return top || null;
+  const entry = clarifyFor(top.word);
+  const option = entry && pickClarifyOption(text, entry);
+  if (option) return { ...top, id: option.zone, place: option.place || null };
+  const vague = clean(top.word);
+  const precise = found.filter((m) => !VAGUE.has(clean(m.word)) && !vague.includes(clean(m.word)));
+  if (precise.length && precise.every((m) => m.id === precise[0].id)) return precise[0];
+  return { ...top, vague: true };
 }
 
 function fuzzyMatch(query, lang) {
@@ -258,14 +283,15 @@ export function findProblem(text) {
   return null;
 }
 
-// Renvoie { id, place, keyword, fuzzy } ou null (place : emplacement précis, ou null).
+// Renvoie { id, place, keyword, fuzzy, vague } ou null (place : emplacement précis, ou null ;
+// vague : mot vague gardé, voir findClarify).
 export function findZoneDetailed(text, lang) {
   const query = clean(text);
   if (!query) return null;
   const problem = findProblem(text);
   if (problem) return { id: "savRetrait", place: null, keyword: problem, fuzzy: false };
-  const exact = exactMatch(query, lang) || exactMatch(query, null);
-  if (exact) return { id: exact.id, place: exact.place, keyword: exact.word, fuzzy: false };
+  const exact = bestMatch(text, query, lang) || bestMatch(text, query, null);
+  if (exact) return { id: exact.id, place: exact.place, keyword: exact.word, fuzzy: false, vague: Boolean(exact.vague) };
   const fuzzy = fuzzyMatch(query, lang) || fuzzyMatch(query, null);
   return fuzzy ? { id: fuzzy.id, place: fuzzy.place, keyword: fuzzy.word, fuzzy: true } : null;
 }
@@ -292,6 +318,41 @@ export function findInfo(text) {
 export function findIntent(text) {
   const query = clean(text);
   return ["human", "thanks", "hello"].find((name) => INTENT_MATCHERS[name].some((re) => re.test(query))) || null;
+}
+
+// ---------------------------------------------------------------------
+// Demandes vagues (« un casque », « un chargeur ») : voir CLARIFY dans data.js.
+// On pose la question seulement si le mot vague est tout ce qui a été reconnu :
+// si la recherche a trouvé un mot-clé plus précis (« casque gamer »,
+// « chargeur d'iPhone ») ou une panne, le client va directement au bon rayon.
+// ---------------------------------------------------------------------
+const CLARIFY_WORDS = CLARIFY.map((entry) => ({
+  entry,
+  forms: new Set(Object.values(entry.words).flat().map(clean)),
+  res: Object.values(entry.words).flat().map(phraseRe)
+}));
+
+const clarifyFor = (word) => (CLARIFY_WORDS.find(({ forms }) => forms.has(clean(word))) || {}).entry || null;
+
+// La question à poser, ou null. "match" : le résultat de findZoneDetailed.
+export function findClarify(text, match) {
+  const query = clean(text);
+  if (!query) return null;
+  // Mot vague reconnu et gardé par bestMatch : la question. Mot précis : pas de question.
+  if (match && !match.fuzzy) return match.vague ? clarifyFor(match.keyword) : null;
+  const hit = CLARIFY_WORDS.find(({ res }) => res.some((re) => re.test(query)));
+  return hit ? hit.entry : null;
+}
+
+// Réponse du client à la question : « pour jouer », « Samsung », « l'iPad »…
+// Renvoie l'option choisie, ou null si la phrase ne désigne aucun choix.
+export function pickClarifyOption(text, entry) {
+  const words = ` ${normalize(text)} `;
+  const scores = entry.options.map((option) =>
+    Object.values(option.say).flat().filter((word) => words.includes(` ${normalize(word)} `)).length);
+  const best = Math.max(...scores);
+  if (!best || scores.filter((score) => score === best).length > 1) return null;
+  return entry.options[scores.indexOf(best)];
 }
 
 // Écriture soignée des marques pour l'affichage (« iphone » → « iPhone »).
