@@ -1,0 +1,686 @@
+[
+ {
+  "lang": "fr",
+  "text": "Bonjour et bienvenue à la Fnac Jeanne d'Arc ! Dites-moi ce que vous cherchez, je vous montre le rayon sur le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "Très bien, je continue en français. Que cherchez-vous ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Bonjour ! Quel produit cherchez-vous ?"
+ },
+ {
+  "lang": "fr",
+  "text": "Avec plaisir ! Bonne visite à la Fnac."
+ },
+ {
+  "lang": "fr",
+  "text": "Bien sûr. Touchez « Appeler un vendeur » et un membre de l'équipe viendra vous aider."
+ },
+ {
+  "lang": "fr",
+  "text": "Je n'ai pas trouvé ce produit. Essayez avec un autre mot, ou appelez un vendeur : il viendra vous aider."
+ },
+ {
+  "lang": "fr",
+  "text": "Les livres, BD, manuels scolaires, la papeterie, les CD, vinyles et DVD se trouvent à la Fnac Wilson, 16 allées Franklin-Roosevelt, près de Jean-Jaurès. Ici, à la Fnac Jeanne d'Arc, nous sommes spécialisés dans la technique."
+ },
+ {
+  "lang": "fr",
+  "text": "Les LEGO, figurines POP et cartes Pokémon sont dans l'escalier qui relie l'étage 0 au sous-sol."
+ },
+ {
+  "lang": "fr",
+  "text": "L'entrée et la sortie sont à l'étage 0, en bas du plan."
+ },
+ {
+  "lang": "fr",
+  "text": "Le micro n'est pas disponible sur cet appareil. Vous pouvez écrire votre question."
+ },
+ {
+  "lang": "fr",
+  "text": "Le micro est bloqué. Autorisez-le dans le navigateur, ou écrivez votre question."
+ },
+ {
+  "lang": "fr",
+  "text": "Je n'ai pas bien entendu. Réessayez, ou écrivez votre question."
+ },
+ {
+  "lang": "fr",
+  "text": "Le magasin est ouvert du lundi au samedi, de 10 heures à 19 heures 30. Nous sommes fermés le dimanche."
+ },
+ {
+  "lang": "fr",
+  "text": "Je suis désolée, il n'y a pas de toilettes dans ce magasin."
+ },
+ {
+  "lang": "fr",
+  "text": "Nous ne vendons pas de gros électroménager ici. Au rayon petit électroménager, le plus grand appareil est l'aspirateur balai."
+ },
+ {
+  "lang": "fr",
+  "text": "Le magasin n'a pas de parking. Il faut vous garer dans le quartier."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur a été prévenu et arrive."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Téléphonie Android est ici, à l'étage 0. Je vous l'indique sur le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Téléphonie Android a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Objets connectés est ici, à l'étage 0. Je vous l'indique sur le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Objets connectés a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Escalier · LEGO, POP & Pokémon a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Entrée / Sortie a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Jeux vidéo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Jeux vidéo a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon PC gamer & accessoires est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon PC gamer & accessoires a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Cartouches d'encre est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Cartouches d'encre a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Petit électroménager est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Petit électroménager a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Imprimantes, câbles & stockage est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Imprimantes, câbles & stockage a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Tablettes Android est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Tablettes Android a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Liseuses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Liseuses a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon PC Windows est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon PC Windows a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Mobilité urbaine est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Mobilité urbaine a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Photo & micros est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Photo & micros a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon TV est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon TV a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Audio est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Audio a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Apple est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Apple a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Jeux de société est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Jeux de société a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon SAV & retrait des colis est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon SAV & retrait des colis a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Caisses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Caisses a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "Le rayon Adhésion & financement est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Adhésion & financement a été prévenu."
+ },
+ {
+  "lang": "en",
+  "text": "Hello and welcome to Fnac Jeanne d'Arc! Tell me what you're looking for and I'll show you the section on the map."
+ },
+ {
+  "lang": "en",
+  "text": "Sure, let's continue in English. What are you looking for?"
+ },
+ {
+  "lang": "en",
+  "text": "Hello! What product are you looking for?"
+ },
+ {
+  "lang": "en",
+  "text": "You're welcome! Enjoy your visit to Fnac."
+ },
+ {
+  "lang": "en",
+  "text": "Of course. Tap “Call a staff member” and someone from the team will come to help you."
+ },
+ {
+  "lang": "en",
+  "text": "I couldn't find that product. Try another word, or call a staff member who will come and help you."
+ },
+ {
+  "lang": "en",
+  "text": "Books, comics, school books, stationery, CDs, vinyl records and DVDs are at Fnac Wilson, 16 allées Franklin-Roosevelt, near Jean-Jaurès. Here at Fnac Jeanne d'Arc, we specialise in technology."
+ },
+ {
+  "lang": "en",
+  "text": "LEGO, POP figures and Pokémon cards are in the staircase between floor 0 and the basement."
+ },
+ {
+  "lang": "en",
+  "text": "The entrance and exit are on floor 0, at the bottom of the map."
+ },
+ {
+  "lang": "en",
+  "text": "The microphone isn't available on this device. You can type your question."
+ },
+ {
+  "lang": "en",
+  "text": "The microphone is blocked. Allow it in the browser, or type your question."
+ },
+ {
+  "lang": "en",
+  "text": "I didn't quite catch that. Try again, or type your question."
+ },
+ {
+  "lang": "en",
+  "text": "The store is open Monday to Saturday, from 10 am to 7.30 pm. We are closed on Sundays."
+ },
+ {
+  "lang": "en",
+  "text": "I'm sorry, there are no toilets in this store."
+ },
+ {
+  "lang": "en",
+  "text": "We don't sell large appliances here. In the small appliances aisle, the largest item is the cordless stick vacuum."
+ },
+ {
+  "lang": "en",
+  "text": "The store has no car park. You'll need to park in the neighbourhood."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member has been notified and is on their way."
+ },
+ {
+  "lang": "en",
+  "text": "Android phones is right here on floor 0. I'm showing it on the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Android phones has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Connected devices is right here on floor 0. I'm showing it on the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Connected devices has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Stairs · LEGO, POP & Pokémon has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Entrance / Exit has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Video games is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Video games has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Gaming PCs & accessories is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Gaming PCs & accessories has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Ink cartridges is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Ink cartridges has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Home appliances is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Home appliances has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Printers, cables & storage is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Printers, cables & storage has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Android tablets is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Android tablets has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "E-readers is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from E-readers has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Windows PCs is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Windows PCs has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Urban mobility is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Urban mobility has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Photo & microphones is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Photo & microphones has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "TV is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from TV has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Audio is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Audio has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Apple is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Apple has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Board games is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Board games has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "After-sales & order pickup is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from After-sales & order pickup has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Checkout is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Checkout has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "Membership & financing is in the basement. Take the stairs down, then follow the map."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Membership & financing has been notified."
+ },
+ {
+  "lang": "es",
+  "text": "¡Hola y bienvenido a la Fnac Jeanne d'Arc! Dígame qué busca y le muestro la sección en el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Muy bien, seguimos en español. ¿Qué busca?"
+ },
+ {
+  "lang": "es",
+  "text": "¡Hola! ¿Qué producto busca?"
+ },
+ {
+  "lang": "es",
+  "text": "¡Con mucho gusto! Disfrute de su visita a la Fnac."
+ },
+ {
+  "lang": "es",
+  "text": "Por supuesto. Toque «Llamar a un vendedor» y alguien del equipo vendrá a ayudarle."
+ },
+ {
+  "lang": "es",
+  "text": "No he encontrado ese producto. Pruebe con otra palabra, o llame a un vendedor: vendrá a ayudarle."
+ },
+ {
+  "lang": "es",
+  "text": "Los libros, cómics, libros de texto, la papelería, los CD, vinilos y DVD están en la Fnac Wilson, 16 allées Franklin-Roosevelt, cerca de Jean-Jaurès. Aquí, en la Fnac Jeanne d'Arc, estamos especializados en tecnología."
+ },
+ {
+  "lang": "es",
+  "text": "Los LEGO, las figuras POP y las cartas Pokémon están en la escalera que une la planta 0 con el sótano."
+ },
+ {
+  "lang": "es",
+  "text": "La entrada y la salida están en la planta 0, abajo en el plano."
+ },
+ {
+  "lang": "es",
+  "text": "El micrófono no está disponible en este dispositivo. Puede escribir su pregunta."
+ },
+ {
+  "lang": "es",
+  "text": "El micrófono está bloqueado. Permítalo en el navegador o escriba su pregunta."
+ },
+ {
+  "lang": "es",
+  "text": "No le he entendido bien. Inténtelo de nuevo o escriba su pregunta."
+ },
+ {
+  "lang": "es",
+  "text": "La tienda abre de lunes a sábado, de 10 a 19:30. Los domingos está cerrada."
+ },
+ {
+  "lang": "es",
+  "text": "Lo siento, esta tienda no tiene baños."
+ },
+ {
+  "lang": "es",
+  "text": "Aquí no vendemos grandes electrodomésticos. En pequeños electrodomésticos, lo más grande es el aspirador escoba."
+ },
+ {
+  "lang": "es",
+  "text": "La tienda no tiene aparcamiento. Hay que aparcar por el barrio."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor y ya viene."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Telefonía Android está aquí, en la planta 0. Se la indico en el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Telefonía Android."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Objetos conectados está aquí, en la planta 0. Se la indico en el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Objetos conectados."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Escalera · LEGO, POP y Pokémon."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Entrada / Salida."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Videojuegos está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Videojuegos."
+ },
+ {
+  "lang": "es",
+  "text": "La sección PC gaming y accesorios está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección PC gaming y accesorios."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Cartuchos de tinta está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Cartuchos de tinta."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Pequeños electrodomésticos está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Pequeños electrodomésticos."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Impresoras, cables y almacenamiento está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Impresoras, cables y almacenamiento."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Tabletas Android está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Tabletas Android."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Lectores de libros está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Lectores de libros."
+ },
+ {
+  "lang": "es",
+  "text": "La sección PC Windows está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección PC Windows."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Movilidad urbana está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Movilidad urbana."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Foto y micrófonos está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Foto y micrófonos."
+ },
+ {
+  "lang": "es",
+  "text": "La sección TV está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección TV."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Audio está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Audio."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Apple está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Apple."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Juegos de mesa está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Juegos de mesa."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Posventa y recogida está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Posventa y recogida."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Caja está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Caja."
+ },
+ {
+  "lang": "es",
+  "text": "La sección Socios y financiación está en el sótano. Baje por la escalera y siga el plano."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Socios y financiación."
+ }
+]
