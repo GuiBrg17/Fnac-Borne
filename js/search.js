@@ -23,10 +23,108 @@ const STOPWORDS = new Set([
 ]);
 
 export const normalize = (text) => text.toLowerCase()
+  // « dés » perdrait son accent et deviendrait « des », un mot ignoré :
+  // on lui donne un mot bien à lui avant de retirer les accents.
+  // (\b ne marche pas après « é », qui n'est pas une lettre pour les regex)
+  .replace(/\bdés?(?![a-zà-ÿ])/g, "dice")
+  // « cent quarante-quatre hertz » doit rejoindre « écran 144 hz »
+  .replace(/\bhertz\b/g, "hz")
   .normalize("NFD").replace(/[̀-ͯ]/g, "")
   .replace(/[^a-z0-9]+/g, " ").trim();
 
-const clean = (text) => normalize(text).split(" ").filter((w) => w && !STOPWORDS.has(w)).join(" ");
+// À l'oral, la reconnaissance vocale écrit les nombres en lettres :
+// « je veux une PS cinq », « une télé soixante-cinq pouces », « la Switch deux ».
+// On les repasse en chiffres, des deux côtés (question et mots-clés), donc
+// « PS cinq » et « PS5 » finissent identiques.
+const UNITS = {
+  zero: 0, deux: 2, trois: 3, quatre: 4, cinq: 5, six: 6, sept: 7, huit: 8, neuf: 9, dix: 10,
+  onze: 11, douze: 12, treize: 13, quatorze: 14, quinze: 15, seize: 16,
+  one: 1, two: 2, three: 3, four: 4, five: 5, seven: 7, eight: 8, nine: 9, ten: 10,
+  eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16,
+  seventeen: 17, eighteen: 18, nineteen: 19,
+  cero: 0, uno: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5, siete: 7, ocho: 8, nueve: 9, diez: 10,
+  once: 11, doce: 12, trece: 13, catorce: 14, quince: 15, dieciseis: 16, diecisiete: 17,
+  dieciocho: 18, diecinueve: 19
+};
+const TENS = {
+  vingt: 20, trente: 30, quarante: 40, cinquante: 50, soixante: 60,
+  twenty: 20, thirty: 30, forty: 40, fifty: 50, sixty: 60, seventy: 70, eighty: 80, ninety: 90,
+  veinte: 20, treinta: 30, cuarenta: 40, cincuenta: 50, sesenta: 60, setenta: 70, ochenta: 80, noventa: 90
+};
+const HUNDREDS = { cent: 100, cents: 100, hundred: 100, cien: 100, ciento: 100, mille: 1000, thousand: 1000, mil: 1000 };
+
+function toDigits(words) {
+  const out = [];
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i];
+    const next = words[i + 1];
+    // « quatre vingt dix » = 90, « quatre vingt » = 80
+    if (w === "quatre" && (next === "vingt" || next === "vingts")) {
+      let value = 80;
+      const after = words[i + 2];
+      if (after !== undefined && UNITS[after] !== undefined) { value += UNITS[after]; i += 2; }
+      else i += 1;
+      out.push(String(value));
+      continue;
+    }
+    if (TENS[w] !== undefined) {
+      // « soixante cinq » = 65, « soixante quinze » = 75, « vingt sept » = 27,
+      // et la forme espagnole « sesenta y cinco ».
+      const liaison = next === "y" || next === "and";
+      const unit = liaison ? words[i + 2] : next;
+      if (unit !== undefined && UNITS[unit] !== undefined && UNITS[unit] < 20) {
+        out.push(String(TENS[w] + UNITS[unit]));
+        i += liaison ? 2 : 1;
+      } else out.push(String(TENS[w]));
+      continue;
+    }
+    if (w === "dix" && next !== undefined && UNITS[next] >= 7 && UNITS[next] <= 9) {
+      out.push(String(10 + UNITS[next]));
+      i += 1;
+      continue;
+    }
+    if (HUNDREDS[w] !== undefined) {
+      // « cent quarante-quatre hertz » = 144 Hz, « cent » seul = 100
+      if (HUNDREDS[w] === 100) {
+        let j = i + 1;
+        let extra = 0;
+        if (words[j] !== undefined && TENS[words[j]] !== undefined) {
+          extra = TENS[words[j]];
+          j += 1;
+          const liaison = words[j] === "y" || words[j] === "and";
+          const unit = liaison ? words[j + 1] : words[j];
+          if (unit !== undefined && UNITS[unit] !== undefined && UNITS[unit] < 20) {
+            extra += UNITS[unit];
+            j += liaison ? 2 : 1;
+          }
+        } else if (words[j] !== undefined && UNITS[words[j]] !== undefined) {
+          extra = UNITS[words[j]];
+          j += 1;
+        }
+        out.push(String(100 + extra));
+        i = j - 1;
+        continue;
+      }
+      out.push(String(HUNDREDS[w]));
+      continue;
+    }
+    if (UNITS[w] !== undefined) { out.push(String(UNITS[w])); continue; }
+    out.push(w);
+  }
+  return out;
+}
+
+const clean = (text) => toDigits(normalize(text).split(" ").filter((w) => w && !STOPWORDS.has(w))).join(" ");
+
+// La voix sépare la marque du chiffre (« ps 5 »), le clavier les colle
+// (« ps5 ») : on essaie les deux écritures.
+function variants(query) {
+  const forms = new Set([query]);
+  forms.add(query.replace(/\b([a-z]{1,5}) (\d{1,4})\b/g, "$1$2"));
+  forms.add(query.replace(/\b(\d{1,4}) ([a-z])\b/g, "$1$2"));
+  forms.add(query.replace(/\b([a-z]{2,6})(\d{1,4})\b/g, "$1 $2"));
+  return [...forms];
+}
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const phraseRe = (phrase) => new RegExp(`(?:^| )${clean(phrase).split(" ").map(escapeRe).join(" ")}(?:s|x|es)?(?= |$)`);
 
@@ -71,8 +169,9 @@ function editDistance(a, b, max) {
 }
 
 function exactMatch(query, lang) {
+  const forms = variants(query);
   return MATCHERS
-    .filter((m) => (!lang || m.lang === lang) && m.re.test(query))
+    .filter((m) => (!lang || m.lang === lang) && forms.some((form) => m.re.test(form)))
     .sort((a, b) => b.weight - a.weight)[0] || null;
 }
 
