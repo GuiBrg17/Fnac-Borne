@@ -656,8 +656,10 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
    la hauteur est la plus petite entre la hauteur disponible et
    la largeur disponible divisée par le rapport du plan. */
 .plan-0 {
-  aspect-ratio: 396 / 567;
-  width: min(100cqw, calc(100cqh * 396 / 567));
+  /* Cadré sur la surface de vente (viewBox du SVG), pas sur toute la feuille. */
+  outline: none;
+  aspect-ratio: 344 / 426;
+  width: min(100cqw, calc(100cqh * 344 / 426));
   height: auto;
 }
 .plan-m1 {
@@ -758,6 +760,33 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   transition: fill 0.35s ease, opacity 0.35s ease;
 }
 .bm-counter { fill: var(--yellow-light); }
+.bm-entrance { fill: var(--paper); }
+.bm-neutral { fill: rgba(255, 255, 255, 0.16); stroke: none; cursor: default; }
+
+/* Vous êtes ici (la borne, à l'entrée) */
+.bm-here { pointer-events: none; }
+.bm-here-dot { fill: var(--yellow); stroke: var(--ink); stroke-width: 2px; vector-effect: non-scaling-stroke; }
+.bm-here-pulse {
+  fill: rgba(235, 179, 0, 0.35);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: here-pulse 1.8s ease-out infinite;
+}
+@keyframes here-pulse { from { transform: scale(0.6); opacity: 1; } to { transform: scale(1.8); opacity: 0; } }
+.bm-here-text {
+  fill: var(--yellow);
+  font-size: 10px;
+  font-weight: 800;
+  paint-order: stroke;
+  stroke: var(--ink);
+  stroke-width: 3px;
+}
+/* Le plan de l'étage 0 est affiché un peu plus grand que celui du sous-sol
+   (sa feuille est plus petite) : textes légèrement réduits pour garder la même
+   taille à l'écran. */
+.plan-0 .bm-label { font-size: 10.5px; stroke-width: 3px; }
+.plan-0 .bm-label.is-hit { font-size: 12px; }
+.plan-0 .route-casing, .plan-0 .route-line { vector-effect: non-scaling-stroke; }
 .bm-stairs { cursor: pointer; }
 .bm-stairs-band { fill: var(--yellow-light); stroke: var(--ink); stroke-width: 1px; vector-effect: non-scaling-stroke; }
 .bm-stairs line { stroke: rgba(18, 18, 18, 0.5); stroke-width: 1px; vector-effect: non-scaling-stroke; }
@@ -788,12 +817,14 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   stroke-width: 3px;
   animation: bm-hit 1.6s ease-in-out infinite;
 }
-.bm-stairs.is-hit .bm-stairs-band { fill: var(--paper); stroke: var(--yellow); stroke-width: 3px; }
+.bm-stairs.is-hit .bm-stairs-band,
+.bm-stairs.is-route .bm-stairs-band { fill: var(--paper); stroke: var(--yellow); stroke-width: 3px; }
+.has-focus .bm-stairs.is-route { opacity: 1; }
 .bm-label.is-hit { fill: var(--yellow); font-size: 14px; }
 @keyframes bm-hit { 50% { fill: var(--yellow-light); } }
 .plan-m1 .route-casing, .plan-m1 .route-line { vector-effect: non-scaling-stroke; }
 html.a11y .has-focus .bm-shape:not(.is-hit):not(.is-zone) { opacity: 0.12; }
-@media (prefers-reduced-motion: reduce) { .bm-shape.is-hit { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .bm-shape.is-hit, .bm-here-pulse { animation: none; } }
 
 /* Vous êtes ici */
 .here {

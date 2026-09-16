@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=17">
+<link rel="stylesheet" href="css/kiosk.css?v=19">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=17"></script>
+<script type="module" src="js/app.js?v=19"></script>
 </head>
 <body class="is-idle">
 
@@ -176,12 +176,8 @@
       <!-- Étage 0 : téléphonie, objets connectés, escalier vers le sous-sol, entrée -->
       <div class="floor floor-0 is-active" data-floor="0" role="tabpanel">
         <div class="plan plan-0">
-          <button type="button" class="tile" data-zone="telephonie" style="left:5%;top:24%;width:35%;height:42%"></button>
-          <button type="button" class="tile" data-zone="objets" style="left:44%;top:9%;width:35%;height:29%"></button>
-          <button type="button" class="tile tile-stairs" data-zone="escalier" style="left:47%;top:43%;width:32%;height:27%"></button>
-          <button type="button" class="tile tile-entrance" data-zone="entree" style="left:5%;top:74%;width:37%;height:15%"></button>
-          <span class="here" style="left:5%;top:74%;width:37%;height:15%"><svg><use href="#i-pin"/></svg><span data-i18n="youAreHere">Vous êtes ici</span></span>
-          <svg class="route-layer" aria-hidden="true"></svg>
+          <!-- Plan du rez-de-chaussée dessiné à partir de js/plan.js (vraies gondoles). -->
+          <svg class="plan-svg" id="groundPlan" viewBox="14 30 344 426" role="img" aria-label="Plan du rez-de-chaussée"></svg>
         </div>
       </div>
 

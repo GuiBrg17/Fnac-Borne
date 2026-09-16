@@ -191,7 +191,9 @@ export const ZONES = {
   telephonie: {
     floors: ["0"], icon: "smartphone",
     label: { fr: "Téléphonie Android", en: "Android phones", es: "Telefonía Android" },
+    short: { fr: "Téléphonie", en: "Phones", es: "Telefonía" },
     detail: { fr: "Écouteurs filaires, chargeurs…", en: "Wired earphones, chargers…", es: "Auriculares con cable, cargadores…" },
+    spots: ["T1", "T2", "T3", "T4", "T5", "T6"],
     keywords: {
       fr: ["téléphone", "téléphone portable", "portable", "mobile", "smartphone", "téléphone android", "android",
            "téléphone samsung", "samsung", "galaxy", "samsung galaxy", "galaxy s24", "galaxy s25", "galaxy a16",
@@ -236,7 +238,9 @@ export const ZONES = {
   objets: {
     floors: ["0"], icon: "watch",
     label: { fr: "Objets connectés", en: "Connected devices", es: "Objetos conectados" },
+    short: { fr: "Objets\nconnectés", en: "Connected\ndevices", es: "Objetos\nconectados" },
     detail: { fr: "Montres, maison connectée…", en: "Watches, smart home…", es: "Relojes, hogar conectado…" },
+    spots: ["O1", "O2", "O3"],
     keywords: {
       fr: ["objet connecté", "objets connectés", "montre connectée", "montres connectées", "montre", "smartwatch",
            "montre gps", "montre de sport", "montre cardio", "cardiofréquencemètre", "bracelet connecté",
@@ -279,6 +283,7 @@ export const ZONES = {
     label: { fr: "Escalier · LEGO, POP & Pokémon", en: "Stairs · LEGO, POP & Pokémon", es: "Escalera · LEGO, POP y Pokémon" },
     short: { fr: "Escalier", en: "Stairs", es: "Escalera" },
     detail: { fr: "", en: "", es: "" },
+    spots: ["L1"],
     keywords: {
       fr: ["lego", "lego technic", "lego star wars", "lego city", "lego friends", "lego harry potter", "lego icons",
            "briques lego", "jeu de construction", "figurine", "figurines", "figurine pop", "figurines pop", "funko",
@@ -306,6 +311,7 @@ export const ZONES = {
     floors: ["0"], icon: "door",
     label: { fr: "Entrée / Sortie", en: "Entrance / Exit", es: "Entrada / Salida" },
     detail: { fr: "", en: "", es: "" },
+    spots: ["ENTREE"],
     keywords: {
       fr: ["entrée", "sortie", "porte", "porte d'entrée", "sortie de secours", "je veux sortir", "où sortir",
            "comment sortir", "par où entrer"],
