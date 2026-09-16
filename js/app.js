@@ -7,7 +7,8 @@ const VERSION = new URL(import.meta.url).search;
 const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE, INFO } = await import("./data.js" + VERSION);
 const { findZoneDetailed, findIntent, findInfo, findClarify, pickClarifyOption, normalize, displayKeyword } = await import("./search.js" + VERSION);
 const { NEWS } = await import("./news.js" + VERSION);
-const { recordSession, recordQuestion, recordFeedback, readStats, resetStats } = await import("./stats.js" + VERSION);
+const { recordSession, recordQuestion, recordFeedback, readStats, readPeriod, resetStats, dayKey } = await import("./stats.js" + VERSION);
+const { buildReport, monthlyPeriod, downloadReport, emailReport, isEmail } = await import("./report.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
 const { BASEMENT, GROUND, box, routeTo, routeGround, stairsDrawing } = await import("./plan.js" + VERSION);
 
@@ -73,6 +74,8 @@ const els = {
   warning: $("#idleWarning"), warningBody: $("#idleWarningBody"), warningButton: $("#idleWarningButton"),
   survey: $("#survey"), surveyTitle: $("#surveyTitle"), surveyButtons: $("#surveyButtons"),
   statsSatisfaction: $("#statsSatisfaction"), statsUnhappy: $("#statsUnhappy"),
+  reportEmail: $("#reportEmail"), reportDay: $("#reportDay"), reportMonthly: $("#reportMonthly"),
+  reportStatus: $("#reportStatus"), reportSend: $("#reportSend"), reportDownload: $("#reportDownload"),
   settings: $("#settings"), idleSeconds: $("#idleSeconds"), testVoice: $("#testVoice"),
   neuralToggle: $("#neuralToggle"), voiceStatus: $("#voiceStatus"), voiceDownload: $("#voiceDownload"),
   toast: $("#toast"),
@@ -1200,6 +1203,85 @@ function renderStats() {
   fillStatsList(els.statsUnhappy, unhappy, "Aucun client mécontent pour l'instant");
 }
 
+// --- Envoi mensuel des statistiques par e-mail (js/report.js) --------------
+// Réglages enregistrés sur la borne : adresse, jour du mois, envoi activé,
+// et le dernier mois envoyé (« 2026-10 ») pour ne jamais envoyer deux fois.
+const report = {
+  get email() { return store.get("reportEmail", ""); },
+  get day() { return store.get("reportDay", 5); },
+  get monthly() { return store.get("reportMonthly", false); }
+};
+
+const periodReport = (sendDate) => {
+  const period = monthlyPeriod(sendDate);
+  const stats = readPeriod(dayKey(period.from), dayKey(period.to));
+  return buildReport(stats, period, (id) => (ZONES[id] ? ZONES[id].label.fr : id));
+};
+
+function setReportStatus(text, kind = "") {
+  els.reportStatus.textContent = text;
+  els.reportStatus.className = `stats-note${kind ? " is-" + kind : ""}`;
+}
+
+function saveReportSettings() {
+  store.set("reportEmail", els.reportEmail.value.trim());
+  store.set("reportDay", Number(els.reportDay.value) || 5);
+  store.set("reportMonthly", els.reportMonthly.checked);
+}
+
+async function sendReport(sendDate, { automatic = false } = {}) {
+  const address = report.email;
+  if (!isEmail(address)) {
+    if (!automatic) setReportStatus("Adresse e-mail invalide.", "error");
+    return false;
+  }
+  if (!automatic) {
+    els.reportSend.disabled = true;
+    setReportStatus("Envoi en cours…");
+  }
+  try {
+    const result = await emailReport(periodReport(sendDate), address);
+    if (result === "activation") {
+      if (!automatic) setReportStatus(`Première fois : ouvrez l'e-mail « Activate form » reçu sur ${address}, cliquez sur le lien, puis touchez de nouveau « Envoyer maintenant ».`, "error");
+      return false;
+    }
+    store.set("reportLastSent", Date.now());
+    if (!automatic) setReportStatus(`Statistiques envoyées à ${address}.`, "ok");
+    return true;
+  } catch (error) {
+    if (!automatic) setReportStatus(`Envoi impossible (${error.message}). Vérifiez la connexion internet, ou téléchargez le fichier.`, "error");
+    return false;
+  } finally {
+    els.reportSend.disabled = false;
+  }
+}
+
+// Vérifiée au démarrage puis toutes les 30 minutes, seulement à l'écran d'accueil
+// (jamais pendant qu'un client utilise la borne). Borne éteinte le jour prévu :
+// l'envoi part dès qu'elle est rallumée, avec la même période.
+let monthlySending = false;
+async function checkMonthlyReport() {
+  if (!report.monthly || !isEmail(report.email) || state.screen !== "idle" || monthlySending) return;
+  const now = new Date();
+  const month = dayKey(now).slice(0, 7);
+  if (now.getDate() < report.day || store.get("reportLastMonth", "") === month) return;
+  monthlySending = true;
+  const scheduled = new Date(now.getFullYear(), now.getMonth(), report.day);
+  if (await sendReport(scheduled, { automatic: true })) store.set("reportLastMonth", month);
+  monthlySending = false;
+}
+
+function fillReportSettings() {
+  if (!els.reportDay.options.length) {
+    for (let day = 1; day <= 28; day++) els.reportDay.append(new Option(`le ${day} du mois`, String(day)));
+  }
+  els.reportEmail.value = report.email;
+  els.reportDay.value = String(report.day);
+  els.reportMonthly.checked = report.monthly;
+  const lastSent = store.get("reportLastSent", 0);
+  if (lastSent) setReportStatus(`Dernier envoi : ${new Date(lastSent).toLocaleString("fr-FR", { dateStyle: "long", timeStyle: "short" })}.`);
+}
+
 function handleStatsReset() {
   if (!resetArmed) {
     els.statsReset.textContent = "Toucher encore pour confirmer";
@@ -1312,6 +1394,7 @@ els.logo.addEventListener("click", () => {
     logoTaps = [];
     fillVoiceSettings();
     renderStats();
+    fillReportSettings();
     els.neuralToggle.checked = settings.neuralVoice;
     updateVoiceStatus();
     els.idleSeconds.value = settings.idleSeconds;
@@ -1336,6 +1419,32 @@ els.settings.addEventListener("change", (e) => {
 });
 els.testVoice.addEventListener("click", () => speak(t().hello));
 els.statsReset.addEventListener("click", handleStatsReset);
+els.reportEmail.addEventListener("change", saveReportSettings);
+els.reportDay.addEventListener("change", saveReportSettings);
+els.reportMonthly.addEventListener("change", () => {
+  if (els.reportMonthly.checked && !isEmail(els.reportEmail.value)) {
+    els.reportMonthly.checked = false;
+    setReportStatus("Indiquez d'abord une adresse e-mail valide.", "error");
+    return;
+  }
+  saveReportSettings();
+  // Mois en cours déjà passé le jour prévu : le premier envoi sera celui du mois prochain.
+  const now = new Date();
+  if (els.reportMonthly.checked && now.getDate() >= report.day) store.set("reportLastMonth", dayKey(now).slice(0, 7));
+  setReportStatus(els.reportMonthly.checked
+    ? `Envoi mensuel activé : le ${report.day} de chaque mois, à ${report.email}.`
+    : "Envoi mensuel désactivé.", els.reportMonthly.checked ? "ok" : "");
+});
+els.reportSend.addEventListener("click", () => {
+  saveReportSettings();
+  sendReport(new Date());
+});
+els.reportDownload.addEventListener("click", () => {
+  downloadReport(periodReport(new Date()));
+  setReportStatus("Fichier des 31 derniers jours téléchargé (dossier Téléchargements).", "ok");
+});
+setInterval(checkMonthlyReport, 30 * 60 * 1000);
+setTimeout(checkMonthlyReport, 60 * 1000);
 els.voiceDownload.addEventListener("click", () => downloadVoices());
 
 let resizeTimer = null;
