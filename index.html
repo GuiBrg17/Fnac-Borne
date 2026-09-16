@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=15">
+<link rel="stylesheet" href="css/kiosk.css?v=16">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=15"></script>
+<script type="module" src="js/app.js?v=16"></script>
 </head>
 <body class="is-idle">
 
@@ -188,26 +188,8 @@
       <!-- Niveau -1 -->
       <div class="floor floor-m1" data-floor="-1" role="tabpanel">
         <div class="plan plan-m1">
-          <!-- Rangée du haut : mobilité, jeux vidéo, accessoires gaming, puis le SAV
-               collé aux accessoires et posé au-dessus de l'allée des PC. -->
-          <button type="button" class="tile" data-zone="trottinettes" style="left:2%;top:3%;width:12%;height:15%"></button>
-          <button type="button" class="tile" data-zone="gaming" style="left:15%;top:3%;width:27%;height:15%"></button>
-          <button type="button" class="tile" data-zone="accessoiresGaming" style="left:44%;top:3%;width:19%;height:15%"></button>
-          <button type="button" class="tile" data-zone="savRetrait" style="left:65%;top:3%;width:12%;height:15%"></button>
-          <!-- Colonne de droite : caisses en haut, adhésion dessous, jeux de société. -->
-          <button type="button" class="tile" data-zone="caisse" style="left:79%;top:3%;width:18%;height:11%"></button>
-          <button type="button" class="tile" data-zone="adhesion" style="left:79%;top:16%;width:18%;height:11%"></button>
-          <button type="button" class="tile" data-zone="jeuxSociete" style="left:79%;top:29%;width:18%;height:11%"></button>
-          <!-- Allées du milieu : les PC prennent plus de place que l'électroménager. -->
-          <button type="button" class="tile" data-zone="photo" style="left:1%;top:21%;width:12%;height:42%"></button>
-          <button type="button" class="tile" data-zone="electromenager" style="left:15%;top:21%;width:26%;height:47%"></button>
-          <button type="button" class="tile" data-zone="pcwindows" style="left:43%;top:21%;width:34%;height:47%"></button>
-          <!-- Bas : la TV à côté de l'audio et plus grande que lui, puis Apple et l'escalier. -->
-          <button type="button" class="tile" data-zone="tv" style="left:3%;top:70%;width:25%;height:23%"></button>
-          <button type="button" class="tile" data-zone="audio" style="left:34%;top:77%;width:20%;height:19%"></button>
-          <button type="button" class="tile" data-zone="apple" style="left:58%;top:77%;width:20%;height:15%"></button>
-          <button type="button" class="tile tile-stairs" data-zone="escalier" style="left:79%;top:79%;width:18%;height:17%"></button>
-          <svg class="route-layer" aria-hidden="true"></svg>
+          <!-- Plan du sous-sol dessiné à partir de js/plan.js (vraies gondoles). -->
+          <svg class="plan-svg" id="basementPlan" viewBox="0 0 822 434" role="img" aria-label="Plan du sous-sol"></svg>
         </div>
       </div>
 

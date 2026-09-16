@@ -11,15 +11,24 @@ const collisions = [];
 const counts = [];
 let total = 0;
 
+// Listes de mots-clés d'un rayon : celle du rayon entier, puis celle de
+// chaque emplacement précis (« places »).
+const lists = (zone) => [[null, zone.keywords], ...Object.entries(zone.places || {}).map(([p, e]) => [p, e.keywords])];
+const where = (id, place) => (place ? `${id} › ${place}` : id);
+
 for (const [id, zone] of Object.entries(ZONES)) {
   let perZone = 0;
-  for (const [lang, words] of Object.entries(zone.keywords)) {
-    perZone += words.length;
-    total += words.length;
-    for (const word of words) {
-      const match = findZoneDetailed(word, lang);
-      if (!match) collisions.push({ id, lang, word, got: "aucun rayon" });
-      else if (match.id !== id) collisions.push({ id, lang, word, got: match.id, via: match.keyword });
+  for (const [place, keywords] of lists(zone)) {
+    for (const [lang, words] of Object.entries(keywords)) {
+      perZone += words.length;
+      total += words.length;
+      for (const word of words) {
+        const match = findZoneDetailed(word, lang);
+        if (!match) collisions.push({ id: where(id, place), lang, word, got: "aucun rayon" });
+        else if (match.id !== id || match.place !== place) {
+          collisions.push({ id: where(id, place), lang, word, got: where(match.id, match.place), via: match.keyword });
+        }
+      }
     }
   }
   counts.push([id, perZone]);
@@ -27,11 +36,13 @@ for (const [id, zone] of Object.entries(ZONES)) {
 
 const doubles = new Map();
 for (const [id, zone] of Object.entries(ZONES)) {
-  for (const [lang, words] of Object.entries(zone.keywords)) {
-    for (const word of words) {
-      const key = `${lang}:${normalize(word)}`;
-      if (!doubles.has(key)) doubles.set(key, new Set());
-      doubles.get(key).add(id);
+  for (const [place, keywords] of lists(zone)) {
+    for (const [lang, words] of Object.entries(keywords)) {
+      for (const word of words) {
+        const key = `${lang}:${normalize(word)}`;
+        if (!doubles.has(key)) doubles.set(key, new Set());
+        doubles.get(key).add(where(id, place));
+      }
     }
   }
 }
@@ -50,7 +61,7 @@ if (shared.length) {
 if (collisions.length) {
   console.log(`Mots-clés captés par un autre rayon (${collisions.length}) :`);
   for (const c of collisions) {
-    console.log(`  [${c.lang}] ${c.word.padEnd(28)} déclaré ${c.id.padEnd(18)} → trouvé ${c.got}${c.via ? ` (via « ${c.via} »)` : ""}`);
+    console.log(`  [${c.lang}] ${c.word.padEnd(28)} déclaré ${c.id.padEnd(30)} → trouvé ${c.got}${c.via ? ` (via « ${c.via} »)` : ""}`);
   }
 } else {
   console.log("Aucun mot-clé capté par un autre rayon.");

@@ -661,6 +661,8 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   height: auto;
 }
 .plan-m1 {
+  /* Le plan du sous-sol dessine son propre contour (murs réels) : pas de cadre pointillé. */
+  outline: none;
   aspect-ratio: 822 / 434;
   width: min(100cqw, calc(100cqh * 822 / 434));
   height: auto;
@@ -735,6 +737,61 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   background: var(--paper);
   box-shadow: 0 0 0 0.28rem var(--yellow);
 }
+
+/* ---------------------------------------------------------------------
+   Plan du sous-sol : vraies gondoles (SVG aux coordonnées de l'architecte)
+   --------------------------------------------------------------------- */
+.plan-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.bm-floor {
+  fill: rgba(255, 255, 255, 0.045);
+  stroke: rgba(255, 255, 255, 0.42);
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.bm-shape {
+  fill: var(--yellow);
+  stroke: var(--ink);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+  cursor: pointer;
+  transition: fill 0.35s ease, opacity 0.35s ease;
+}
+.bm-counter { fill: var(--yellow-light); }
+.bm-stairs { cursor: pointer; }
+.bm-stairs rect { fill: var(--yellow-light); stroke: var(--ink); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.bm-stairs line { stroke: rgba(18, 18, 18, 0.45); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.bm-label {
+  fill: var(--paper);
+  font-size: 12.5px;
+  font-weight: 800;
+  font-stretch: 104%;
+  letter-spacing: 0.01em;
+  paint-order: stroke;
+  stroke: var(--ink);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: fill 0.35s ease, opacity 0.35s ease;
+}
+
+/* Rayon trouvé : ses meubles s'allument, le reste s'efface. */
+.has-focus .bm-shape:not(.is-hit):not(.is-zone),
+.has-focus .bm-stairs:not(.is-hit) { opacity: 0.22; }
+.has-focus .bm-label:not(.is-hit) { opacity: 0.3; }
+.bm-shape.is-zone { opacity: 0.75; }
+.bm-shape.is-hit {
+  fill: var(--paper);
+  stroke: var(--yellow);
+  stroke-width: 3px;
+  animation: bm-hit 1.6s ease-in-out infinite;
+}
+.bm-stairs.is-hit rect { fill: var(--paper); stroke: var(--yellow); stroke-width: 3px; }
+.bm-label.is-hit { fill: var(--yellow); font-size: 14px; }
+@keyframes bm-hit { 50% { fill: var(--yellow-light); } }
+.plan-m1 .route-casing, .plan-m1 .route-line { vector-effect: non-scaling-stroke; }
+html.a11y .has-focus .bm-shape:not(.is-hit):not(.is-zone) { opacity: 0.12; }
+@media (prefers-reduced-motion: reduce) { .bm-shape.is-hit { animation: none; } }
 
 /* Vous êtes ici */
 .here {
