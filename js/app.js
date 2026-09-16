@@ -9,6 +9,7 @@ const { findZoneDetailed, findIntent, findInfo, normalize, displayKeyword } = aw
 const { NEWS } = await import("./news.js" + VERSION);
 const { recordSession, recordQuestion, readStats, resetStats } = await import("./stats.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
+const { BASEMENT, routeTo } = await import("./plan.js" + VERSION);
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -48,7 +49,7 @@ const settings = {
   neuralVoice: store.get("neuralVoice", true)
 };
 
-const state = { screen: "idle", lang: "fr", floor: "0", zone: null, a11y: false, listening: false, speaking: false };
+const state = { screen: "idle", lang: "fr", floor: "0", zone: null, place: null, a11y: false, listening: false, speaking: false };
 const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const motionReduced = () => prefersReduced || state.a11y;
 const t = () => UI[state.lang];
@@ -318,7 +319,7 @@ function ask(text, source = "text") {
   const intent = zone ? null : findIntent(text);
   // Les « bonjour » / « merci » comptent comme questions, pas comme questions sans réponse.
   recordQuestion({ text: intent ? null : text, zone, lang: state.lang, source });
-  if (zone) { answerZone(zone, match.fuzzy ? t().didYouMean(displayKeyword(match.keyword)) : ""); return; }
+  if (zone) { answerZone(zone, match.fuzzy ? t().didYouMean(displayKeyword(match.keyword)) : "", match.place); return; }
   if (intent) {
     reply(t()[intent]);
     if (intent === "thanks") signLSF("merci");
@@ -330,13 +331,13 @@ function ask(text, source = "text") {
 
 const zoneLabel = (id) => ZONES[id].label[state.lang];
 
-function answerZone(id, prefix = "") {
+function answerZone(id, prefix = "", place = null) {
   if (ZONES[id].external) {
     showOtherStore();
     reply(prefix + t().otherStore);
     return;
   }
-  showZone(id);
+  showZone(id, place);
   if (id === "escalier") reply(prefix + t().foundStairs);
   else if (id === "entree") reply(prefix + t().foundEntrance);
   else reply(prefix + t().found(zoneLabel(id), ZONES[id].floors[0]));
@@ -345,9 +346,86 @@ function answerZone(id, prefix = "") {
 // =====================================================================
 // Plan du magasin
 // =====================================================================
+const SVG_NS = "http://www.w3.org/2000/svg";
 let floorTimer = null;
 
+// --- Plan du sous-sol : les vraies gondoles (js/plan.js) -------------------
+// Chaque meuble appartient à un rayon, et parfois à un emplacement précis
+// du rayon ; le plus précis (le moins de meubles) l'emporte.
+const SPOT_OWNER = new Map();
+for (const [id, zone] of Object.entries(ZONES)) {
+  for (const spot of zone.spots || []) SPOT_OWNER.set(spot, { zone: id, place: null, size: Infinity });
+  for (const [place, entry] of Object.entries(zone.places || {})) {
+    for (const spot of entry.spots) {
+      const current = SPOT_OWNER.get(spot);
+      if (!current || entry.spots.length < current.size) SPOT_OWNER.set(spot, { zone: id, place, size: entry.spots.length });
+    }
+  }
+}
+
+function svgEl(tag, attrs, parent) {
+  const el = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  parent.append(el);
+  return el;
+}
+
+function buildBasement() {
+  const svg = $("#basementPlan");
+  if (!svg) return;
+  svg.textContent = "";
+  svgEl("path", { d: BASEMENT.outline, class: "bm-floor" }, svg);
+  const st = BASEMENT.stairs;
+  const stairs = svgEl("g", { class: "bm-stairs", "data-zone": "escalier" }, svg);
+  svgEl("rect", { x: st.x, y: st.y, width: st.w, height: st.h, rx: 6 }, stairs);
+  for (let i = 1; i < 6; i++) {
+    const y = st.y + (i * st.h) / 6;
+    svgEl("line", { x1: st.x + 5, x2: st.x + st.w - 5, y1: y, y2: y }, stairs);
+  }
+  for (const shape of BASEMENT.shapes) {
+    const owner = SPOT_OWNER.get(shape.id);
+    const attrs = {
+      x: shape.x, y: shape.y, width: shape.w, height: shape.h, rx: shape.kind === "mural" ? 1 : 2,
+      class: `bm-shape bm-${shape.kind}`, "data-spot": shape.id
+    };
+    if (owner) {
+      attrs["data-zone"] = owner.zone;
+      if (owner.place) attrs["data-place"] = owner.place;
+    }
+    svgEl("rect", attrs, svg);
+  }
+  svgEl("g", { class: "bm-labels" }, svg);
+  svgEl("g", { class: "route-layer" }, svg);
+}
+
+function renderBasementLabels() {
+  const layer = $("#basementPlan .bm-labels");
+  if (!layer) return;
+  layer.textContent = "";
+  for (const [key, [x, y, anchor = "middle", rotate = 0]] of Object.entries(BASEMENT.labels)) {
+    const [zoneId, placeId] = key.split(".");
+    const entry = placeId ? ZONES[zoneId]?.places?.[placeId] : ZONES[zoneId];
+    if (!entry) continue;
+    const attrs = { x, y, "text-anchor": anchor, class: "bm-label", "data-zone": zoneId };
+    if (placeId) attrs["data-place"] = placeId;
+    if (rotate) attrs.transform = `rotate(${rotate} ${x} ${y})`;
+    const text = svgEl("text", attrs, layer);
+    const lines = (entry.short || entry.label)[state.lang].split("\n");
+    lines.forEach((line, i) => {
+      svgEl("tspan", { x, dy: i === 0 ? `${-(lines.length - 1) * 0.55}em` : "1.1em" }, text).textContent = line;
+    });
+  }
+}
+
+// Meubles à allumer : ceux de l'emplacement précis, sinon tout le rayon.
+function targetSpots(id, place) {
+  const zone = ZONES[id];
+  if (!zone) return [];
+  return (place && zone.places?.[place]?.spots) || zone.spots || [];
+}
+
 function renderTiles() {
+  renderBasementLabels();
   $$(".tile").forEach((tile) => {
     const zone = ZONES[tile.dataset.zone];
     // Sécurité : une case sans rayon connu (fichiers dépareillés) est ignorée
@@ -379,7 +457,6 @@ function setFloor(floor) {
 }
 
 // --- Tracé animé : Vous êtes ici → escalier → rayon ---------------------
-const SVG_NS = "http://www.w3.org/2000/svg";
 let routeDrawTimer = null;
 let routeAnimation = null;
 
@@ -401,10 +478,10 @@ function routePoints(floor, id) {
     return [start, { x: end.x, y: start.y }, end];
   }
   if (id === "escalier" || !zone.floors.includes("-1")) return null;
-  const stairs = centre($('.plan-m1 .tile[data-zone="escalier"]'));
-  const end = centre($(`.plan-m1 .tile[data-zone="${id}"]`));
-  const start = { x: stairs.x, y: stairs.bottom };
-  return [start, { x: start.x, y: end.y }, end];
+  // Coordonnées du plan de l'architecte : le tracé est dessiné dans le même SVG.
+  const spots = targetSpots(id, state.place);
+  const points = spots.length ? routeTo(spots[0]) : null;
+  return points ? points.map(([x, y]) => ({ x, y })) : null;
 }
 
 function clearRoutes() {
@@ -436,8 +513,9 @@ function drawRoute(animate) {
   const line = make("path", { d, class: "route-line" });
   const start = points[0];
   const end = points[points.length - 1];
-  make("circle", { cx: start.x, cy: start.y, r: 7, class: "route-start" });
-  const endDot = make("circle", { cx: end.x, cy: end.y, r: 11, class: "route-end" });
+  const unit = state.floor === "-1" ? 0.6 : 1;
+  make("circle", { cx: start.x, cy: start.y, r: 7 * unit, class: "route-start" });
+  const endDot = make("circle", { cx: end.x, cy: end.y, r: 11 * unit, class: "route-end" });
 
   const length = line.getTotalLength();
   const animated = animate && !motionReduced();
@@ -457,7 +535,7 @@ function drawRoute(animate) {
   if (motionReduced()) return;
 
   // Petit point jaune qui parcourt l'itinéraire en boucle.
-  const walker = make("circle", { r: 6, class: "route-walker" });
+  const walker = make("circle", { r: 6 * unit, class: "route-walker" });
   const t0 = performance.now() + (animated ? 1200 : 0);
   const tick = (now) => {
     const progress = Math.max(0, now - t0) % 2400 / 2400;
@@ -486,14 +564,25 @@ function hideOtherStore() {
   els.mapStage.classList.remove("is-elsewhere");
 }
 
-function showZone(id) {
+function showZone(id, place = null) {
   hideOtherStore();
   clearTimeout(floorTimer);
   state.zone = id;
+  state.place = place && ZONES[id]?.places?.[place] ? place : null;
   const zone = ZONES[id];
   const basementOnly = !zone.floors.includes("0");
 
   $$(".tile").forEach((tile) => tile.classList.toggle("is-hit", tile.dataset.zone === id));
+  const zoneSpots = new Set(zone.spots || []);
+  const hitSpots = new Set(targetSpots(id, state.place));
+  $$("#basementPlan .bm-shape").forEach((el) => {
+    const spot = el.dataset.spot;
+    el.classList.toggle("is-hit", hitSpots.has(spot));
+    el.classList.toggle("is-zone", zoneSpots.has(spot) && !hitSpots.has(spot));
+  });
+  $$("#basementPlan .bm-label").forEach((el) => el.classList.toggle("is-hit",
+    el.dataset.zone === id && (!el.dataset.place || el.dataset.place === state.place)));
+  $$("#basementPlan .bm-stairs").forEach((el) => el.classList.toggle("is-hit", id === "escalier"));
   $$('.plan-0 .tile[data-zone="escalier"]').forEach((tile) => tile.classList.toggle("is-route", basementOnly));
   els.mapStage.classList.add("has-focus");
   renderRoute();
@@ -511,7 +600,9 @@ function showZone(id) {
 function clearZone() {
   clearTimeout(floorTimer);
   state.zone = null;
+  state.place = null;
   $$(".tile").forEach((tile) => tile.classList.remove("is-hit", "is-route"));
+  $$("#basementPlan .is-hit, #basementPlan .is-zone").forEach((el) => el.classList.remove("is-hit", "is-zone"));
   els.mapStage.classList.remove("has-focus");
   renderRoute();
   clearRoutes();
@@ -525,7 +616,8 @@ function renderRoute() {
   if (!showRoute) return;
   const zone = ZONES[id];
   els.routeStairs.hidden = zone.floors.includes("0");
-  els.routeTarget.textContent = zone.label[state.lang];
+  const place = state.place && zone.places?.[state.place];
+  els.routeTarget.textContent = (place || zone).label[state.lang];
   els.routeIcon.setAttribute("href", `#i-${zone.icon}`);
 }
 
@@ -907,10 +999,10 @@ $("#floorTabs").addEventListener("click", (e) => {
   setFloor(tab.dataset.floor);
 });
 els.mapStage.addEventListener("click", (e) => {
-  const tile = e.target.closest(".tile[data-zone]");
-  if (!tile) return;
-  recordQuestion({ zone: tile.dataset.zone, lang: state.lang, source: "map" });
-  answerZone(tile.dataset.zone);
+  const target = e.target.closest(".tile[data-zone], #basementPlan [data-zone]");
+  if (!target) return;
+  recordQuestion({ zone: target.dataset.zone, lang: state.lang, source: "map" });
+  answerZone(target.dataset.zone, "", target.dataset.place || null);
 });
 
 els.warningButton.addEventListener("click", bump);
@@ -962,6 +1054,7 @@ if ("speechSynthesis" in window) {
 }
 
 // --- Démarrage ---
+buildBasement();
 els.app.inert = true;
 $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); });
 applyLang();

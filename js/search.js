@@ -141,14 +141,21 @@ const phonetic = (word) => word
   .replace(/(.)\1+/g, "$1")
   .replace(/[sx]$/, "");
 
-const MATCHERS = Object.entries(ZONES).flatMap(([id, zone]) =>
-  Object.entries(zone.keywords).flatMap(([lang, words]) =>
+// Chaque mot-clé retient son rayon et, s'il y en a un, son emplacement précis
+// dans le rayon (« aspirateur balai » → rayon électroménager, gondole E2).
+const matchersFor = (id, zone, place, keywords) =>
+  Object.entries(keywords).flatMap(([lang, words]) =>
     words.map((word) => ({
-      id, lang, word,
+      id, place, lang, word,
       re: phraseRe(word),
       weight: clean(word).length + (zone.boost || 0),
       sound: phonetic(clean(word).replace(/ /g, ""))
-    }))));
+    })));
+
+const MATCHERS = Object.entries(ZONES).flatMap(([id, zone]) => [
+  ...matchersFor(id, zone, null, zone.keywords),
+  ...Object.entries(zone.places || {}).flatMap(([place, entry]) => matchersFor(id, zone, place, entry.keywords))
+]);
 
 const INTENT_MATCHERS = Object.fromEntries(
   Object.entries(INTENTS).map(([name, words]) => [name, words.map(phraseRe)]));
@@ -202,14 +209,14 @@ function fuzzyMatch(query, lang) {
   return best ? best.matcher : null;
 }
 
-// Renvoie { id, keyword, fuzzy } ou null.
+// Renvoie { id, place, keyword, fuzzy } ou null (place : emplacement précis, ou null).
 export function findZoneDetailed(text, lang) {
   const query = clean(text);
   if (!query) return null;
   const exact = exactMatch(query, lang) || exactMatch(query, null);
-  if (exact) return { id: exact.id, keyword: exact.word, fuzzy: false };
+  if (exact) return { id: exact.id, place: exact.place, keyword: exact.word, fuzzy: false };
   const fuzzy = fuzzyMatch(query, lang) || fuzzyMatch(query, null);
-  return fuzzy ? { id: fuzzy.id, keyword: fuzzy.word, fuzzy: true } : null;
+  return fuzzy ? { id: fuzzy.id, place: fuzzy.place, keyword: fuzzy.word, fuzzy: true } : null;
 }
 
 export function findZone(text, lang) {
