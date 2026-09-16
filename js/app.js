@@ -269,10 +269,19 @@ async function initVoice() {
   }
 }
 
+// À faire quand Jeanne a fini de parler (ex. ouvrir le micro après le bonjour).
+// Annulé dès que le client touche l'écran : il a pris la main.
+let afterSpeaking = null;
+
 function setSpeaking(on) {
   state.speaking = on;
   if (avatar) avatar.setSpeaking(on);
   updateStatus();
+  if (!on && afterSpeaking) {
+    const next = afterSpeaking;
+    afterSpeaking = null;
+    next();
+  }
 }
 
 // =====================================================================
@@ -281,43 +290,68 @@ function setSpeaking(on) {
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = null;
 
-function toggleMic() {
-  if (!SpeechRecognition) { reply(t().micUnsupported); return; }
+// auto : micro ouvert par la borne (après le bonjour), pas par le client.
+// Dans ce cas, un silence n'est pas une erreur : le micro se referme sans rien dire.
+function toggleMic({ auto = false } = {}) {
+  if (!SpeechRecognition) { if (!auto) reply(t().micUnsupported); return; }
   if (state.listening) { recognition && recognition.stop(); return; }
 
+  afterSpeaking = null;
   stopSpeaking();
   const rec = new SpeechRecognition();
   rec.lang = LANGS[state.lang].speech;
   rec.interimResults = true;
   rec.maxAlternatives = 1;
   let finalText = "";
+  let interimText = "";
   let error = null;
+  let settleTimer = null;
+
+  // Répondre dès que la phrase est connue, sans attendre que le navigateur
+  // ferme le micro (il ajoute souvent une demi-seconde, parfois plus).
+  const finish = (text) => {
+    clearTimeout(settleTimer);
+    if (recognition !== rec) return;
+    recognition = null;
+    rec.abort();
+    setListening(false);
+    els.input.value = "";
+    if (text) ask(text, "voice");
+  };
 
   rec.onresult = (event) => {
-    let interim = "";
+    interimText = "";
     for (let i = event.resultIndex; i < event.results.length; i++) {
       const result = event.results[i];
       if (result.isFinal) finalText += result[0].transcript;
-      else interim += result[0].transcript;
+      else interimText += result[0].transcript;
     }
-    els.input.value = (finalText + " " + interim).trim();
+    els.input.value = (finalText + " " + interimText).trim();
     bump();
+    if (finalText.trim() && !interimText.trim()) { finish(finalText.trim()); return; }
+    // Certains navigateurs tardent à valider la phrase : si le texte ne bouge
+    // plus pendant une seconde, le client a fini de parler.
+    clearTimeout(settleTimer);
+    settleTimer = setTimeout(() => finish((finalText + " " + interimText).trim()), 1000);
   };
   rec.onerror = (event) => { error = event.error; };
   rec.onend = () => {
+    clearTimeout(settleTimer);
     if (recognition !== rec) return;
     recognition = null;
     setListening(false);
-    const text = finalText.trim();
+    const text = (finalText + " " + interimText).trim();
     els.input.value = "";
     if (text) ask(text, "voice");
+    // Micro ouvert tout seul : en cas de silence ou de micro bloqué, on n'affiche rien.
+    else if (auto) return;
     else if (error === "not-allowed" || error === "service-not-allowed") reply(t().micDenied);
     else if (error && error !== "aborted") reply(t().micError);
   };
 
   recognition = rec;
   setListening(true);
-  try { rec.start(); } catch { recognition = null; setListening(false); reply(t().micError); }
+  try { rec.start(); } catch { recognition = null; setListening(false); if (!auto) reply(t().micError); }
 }
 
 function abortMic() {
@@ -405,6 +439,8 @@ function reply(text, prefix = "") {
 }
 
 function ask(text, source = "text") {
+  afterSpeaking = null;
+  abortMic();
   addMessage("user", text);
   bump();
   hideOtherStore();
@@ -1026,13 +1062,28 @@ function enterApp() {
   if (avatar) avatar.setFraming("docked");
   els.chat.textContent = "";
   setTimeout(() => {
-    reply(t().greeting);
+    // Le message complet s'affiche, mais Jeanne dit seulement « Bonjour ! Quel
+    // produit cherchez-vous ? », puis ouvre le micro : le client n'a pas besoin
+    // de toucher « Appuyez pour parler ».
+    addMessage("jeanne", t().greeting);
+    speak(t().hello);
     if (avatar) avatar.wave();
+    if (state.screen !== "app") return;
+    let opened = false;
+    const listen = () => {
+      if (opened || state.screen !== "app" || state.listening || state.speaking) return;
+      opened = true;
+      toggleMic({ auto: true });
+    };
+    afterSpeaking = listen;
+    // Si aucune voix ne se lance (appareil sans son), le micro s'ouvre quand même.
+    setTimeout(() => { if (!state.speaking && afterSpeaking === listen) { afterSpeaking = null; listen(); } }, 2500);
   }, 450);
   bump();
 }
 
 function exitToIdle() {
+  afterSpeaking = null;
   closeWarning();
   closeSurvey();
   closeChoices();
@@ -1207,7 +1258,9 @@ els.idle.tabIndex = 0;
 els.idle.addEventListener("click", enterApp);
 els.idle.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); enterApp(); } });
 
-els.mic.addEventListener("click", toggleMic);
+els.mic.addEventListener("click", () => toggleMic());
+// Le client touche l'écran pendant que Jeanne parle : il prend la main, la borne n'ouvre pas le micro toute seule.
+document.addEventListener("pointerdown", () => { if (state.screen === "app") afterSpeaking = null; }, { capture: true });
 els.form.addEventListener("submit", (e) => {
   e.preventDefault();
   const text = els.input.value.trim();
