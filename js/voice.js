@@ -96,6 +96,63 @@ let context = null;
 let playing = null;
 let session = null;
 
+function ensureContext() {
+  if (!context) context = new (window.AudioContext || window.webkitAudioContext)();
+  return context;
+}
+
+// =====================================================================
+// Phrases enregistrées d'avance (assets/voix, fabriquées par tools/voix) :
+// publiées avec le site, elles se lisent immédiatement, avec la même voix
+// sur tous les appareils, sans rien télécharger d'autre.
+// =====================================================================
+const clips = new Map();
+
+function loadClip(url) {
+  if (!clips.has(url)) {
+    const promise = fetch(url)
+      .then((response) => {
+        if (!response.ok) throw new Error(`${response.status} ${url}`);
+        return response.arrayBuffer();
+      })
+      .then((data) => ensureContext().decodeAudioData(data));
+    promise.catch(() => clips.delete(url));
+    clips.set(url, promise);
+  }
+  return clips.get(url);
+}
+
+// Prépare les phrases d'une langue en arrière-plan : la première lecture est alors instantanée.
+export function preloadClips(urls) {
+  for (const url of urls) loadClip(url).catch(() => {});
+}
+
+// Lit une phrase enregistrée. Renvoie false si c'est impossible (fichier
+// absent, son bloqué) : la borne passe alors à une voix de synthèse.
+export async function playClip(url, { onStart, onLevel, onEnd } = {}) {
+  stop();
+  const token = {};
+  session = token;
+  try {
+    ensureContext();
+    if (context.state !== "running") await context.resume();
+    if (context.state !== "running") { session = null; return false; }
+    const buffer = await loadClip(url);
+    if (session !== token) return true;
+    if (onStart) onStart();
+    await playBuffer(buffer, 1, token, onLevel);
+    if (session === token) {
+      session = null;
+      if (onEnd) onEnd();
+    }
+    return true;
+  } catch (error) {
+    console.info("Phrase enregistrée illisible :", error.message);
+    if (session === token) session = null;
+    return false;
+  }
+}
+
 function playBuffer(buffer, rate, token, onLevel) {
   return new Promise((resolve) => {
     const source = context.createBufferSource();
@@ -140,7 +197,7 @@ export async function speak(text, lang, { rate = 1, onStart, onLevel, onEnd } = 
   session = token;
   let started = false;
   try {
-    if (!context) context = new (window.AudioContext || window.webkitAudioContext)();
+    ensureContext();
     if (context.state !== "running") await context.resume();
     if (context.state !== "running") {
       // Le navigateur refuse encore le son (aucun geste de l'utilisateur) :
