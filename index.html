@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=26">
+<link rel="stylesheet" href="css/kiosk.css?v=27">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=26"></script>
+<script type="module" src="js/app.js?v=27"></script>
 </head>
 <body class="is-idle">
 
@@ -273,6 +273,24 @@
         </div>
       </div>
       <p class="stats-note">Données anonymes, enregistrées uniquement sur cette borne. Les questions sans réponse aident à compléter les mots-clés.</p>
+      <div class="stats-export">
+        <h4>Envoi mensuel par e-mail</h4>
+        <p class="stats-note">Chaque mois, les statistiques des 31 jours précédents sont envoyées à cette adresse (tableau dans l'e-mail + fichier Excel). Si la borne est éteinte ce jour-là, l'envoi part dès qu'elle est rallumée.</p>
+        <div class="stats-export-row">
+          <label class="stats-export-email">Adresse e-mail
+            <input type="email" id="reportEmail" inputmode="email" autocomplete="off" placeholder="prenom.nom@fnac.com">
+          </label>
+          <label class="stats-export-day">Jour d'envoi
+            <select id="reportDay"></select>
+          </label>
+        </div>
+        <label class="check"><input type="checkbox" id="reportMonthly"><span>Activer l'envoi mensuel</span></label>
+        <p class="stats-note" id="reportStatus" role="status">La première fois, FormSubmit envoie un e-mail « Activate form » : cliquez sur le lien qu'il contient, puis touchez « Envoyer maintenant ».</p>
+        <div class="stats-export-buttons">
+          <button type="button" class="stats-send" id="reportSend">Envoyer maintenant (31 derniers jours)</button>
+          <button type="button" class="stats-reset" id="reportDownload">Télécharger le fichier Excel</button>
+        </div>
+      </div>
       <button type="button" class="stats-reset" id="statsReset">Remettre les statistiques à zéro</button>
     </section>
 
