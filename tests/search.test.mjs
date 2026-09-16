@@ -146,7 +146,35 @@ const cases = [
   ["es", "auriculares inalámbricos", "audio"],
   ["es", "una freidora de aire", "electromenager"],
   ["es", "un disco duro externo", "pcwindows"],
-  ["es", "cartas pokemon", "escalier"]
+  ["es", "cartas pokemon", "escalier"],
+  // --- À l'oral : la reconnaissance vocale écrit les nombres en lettres
+  //     et sépare les marques (« PS cinq », « air pods »). ---
+  ["fr", "je veux une PS cinq", "gaming"],
+  ["fr", "la Switch deux", "gaming"],
+  ["fr", "une play station", "gaming"],
+  ["fr", "Xbox Série X", "gaming"],
+  ["fr", "un iPhone quinze", "apple"],
+  ["fr", "un iPhone dix-sept", "apple"],
+  ["fr", "des air pods", "apple"],
+  ["fr", "un i phone", "apple"],
+  ["fr", "une télé soixante-cinq pouces", "tv"],
+  ["fr", "une télé de cinquante-cinq pouces", "tv"],
+  ["fr", "un écran vingt-sept pouces", "pcwindows"],
+  ["fr", "un puzzle mille pièces", "jeuxSociete"],
+  ["fr", "un dé à jouer", "jeuxSociete"],
+  ["fr", "un jeu de dés", "jeuxSociete"],
+  ["fr", "un go pro", "photo"],
+  // les mots qui ressemblent ne doivent pas être emportés
+  ["fr", "un coffret de séries DVD", "editorial"],
+  ["fr", "le jeu Uno", "jeuxSociete"],
+  ["fr", "des capsules de café", "electromenager"],
+  ["en", "a play station five", "gaming"],
+  ["es", "una tele de sesenta y cinco pulgadas", "tv"],
+  ["fr", "un écran de cent quarante-quatre hertz", "accessoiresGaming"],
+  ["fr", "je cherche le rayon informatique", "pcwindows"],
+  ["fr", "un casque anti bruit", "audio"],
+  ["fr", "une carte mémoire pour ma switch", "gaming"],
+  ["fr", "un iphone seize pro max", "apple"]
 ];
 
 // Questions pratiques : elles doivent passer avant les rayons.
