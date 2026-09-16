@@ -421,7 +421,7 @@ export const ZONES = {
            "machine à soda", "fer à repasser", "centrale vapeur", "défroisseur", "pèse-personne",
            "balance connectée cuisine", "balance de cuisine", "ventilateur", "brumisateur", "chauffage d'appoint",
            "radiateur", "climatiseur", "climatiseur mobile", "déshumidificateur", "purificateur d'air",
-           "humidificateur", "diffuseur d'huiles essentielles", "barbecue électrique", "cave à vin", "réfrigérateur",
+           "humidificateur", "diffuseur d'huiles essentielles", "barbecue électrique",
               "capsule", "capsules", "dosette", "dosettes", "machine à capsules", "café en grains", "café moulu", "détartrant"],
       en: ["home appliance", "appliances", "small appliance", "vacuum", "vacuum cleaner", "cordless vacuum",
            "stick vacuum", "robot vacuum", "handheld vacuum", "dyson", "rowenta", "roomba", "irobot",
@@ -436,7 +436,7 @@ export const ZONES = {
            "raclette", "electric grill", "bread maker", "yogurt maker", "ice cream maker", "vacuum sealer",
            "sodastream", "soda maker", "iron", "steam generator", "garment steamer", "bathroom scale",
            "kitchen scale", "fan", "heater", "air conditioner", "portable air conditioner", "dehumidifier",
-           "air purifier", "humidifier", "diffuser", "wine cooler", "fridge",
+           "air purifier", "humidifier", "diffuser",
               "coffee capsule", "capsules", "coffee pods", "capsule machine", "coffee beans", "descaler"],
       es: ["electrodoméstico", "electrodomésticos", "pequeño electrodoméstico", "aspiradora", "aspirador",
            "aspirador escoba", "aspirador sin cable", "robot aspirador", "aspirador de mano", "dyson", "rowenta",
@@ -451,7 +451,7 @@ export const ZONES = {
            "raclette", "plancha de cocina", "panificadora", "yogurtera", "heladera", "envasadora al vacío",
            "sodastream", "plancha", "plancha de ropa", "centro de planchado", "vaporizador de ropa", "báscula",
            "báscula de cocina", "ventilador", "calefactor", "aire acondicionado", "deshumidificador",
-           "purificador de aire", "humidificador", "difusor", "vinoteca", "nevera",
+           "purificador de aire", "humidificador", "difusor",
               "cápsula", "cápsulas", "monodosis", "cafetera de cápsulas", "café en grano", "descalcificador"]
     }
   },
@@ -858,6 +858,22 @@ export const INFO = {
       fr: "Je suis désolée, il n'y a pas de toilettes dans ce magasin.",
       en: "I'm sorry, there are no toilets in this store.",
       es: "Lo siento, esta tienda no tiene baños."
+    }
+  },
+  largeAppliances: {
+    keywords: {
+      fr: ["gros électroménager", "lave-linge", "machine à laver", "lave-vaisselle", "sèche-linge", "frigo",
+           "réfrigérateur", "congélateur", "four encastrable", "plaque de cuisson", "table de cuisson", "hotte",
+           "cuisinière", "chauffe-eau", "cave à vin"],
+      en: ["large appliance", "large appliances", "washing machine", "dishwasher", "tumble dryer", "fridge",
+           "refrigerator", "freezer", "built in oven", "hob", "cooker hood", "wine cooler"],
+      es: ["gran electrodoméstico", "lavadora", "lavavajillas", "secadora", "nevera", "frigorífico", "congelador",
+           "horno empotrable", "placa de cocina", "campana extractora", "vinoteca"]
+    },
+    answer: {
+      fr: "Nous ne vendons pas de gros électroménager ici. Au rayon petit électroménager, le plus grand appareil est l'aspirateur balai.",
+      en: "We don't sell large appliances here. In the small appliances aisle, the largest item is the cordless stick vacuum.",
+      es: "Aquí no vendemos grandes electrodomésticos. En pequeños electrodomésticos, lo más grande es el aspirador escoba."
     }
   },
   parking: {
