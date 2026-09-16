@@ -72,7 +72,81 @@ const cases = [
   ["en", "where are the headphones", "audio"],
   ["es", "un cargador de iPhone", "apple"],
   ["es", "¿dónde están los auriculares?", "audio"],
-  ["es", "el mando a distancia", "tv"]
+  ["es", "el mando a distancia", "tv"],
+  // --- Priorité du SAV : la panne passe avant le rayon du produit ---
+  ["fr", "je viens faire réparer mon iPhone", "savRetrait"],
+  ["fr", "mon iPhone est cassé", "savRetrait"],
+  ["fr", "ma télé est cassée", "savRetrait"],
+  ["fr", "je viens chercher ma commande", "savRetrait"],
+  ["fr", "une extension de garantie", "savRetrait"],
+  ["fr", "mon aspirateur ne fonctionne pas", "savRetrait"],
+  ["en", "I want to pick up my order", "savRetrait"],
+  ["es", "vengo a recoger mi pedido", "savRetrait"],
+  // mais le produit seul reste dans son rayon
+  ["fr", "un iPhone 17", "apple"],
+  ["fr", "une télé 65 pouces", "tv"],
+
+  // --- Vocabulaire ajouté : étage 0 ---
+  ["fr", "une montre Garmin", "objets"],
+  ["fr", "une ampoule connectée", "objets"],
+  ["fr", "un babyphone", "objets"],
+  ["fr", "une batterie externe", "telephonie"],
+  ["fr", "un verre trempé pour Samsung", "telephonie"],
+  ["fr", "une carte SIM", "telephonie"],
+  ["fr", "des cartes Pokémon", "escalier"],
+  ["fr", "un LEGO Technic", "escalier"],
+  ["fr", "une figurine Funko Pop", "escalier"],
+
+  // --- Vocabulaire ajouté : sous-sol ---
+  ["fr", "un jeu Pokémon", "gaming"],
+  ["fr", "une manette PS5", "gaming"],
+  ["fr", "un casque VR", "gaming"],
+  ["fr", "un clavier mécanique", "accessoiresGaming"],
+  ["fr", "une cartouche d'encre HP", "accessoiresGaming"],
+  ["fr", "une carte graphique RTX", "accessoiresGaming"],
+  ["fr", "un airfryer", "electromenager"],
+  ["fr", "une friteuse sans huile", "electromenager"],
+  ["fr", "un robot pâtissier", "electromenager"],
+  ["fr", "une brosse à dents électrique", "electromenager"],
+  ["fr", "un disque dur externe", "pcwindows"],
+  ["fr", "une imprimante laser", "pcwindows"],
+  ["fr", "un répéteur wifi", "pcwindows"],
+  ["fr", "une tablette Samsung", "pcwindows"],
+  ["fr", "une trottinette électrique", "trottinettes"],
+  ["fr", "un casque de vélo", "trottinettes"],
+  ["fr", "un objectif pour mon appareil photo", "photo"],
+  ["fr", "une carte SD", "photo"],
+  ["fr", "un micro cravate", "photo"],
+  ["fr", "un vidéoprojecteur", "tv"],
+  ["fr", "une télécommande universelle", "tv"],
+  ["fr", "des écouteurs sans fil", "audio"],
+  ["fr", "une enceinte bluetooth", "audio"],
+  ["fr", "un casque à réduction de bruit", "audio"],
+  ["fr", "un AirTag", "apple"],
+  ["fr", "un bracelet Apple Watch", "apple"],
+  ["fr", "un dé à jouer", "jeuxSociete"],
+  ["fr", "un puzzle 1000 pièces", "jeuxSociete"],
+  ["fr", "un jeu de rôle", "jeuxSociete"],
+  ["fr", "la carte Fnac", "adhesion"],
+  ["fr", "où payer", "caisse"],
+  ["fr", "un manuel scolaire", "editorial"],
+  ["fr", "un magazine", "editorial"],
+
+  // --- Fautes de frappe et d'oreille ---
+  ["fr", "une trotinette", "trottinettes"],
+  ["fr", "un aspirateur robo", "electromenager"],
+
+  // --- Anglais et espagnol ajoutés ---
+  ["en", "a gaming keyboard", "accessoiresGaming"],
+  ["en", "a robot vacuum", "electromenager"],
+  ["en", "an ink cartridge", "accessoiresGaming"],
+  ["en", "wireless earbuds", "audio"],
+  ["en", "a smart bulb", "objets"],
+  ["es", "un cargador de móvil", "telephonie"],
+  ["es", "auriculares inalámbricos", "audio"],
+  ["es", "una freidora de aire", "electromenager"],
+  ["es", "un disco duro externo", "pcwindows"],
+  ["es", "cartas pokemon", "escalier"]
 ];
 
 let failures = 0;

@@ -14,6 +14,8 @@ const { ZONES, INTENTS } = await import("./data.js" + new URL(import.meta.url).s
 const STOPWORDS = new Set([
   // français
   "d", "de", "du", "des", "l", "la", "le", "les", "un", "une", "pour", "a", "au", "aux", "mon", "ma", "mes", "en", "sur",
+  // « est » : sans lui, « mon écran est noir » ne rejoignait pas « écran noir ».
+  "est",
   // anglais
   "the", "an", "of", "for", "my", "some", "to",
   // espagnol
