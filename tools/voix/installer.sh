@@ -19,7 +19,8 @@ echo "2/4 Python 3.11 isolé…"
 
 echo "3/4 Chatterbox et PyTorch…"
 # setuptools : le filigrane audio (resemble-perth) importe encore pkg_resources.
-"$UV" pip install --python "$DIR/venv/bin/python" chatterbox-tts "setuptools<81"
+# faster-whisper : transcription de contrôle des phrases fabriquées.
+"$UV" pip install --python "$DIR/venv/bin/python" chatterbox-tts "setuptools<81" faster-whisper
 
 echo "4/4 Téléchargement du modèle multilingue…"
 "$DIR/venv/bin/python" - <<'PY'

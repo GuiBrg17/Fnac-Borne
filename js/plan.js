@@ -193,7 +193,7 @@ export function stairsDrawing(plan) {
         arrowFrom = arcPoint(piece, piece.arrow - 4, 0.5);
         arrowTo = arcPoint(piece, piece.arrow + 4, 0.5);
       }
-    } else {
+    } else if (piece.type === "flight") {
       band = pts([flightPoint(piece, 0, -1), flightPoint(piece, 1, -1), flightPoint(piece, 1, 1), flightPoint(piece, 0, 1)]) + " Z";
       for (let i = 1; i <= piece.treads; i++) {
         const u = i / (piece.treads + 1);
@@ -203,6 +203,11 @@ export function stairsDrawing(plan) {
         arrowFrom = flightPoint(piece, piece.arrow - 0.06, 0);
         arrowTo = flightPoint(piece, piece.arrow + 0.06, 0);
       }
+    }
+    if (piece.type === "drawn") {
+      band = piece.outline;
+      lines.push(...piece.treads);
+      if (piece.arrow) [arrowFrom, arrowTo] = piece.arrow;
     }
     const arrow = arrowFrom && {
       x: arrowFrom[0], y: arrowFrom[1],
@@ -261,9 +266,45 @@ export const GROUND = {
   outline: "M27 133 L195 57 L204 41 L256 41 L262 92 L231 108 L264 174 L302 160 L345 330 L243 368 L237 405 " +
            "L147 425 L133 390 Q 108 352 77 348 L34 352 Z",
 
+  // Escalier relevé tel qu'il est dessiné sur le plan (contours et marches) :
+  // en haut à gauche la volée en biais « accès sous-sol », en dessous à droite
+  // la partie courbe qui longe le mur du poste sécu.
   stairs: [
-    { type: "flight", from: [196, 226], to: [242, 284], width: 44, treads: 8, arrow: 0.5 },
-    { type: "arc", cx: 206, cy: 306, inner: [30, 30], outer: [82, 82], from: -22, to: 62, steps: [-22, 62], treads: 9 }
+    {
+      type: "drawn",
+      outline: "M186.9 239.3 L217.9 227.4 L240.0 275.4 L207.9 289.7 Z",
+      treads: [
+        [189.7, 238.2, 210.8, 288.4],
+        [192.5, 237.1, 213.7, 287.1],
+        [195.4, 236.1, 216.7, 285.8],
+        [198.2, 235.0, 219.6, 284.5],
+        [201.0, 233.9, 222.5, 283.2],
+        [203.8, 232.8, 225.4, 281.9],
+        [206.6, 231.7, 228.3, 280.6],
+        [209.4, 230.6, 231.2, 279.3],
+        [212.3, 229.6, 234.2, 278.0],
+        [215.1, 228.5, 237.1, 276.7],
+        [197.4, 264.5, 229.0, 251.4]
+      ]
+    },
+    {
+      type: "drawn",
+      outline: "M240 276.4 L292.9 276.4 L292.9 301.4 Q 289.9 330 272.9 358.6 L241.4 365 L227.1 330 Q 232.2 316.4 240 276.4 Z",
+      treads: [
+        [240.0, 282.9, 292.9, 287.1],
+        [239.3, 289.7, 292.9, 294.6],
+        [238.6, 296.4, 292.1, 301.7],
+        [237.6, 302.9, 290.7, 308.6],
+        [236.4, 310.0, 288.9, 316.0],
+        [235.0, 316.4, 286.9, 322.9],
+        [232.9, 322.9, 285.0, 329.7],
+        [230.0, 329.3, 282.9, 336.4],
+        [229.3, 335.7, 280.3, 343.6],
+        [232.9, 342.1, 277.9, 350.7],
+        [237.1, 349.3, 275.0, 357.1]
+      ],
+      arrow: [[266, 292], [262, 312]]
+    }
   ],
 
   shapes: [
@@ -296,7 +337,7 @@ export const GROUND = {
 
   // Trajets depuis la borne (à l'entrée), en contournant tables et poste sécu.
   routes: {
-    stairs: [[150, 352], [145, 300], [168, 262], [194, 234]],
+    stairs: [[150, 352], [145, 300], [168, 262], [192, 264]],
     telephonie: [[150, 352], [124, 300]],
     objets: [[150, 352], [145, 300], [168, 262], [172, 215], [200, 160]]
   }
