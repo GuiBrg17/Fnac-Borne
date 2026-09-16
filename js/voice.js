@@ -14,6 +14,9 @@ export const PIPER_VOICES = {
   fr: "fr_FR-upmc-medium",
   en: "en_GB-jenny_dioco-medium"
 };
+// Le modèle français contient deux voix : Jessica (0, femme) et Pierre (1, homme).
+// On impose Jessica au lieu de compter sur la voix par défaut.
+const PIPER_SPEAKERS = { "fr_FR-upmc-medium": 0 };
 
 const MAX_CHUNK = 140;
 
@@ -207,7 +210,8 @@ export async function speak(text, lang, { rate = 1, onStart, onLevel, onEnd } = 
       return false;
     }
     const chunks = splitText(text);
-    const synth = (chunk) => call({ type: "predict", text: chunk, voiceId: PIPER_VOICES[lang] });
+    const voiceId = PIPER_VOICES[lang];
+    const synth = (chunk) => call({ type: "predict", text: chunk, voiceId, speakerId: PIPER_SPEAKERS[voiceId] });
     let pending = synth(chunks[0]);
     for (let i = 0; i < chunks.length; i++) {
       const wav = await pending;

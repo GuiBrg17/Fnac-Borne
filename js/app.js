@@ -78,11 +78,12 @@ const els = {
 // Voix de Jeanne (synthèse vocale du navigateur, voix féminines d'abord)
 // =====================================================================
 const FEMALE_VOICES = {
-  fr: ["denise", "vivienne", "eloise", "brigitte", "celeste", "coralie", "jacqueline", "josephine", "yvette", "julie", "hortense", "amelie", "audrey", "aurelie", "marie", "virginie", "google francais"],
-  en: ["sonia", "libby", "maisie", "hollie", "jenny", "aria", "michelle", "ava", "emma", "hazel", "susan", "zira", "serena", "kate", "karen", "moira", "samantha", "tessa", "victoria", "google uk english female", "google us english"],
-  es: ["elvira", "abril", "ximena", "helena", "laura", "monica", "paulina", "lucia", "conchita", "google espanol"]
+  fr: ["denise", "vivienne", "eloise", "brigitte", "celeste", "coralie", "jacqueline", "josephine", "yvette", "julie", "hortense", "amelie", "audrey", "aurelie", "marie", "virginie", "google francais", "flo", "sandy", "shelley"],
+  en: ["sonia", "libby", "maisie", "hollie", "jenny", "aria", "michelle", "ava", "emma", "hazel", "susan", "zira", "serena", "kate", "karen", "moira", "samantha", "tessa", "victoria", "allison", "fiona", "zoe", "google uk english female", "google us english", "flo", "sandy", "shelley"],
+  es: ["elvira", "abril", "ximena", "helena", "laura", "monica", "paulina", "lucia", "conchita", "marisol", "google espanol", "flo", "sandy", "shelley"]
 };
-const MALE_VOICES = ["paul", "henri", "claude", "guy", "remy", "alain", "jerome", "yves", "antoine", "david", "mark", "george", "ryan", "thomas", "daniel", "oliver", "alvaro", "pablo", "jorge", "diego", "raul", "arthur", "fred", "alex", "tom", "male"];
+const MALE_VOICES = ["paul", "henri", "claude", "guy", "remy", "alain", "jerome", "yves", "antoine", "david", "mark", "george", "ryan", "thomas", "daniel", "oliver", "alvaro", "pablo", "jorge", "diego", "raul", "arthur", "fred", "alex", "tom", "male",
+  "eddy", "reed", "rocko", "grandpa", "albert", "ralph", "junior", "jacques", "nicolas", "gordon", "aaron", "rishi", "juan", "carlos", "jorge"];
 
 let voices = [];
 let currentUtterance = null;
@@ -93,9 +94,16 @@ function refreshVoices() {
   fillVoiceSettings();
 }
 
+// Voix de femme reconnue pour cette langue (les voix inconnues ou d'homme sont exclues).
+function isFemaleVoice(voiceItem, lang) {
+  const name = normalize(voiceItem.name);
+  const matches = (n) => new RegExp(`(^| )${n}( |$)`).test(name);
+  return FEMALE_VOICES[lang].some(matches) && !MALE_VOICES.some(matches);
+}
+
 function pickVoice(lang) {
   const saved = settings.voices[lang] && voices.find((v) => v.voiceURI === settings.voices[lang]);
-  if (saved) return saved;
+  if (saved && isFemaleVoice(saved, lang)) return saved;
   const wanted = LANGS[lang].speech.toLowerCase();
   let best = null;
   let bestScore = -Infinity;
@@ -104,9 +112,10 @@ function pickVoice(lang) {
     if (!voiceLang.startsWith(wanted.slice(0, 2))) continue;
     const name = normalize(candidate.name);
     let score = voiceLang === wanted ? 4 : 0;
-    const rank = FEMALE_VOICES[lang].findIndex((n) => name.includes(n));
-    if (rank >= 0) score += 20 - rank * 0.2;
-    if (MALE_VOICES.some((n) => new RegExp(`(^| )${n}( |$)`).test(name))) score -= 30;
+    const rank = FEMALE_VOICES[lang].findIndex((n) => new RegExp(`(^| )${n}( |$)`).test(name));
+    // Jeanne ne parle qu'avec une voix de femme : une voix inconnue ou d'homme est écartée.
+    if (rank < 0 || MALE_VOICES.some((n) => new RegExp(`(^| )${n}( |$)`).test(name))) continue;
+    score += 20 - rank * 0.2;
     if (/natural|online|neural|premium|enhanced/.test(name)) score += 3;
     if (score > bestScore) { bestScore = score; best = candidate; }
   }
@@ -189,8 +198,14 @@ function speakWithBrowser(text, lang = state.lang) {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = LANGS[lang].speech;
   const chosen = pickVoice(lang);
-  if (chosen) utterance.voice = chosen;
-  lastEngine = `voix du navigateur : ${chosen ? chosen.name : "voix par défaut"} (${lang})`;
+  if (!chosen) {
+    // Aucune voix de femme sur cet appareil : la réponse reste affichée, sans voix d'homme.
+    lastEngine = `aucune voix féminine disponible sur cet appareil (${lang}) — réponse affichée seulement`;
+    updateVoiceStatus();
+    return;
+  }
+  utterance.voice = chosen;
+  lastEngine = `voix du navigateur : ${chosen.name} (${lang})`;
   updateVoiceStatus();
   utterance.rate = state.a11y ? 0.86 : 1;
   utterance.pitch = 1.05;
@@ -931,8 +946,9 @@ function fillVoiceSettings() {
     const prefix = LANGS[lang].speech.slice(0, 2).toLowerCase();
     select.textContent = "";
     select.append(new Option("Automatique (voix féminine)", ""));
+    // Le personnel ne peut choisir qu'une voix de femme.
     voices
-      .filter((v) => (v.lang || "").toLowerCase().startsWith(prefix))
+      .filter((v) => (v.lang || "").toLowerCase().startsWith(prefix) && isFemaleVoice(v, lang))
       .forEach((v) => select.append(new Option(`${v.name} (${v.lang})`, v.voiceURI)));
     select.value = settings.voices[lang] || "";
   });
