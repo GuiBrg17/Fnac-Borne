@@ -187,7 +187,13 @@ const infoCases = [
   ["en", "what time do you close", "hours"],
   ["en", "where is the restroom", "toilets"],
   ["es", "dónde están los baños", "toilets"],
-  ["es", "a qué hora cierran", "hours"]
+  ["es", "a qué hora cierran", "hours"],
+  // Pas de gros électroménager ici : le plus grand appareil est l'aspirateur balai.
+  ["fr", "un lave-linge", "largeAppliances"],
+  ["fr", "un frigo", "largeAppliances"],
+  ["fr", "une machine à laver", "largeAppliances"],
+  ["en", "a washing machine", "largeAppliances"],
+  ["es", "una lavadora", "largeAppliances"]
 ];
 // Demandes sans produit précis : un vendeur conseillera mieux.
 const intentCases = [
