@@ -747,14 +747,17 @@ export const ZONES = {
               "liquide", "sans contact", "ticket", "ticket de caisse", "facture", "détaxe", "tax free",
               "carte cadeau", "chèque cadeau", "bon d'achat", "avoir", "trois fois sans frais",
               "paiement en plusieurs fois", "financement", "crédit", "emballage cadeau", "papier cadeau",
-              "file d'attente", "caisse automatique", "borne de paiement", "réservation"],
+              "file d'attente", "caisse automatique", "borne de paiement", "réservation",
+            "piles", "pile", "piles rechargeables", "pile bouton", "adaptateur de voyage", "adaptateur prise étrangère", "adaptateur international", "prise anglaise", "prise américaine", "carte cadeau fnac", "e-carte cadeau"],
       en: ["checkout", "cashier", "till", "cash register", "pay", "where to pay", "payment", "card payment",
               "credit card", "cash", "contactless", "receipt", "invoice", "tax free", "gift card", "gift voucher",
               "voucher", "credit note", "instalments", "pay in instalments", "financing", "gift wrapping", "queue",
-              "self checkout"],
+              "self checkout",
+            "batteries", "battery", "aa batteries", "rechargeable batteries", "travel adapter", "plug adapter", "uk plug adapter", "us plug adapter", "fnac gift card"],
       es: ["caja", "cajas", "pagar", "dónde pagar", "pago", "tarjeta bancaria", "efectivo", "contactless", "ticket",
               "recibo", "factura", "tax free", "tarjeta regalo", "cheque regalo", "vale", "financiación",
-              "pago a plazos", "envoltorio de regalo", "papel de regalo", "cola", "caja automática"]
+              "pago a plazos", "envoltorio de regalo", "papel de regalo", "cola", "caja automática",
+            "pilas", "pila", "pilas recargables", "adaptador de viaje", "adaptador de enchufe", "tarjeta regalo fnac"]
     }
   },
   adhesion: {
