@@ -73,6 +73,15 @@ export const UI = {
     idleWarnTitle: "Vous êtes toujours là ?",
     idleWarnBody: (s) => `Retour à l'accueil dans ${s} s.`,
     idleWarnButton: "Je continue",
+    choose: "Touchez votre choix, ou dites-le.",
+    surveyAsk: "Avant de partir : avez-vous trouvé ce que vous cherchiez ?",
+    surveyYes: "Oui",
+    surveyNo: "Non",
+    surveySkip: "Passer",
+    surveyThanksYes: "Merci ! Bonne visite à la Fnac.",
+    surveyThanksNo: "Merci de nous l'avoir dit. Un vendeur peut vous aider : touchez « Appeler un vendeur ».",
+    a11yOn: "Mode accessibilité : le texte est agrandi et le contraste renforcé. Si vous ne pouvez pas prendre l'escalier, il y a un ascenseur : touchez « Appeler un vendeur », on vous y accompagne.",
+    a11yOff: "Affichage normal.",
     floorName: (f) => FLOOR_NAMES.fr[f]
   },
   en: {
@@ -126,6 +135,15 @@ export const UI = {
     idleWarnTitle: "Are you still there?",
     idleWarnBody: (s) => `Back to the welcome screen in ${s} s.`,
     idleWarnButton: "I'm still here",
+    choose: "Tap your choice, or say it.",
+    surveyAsk: "Before you go: did you find what you were looking for?",
+    surveyYes: "Yes",
+    surveyNo: "No",
+    surveySkip: "Skip",
+    surveyThanksYes: "Thank you! Enjoy your visit.",
+    surveyThanksNo: "Thank you for telling us. A member of staff can help: tap “Call a staff member”.",
+    a11yOn: "Accessibility mode: larger text and stronger contrast. If you can't use the stairs, there is a lift: tap “Call a staff member” and we'll take you there.",
+    a11yOff: "Standard display.",
     floorName: (f) => FLOOR_NAMES.en[f]
   },
   es: {
@@ -179,6 +197,15 @@ export const UI = {
     idleWarnTitle: "¿Sigue ahí?",
     idleWarnBody: (s) => `Volvemos a la pantalla de inicio en ${s} s.`,
     idleWarnButton: "Sigo aquí",
+    choose: "Toque su opción o dígala.",
+    surveyAsk: "Antes de irse: ¿ha encontrado lo que buscaba?",
+    surveyYes: "Sí",
+    surveyNo: "No",
+    surveySkip: "Omitir",
+    surveyThanksYes: "¡Gracias! Disfrute de su visita.",
+    surveyThanksNo: "Gracias por decírnoslo. Un vendedor puede ayudarle: toque «Llamar a un vendedor».",
+    a11yOn: "Modo accesibilidad: texto más grande y más contraste. Si no puede usar la escalera, hay un ascensor: toque «Llamar a un vendedor» y le acompañaremos.",
+    a11yOff: "Vista normal.",
     floorName: (f) => FLOOR_NAMES.es[f]
   }
 };
@@ -630,7 +657,7 @@ export const ZONES = {
     spots: ["22","23","24","25","26","27"],
     keywords: {
       fr: ["pc", "pc windows", "informatique", "rayon informatique", "bureautique", "pc portable", "ordinateur",
-           "ordinateur portable", "ordi", "portable windows", "pc fixe", "unité centrale", "tour pc", "tout-en-un",
+           "ordinateur portable", "ordi", "portable windows", "pc fixe", "unité centrale", "tour pc", "ordinateur tout-en-un", "pc tout-en-un",
            "laptop", "notebook", "ultrabook", "chromebook", "asus", "hp", "lenovo", "acer", "dell", "msi",
            "huawei matebook", "microsoft surface", "surface pro", "windows", "windows 11", "pack office",
            "microsoft 365", "logiciel", "antivirus", "suite bureautique", "sacoche ordinateur", "housse ordinateur",
@@ -936,7 +963,7 @@ export const ZONES = {
       fr: ["adhésion", "adhérent", "devenir adhérent", "carte fnac", "carte adhérent", "carte de fidélité",
            "fidélité", "points fidélité", "avantages adhérent", "réduction adhérent", "offre adhérent", "abonnement",
            "fnac plus", "renouveler ma carte", "inscription", "s'inscrire", "compte fnac", "espace adhérent",
-           "parrainage", "carte trois ans", "carte un an", "trois fois sans frais", "paiement en plusieurs fois",
+           "parrainage", "carte fnac trois ans", "carte fnac un an", "trois fois sans frais", "paiement en plusieurs fois",
            "financement", "crédit",
             "paiement en 3 fois", "paiement en 4 fois", "paiement en 10 fois", "payer en plusieurs fois", "payer en 3 fois", "en plusieurs fois", "facilités de paiement"],
       en: ["membership", "member", "become a member", "fnac card", "member card", "loyalty card", "loyalty points",
@@ -1000,7 +1027,7 @@ ZONES.editorial = {
 // =====================================================================
 const SPOKEN = {
   telephonie: {
-    fr: ["tel", "téléphone pliable", "téléphone pliant", "smartphone pliable", "galaxy s23", "galaxy s24 ultra",
+    fr: ["galaxy s26", "galaxy s26 ultra", "galaxy s26 plus", "s26 ultra", "s26", "galaxy z fold 8", "galaxy z flip 8", "galaxy tri fold", "trifold", "galaxy a57", "galaxy a37", "pixel 10a", "pixel 11", "pixel 11 pro", "xiaomi 16", "xiaomi 17", "redmi note 15", "nothing phone 4", "honor magic 8", "précommande samsung", "précommander le galaxy", "réserver le galaxy", "nouveau samsung", "dernier samsung", "samsoung", "samsong", "sam soung", "galaxie", "xaomi", "chaomi", "shaomi", "wawei", "houawei", "hawaï téléphone", "one plus", "motorola razr", "razr", "oppo find", "téléphone xiaomi", "blue tooth", "bloutouth", "tel", "téléphone pliable", "téléphone pliant", "smartphone pliable", "galaxy s23", "galaxy s24 ultra",
          "galaxy s25 ultra", "galaxy s26", "s24 ultra", "s25 ultra", "galaxy a15", "galaxy a25", "galaxy a35",
          "galaxy a55", "galaxy a36", "galaxy z flip 7", "galaxy z fold 7", "redmi note", "redmi note 14",
          "xiaomi 15", "pixel 9", "pixel 9a", "pixel 10", "pixel 10 pro", "honor magic", "honor 400", "nothing phone",
@@ -1019,19 +1046,19 @@ const SPOKEN = {
          "écouteurs usb c", "écouteurs type c", "kit piéton", "écouteurs avec fil", "casque avec fil téléphone",
          "trépied téléphone", "stabilisateur de téléphone", "objectif pour téléphone", "reprise de mon téléphone",
          "revendre mon téléphone", "portable pour enfant", "premier téléphone"],
-    en: ["cell", "foldable phone", "folding phone", "galaxy s24 ultra", "galaxy s25 ultra", "galaxy a55",
+    en: ["galaxy s26", "galaxy s26 ultra", "galaxy z fold 8", "galaxy z flip 8", "pixel 10a", "pixel 11", "samsung preorder", "new samsung", "razr", "one plus", "cell", "foldable phone", "folding phone", "galaxy s24 ultra", "galaxy s25 ultra", "galaxy a55",
          "redmi note", "pixel 9", "pixel 10", "nothing phone", "senior phone", "phone for elderly",
          "big button phone", "dual sim phone", "5g phone", "esim", "nano sim", "usb charger", "usb c charger",
          "type c", "type c cable", "charging lead", "charging cord", "phone battery", "magnetic battery",
          "clear case", "rugged case", "wallet case", "screen guard", "phone strap", "phone lanyard",
          "bike phone mount", "usb c earphones", "phone tripod", "first phone"],
-    es: ["móvil plegable", "teléfono plegable", "galaxy s24 ultra", "galaxy s25 ultra", "galaxy a55", "redmi note",
+    es: ["galaxy s26", "galaxy s26 ultra", "galaxy z fold 8", "pixel 11", "reservar el galaxy", "nuevo samsung", "razr", "móvil plegable", "teléfono plegable", "galaxy s24 ultra", "galaxy s25 ultra", "galaxy a55", "redmi note",
          "pixel 9", "pixel 10", "móvil para personas mayores", "móvil de teclas grandes", "móvil 5g", "esim",
          "nano sim", "cargador usb", "cargador usb c", "tipo c", "cable tipo c", "funda transparente", "funda antigolpes", "funda cartera", "protector de pantalla móvil",
          "cordón para móvil", "soporte de bici para móvil", "auriculares usb c", "primer móvil"]
   },
   objets: {
-    fr: ["garmin forerunner", "forerunner", "garmin venu", "garmin fenix", "fenix", "garmin instinct",
+    fr: ["galaxy watch 9", "pixel watch 4", "garmin fenix 8", "forerunner 970", "oura ring 4", "montre connectée 2026", "smart ouatch", "garmin forerunner", "forerunner", "garmin venu", "garmin fenix", "fenix", "garmin instinct",
          "galaxy watch 8", "galaxy watch ultra", "pixel watch", "huawei watch gt", "xiaomi smart band", "redmi watch",
          "montre pour courir", "montre running", "montre pour le sport", "montre pour enfant", "montre enfant",
          "montre gps enfant", "montre qui compte les pas", "compter mes pas", "bracelet de sport", "galaxy ring",
@@ -1052,7 +1079,7 @@ const SPOKEN = {
          "localizador para perro"]
   },
   escalier: {
-    fr: ["lego ninjago", "lego marvel", "lego creator", "lego architecture", "lego duplo", "duplo", "lego minecraft",
+    fr: ["lego 2026", "nouveautés lego", "précommande lego", "lego star wars ucs", "ucs", "set lego collector", "légo", "pokémon 30 ans", "coffret pokemon 30 ans", "méga évolution", "mega evolution", "pokemon méga évolution", "booster méga évolution", "ascended heroes", "précommande pokemon", "précommande cartes pokemon", "display précommande", "lorcana précommande", "one piece op13", "lego ninjago", "lego marvel", "lego creator", "lego architecture", "lego duplo", "duplo", "lego minecraft",
          "lego speed champions", "lego ideas", "lego disney", "lego pour adulte", "lego botanique", "lego fleurs",
          "fleurs lego", "bouquet lego", "bonsaï lego", "lego technic voiture", "lego star wars vaisseau",
          "lego jurassic world", "lego super mario", "lego pokemon", "boîte de lego", "legos", "pop marvel",
@@ -1080,7 +1107,7 @@ const SPOKEN = {
     es: ["quiero salir", "busco la salida"]
   },
   gaming: {
-    fr: ["la play", "une play", "play 5", "play 4", "la ps", "playstation portal", "ps portal", "ps5 slim",
+    fr: ["gta 6", "gta vi", "gta six", "grand theft auto 6", "grand theft auto vi", "précommande gta", "précommander gta 6", "réserver gta 6", "sortie gta 6", "quand sort gta 6", "gta 6 ps5", "gta 6 xbox", "ps6", "playstation 6", "ps 6", "xbox next", "prochaine xbox", "prochaine playstation", "switch 3", "précommander un jeu", "réserver un jeu", "jeu à réserver", "réservation jeu", "jeux à venir", "bonus de précommande", "fc 27", "fifa 27", "call of duty 2026", "black ops 8", "the witcher 4", "witcher 4", "elder scrolls 6", "marvel's wolverine", "wolverine ps5", "007 first light", "resident evil requiem", "metroid prime 4", "kirby air riders", "pokemon pokopia", "pokopia", "pokemon vents et vagues", "zelda switch 2", "mario kart world", "nba 2k27", "gears of war", "gears of war e-day", "clair obscur", "expedition 33", "ghost of yotei", "onimusha", "phantom blade zero", "crimson desert", "pragmata", "nintendo swiche", "switche", "switch deux", "ixbox", "x box", "iks box", "plais station", "playstaïtion", "pléstation", "ps cinq", "manette ps cinq", "dual sense", "joy cone", "game pass ultimate", "la play", "une play", "play 5", "play 4", "la ps", "playstation portal", "ps portal", "ps5 slim",
          "ps5 digital", "ps5 édition digitale", "ps5 standard", "xbox game pass",
          "nintendo switch 2", "la switch", "switch 1", "console nintendo", "console sony", "console microsoft",
          "console pour enfant", "console pour jouer", "jouer à la console", "rog ally", "legion go",
@@ -1108,7 +1135,7 @@ const SPOKEN = {
          "volant logitech", "volant thrustmaster", "thrustmaster", "pédalier", "sacoche switch", "étui switch",
          "protection écran switch", "grip switch", "station d'accueil switch", "disque dur ps5", "ssd ps5",
          "ventilateur ps5", "support ps5", "coque manette", "sticks manette"],
-    en: ["the play", "playstation portal", "ps5 slim", "ps5 digital", "nintendo switch 2", "rog ally", "legion go",
+    en: ["gta 6", "gta vi", "grand theft auto vi", "gta 6 preorder", "ps6", "playstation 6", "next xbox", "preorder a game", "preorder", "upcoming games", "fc 27", "the witcher 4", "007 first light", "resident evil requiem", "metroid prime 4", "pokopia", "gears of war", "x box", "the play", "playstation portal", "ps5 slim", "ps5 digital", "nintendo switch 2", "rog ally", "legion go",
          "retro console", "game boy", "nintendo ds", "wireless controller", "dualsense edge", "ps5 headset",
          "pulse 3d", "xbox headset", "games", "new games", "new releases", "preorder", "war game", "fighting game",
          "adventure game", "horror game", "sports game", "multiplayer game", "fc 25", "fc 26", "ea fc",
@@ -1119,7 +1146,7 @@ const SPOKEN = {
          "steam card", "steam", "vbucks", "fortnite card", "roblox", "roblox card", "robux", "minecraft card",
          "meta quest 3", "quest 3", "vr", "ps vr2", "thrustmaster", "pedals", "switch carry case",
          "ps5 ssd", "ps5 stand"],
-    es: ["la play", "play 5", "play 4", "playstation portal", "ps5 slim", "ps5 digital", "nintendo switch 2",
+    es: ["gta 6", "gta vi", "ps6", "playstation 6", "reservar un juego", "reserva de juego", "próximos juegos", "fc 27", "the witcher 4", "resident evil requiem", "x box", "la play", "play 5", "play 4", "playstation portal", "ps5 slim", "ps5 digital", "nintendo switch 2",
          "rog ally", "consola retro", "game boy", "mando inalámbrico", "cascos ps5", "juegos", "juegos ps5",
          "juegos switch", "novedades videojuegos", "reserva", "juego de guerra", "juego de lucha", "juego de coches",
          "juego de aventuras", "juego de terror", "juego de deportes", "fc 25", "fc 26", "ea fc", "mario kart world",
@@ -1130,7 +1157,7 @@ const SPOKEN = {
          "thrustmaster", "pedales", "funda de transporte switch", "ssd ps5"]
   },
   "accessoiresGaming.pc": {
-    fr: ["composant", "composants", "composant pc", "pièces pc", "pièce pour pc", "monter mon pc", "monter un pc",
+    fr: ["rtx 5060 ti", "rtx 5050", "rtx 6070", "rtx 6080", "rtx 6090", "rx 9060 xt", "ryzen 9000", "ryzen 9 9950x3d", "9800x3d", "core ultra 7", "core ultra 9", "écran 500 hz", "écran 240hz oled", "composant", "composants", "composant pc", "pièces pc", "pièce pour pc", "monter mon pc", "monter un pc",
          "config gamer", "configuration gamer", "pc de gamer", "ordinateur gamer", "ordinateur gaming",
          "pc portable gamer", "pc portable gaming", "ordinateur portable gamer", "asus tuf", "tuf gaming",
          "msi katana", "lenovo legion", "hp omen", "hp victus", "victus", "acer nitro", "acer predator", "alienware", "rtx 4060", "rtx 4070", "rtx 5060", "rtx 5070", "rtx 5070 ti",
@@ -1211,7 +1238,7 @@ const SPOKEN = {
          "pistola de masaje", "almohadilla térmica", "manta eléctrica"]
   },
   "electromenager.sols": {
-    fr: ["aspirateur dyson", "dyson v8", "dyson v10", "dyson v11", "dyson v12", "dyson v15", "dyson v16",
+    fr: ["dyson v16", "dyson pencilvac", "pencilvac", "daïson", "daisonne", "dayson", "aspirateur dyson", "dyson v8", "dyson v10", "dyson v11", "dyson v12", "dyson v15", "dyson v16",
          "dyson gen5", "dyson gen 5", "dyson detect", "aspirateur laveur", "aspirateur eau et poussière",
          "nettoyeur de sol", "laveur de sol", "serpillère électrique", "lave-vitre", "nettoyeur vitres",
          "karcher vitres", "aspirateur de chantier", "aspirateur souffleur", "aspirateur traineau sans sac",
@@ -1282,7 +1309,7 @@ const SPOKEN = {
   },
   "electromenager.machinesCafe": {
     fr: ["café", "machine café", "cafetière électrique", "cafetière à piston",
-         "cafetière italienne", "cafetière italienne électrique", "machine à thé", "faire du café",
+         "cafetière italienne", "cafetière italienne électrique", "théière", "faire du café",
          "machine pour le café"],
     en: ["coffee", "coffee maker machine", "french press", "moka pot", "tea maker"],
     es: ["café", "máquina de café", "cafetera eléctrica", "cafetera italiana", "cafetera de émbolo"]
@@ -1301,7 +1328,7 @@ const SPOKEN = {
          "robot de cocina", "thermomix", "cook expert", "kitchenaid artisan", "batidora de brazo"]
   },
   "electromenager.capsules": {
-    fr: ["capsules nespresso", "capsule nespresso", "nespresso vertuo", "vertuo", "capsules vertuo", "vertuo pop",
+    fr: ["air frayeur", "ère frayeur", "air friteuse", "airfrayer", "nes presso", "vertuo next", "vertuo creatista", "capsules nespresso", "capsule nespresso", "nespresso vertuo", "vertuo", "capsules vertuo", "vertuo pop",
          "machine nespresso", "machine dolce gusto", "capsules dolce gusto", "capsules tassimo", "dosettes senseo",
          "l'or barista", "machine l'or", "aeroccino", "bouilloire électrique", "bouilloire température réglable",
          "grille pain", "toasteur", "grille-pain 4 tranches", "air fryer ninja", "ninja air fryer",
@@ -1373,7 +1400,7 @@ const SPOKEN = {
          "lector de ebooks a color", "funda kobo", "funda para lector", "epub", "tableta para leer"]
   },
   pcwindows: {
-    fr: ["l'ordi", "un ordi", "ordi portable", "ordinateur de bureau", "pc de bureau", "ordinateur fixe",
+    fr: ["pc copilot plus", "copilot+ pc", "windows 12", "ordinateur portable 2026", "ordinnateur", "ordinatteur", "pécé", "l'ordi", "un ordi", "ordi portable", "ordinateur de bureau", "pc de bureau", "ordinateur fixe",
          "ordinateur pour l'école", "ordinateur pour les études", "ordinateur pour mes études", "pc pour étudiant",
          "ordinateur étudiant", "pc étudiant", "ordinateur pour travailler", "pc pour le travail",
          "ordinateur pour le bureau", "pc pour la maison", "ordinateur familial", "ordinateur pour internet",
@@ -1407,7 +1434,7 @@ const SPOKEN = {
          "bitdefender", "bolsa para portátil", "cargador universal portátil"]
   },
   trottinettes: {
-    fr: ["trott", "trottinette xiaomi", "xiaomi electric scooter", "trottinette ninebot", "ninebot max",
+    fr: ["trotinnette", "trotinet", "trotinette électrique", "ninebot max g3", "xiaomi scooter 5", "segway gt3", "trott", "trottinette xiaomi", "xiaomi electric scooter", "trottinette ninebot", "ninebot max",
          "segway ninebot", "ninebot g30", "ninebot f2", "ninebot e2", "trottinette pliable", "trottinette adulte",
          "trottinette pour ado", "trottinette électrique enfant", "trottinette tout terrain", "trottinette puissante",
          "trottinette légère", "trottinette pas chère", "vélo", "vélo à assistance électrique", "vae",
@@ -1431,7 +1458,7 @@ const SPOKEN = {
          "cadena antirrobo", "bomba eléctrica", "compresor portátil"]
   },
   photo: {
-    fr: ["appareil photo pour débutant", "appareil photo pas cher", "appareil photo enfant", "appareil photo vlog",
+    fr: ["gopro hero 14", "dji osmo 360", "osmo 360", "dji mini 5 pro", "dji osmo pocket 4", "osmo pocket 4", "instax mini 13", "instax wide evo", "fujifilm x-e5", "x-e5", "canon eos r50 v", "sony zv-e10 ii", "insta 360", "go pro 14", "goprot", "appareil foto", "appareil photo pour débutant", "appareil photo pas cher", "appareil photo enfant", "appareil photo vlog",
          "canon eos", "eos r50", "eos r10", "eos r6", "canon r50", "sony zv-e10", "zv-e10", "sony zv-1", "zv1",
          "sony a7", "a7 iv", "sony a6400", "fujifilm x100", "x100vi", "fujifilm x-t50", "xt5", "nikon z50", "nikon z",
          "nikon zf", "lumix g", "om system", "ricoh gr", "instax mini", "instax mini 12", "instax mini 41",
@@ -1475,7 +1502,7 @@ const SPOKEN = {
          "filtro nd"]
   },
   tv: {
-    fr: ["tv 32 pouces", "tv 40 pouces", "tv 43 pouces", "tv 50 pouces", "tv 55 pouces", "tv 65 pouces",
+    fr: ["tv 2026", "télé 2026", "nouvelle télé", "samsung s95", "lg c6", "lg g6", "oled evo", "micro rgb", "tv micro led", "rgb mini led", "tévé", "té vé", "la télé du salon", "télévision connectée", "téloche", "écran géant", "tv 32 pouces", "tv 40 pouces", "tv 43 pouces", "tv 50 pouces", "tv 55 pouces", "tv 65 pouces",
          "tv 75 pouces", "tv 77 pouces", "tv 85 pouces", "tv 98 pouces", "tv 100 pouces", "32 pouces", "43 pouces",
          "50 pouces", "77 pouces", "85 pouces", "98 pouces", "100 pouces", "télé 4k", "télé oled", "tv oled",
          "tv qled", "tv mini led", "tv led", "neo qled", "tv lg oled", "lg oled", "lg c5", "lg c4", "lg g5",
@@ -1506,7 +1533,7 @@ const SPOKEN = {
          "samsung freestyle", "benq", "pantalla para proyector", "cine en casa"]
   },
   audio: {
-    fr: ["musique", "écouter de la musique", "pour écouter de la musique", "écouter mes musiques", "enceinte jbl", "jbl flip", "jbl flip 7", "jbl flip 6", "jbl charge", "jbl charge 6", "jbl charge 5",
+    fr: ["sony wh-1000xm6", "wh-1000xm6", "bose quietcomfort ultra 2", "jbl flip 8", "jbl charge 6", "sonos arc ultra", "sonos era 100 pro", "ji bi elle", "jibiel", "gbl", "enceinte jibiel", "marchal", "bitz", "musique", "écouter de la musique", "pour écouter de la musique", "écouter mes musiques", "enceinte jbl", "jbl flip", "jbl flip 7", "jbl flip 6", "jbl charge", "jbl charge 6", "jbl charge 5",
          "jbl go", "jbl go 4", "jbl clip", "jbl xtreme", "jbl boombox", "jbl partybox", "partybox", "jbl tune",
          "jbl tour", "jbl live", "enceinte de soirée", "enceinte pour faire la fête", "enceinte avec lumière",
          "enceinte lumineuse", "grosse enceinte bluetooth", "enceinte puissante", "enceinte de salon",
@@ -1563,7 +1590,7 @@ const SPOKEN = {
          "pioneer dj", "altavoz karaoke", "cantar"]
   },
   apple: {
-    fr: ["iphone 13", "iphone 14", "iphone 16e", "iphone 17 pro", "iphone 17 pro max", "iphone 17 air", "iphone air",
+    fr: ["iphone 18", "iphone 18 pro", "iphone 18 pro max", "iphone 18 air", "iphone 19", "iphone pliable", "iphone fold", "iphone flip", "prochain iphone", "futur iphone", "nouvel iphone précommande", "précommande iphone", "réserver un iphone", "précommander l'iphone", "sortie iphone", "quand sort l'iphone", "iphone 17e", "ipad pro m6", "ipad air m4", "macbook air m5", "macbook pro m6", "macbook pas cher", "airpods pro 4", "airpods 5", "apple watch series 12", "apple watch ultra 3", "apple watch ultra 4", "vision air", "apple tv 2026", "homepod 2026", "magic mouse usb c", "aifone", "aïfone", "aille fone", "i phone dix huit", "mac bouc", "macbouc", "air podes", "èr pods", "ipade", "aïe pad", "apple ouatch", "apple wotch", "iphone 13", "iphone 14", "iphone 16e", "iphone 17 pro", "iphone 17 pro max", "iphone 17 air", "iphone air",
          "iphone se", "iphone 16 plus", "iphone mini", "nouvel iphone", "dernier iphone", "iphone pas cher",
          "iphone d'occasion", "ipad 10", "ipad 11", "ipad a16", "ipad air m3", "ipad pro m4", "ipad pro m5",
          "ipad mini 7", "nouvel ipad", "airpods 4", "airpods pro 2", "airpods pro 3", "airpods max 2", "air pod",
@@ -1579,7 +1606,7 @@ const SPOKEN = {
          "vitre iphone", "verre trempé ipad", "film iphone", "apple one", "apple music", "apple tv 4k",
          "homepod mini", "iphone de ma fille", "iphone pour mon fils", "macos", "ios", "la pomme",
          "marque à la pomme", "aïe phone", "aille phone", "ail phone", "i fone", "ifone", "iphon", "ipod touch"],
-    en: ["iphone 13", "iphone 14", "iphone 16e", "iphone 17 pro", "iphone 17 pro max", "iphone air", "iphone se",
+    en: ["iphone 18", "iphone 18 pro", "iphone fold", "foldable iphone", "next iphone", "iphone preorder", "preorder iphone", "iphone release date", "ipad pro m6", "macbook air m5", "airpods pro 4", "apple watch series 12", "apple watch ultra 3", "iphone 13", "iphone 14", "iphone 16e", "iphone 17 pro", "iphone 17 pro max", "iphone air", "iphone se",
          "new iphone", "latest iphone", "used iphone", "ipad 11", "ipad air m3", "ipad pro m4", "ipad mini 7",
          "airpods 4", "airpods pro 2", "airpods pro 3", "airpod", "earpods", "macbook air m4", "macbook pro m4",
          "mac mini m4", "apple watch series 10", "apple watch series 11", "apple watch se 3", "vision pro",
@@ -1587,7 +1614,7 @@ const SPOKEN = {
          "20w apple charger", "iphone cable", "usb c iphone cable", "airtag keyring", "airpods case", "macbook case",
          "macbook sleeve", "macbook hub", "macbook charger", "ipad charger", "iphone screen protector", "apple music",
          "apple tv 4k", "homepod mini", "macos", "ios"],
-    es: ["iphone 13", "iphone 14", "iphone 16e", "iphone 17 pro", "iphone 17 pro max", "iphone air", "iphone se",
+    es: ["iphone 18", "iphone 18 pro", "iphone plegable", "próximo iphone", "reservar iphone", "preventa iphone", "airpods pro 4", "apple watch series 12", "iphone 13", "iphone 14", "iphone 16e", "iphone 17 pro", "iphone 17 pro max", "iphone air", "iphone se",
          "nuevo iphone", "último iphone", "ipad 11", "ipad air m3", "ipad pro m4", "ipad mini 7", "airpods 4",
          "airpods pro 2", "airpods pro 3", "macbook air m4", "macbook pro m4", "mac mini m4", "apple watch series 10",
          "apple watch series 11", "vision pro", "apple pencil pro", "magic trackpad", "cargador magsafe",
@@ -1732,6 +1759,301 @@ for (const [key, words] of Object.entries(SPOKEN)) {
   for (const [lang, list] of Object.entries(words)) target[lang].push(...list);
 }
 
+// =====================================================================
+// Demandes vagues : Jeanne pose une question au lieu de deviner.
+// « un casque » peut être un casque audio, gamer, de réalité virtuelle ou
+// de vélo. La question n'est posée que si le client a dit le mot seul :
+// « casque gamer » ou « casque pour mon iPhone » vont directement au rayon.
+// - words   : le mot vague, par langue (écrit comme dans la question du client)
+// - question: ce que Jeanne dit (les choix sont cités pour qu'on puisse
+//             répondre à voix haute)
+// - options : un bouton par choix ; "say" = mots qui choisissent l'option
+//             quand le client répond au micro
+// =====================================================================
+export const CLARIFY = [
+  {
+    words: { fr: ["casque", "casques"], en: ["helmet"], es: ["casco", "cascos"] },
+    question: {
+      fr: "Quel genre de casque ? Pour écouter de la musique, pour jouer, de réalité virtuelle, ou pour le vélo et la trottinette ?",
+      en: "What kind? Headphones for music, a gaming headset, a VR headset, or a bike and scooter helmet?",
+      es: "¿Qué tipo de casco? ¿Para escuchar música, para jugar, de realidad virtual o para bici y patinete?"
+    },
+    options: [
+      { zone: "audio", label: { fr: "Musique", en: "Music", es: "Música" },
+        say: { fr: ["musique", "audio", "ecouter", "bluetooth"], en: ["music", "headphones", "audio"], es: ["musica", "escuchar", "audio"] } },
+      { zone: "accessoiresGaming", place: "accessoires", label: { fr: "Pour jouer (gamer)", en: "Gaming", es: "Para jugar" },
+        say: { fr: ["jouer", "gamer", "gaming", "jeu", "pc"], en: ["gaming", "gamer", "game"], es: ["jugar", "gaming", "gamer"] } },
+      { zone: "gaming", label: { fr: "Réalité virtuelle", en: "VR headset", es: "Realidad virtual" },
+        say: { fr: ["realite", "virtuelle", "vr", "quest"], en: ["vr", "virtual", "reality", "quest"], es: ["realidad", "virtual", "vr"] } },
+      { zone: "trottinettes", label: { fr: "Vélo & trottinette", en: "Bike & scooter", es: "Bici y patinete" },
+        say: { fr: ["velo", "trottinette", "trottinettes", "protection", "tete"], en: ["bike", "scooter", "cycling"], es: ["bici", "bicicleta", "patinete"] } }
+    ]
+  },
+  {
+    words: { fr: ["chargeur", "chargeurs"], en: ["charger", "chargers"], es: ["cargador", "cargadores"] },
+    question: {
+      fr: "Un chargeur pour quel appareil ? Un téléphone Android, un iPhone ou un produit Apple, un ordinateur portable, ou une trottinette ?",
+      en: "A charger for which device? An Android phone, an iPhone or Apple product, a laptop, or a scooter?",
+      es: "¿Un cargador para qué aparato? ¿Un móvil Android, un iPhone o producto Apple, un portátil o un patinete?"
+    },
+    options: [
+      { zone: "telephonie", label: { fr: "Téléphone Android", en: "Android phone", es: "Móvil Android" },
+        say: { fr: ["android", "samsung", "telephone", "portable", "xiaomi"], en: ["android", "samsung", "phone"], es: ["android", "samsung", "movil", "telefono"] } },
+      { zone: "apple", label: { fr: "iPhone, iPad, Mac", en: "iPhone, iPad, Mac", es: "iPhone, iPad, Mac" },
+        say: { fr: ["iphone", "ipad", "apple", "mac", "macbook", "airpods"], en: ["iphone", "ipad", "apple", "mac"], es: ["iphone", "ipad", "apple", "mac"] } },
+      { zone: "pcwindows", label: { fr: "Ordinateur portable", en: "Laptop", es: "Portátil" },
+        say: { fr: ["ordinateur", "ordi", "pc"], en: ["laptop", "computer", "pc"], es: ["portatil", "ordenador", "pc"] } },
+      { zone: "trottinettes", label: { fr: "Trottinette", en: "Scooter", es: "Patinete" },
+        say: { fr: ["trottinette", "velo"], en: ["scooter", "bike"], es: ["patinete", "bici"] } }
+    ]
+  },
+  {
+    words: { fr: ["câble", "câbles", "cable", "cables"], en: ["cable", "cables", "lead"], es: ["cable", "cables"] },
+    question: {
+      fr: "Quel câble ? Pour un téléphone, pour un iPhone, un câble HDMI, USB ou réseau pour l'ordinateur ou la télé, ou un câble audio ?",
+      en: "Which cable? For a phone, for an iPhone, an HDMI, USB or network cable for a computer or TV, or an audio cable?",
+      es: "¿Qué cable? ¿Para un móvil, para un iPhone, un cable HDMI, USB o de red para ordenador o tele, o un cable de audio?"
+    },
+    options: [
+      { zone: "telephonie", label: { fr: "Téléphone", en: "Phone", es: "Móvil" },
+        say: { fr: ["telephone", "android", "samsung", "charge"], en: ["phone", "android", "charging"], es: ["movil", "telefono", "android", "carga"] } },
+      { zone: "apple", label: { fr: "iPhone, iPad, Mac", en: "iPhone, iPad, Mac", es: "iPhone, iPad, Mac" },
+        say: { fr: ["iphone", "ipad", "apple", "mac", "lightning"], en: ["iphone", "ipad", "apple", "lightning"], es: ["iphone", "ipad", "apple"] } },
+      { zone: "informatique", label: { fr: "HDMI, USB, réseau", en: "HDMI, USB, network", es: "HDMI, USB, red" },
+        say: { fr: ["hdmi", "usb", "reseau", "ethernet", "ordinateur", "tele", "tv"], en: ["hdmi", "usb", "network", "ethernet", "computer", "tv"], es: ["hdmi", "usb", "red", "ethernet", "ordenador", "tele"] } },
+      { zone: "audio", place: "adaptateurs", label: { fr: "Audio (jack, optique)", en: "Audio (jack, optical)", es: "Audio (jack, óptico)" },
+        say: { fr: ["audio", "jack", "optique", "son", "enceinte"], en: ["audio", "jack", "optical", "sound"], es: ["audio", "jack", "optico", "sonido"] } }
+    ]
+  },
+  {
+    words: { fr: ["écran", "écrans", "ecran"], en: ["screen", "screens"], es: ["pantalla", "pantallas"] },
+    question: {
+      fr: "Quel écran ? Un écran pour ordinateur, une télévision, ou une protection d'écran pour téléphone ?",
+      en: "Which screen? A computer monitor, a TV, or a phone screen protector?",
+      es: "¿Qué pantalla? ¿Un monitor de ordenador, una tele o un protector de pantalla para móvil?"
+    },
+    options: [
+      { zone: "accessoiresGaming", place: "pc", label: { fr: "Écran d'ordinateur", en: "Computer monitor", es: "Monitor" },
+        say: { fr: ["ordinateur", "pc", "moniteur", "gamer", "bureau"], en: ["computer", "monitor", "pc", "gaming"], es: ["ordenador", "monitor", "pc"] } },
+      { zone: "tv", label: { fr: "Télévision", en: "TV", es: "Televisión" },
+        say: { fr: ["tele", "television", "tv", "salon"], en: ["tv", "television"], es: ["tele", "television", "tv"] } },
+      { zone: "telephonie", label: { fr: "Protection de téléphone", en: "Phone protector", es: "Protector de móvil" },
+        say: { fr: ["protection", "telephone", "verre", "film"], en: ["protector", "phone", "glass"], es: ["protector", "movil", "cristal"] } }
+    ]
+  },
+  {
+    words: { fr: ["montre", "montres"], en: ["watch", "watches"], es: ["reloj", "relojes"] },
+    question: {
+      fr: "Quelle montre ? Une Apple Watch, ou une autre montre connectée comme Samsung ou Garmin ?",
+      en: "Which watch? An Apple Watch, or another smartwatch like Samsung or Garmin?",
+      es: "¿Qué reloj? ¿Un Apple Watch u otro reloj inteligente como Samsung o Garmin?"
+    },
+    options: [
+      { zone: "apple", label: { fr: "Apple Watch", en: "Apple Watch", es: "Apple Watch" },
+        say: { fr: ["apple", "iphone"], en: ["apple", "iphone"], es: ["apple", "iphone"] } },
+      { zone: "objets", label: { fr: "Samsung, Garmin, autres", en: "Samsung, Garmin, others", es: "Samsung, Garmin, otros" },
+        say: { fr: ["samsung", "garmin", "autre", "android", "sport", "connectee"], en: ["samsung", "garmin", "other", "android", "sport"], es: ["samsung", "garmin", "otro", "android", "deporte"] } }
+    ]
+  },
+  {
+    words: { fr: ["tablette", "tablettes"], en: ["tablet", "tablets"], es: ["tableta", "tabletas", "tablet"] },
+    question: {
+      fr: "Quelle tablette ? Un iPad, une tablette Android comme Samsung, ou une liseuse pour lire des livres ?",
+      en: "Which tablet? An iPad, an Android tablet like Samsung, or an e-reader for books?",
+      es: "¿Qué tableta? ¿Un iPad, una tableta Android como Samsung o un lector de libros?"
+    },
+    options: [
+      { zone: "apple", label: { fr: "iPad", en: "iPad", es: "iPad" },
+        say: { fr: ["ipad", "apple"], en: ["ipad", "apple"], es: ["ipad", "apple"] } },
+      { zone: "tablettes", label: { fr: "Android (Samsung…)", en: "Android (Samsung…)", es: "Android (Samsung…)" },
+        say: { fr: ["android", "samsung", "lenovo", "xiaomi", "enfant"], en: ["android", "samsung", "lenovo"], es: ["android", "samsung", "lenovo"] } },
+      { zone: "liseuses", label: { fr: "Liseuse", en: "E-reader", es: "Lector de libros" },
+        say: { fr: ["liseuse", "lire", "livre", "livres", "kobo", "kindle"], en: ["ereader", "reader", "read", "books", "kobo", "kindle"], es: ["lector", "leer", "libros", "kobo"] } }
+    ]
+  },
+  {
+    words: { fr: ["ordinateur", "ordinateurs", "ordi", "pc", "ordinateur portable", "pc portable", "ordi portable"],
+             en: ["computer", "laptop", "pc"], es: ["ordenador", "portátil", "pc"] },
+    question: {
+      fr: "Quel ordinateur ? Un PC Windows, un Mac, ou un PC gamer pour jouer ?",
+      en: "Which computer? A Windows PC, a Mac, or a gaming PC?",
+      es: "¿Qué ordenador? ¿Un PC Windows, un Mac o un PC gaming?"
+    },
+    options: [
+      { zone: "pcwindows", label: { fr: "PC Windows", en: "Windows PC", es: "PC Windows" },
+        say: { fr: ["windows", "normal", "travail", "etudes", "bureautique", "classique"], en: ["windows", "work", "school", "normal"], es: ["windows", "trabajo", "estudios", "normal"] } },
+      { zone: "apple", label: { fr: "Mac", en: "Mac", es: "Mac" },
+        say: { fr: ["mac", "macbook", "apple", "imac"], en: ["mac", "macbook", "apple"], es: ["mac", "macbook", "apple"] } },
+      { zone: "accessoiresGaming", place: "pc", label: { fr: "PC gamer", en: "Gaming PC", es: "PC gaming" },
+        say: { fr: ["gamer", "gaming", "jouer", "jeux", "jeu"], en: ["gaming", "gamer", "games"], es: ["gaming", "gamer", "jugar", "juegos"] } }
+    ]
+  },
+  {
+    words: { fr: ["clavier", "claviers"], en: ["keyboard", "keyboards"], es: ["teclado", "teclados"] },
+    question: {
+      fr: "Un clavier pour quoi ? Pour un ordinateur, ou pour un iPad ?",
+      en: "A keyboard for what? For a computer, or for an iPad?",
+      es: "¿Un teclado para qué? ¿Para un ordenador o para un iPad?"
+    },
+    options: [
+      { zone: "accessoiresGaming", place: "accessoires", label: { fr: "Ordinateur", en: "Computer", es: "Ordenador" },
+        say: { fr: ["ordinateur", "ordi", "pc", "gamer", "bureau"], en: ["computer", "pc", "gaming"], es: ["ordenador", "pc", "gaming"] } },
+      { zone: "apple", label: { fr: "iPad, Mac", en: "iPad, Mac", es: "iPad, Mac" },
+        say: { fr: ["ipad", "apple", "mac"], en: ["ipad", "apple", "mac"], es: ["ipad", "apple", "mac"] } }
+    ]
+  },
+  {
+    words: { fr: ["coque", "coques", "étui", "housse", "protection"], en: ["case", "cases", "cover"], es: ["funda", "fundas", "carcasa"] },
+    question: {
+      fr: "Une protection pour quel appareil ? Un iPhone, un téléphone Android, ou une tablette ?",
+      en: "A case for which device? An iPhone, an Android phone, or a tablet?",
+      es: "¿Una funda para qué aparato? ¿Un iPhone, un móvil Android o una tableta?"
+    },
+    options: [
+      { zone: "apple", label: { fr: "iPhone, iPad", en: "iPhone, iPad", es: "iPhone, iPad" },
+        say: { fr: ["iphone", "ipad", "apple"], en: ["iphone", "ipad", "apple"], es: ["iphone", "ipad", "apple"] } },
+      { zone: "telephonie", label: { fr: "Téléphone Android", en: "Android phone", es: "Móvil Android" },
+        say: { fr: ["android", "samsung", "telephone", "xiaomi"], en: ["android", "samsung", "phone"], es: ["android", "samsung", "movil"] } },
+      { zone: "tablettes", label: { fr: "Tablette Android", en: "Android tablet", es: "Tableta Android" },
+        say: { fr: ["tablette"], en: ["tablet"], es: ["tableta", "tablet"] } }
+    ]
+  },
+  {
+    words: { fr: ["jeu", "jeux"], en: ["game", "games"], es: ["juego", "juegos"] },
+    question: {
+      fr: "Quel genre de jeu ? Un jeu vidéo, un jeu de société, ou des cartes à collectionner comme Pokémon ?",
+      en: "What kind of game? A video game, a board game, or trading cards like Pokémon?",
+      es: "¿Qué tipo de juego? ¿Un videojuego, un juego de mesa o cartas coleccionables como Pokémon?"
+    },
+    options: [
+      { zone: "gaming", label: { fr: "Jeu vidéo", en: "Video game", es: "Videojuego" },
+        say: { fr: ["video", "console", "ps5", "switch", "xbox", "play"], en: ["video", "console", "ps5", "switch", "xbox"], es: ["videojuego", "video", "consola", "ps5", "switch"] } },
+      { zone: "jeuxSociete", label: { fr: "Jeu de société", en: "Board game", es: "Juego de mesa" },
+        say: { fr: ["societe", "plateau", "famille", "puzzle", "cartes a jouer"], en: ["board", "family", "puzzle"], es: ["mesa", "familia", "puzle"] } },
+      { zone: "escalier", label: { fr: "Cartes Pokémon & co", en: "Pokémon cards & co", es: "Cartas Pokémon y más" },
+        say: { fr: ["pokemon", "collection", "collectionner", "magic", "lorcana"], en: ["pokemon", "trading", "collectible", "magic"], es: ["pokemon", "coleccionables", "magic"] } }
+    ]
+  },
+  {
+    words: { fr: ["batterie", "batteries"], en: ["battery", "batteries"], es: ["batería", "baterías"] },
+    question: {
+      fr: "Quelle batterie ? Une batterie externe pour téléphone, des piles, une batterie d'ordinateur, d'appareil photo, ou de trottinette ?",
+      en: "Which battery? A phone power bank, AA-type batteries, a laptop, camera or scooter battery?",
+      es: "¿Qué batería? ¿Una batería externa para el móvil, pilas, o una batería de portátil, de cámara o de patinete?"
+    },
+    options: [
+      { zone: "telephonie", label: { fr: "Batterie externe", en: "Power bank", es: "Batería externa" },
+        say: { fr: ["externe", "telephone", "portable", "powerbank"], en: ["power", "bank", "phone"], es: ["externa", "movil"] } },
+      { zone: "caisse", label: { fr: "Piles", en: "AA-type batteries", es: "Pilas" },
+        say: { fr: ["piles", "pile", "telecommande"], en: ["aa", "aaa", "remote"], es: ["pilas", "pila", "mando"] } },
+      { zone: "pcwindows", label: { fr: "Ordinateur", en: "Laptop", es: "Portátil" },
+        say: { fr: ["ordinateur", "ordi", "pc"], en: ["laptop", "computer"], es: ["portatil", "ordenador"] } },
+      { zone: "photo", label: { fr: "Appareil photo, GoPro", en: "Camera, GoPro", es: "Cámara, GoPro" },
+        say: { fr: ["photo", "gopro", "camera"], en: ["camera", "gopro"], es: ["camara", "gopro"] } },
+      { zone: "trottinettes", label: { fr: "Trottinette", en: "Scooter", es: "Patinete" },
+        say: { fr: ["trottinette", "velo"], en: ["scooter", "bike"], es: ["patinete", "bici"] } }
+    ]
+  },
+  {
+    words: { fr: ["enceinte", "enceintes"], en: ["speaker", "speakers"], es: ["altavoz", "altavoces"] },
+    question: {
+      fr: "Quelle enceinte ? Une enceinte bluetooth ou hifi pour la musique, ou une enceinte connectée avec assistant vocal comme Alexa ?",
+      en: "Which speaker? A Bluetooth or hi-fi speaker for music, or a smart speaker with a voice assistant like Alexa?",
+      es: "¿Qué altavoz? ¿Un altavoz bluetooth o hifi para música, o uno inteligente con asistente de voz como Alexa?"
+    },
+    options: [
+      { zone: "audio", label: { fr: "Bluetooth, hifi", en: "Bluetooth, hi-fi", es: "Bluetooth, hifi" },
+        say: { fr: ["bluetooth", "musique", "hifi", "jbl", "portable", "soiree"], en: ["bluetooth", "music", "hifi", "jbl", "party"], es: ["bluetooth", "musica", "hifi", "jbl", "fiesta"] } },
+      { zone: "objets", label: { fr: "Connectée (Alexa…)", en: "Smart (Alexa…)", es: "Inteligente (Alexa…)" },
+        say: { fr: ["alexa", "google", "connectee", "assistant", "vocal"], en: ["alexa", "google", "smart", "assistant"], es: ["alexa", "google", "inteligente", "asistente"] } }
+    ]
+  },
+  {
+    words: { fr: ["micro", "micros", "microphone"], en: ["mic", "microphone"], es: ["micro", "micrófono"] },
+    question: {
+      fr: "Quel micro ? Pour filmer ou faire un podcast, pour jouer ou streamer, ou pour chanter au karaoké ?",
+      en: "Which microphone? For filming or podcasts, for gaming or streaming, or for karaoke?",
+      es: "¿Qué micrófono? ¿Para grabar vídeo o pódcast, para jugar o hacer streaming, o para karaoke?"
+    },
+    options: [
+      { zone: "photo", label: { fr: "Vidéo, podcast", en: "Video, podcast", es: "Vídeo, pódcast" },
+        say: { fr: ["video", "filmer", "podcast", "cravate", "youtube", "tiktok", "telephone"], en: ["video", "filming", "podcast", "lapel", "youtube"], es: ["video", "grabar", "podcast", "corbata"] } },
+      { zone: "accessoiresGaming", place: "accessoires", label: { fr: "Gaming, stream", en: "Gaming, streaming", es: "Gaming, streaming" },
+        say: { fr: ["jouer", "gamer", "gaming", "stream", "streamer", "twitch", "pc"], en: ["gaming", "stream", "streaming", "twitch"], es: ["jugar", "gaming", "streaming", "twitch"] } },
+      { zone: "audio", label: { fr: "Karaoké", en: "Karaoke", es: "Karaoke" },
+        say: { fr: ["karaoke", "chanter"], en: ["karaoke", "singing", "sing"], es: ["karaoke", "cantar"] } }
+    ]
+  },
+  {
+    words: { fr: ["adaptateur", "adaptateurs"], en: ["adapter", "adaptor"], es: ["adaptador", "adaptadores"] },
+    question: {
+      fr: "Quel adaptateur ? Une prise pour voyager à l'étranger, un adaptateur HDMI ou USB, un adaptateur audio jack, ou pour iPhone ?",
+      en: "Which adapter? A travel plug adapter, an HDMI or USB adapter, an audio jack adapter, or for an iPhone?",
+      es: "¿Qué adaptador? ¿Un enchufe de viaje, un adaptador HDMI o USB, un adaptador de audio jack, o para iPhone?"
+    },
+    options: [
+      { zone: "caisse", label: { fr: "Prise de voyage", en: "Travel plug", es: "Enchufe de viaje" },
+        say: { fr: ["voyage", "etranger", "prise", "anglaise", "americaine", "angleterre"], en: ["travel", "plug", "uk", "us", "abroad"], es: ["viaje", "enchufe", "extranjero"] } },
+      { zone: "informatique", label: { fr: "HDMI, USB", en: "HDMI, USB", es: "HDMI, USB" },
+        say: { fr: ["hdmi", "usb", "ordinateur", "vga", "displayport"], en: ["hdmi", "usb", "computer", "vga"], es: ["hdmi", "usb", "ordenador", "vga"] } },
+      { zone: "audio", place: "adaptateurs", label: { fr: "Audio jack", en: "Audio jack", es: "Audio jack" },
+        say: { fr: ["jack", "audio", "casque", "ecouteurs", "bluetooth"], en: ["jack", "audio", "headphones"], es: ["jack", "audio", "auriculares"] } },
+      { zone: "apple", label: { fr: "iPhone, Mac", en: "iPhone, Mac", es: "iPhone, Mac" },
+        say: { fr: ["iphone", "apple", "mac", "lightning"], en: ["iphone", "apple", "mac", "lightning"], es: ["iphone", "apple", "mac"] } }
+    ]
+  },
+  {
+    words: { fr: ["aspirateur", "aspirateurs"], en: ["vacuum", "vacuum cleaner", "hoover"], es: ["aspiradora", "aspirador"] },
+    question: {
+      fr: "Quel aspirateur ? Un aspirateur balai ou un robot, ou un aspirateur traîneau, Dyson ou vapeur ?",
+      en: "Which vacuum? A cordless stick or robot vacuum, or a cylinder, Dyson or steam cleaner?",
+      es: "¿Qué aspiradora? ¿Una escoba sin cable o un robot, o una de trineo, Dyson o de vapor?"
+    },
+    options: [
+      { zone: "electromenager", place: "aspirateurs", label: { fr: "Balai, robot", en: "Stick, robot", es: "Escoba, robot" },
+        say: { fr: ["balai", "robot", "sans fil", "main"], en: ["stick", "cordless", "robot", "handheld"], es: ["escoba", "robot", "sin cable"] } },
+      { zone: "electromenager", place: "sols", label: { fr: "Traîneau, Dyson, vapeur", en: "Cylinder, Dyson, steam", es: "Trineo, Dyson, vapor" },
+        say: { fr: ["traineau", "dyson", "vapeur", "sac"], en: ["cylinder", "dyson", "steam"], es: ["trineo", "dyson", "vapor"] } }
+    ]
+  },
+  {
+    words: { fr: ["machine à café", "machines à café", "cafetière", "café"], en: ["coffee machine", "coffee maker", "coffee"], es: ["cafetera", "cafeteras", "café"] },
+    question: {
+      fr: "Quelle machine à café ? À capsules comme Nespresso, à grains ou expresso, ou une cafetière filtre ?",
+      en: "Which coffee machine? A capsule machine like Nespresso, a bean-to-cup or espresso machine, or a filter coffee maker?",
+      es: "¿Qué cafetera? ¿De cápsulas como Nespresso, superautomática o espresso, o de goteo?"
+    },
+    options: [
+      { zone: "electromenager", place: "capsules", label: { fr: "Capsules", en: "Capsules", es: "Cápsulas" },
+        say: { fr: ["capsule", "capsules", "nespresso", "dosettes", "senseo", "dolce", "tassimo"], en: ["capsule", "capsules", "nespresso", "pods"], es: ["capsulas", "nespresso"] } },
+      { zone: "electromenager", place: "cafe", label: { fr: "Grains, expresso", en: "Beans, espresso", es: "Grano, espresso" },
+        say: { fr: ["grain", "grains", "expresso", "broyeur", "barista"], en: ["beans", "bean", "espresso", "grinder"], es: ["grano", "espresso"] } },
+      { zone: "electromenager", place: "machinesCafe", label: { fr: "Filtre", en: "Filter", es: "Goteo" },
+        say: { fr: ["filtre", "cafetiere"], en: ["filter", "drip"], es: ["goteo", "filtro"] } }
+    ]
+  },
+  {
+    words: { fr: ["carte", "cartes"], en: ["card", "cards"], es: ["tarjeta", "tarjetas", "carta", "cartas"] },
+    question: {
+      fr: "Quelle carte ? Une carte cadeau, la carte Fnac, une carte mémoire, des cartes Pokémon, ou une carte graphique ?",
+      en: "Which card? A gift card, the Fnac membership card, a memory card, Pokémon cards, or a graphics card?",
+      es: "¿Qué tarjeta? ¿Una tarjeta regalo, la tarjeta Fnac, una tarjeta de memoria, cartas Pokémon o una tarjeta gráfica?"
+    },
+    options: [
+      { zone: "caisse", label: { fr: "Carte cadeau", en: "Gift card", es: "Tarjeta regalo" },
+        say: { fr: ["cadeau"], en: ["gift"], es: ["regalo"] } },
+      { zone: "adhesion", label: { fr: "Carte Fnac", en: "Fnac card", es: "Tarjeta Fnac" },
+        say: { fr: ["fnac", "fidelite", "adherent"], en: ["fnac", "membership", "loyalty"], es: ["fnac", "socio", "fidelidad"] } },
+      { zone: "informatique", label: { fr: "Carte mémoire", en: "Memory card", es: "Tarjeta de memoria" },
+        say: { fr: ["memoire", "sd", "micro"], en: ["memory", "sd"], es: ["memoria", "sd"] } },
+      { zone: "escalier", label: { fr: "Cartes Pokémon & co", en: "Pokémon cards & co", es: "Cartas Pokémon y más" },
+        say: { fr: ["pokemon", "collection", "magic", "yu", "lorcana", "one piece"], en: ["pokemon", "trading", "magic"], es: ["pokemon", "coleccionables", "magic"] } },
+      { zone: "accessoiresGaming", place: "pc", label: { fr: "Carte graphique", en: "Graphics card", es: "Tarjeta gráfica" },
+        say: { fr: ["graphique", "rtx", "nvidia"], en: ["graphics", "gpu", "rtx"], es: ["grafica", "rtx"] } }
+    ]
+  }
+];
+
 // Boutons de recherches fréquentes (page principale).
 export const SUGGESTIONS = [
   { zone: "audio", icon: "headphones", label: { fr: "Casques audio", en: "Headphones", es: "Auriculares" } },
@@ -1790,6 +2112,27 @@ export const INFO = {
       fr: "Nous ne vendons pas de gros électroménager ici. Au rayon petit électroménager, le plus grand appareil est l'aspirateur balai.",
       en: "We don't sell large appliances here. In the small appliances aisle, the largest item is the cordless stick vacuum.",
       es: "Aquí no vendemos grandes electrodomésticos. En pequeños electrodomésticos, lo más grande es el aspirador escoba."
+    }
+  },
+  // Un ascenseur existe, réservé aux personnes qui en ont besoin (réponse du
+  // magasin le 17/09/2026). Son emplacement n'est pas encore sur le plan.
+  elevator: {
+    keywords: {
+      fr: ["ascenseur", "ascenseurs", "élévateur", "monte-charge", "fauteuil roulant",
+           "handicap", "handicapé", "personne handicapée", "pmr", "mobilité réduite", "personne à mobilité réduite",
+           "poussette", "avec une poussette", "béquilles", "je ne peux pas prendre l'escalier",
+           "je peux pas prendre les escaliers", "sans escalier", "éviter l'escalier", "accès handicapé",
+           "accès pmr", "accessible en fauteuil", "déambulateur"],
+      en: ["lift", "elevator", "wheelchair", "disabled access", "disability", "reduced mobility", "pushchair",
+           "stroller", "pram", "crutches", "can't use the stairs", "cannot take the stairs", "step free access",
+           "accessible entrance"],
+      es: ["ascensor", "ascensores", "silla de ruedas", "movilidad reducida", "discapacidad", "minusválido",
+           "carrito de bebé", "carrito", "muletas", "no puedo subir escaleras", "sin escaleras", "acceso para discapacitados"]
+    },
+    answer: {
+      fr: "Oui, il y a un ascenseur pour les personnes qui en ont besoin. Touchez « Appeler un vendeur » : un membre de l'équipe vous y accompagne.",
+      en: "Yes, there is a lift for anyone who needs it. Tap “Call a staff member” and a member of the team will take you there.",
+      es: "Sí, hay un ascensor para las personas que lo necesiten. Toque «Llamar a un vendedor» y alguien del equipo le acompañará."
     }
   },
   parking: {
