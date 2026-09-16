@@ -39,10 +39,12 @@ export const normalize = (text) => text.toLowerCase()
 const UNITS = {
   zero: 0, deux: 2, trois: 3, quatre: 4, cinq: 5, six: 6, sept: 7, huit: 8, neuf: 9, dix: 10,
   onze: 11, douze: 12, treize: 13, quatorze: 14, quinze: 15, seize: 16,
-  one: 1, two: 2, three: 3, four: 4, five: 5, seven: 7, eight: 8, nine: 9, ten: 10,
+  // « one » et « uno » restent des mots : aucun produit ne s'appelle « 1 », et
+  // sinon le jeu UNO et le manga One Piece captaient tous les « 1 ».
+  two: 2, three: 3, four: 4, five: 5, seven: 7, eight: 8, nine: 9, ten: 10,
   eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16,
   seventeen: 17, eighteen: 18, nineteen: 19,
-  cero: 0, uno: 1, dos: 2, tres: 3, cuatro: 4, cinco: 5, siete: 7, ocho: 8, nueve: 9, diez: 10,
+  cero: 0, dos: 2, tres: 3, cuatro: 4, cinco: 5, siete: 7, ocho: 8, nueve: 9, diez: 10,
   once: 11, doce: 12, trece: 13, catorce: 14, quince: 15, dieciseis: 16, diecisiete: 17,
   dieciocho: 18, diecinueve: 19
 };
