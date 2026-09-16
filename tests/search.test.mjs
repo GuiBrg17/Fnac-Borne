@@ -1,6 +1,6 @@
 // Vérifie que les phrases des clients mènent au bon rayon.
 // Lancer depuis le dossier du projet :  node tests/search.test.mjs
-import { findZone } from "../js/search.js";
+import { findZone, findInfo, findIntent } from "../js/search.js";
 
 const cases = [
   // [langue, phrase, rayon attendu]
@@ -149,12 +149,46 @@ const cases = [
   ["es", "cartas pokemon", "escalier"]
 ];
 
+// Questions pratiques : elles doivent passer avant les rayons.
+const infoCases = [
+  ["fr", "vous êtes ouvert jusqu'à quelle heure", "hours"],
+  ["fr", "quels sont vos horaires", "hours"],
+  ["fr", "vous êtes ouvert le dimanche", "hours"],
+  ["fr", "où sont les toilettes", "toilets"],
+  ["fr", "je peux me garer où", "parking"],
+  ["en", "what time do you close", "hours"],
+  ["en", "where is the restroom", "toilets"],
+  ["es", "dónde están los baños", "toilets"],
+  ["es", "a qué hora cierran", "hours"]
+];
+// Demandes sans produit précis : un vendeur conseillera mieux.
+const intentCases = [
+  ["fr", "un cadeau pour mon fils de 10 ans", "human"],
+  ["fr", "je cherche une idée cadeau", "human"],
+  ["fr", "bonjour", "hello"],
+  ["fr", "merci beaucoup", "thanks"],
+  ["en", "a gift idea", "human"]
+];
+
 let failures = 0;
+for (const [lang, text, expected] of infoCases) {
+  const got = findInfo(text);
+  const ok = got === expected;
+  if (!ok) failures++;
+  console.log(`${ok ? "✓" : "✗"} [${lang}] ${text} → ${got}${ok ? "" : `   (attendu : ${expected})`}`);
+}
+for (const [lang, text, expected] of intentCases) {
+  const got = findZone(text, lang) ? "rayon " + findZone(text, lang) : findIntent(text);
+  const ok = got === expected;
+  if (!ok) failures++;
+  console.log(`${ok ? "✓" : "✗"} [${lang}] ${text} → ${got}${ok ? "" : `   (attendu : ${expected})`}`);
+}
 for (const [lang, text, expected] of cases) {
   const got = findZone(text, lang);
   const ok = got === expected;
   if (!ok) failures++;
   console.log(`${ok ? "✓" : "✗"} [${lang}] ${text} → ${got}${ok ? "" : `   (attendu : ${expected})`}`);
 }
-console.log(`\n${cases.length - failures}/${cases.length} réussis`);
+const total = cases.length + infoCases.length + intentCases.length;
+console.log(`\n${total - failures}/${total} réussis`);
 process.exit(failures ? 1 : 0);

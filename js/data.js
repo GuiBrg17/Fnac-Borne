@@ -57,8 +57,8 @@ export const UI = {
     hello: "Bonjour ! Quel produit cherchez-vous ?",
     thanks: "Avec plaisir ! Bonne visite à la Fnac.",
     human: "Bien sûr. Touchez « Appeler un vendeur » et un membre de l'équipe viendra vous aider.",
-    otherStore: "Les livres, BD, manuels scolaires, CD, vinyles et DVD se trouvent à la Fnac Wilson, 16 allées Franklin-Roosevelt, près de Jean-Jaurès. Ici, à la Fnac Jeanne d'Arc, nous sommes spécialisés dans la technique.",
-    otherStoreWhat: "Livres, BD, manuels scolaires, CD, vinyles, DVD",
+    otherStore: "Les livres, BD, manuels scolaires, la papeterie, les CD, vinyles et DVD se trouvent à la Fnac Wilson, 16 allées Franklin-Roosevelt, près de Jean-Jaurès. Ici, à la Fnac Jeanne d'Arc, nous sommes spécialisés dans la technique.",
+    otherStoreWhat: "Livres, BD, manuels scolaires, papeterie, CD, vinyles, DVD",
     otherStoreNear: "Près de Jean-Jaurès",
     otherStoreClose: "Retour au plan",
     didYouMean: (word) => `Vous voulez dire « ${word} » ? `,
@@ -109,8 +109,8 @@ export const UI = {
     hello: "Hello! What product are you looking for?",
     thanks: "You're welcome! Enjoy your visit to Fnac.",
     human: "Of course. Tap “Call a staff member” and someone from the team will come to help you.",
-    otherStore: "Books, comics, school books, CDs, vinyl records and DVDs are at Fnac Wilson, 16 allées Franklin-Roosevelt, near Jean-Jaurès. Here at Fnac Jeanne d'Arc, we specialise in technology.",
-    otherStoreWhat: "Books, comics, school books, CDs, vinyl, DVDs",
+    otherStore: "Books, comics, school books, stationery, CDs, vinyl records and DVDs are at Fnac Wilson, 16 allées Franklin-Roosevelt, near Jean-Jaurès. Here at Fnac Jeanne d'Arc, we specialise in technology.",
+    otherStoreWhat: "Books, comics, school books, stationery, CDs, vinyl, DVDs",
     otherStoreNear: "Near Jean-Jaurès",
     otherStoreClose: "Back to the map",
     didYouMean: (word) => `Did you mean “${word}”? `,
@@ -161,8 +161,8 @@ export const UI = {
     hello: "¡Hola! ¿Qué producto busca?",
     thanks: "¡Con mucho gusto! Disfrute de su visita a la Fnac.",
     human: "Por supuesto. Toque «Llamar a un vendedor» y alguien del equipo vendrá a ayudarle.",
-    otherStore: "Los libros, cómics, libros de texto, CD, vinilos y DVD están en la Fnac Wilson, 16 allées Franklin-Roosevelt, cerca de Jean-Jaurès. Aquí, en la Fnac Jeanne d'Arc, estamos especializados en tecnología.",
-    otherStoreWhat: "Libros, cómics, libros de texto, CD, vinilos, DVD",
+    otherStore: "Los libros, cómics, libros de texto, la papelería, los CD, vinilos y DVD están en la Fnac Wilson, 16 allées Franklin-Roosevelt, cerca de Jean-Jaurès. Aquí, en la Fnac Jeanne d'Arc, estamos especializados en tecnología.",
+    otherStoreWhat: "Libros, cómics, libros de texto, papelería, CD, vinilos, DVD",
     otherStoreNear: "Cerca de Jean-Jaurès",
     otherStoreClose: "Volver al plano",
     didYouMean: (word) => `¿Quiere decir «${word}»? `,
@@ -297,7 +297,7 @@ export const ZONES = {
       es: ["lego", "lego technic", "lego star wars", "lego city", "lego friends", "lego harry potter", "lego icons",
            "piezas lego", "juego de construcción", "figura", "figuras", "figura pop", "figuras pop", "funko",
            "funko pop", "cabezón", "artículo de colección", "figura manga", "figura anime", "pokemon",
-           "carta pokemon", "cartas pokemon", "sobre", "sobre pokemon", "caja pokemon", "elite trainer box",
+           "carta pokemon", "cartas pokemon", "sobre pokemon", "sobre de cartas", "caja pokemon", "elite trainer box",
            "carta coleccionable", "cartas coleccionables", "cartas magic", "magic the gathering", "yu-gi-oh",
            "one piece card game", "archivador de cartas", "fundas para cartas", "escalera", "escaleras", "sótano",
            "abajo", "planta de abajo"]
@@ -785,7 +785,7 @@ export const OTHER_STORE = {
 
 ZONES.editorial = {
   external: true, floors: [], icon: "book",
-  label: { fr: "Livres, CD, vinyles, DVD (Fnac Wilson)", en: "Books, CDs, vinyl, DVDs (Fnac Wilson)", es: "Libros, CD, vinilos, DVD (Fnac Wilson)" },
+  label: { fr: "Livres, papeterie, CD, vinyles, DVD (Fnac Wilson)", en: "Books, stationery, CDs, vinyl, DVDs (Fnac Wilson)", es: "Libros, papelería, CD, vinilos, DVD (Fnac Wilson)" },
   detail: { fr: "", en: "", es: "" },
   keywords: {
     fr: ["livre", "livres", "roman", "romans", "poche", "livre de poche", "polar", "thriller", "science-fiction",
@@ -797,19 +797,22 @@ ZONES.editorial = {
             "nouveauté littéraire", "dédicace", "cd", "cd audio", "album", "compilation", "vinyle", "vinyles",
             "disque vinyle", "33 tours", "45 tours", "coffret cd", "dvd", "blu-ray", "4k ultra hd", "coffret dvd",
             "série", "saison", "film", "bande originale", "cassette", "presse", "magazine", "journal",
-            "abonnement presse"],
+            "abonnement presse",
+            "papeterie", "agenda", "agendas", "carnet", "carnets", "cahier", "cahiers", "bloc-notes", "stylo", "stylos", "stylo plume", "crayon", "crayons", "feutre", "feutres", "surligneur", "gomme", "règle", "classeur", "trieur", "trousse", "calendrier", "carte postale", "cartes postales", "papier à lettres", "enveloppe", "scrapbooking", "carnet de voyage", "journal intime", "planner"],
     en: ["book", "books", "novel", "novels", "paperback", "crime novel", "thriller", "science fiction", "fantasy",
             "comic", "comic book", "comics", "graphic novel", "manga", "one piece", "naruto", "children's book",
             "kids book", "textbook", "school book", "dictionary", "encyclopedia", "atlas", "travel guide",
             "lonely planet", "audiobook", "cookbook", "biography", "essay", "poetry", "cd", "album", "compilation",
             "vinyl", "vinyl record", "record", "lp", "cd box set", "dvd", "blu-ray", "4k ultra hd", "dvd box set",
-            "series", "season", "film", "movie", "soundtrack", "magazine", "newspaper", "press"],
+            "series", "season", "film", "movie", "soundtrack", "magazine", "newspaper", "press",
+            "stationery", "notepad", "writing pad", "diary", "planner", "agenda", "pen", "pens", "fountain pen", "pencil", "pencils", "marker", "highlighter", "eraser", "ruler", "folder", "binder", "pencil case", "calendar", "postcard", "postcards", "envelope", "writing paper"],
     es: ["libro", "libros", "novela", "novelas", "bolsillo", "novela negra", "thriller", "ciencia ficción",
             "fantasía", "cómic", "cómics", "novela gráfica", "manga", "one piece", "naruto", "libro infantil",
             "libro de texto", "diccionario", "enciclopedia", "atlas", "guía de viaje", "lonely planet",
             "audiolibro", "libro de cocina", "biografía", "ensayo", "poesía", "cd", "álbum", "recopilatorio",
             "vinilo", "vinilos", "disco de vinilo", "dvd", "blu-ray", "4k ultra hd", "serie", "temporada",
-            "película", "banda sonora", "revista", "periódico", "prensa"]
+            "película", "banda sonora", "revista", "periódico", "prensa",
+            "papelería", "cuaderno", "cuadernos", "libreta", "agenda", "bloc de notas", "bolígrafo", "bolígrafos", "pluma", "lápiz", "lápices", "rotulador", "marcador", "goma de borrar", "regla", "carpeta", "archivador", "estuche", "calendario", "postal", "postales", "sobre de carta", "sobres de carta", "papel de carta"]
   }
 };
 
@@ -823,9 +826,61 @@ export const SUGGESTIONS = [
   { zone: "savRetrait", icon: "package", label: { fr: "Retrait commande", en: "Order pickup", es: "Recoger pedido" } }
 ];
 
+// =====================================================================
+// Questions pratiques (ni produit, ni rayon).
+// Réponses données par le magasin le 16/09/2026 : ouvert du lundi au
+// samedi de 10 h à 19 h 30, pas de toilettes et pas de parking.
+// =====================================================================
+export const INFO = {
+  hours: {
+    keywords: {
+      fr: ["horaire", "horaires", "heure d'ouverture", "heures d'ouverture", "heure de fermeture", "vous ouvrez", "vous fermez",
+           "ouvert", "ouverture", "fermeture", "fermé", "jusqu'à quelle heure", "à quelle heure vous ouvrez",
+           "à quelle heure vous fermez", "ouvert le dimanche", "ouvert le samedi", "vous êtes ouvert"],
+      en: ["opening hours", "opening time", "closing time", "what time do you open", "what time do you close",
+           "when do you open", "when do you close", "are you open", "open on sunday", "open on saturday"],
+      es: ["horario", "horarios", "hora de apertura", "hora de cierre", "a qué hora abren", "a qué hora cierran",
+           "están abiertos", "abierto el domingo", "abierto el sábado"]
+    },
+    answer: {
+      fr: "Le magasin est ouvert du lundi au samedi, de 10 heures à 19 heures 30. Nous sommes fermés le dimanche.",
+      en: "The store is open Monday to Saturday, from 10 am to 7.30 pm. We are closed on Sundays.",
+      es: "La tienda abre de lunes a sábado, de 10 a 19:30. Los domingos está cerrada."
+    }
+  },
+  toilets: {
+    keywords: {
+      fr: ["toilette", "toilettes", "wc", "petit coin", "sanitaires", "où sont les toilettes"],
+      en: ["toilet", "toilets", "restroom", "restrooms", "bathroom", "wc", "loo"],
+      es: ["baño", "baños", "aseo", "aseos", "servicios", "wc"]
+    },
+    answer: {
+      fr: "Je suis désolée, il n'y a pas de toilettes dans ce magasin.",
+      en: "I'm sorry, there are no toilets in this store.",
+      es: "Lo siento, esta tienda no tiene baños."
+    }
+  },
+  parking: {
+    keywords: {
+      fr: ["parking", "garer", "se garer", "me garer", "où me garer", "où se garer", "stationner", "stationnement",
+           "place de parking", "garer ma voiture", "voiture"],
+      en: ["parking", "car park", "where to park", "park my car", "park the car"],
+      es: ["parking", "aparcamiento", "aparcar", "dónde aparcar", "aparcar el coche", "coche"]
+    },
+    answer: {
+      fr: "Le magasin n'a pas de parking. Il faut vous garer dans le quartier.",
+      en: "The store has no car park. You'll need to park in the neighbourhood.",
+      es: "La tienda no tiene aparcamiento. Hay que aparcar por el barrio."
+    }
+  }
+};
+
 // Petites intentions de conversation (quand aucun rayon ne correspond).
 export const INTENTS = {
   hello: ["bonjour", "salut", "bonsoir", "hello", "hi", "hey", "good morning", "hola", "buenos dias", "buenas tardes"],
   thanks: ["merci", "merci beaucoup", "thank you", "thanks", "gracias", "muchas gracias"],
-  human: ["vendeur", "vendeuse", "conseiller", "conseillere", "quelqu un", "aide", "staff", "someone", "assistant", "employee", "help", "vendedor", "vendedora", "dependiente", "ayuda"]
+  human: ["vendeur", "vendeuse", "conseiller", "conseillere", "quelqu un", "aide", "staff", "someone", "assistant", "employee", "help", "vendedor", "vendedora", "dependiente", "ayuda",
+    // Une demande de cadeau sans produit précis : un vendeur conseillera mieux.
+    "cadeau", "idée cadeau", "idées cadeaux", "un cadeau", "cadeau anniversaire", "cadeau de noël", "cadeau pour mon fils",
+    "cadeau pour ma fille", "quoi offrir", "gift", "gift idea", "present idea", "what to buy", "regalo", "idea de regalo", "qué regalar"]
 };
