@@ -61,6 +61,7 @@ export const UI = {
     otherStoreWhat: "Livres, BD, manuels scolaires, papeterie, CD, vinyles, DVD",
     otherStoreNear: "Près de Jean-Jaurès",
     otherStoreClose: "Retour au plan",
+    otherStoreQr: "Itinéraire à pied sur votre téléphone",
     didYouMean: (word) => `Vous voulez dire « ${word} » ? `,
     vendorConfirm: (zone) => zone
       ? `C'est noté : un vendeur du rayon ${zone} a été prévenu.`
@@ -113,6 +114,7 @@ export const UI = {
     otherStoreWhat: "Books, comics, school books, stationery, CDs, vinyl, DVDs",
     otherStoreNear: "Near Jean-Jaurès",
     otherStoreClose: "Back to the map",
+    otherStoreQr: "Walking directions on your phone",
     didYouMean: (word) => `Did you mean “${word}”? `,
     vendorConfirm: (zone) => zone
       ? `Done: a staff member from ${zone} has been notified.`
@@ -165,6 +167,7 @@ export const UI = {
     otherStoreWhat: "Libros, cómics, libros de texto, papelería, CD, vinilos, DVD",
     otherStoreNear: "Cerca de Jean-Jaurès",
     otherStoreClose: "Volver al plano",
+    otherStoreQr: "Ruta a pie en su móvil",
     didYouMean: (word) => `¿Quiere decir «${word}»? `,
     vendorConfirm: (zone) => zone
       ? `Hecho: se ha avisado a un vendedor de la sección ${zone}.`
