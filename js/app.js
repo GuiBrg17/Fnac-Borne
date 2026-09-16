@@ -9,7 +9,7 @@ const { findZoneDetailed, findIntent, findInfo, normalize, displayKeyword } = aw
 const { NEWS } = await import("./news.js" + VERSION);
 const { recordSession, recordQuestion, readStats, resetStats } = await import("./stats.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
-const { BASEMENT, routeTo, stairsDrawing } = await import("./plan.js" + VERSION);
+const { BASEMENT, GROUND, box, routeTo, routeGround, stairsDrawing } = await import("./plan.js" + VERSION);
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -370,24 +370,30 @@ function svgEl(tag, attrs, parent) {
   return el;
 }
 
-function buildBasement() {
-  const svg = $("#basementPlan");
-  if (!svg) return;
+// Les deux plans : identifiant du SVG → géométrie.
+const PLANS = [["#groundPlan", GROUND], ["#basementPlan", BASEMENT]];
+
+function buildPlan(svg, plan) {
   svg.textContent = "";
-  svgEl("path", { d: BASEMENT.outline, class: "bm-floor" }, svg);
-  // Escalier en courbe : marches en haut à droite, palier qui descend vers le bas à gauche.
-  const drawing = stairsDrawing();
+  svgEl("path", { d: plan.outline, class: "bm-floor" }, svg);
+  // Escaliers : volée droite et/ou courbe, avec les marches et la flèche de descente.
   const stairs = svgEl("g", { class: "bm-stairs", "data-zone": "escalier" }, svg);
-  svgEl("path", { d: drawing.band, class: "bm-stairs-band" }, stairs);
-  for (const [x1, y1, x2, y2] of drawing.lines) svgEl("line", { x1, y1, x2, y2 }, stairs);
-  const { x, y, heading } = drawing.arrow;
-  svgEl("path", { d: "M-6 -5 L6 0 L-6 5 Z", class: "bm-stairs-arrow", transform: `translate(${x} ${y}) rotate(${heading})` }, stairs);
-  for (const shape of BASEMENT.shapes) {
+  for (const piece of stairsDrawing(plan)) {
+    svgEl("path", { d: piece.band, class: "bm-stairs-band" }, stairs);
+    for (const [x1, y1, x2, y2] of piece.lines) svgEl("line", { x1, y1, x2, y2 }, stairs);
+    if (piece.arrow) {
+      const { x, y, heading } = piece.arrow;
+      svgEl("path", { d: "M-6 -5 L6 0 L-6 5 Z", class: "bm-stairs-arrow", transform: `translate(${x} ${y}) rotate(${heading})` }, stairs);
+    }
+  }
+  for (const shape of plan.shapes) {
+    const { cx, cy, w, h, rot } = box(shape);
     const owner = SPOT_OWNER.get(shape.id);
     const attrs = {
-      x: shape.x, y: shape.y, width: shape.w, height: shape.h, rx: shape.kind === "mural" ? 1 : 2,
+      x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: shape.kind === "mural" ? 1 : 2,
       class: `bm-shape bm-${shape.kind}`, "data-spot": shape.id
     };
+    if (rot) attrs.transform = `rotate(${rot.toFixed(2)} ${cx} ${cy})`;
     if (owner) {
       attrs["data-zone"] = owner.zone;
       if (owner.place) attrs["data-place"] = owner.place;
@@ -396,24 +402,44 @@ function buildBasement() {
   }
   svgEl("g", { class: "bm-labels" }, svg);
   svgEl("g", { class: "route-layer" }, svg);
+  if (plan.here) {
+    const [x, y] = plan.here;
+    const here = svgEl("g", { class: "bm-here", transform: `translate(${x} ${y})` }, svg);
+    svgEl("circle", { r: 9, class: "bm-here-pulse" }, here);
+    svgEl("circle", { r: 5.5, class: "bm-here-dot" }, here);
+    svgEl("text", { x: 11, y: 4, class: "bm-here-text" }, here);
+  }
 }
 
-function renderBasementLabels() {
-  const layer = $("#basementPlan .bm-labels");
-  if (!layer) return;
-  layer.textContent = "";
-  for (const [key, [x, y, anchor = "middle", rotate = 0]] of Object.entries(BASEMENT.labels)) {
-    const [zoneId, placeId] = key.split(".");
-    const entry = placeId ? ZONES[zoneId]?.places?.[placeId] : ZONES[zoneId];
-    if (!entry) continue;
-    const attrs = { x, y, "text-anchor": anchor, class: "bm-label", "data-zone": zoneId };
-    if (placeId) attrs["data-place"] = placeId;
-    if (rotate) attrs.transform = `rotate(${rotate} ${x} ${y})`;
-    const text = svgEl("text", attrs, layer);
-    const lines = (entry.short || entry.label)[state.lang].split("\n");
-    lines.forEach((line, i) => {
-      svgEl("tspan", { x, dy: i === 0 ? `${-(lines.length - 1) * 0.55}em` : "1.1em" }, text).textContent = line;
-    });
+function buildPlans() {
+  for (const [selector, plan] of PLANS) {
+    const svg = $(selector);
+    if (svg) buildPlan(svg, plan);
+  }
+}
+
+function renderPlanLabels() {
+  for (const [selector, plan] of PLANS) {
+    const layer = $(`${selector} .bm-labels`);
+    if (!layer) continue;
+    layer.textContent = "";
+    for (const [key, [x, y, anchor = "middle", rotate = 0, text = "short"]] of Object.entries(plan.labels)) {
+      const [zoneId, placeId] = key.split(".");
+      const entry = placeId ? ZONES[zoneId]?.places?.[placeId] : ZONES[zoneId];
+      if (!entry) continue;
+      const attrs = { x, y, "text-anchor": anchor, class: "bm-label", "data-zone": zoneId };
+      if (placeId) attrs["data-place"] = placeId;
+      if (rotate) attrs.transform = `rotate(${rotate} ${x} ${y})`;
+      const label = svgEl("text", attrs, layer);
+      // "full" : nom complet, « · » devient un retour à la ligne (escalier du rez-de-chaussée).
+      const source = text === "full" ? entry.label[state.lang].replace(" · ", "\n") : (entry.short || entry.label)[state.lang];
+      const lines = source.split("\n");
+      lines.forEach((line, i) => {
+        svgEl("tspan", { x, dy: i === 0 ? `${-(lines.length - 1) * 0.55}em` : "1.1em" }, label).textContent = line;
+      });
+    }
+    const hereText = $(`${selector} .bm-here-text`);
+    if (hereText) hereText.textContent = t().youAreHere;
   }
 }
 
@@ -425,7 +451,7 @@ function targetSpots(id, place) {
 }
 
 function renderTiles() {
-  renderBasementLabels();
+  renderPlanLabels();
   $$(".tile").forEach((tile) => {
     const zone = ZONES[tile.dataset.zone];
     // Sécurité : une case sans rayon connu (fichiers dépareillés) est ignorée
@@ -463,22 +489,12 @@ let routeAnimation = null;
 function routePoints(floor, id) {
   const zone = ZONES[id];
   if (!zone || id === "entree") return null;
-  const planEl = $(`.floor[data-floor="${floor}"] .plan`);
-  const box = planEl.getBoundingClientRect();
-  const centre = (el) => {
-    const r = el.getBoundingClientRect();
-    return { x: r.left - box.left + r.width / 2, y: r.top - box.top + r.height / 2, bottom: r.bottom - box.top };
-  };
+  // Les deux plans sont en coordonnées d'architecte : le tracé est dessiné dans le même SVG.
   if (floor === "0") {
-    const start = centre($(".plan-0 .here svg"));
-    const target = zone.floors.includes("0")
-      ? $(`.plan-0 .tile[data-zone="${id}"]`)
-      : $('.plan-0 .tile[data-zone="escalier"]');
-    const end = centre(target);
-    return [start, { x: end.x, y: start.y }, end];
+    const points = routeGround(id, zone.floors);
+    return points ? points.map(([x, y]) => ({ x, y })) : null;
   }
   if (id === "escalier" || !zone.floors.includes("-1")) return null;
-  // Coordonnées du plan de l'architecte : le tracé est dessiné dans le même SVG.
   const spots = targetSpots(id, state.place);
   const points = spots.length ? routeTo(spots[0]) : null;
   return points ? points.map(([x, y]) => ({ x, y })) : null;
@@ -513,7 +529,7 @@ function drawRoute(animate) {
   const line = make("path", { d, class: "route-line" });
   const start = points[0];
   const end = points[points.length - 1];
-  const unit = state.floor === "-1" ? 0.6 : 1;
+  const unit = state.floor === "-1" ? 0.6 : 0.42;
   make("circle", { cx: start.x, cy: start.y, r: 7 * unit, class: "route-start" });
   const endDot = make("circle", { cx: end.x, cy: end.y, r: 11 * unit, class: "route-end" });
 
@@ -575,14 +591,16 @@ function showZone(id, place = null) {
   $$(".tile").forEach((tile) => tile.classList.toggle("is-hit", tile.dataset.zone === id));
   const zoneSpots = new Set(zone.spots || []);
   const hitSpots = new Set(targetSpots(id, state.place));
-  $$("#basementPlan .bm-shape").forEach((el) => {
+  $$(".plan-svg .bm-shape").forEach((el) => {
     const spot = el.dataset.spot;
     el.classList.toggle("is-hit", hitSpots.has(spot));
     el.classList.toggle("is-zone", zoneSpots.has(spot) && !hitSpots.has(spot));
   });
-  $$("#basementPlan .bm-label").forEach((el) => el.classList.toggle("is-hit",
+  $$(".plan-svg .bm-label").forEach((el) => el.classList.toggle("is-hit",
     el.dataset.zone === id && (!el.dataset.place || el.dataset.place === state.place)));
-  $$("#basementPlan .bm-stairs").forEach((el) => el.classList.toggle("is-hit", id === "escalier"));
+  $$(".plan-svg .bm-stairs").forEach((el) => el.classList.toggle("is-hit", id === "escalier"));
+  // Rayon du sous-sol : à l'étage 0, c'est l'escalier qui s'allume.
+  $$("#groundPlan .bm-stairs").forEach((el) => el.classList.toggle("is-route", basementOnly));
   $$('.plan-0 .tile[data-zone="escalier"]').forEach((tile) => tile.classList.toggle("is-route", basementOnly));
   els.mapStage.classList.add("has-focus");
   renderRoute();
@@ -602,7 +620,7 @@ function clearZone() {
   state.zone = null;
   state.place = null;
   $$(".tile").forEach((tile) => tile.classList.remove("is-hit", "is-route"));
-  $$("#basementPlan .is-hit, #basementPlan .is-zone").forEach((el) => el.classList.remove("is-hit", "is-zone"));
+  $$(".plan-svg .is-hit, .plan-svg .is-zone, .plan-svg .is-route").forEach((el) => el.classList.remove("is-hit", "is-zone", "is-route"));
   els.mapStage.classList.remove("has-focus");
   renderRoute();
   clearRoutes();
@@ -999,7 +1017,7 @@ $("#floorTabs").addEventListener("click", (e) => {
   setFloor(tab.dataset.floor);
 });
 els.mapStage.addEventListener("click", (e) => {
-  const target = e.target.closest(".tile[data-zone], #basementPlan [data-zone]");
+  const target = e.target.closest(".tile[data-zone], .plan-svg [data-zone]");
   if (!target) return;
   recordQuestion({ zone: target.dataset.zone, lang: state.lang, source: "map" });
   answerZone(target.dataset.zone, "", target.dataset.place || null);
@@ -1054,7 +1072,7 @@ if ("speechSynthesis" in window) {
 }
 
 // --- Démarrage ---
-buildBasement();
+buildPlans();
 els.app.inert = true;
 $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); });
 applyLang();

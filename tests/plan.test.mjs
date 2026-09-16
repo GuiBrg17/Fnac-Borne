@@ -1,12 +1,13 @@
-// Cohérence du plan du sous-sol.  node tests/plan.test.mjs
+// Cohérence des plans du magasin.  node tests/plan.test.mjs
 import { ZONES } from "../js/data.js";
-import { BASEMENT, routeTo } from "../js/plan.js";
+import { BASEMENT, GROUND, corners, routeGround, routeTo } from "../js/plan.js";
 import { findZoneDetailed } from "../js/search.js";
 
 let failures = 0;
 const check = (ok, message) => { console.log(`${ok ? "✓" : "✗"} ${message}`); if (!ok) failures++; };
 
-const ids = new Set(BASEMENT.shapes.map((s) => s.id));
+const ALL = [...GROUND.shapes, ...BASEMENT.shapes];
+const ids = new Set(ALL.map((s) => s.id));
 const used = new Set();
 
 // 1. Chaque meuble cité par un rayon existe sur le plan, et chaque emplacement
@@ -22,30 +23,51 @@ for (const [id, zone] of Object.entries(ZONES)) {
     }
   }
 }
-check([...ids].every((spot) => used.has(spot)), `les ${ids.size} meubles du plan appartiennent tous à un rayon`);
+const orphans = ALL.filter((s) => s.kind !== "neutral" && !used.has(s.id)).map((s) => s.id);
+check(orphans.length === 0, `les meubles des deux plans appartiennent tous à un rayon${orphans.length ? " — sans rayon : " + orphans.join(", ") : ""}`);
 
-// 2. Aucun trajet ne traverse un meuble.
-const crosses = (a, b, s) => {
-  const [x1, x2] = [Math.min(a[0], b[0]), Math.max(a[0], b[0])];
-  const [y1, y2] = [Math.min(a[1], b[1]), Math.max(a[1], b[1])];
-  return x2 > s.x + 0.5 && x1 < s.x + s.w - 0.5 && y2 > s.y + 0.5 && y1 < s.y + s.h - 0.5;
+// 2. Aucun trajet ne traverse un meuble (formes droites ou en biais).
+const cross = (a, b, c, d) => {
+  const o = (p, q, r) => Math.sign((q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0]));
+  return o(a, b, c) * o(a, b, d) < 0 && o(c, d, a) * o(c, d, b) < 0;
 };
-let crossings = 0;
-for (const target of BASEMENT.shapes) {
-  const points = routeTo(target.id);
-  for (let i = 1; i < points.length; i++) {
-    for (const other of BASEMENT.shapes) {
-      if (other.id !== target.id && crosses(points[i - 1], points[i], other)) {
-        crossings++;
-        console.log(`  trajet vers ${target.id} : traverse ${other.id}`);
+const inside = (p, poly) => {
+  let hit = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i], [xj, yj] = poly[j];
+    if ((yi > p[1]) !== (yj > p[1]) && p[0] < ((xj - xi) * (p[1] - yi)) / (yj - yi) + xi) hit = !hit;
+  }
+  return hit;
+};
+const traverses = (a, b, shape) => {
+  // on réduit la forme d'un demi-point : longer un meuble n'est pas le traverser
+  const poly = corners(shape);
+  const [cx, cy] = [poly.reduce((s, p) => s + p[0], 0) / 4, poly.reduce((s, p) => s + p[1], 0) / 4];
+  const shrunk = poly.map(([x, y]) => [x + Math.sign(cx - x) * 0.5, y + Math.sign(cy - y) * 0.5]);
+  const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+  return shrunk.some((p, i) => cross(a, b, p, shrunk[(i + 1) % 4])) || inside(mid, shrunk);
+};
+function checkRoutes(label, routes, shapes) {
+  let crossings = 0;
+  for (const [target, points] of routes) {
+    for (let i = 1; i < points.length; i++) {
+      for (const other of shapes) {
+        if (other.id !== target && traverses(points[i - 1], points[i], other)) {
+          crossings++;
+          console.log(`  ${label} : trajet vers ${target} traverse ${other.id}`);
+        }
       }
     }
   }
+  check(crossings === 0, `${label} : aucun trajet ne traverse un meuble`);
 }
-check(crossings === 0, "aucun trajet ne traverse un meuble");
+checkRoutes("sous-sol", BASEMENT.shapes.map((s) => [s.id, routeTo(s.id)]), BASEMENT.shapes);
+checkRoutes("rez-de-chaussée",
+  ["telephonie", "objets", "escalier", "apple"].map((id) => [id, routeGround(id, ZONES[id].floors)]),
+  GROUND.shapes.filter((s) => s.kind !== "entrance"));
 
 // 3. Chaque étiquette désigne un rayon ou un emplacement qui existe.
-const badLabels = Object.keys(BASEMENT.labels).filter((key) => {
+const badLabels = [...Object.keys(GROUND.labels), ...Object.keys(BASEMENT.labels)].filter((key) => {
   const [zone, place] = key.split(".");
   return !ZONES[zone] || (place && !ZONES[zone].places?.[place]);
 });

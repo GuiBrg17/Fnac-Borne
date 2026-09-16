@@ -1,5 +1,11 @@
 // =====================================================================
-// Plan du sous-sol, relevé sur le plan de l'architecte (822 × 434).
+// Plans du magasin, relevés sur les plans de l'architecte.
+//   GROUND   : rez-de-chaussée (396 × 567)
+//   BASEMENT : sous-sol (822 × 434)
+// Les formes peuvent être droites (x, y, w, h) ou en biais (from, to, t :
+// les deux extrémités et l'épaisseur).
+//
+// Sous-sol :
 // Les numéros sont ceux du plan annoté par le magasin :
 //   M1…M8 : murales (étagères le long des murs), M5 coupée en deux ;
 //   7…42  : meubles au sol ;
@@ -20,7 +26,8 @@ export const BASEMENT = {
   // Escalier en courbe (« SS 4UP ») : un quart d'ellipse centré en (cx, cy).
   // On arrive de l'étage 0 en haut à droite (angle 0°), les marches descendent
   // jusqu'à 34°, puis le palier s'enroule jusqu'en bas à gauche (90°).
-  stairs: { cx: 702, cy: 297, inner: [79, 60], outer: [116, 98], stepsEnd: 34, treads: 12 },
+  stairs: [{ type: "arc", cx: 702, cy: 297, inner: [79, 60], outer: [116, 98], from: 0, to: 90,
+              steps: [0, 34], treads: 12, arrow: 62 }],
 
   shapes: [
     // --- Murales ---
@@ -126,51 +133,99 @@ export const shape = (id) => byId.get(id);
 
 export const centre = (s) => [s.x + s.w / 2, s.y + s.h / 2];
 
-// Point de l'escalier : angle en degrés, "t" de 0 (bord intérieur) à 1 (bord extérieur).
-function stairPoint(angle, t) {
-  const { cx, cy, inner, outer } = BASEMENT.stairs;
-  const a = (angle * Math.PI) / 180;
-  const rx = inner[0] + (outer[0] - inner[0]) * t;
-  const ry = inner[1] + (outer[1] - inner[1]) * t;
-  return [cx + rx * Math.cos(a), cy + ry * Math.sin(a)];
-}
-
-// Dessin de l'escalier : la bande (marches + palier), les marches, et la flèche de descente.
-export function stairsDrawing() {
-  const { inner, outer, stepsEnd, treads } = BASEMENT.stairs;
-  const r = (n) => n.toFixed(1);
-  const [ox0, oy0] = stairPoint(0, 1), [ox1, oy1] = stairPoint(90, 1);
-  const [ix0, iy0] = stairPoint(0, 0), [ix1, iy1] = stairPoint(90, 0);
-  const band = `M${r(ix0)} ${r(iy0)} L${r(ox0)} ${r(oy0)} A ${outer[0]} ${outer[1]} 0 0 1 ${r(ox1)} ${r(oy1)} ` +
-               `L${r(ix1)} ${r(iy1)} A ${inner[0]} ${inner[1]} 0 0 0 ${r(ix0)} ${r(iy0)} Z`;
-  const lines = [];
-  for (let i = 1; i <= treads; i++) {
-    const angle = (stepsEnd * i) / treads;
-    const [x1, y1] = stairPoint(angle, 0);
-    const [x2, y2] = stairPoint(angle, 1);
-    lines.push([x1, y1, x2, y2]);
+// Rectangle droit ou en biais → centre, dimensions et angle.
+export function box(shape) {
+  if (!shape.from) {
+    return { cx: shape.x + shape.w / 2, cy: shape.y + shape.h / 2, w: shape.w, h: shape.h, rot: 0 };
   }
-  // Flèche au milieu du palier, dans le sens de la descente (angle croissant).
-  const [ax, ay] = stairPoint(58, 0.5);
-  const [bx, by] = stairPoint(66, 0.5);
-  const heading = (Math.atan2(by - ay, bx - ax) * 180) / Math.PI;
-  return { band, lines, arrow: { x: ax, y: ay, heading } };
+  const [x1, y1] = shape.from;
+  const [x2, y2] = shape.to;
+  return {
+    cx: (x1 + x2) / 2, cy: (y1 + y2) / 2,
+    w: Math.hypot(x2 - x1, y2 - y1), h: shape.t,
+    rot: (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI
+  };
 }
 
-// Descente de l'escalier : du haut des marches jusqu'au bout du palier.
-function stairsRoute() {
+// Coins d'une forme (pour vérifier qu'un trajet ne la traverse pas).
+export function corners(shape) {
+  const { cx, cy, w, h, rot } = box(shape);
+  const a = (rot * Math.PI) / 180, c = Math.cos(a), s = Math.sin(a);
+  return [[-w / 2, -h / 2], [w / 2, -h / 2], [w / 2, h / 2], [-w / 2, h / 2]]
+    .map(([x, y]) => [cx + x * c - y * s, cy + x * s + y * c]);
+}
+
+// Point d'un escalier en arc : angle en degrés, t de 0 (intérieur) à 1 (extérieur).
+function arcPoint(piece, angle, t) {
+  const a = (angle * Math.PI) / 180;
+  const rx = piece.inner[0] + (piece.outer[0] - piece.inner[0]) * t;
+  const ry = piece.inner[1] + (piece.outer[1] - piece.inner[1]) * t;
+  return [piece.cx + rx * Math.cos(a), piece.cy + ry * Math.sin(a)];
+}
+
+// Point d'une volée droite : u de 0 (haut) à 1 (bas), v de -1 à 1 (d'un bord à l'autre).
+function flightPoint(piece, u, v) {
+  const [x1, y1] = piece.from, [x2, y2] = piece.to;
+  const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy);
+  const nx = -dy / len, ny = dx / len;
+  return [x1 + dx * u + nx * v * piece.width / 2, y1 + dy * u + ny * v * piece.width / 2];
+}
+
+// Dessin des escaliers d'un plan : contour, marches et flèche de descente.
+export function stairsDrawing(plan) {
+  const r = (n) => n.toFixed(1);
+  const pts = (list) => list.map(([x, y], i) => `${i ? "L" : "M"}${r(x)} ${r(y)}`).join(" ");
+  return plan.stairs.map((piece) => {
+    const lines = [];
+    let band, arrowFrom, arrowTo;
+    if (piece.type === "arc") {
+      const [ox0, oy0] = arcPoint(piece, piece.from, 1), [ox1, oy1] = arcPoint(piece, piece.to, 1);
+      const [ix0, iy0] = arcPoint(piece, piece.from, 0), [ix1, iy1] = arcPoint(piece, piece.to, 0);
+      const large = Math.abs(piece.to - piece.from) > 180 ? 1 : 0;
+      band = `M${r(ix0)} ${r(iy0)} L${r(ox0)} ${r(oy0)} A ${piece.outer[0]} ${piece.outer[1]} 0 ${large} 1 ${r(ox1)} ${r(oy1)} ` +
+             `L${r(ix1)} ${r(iy1)} A ${piece.inner[0]} ${piece.inner[1]} 0 ${large} 0 ${r(ix0)} ${r(iy0)} Z`;
+      const [s0, s1] = piece.steps;
+      for (let i = 1; i <= piece.treads; i++) {
+        const angle = s0 + ((s1 - s0) * i) / (piece.treads + 1);
+        lines.push([...arcPoint(piece, angle, 0), ...arcPoint(piece, angle, 1)]);
+      }
+      if (piece.arrow !== undefined) {
+        arrowFrom = arcPoint(piece, piece.arrow - 4, 0.5);
+        arrowTo = arcPoint(piece, piece.arrow + 4, 0.5);
+      }
+    } else {
+      band = pts([flightPoint(piece, 0, -1), flightPoint(piece, 1, -1), flightPoint(piece, 1, 1), flightPoint(piece, 0, 1)]) + " Z";
+      for (let i = 1; i <= piece.treads; i++) {
+        const u = i / (piece.treads + 1);
+        lines.push([...flightPoint(piece, u, -1), ...flightPoint(piece, u, 1)]);
+      }
+      if (piece.arrow !== undefined) {
+        arrowFrom = flightPoint(piece, piece.arrow - 0.06, 0);
+        arrowTo = flightPoint(piece, piece.arrow + 0.06, 0);
+      }
+    }
+    const arrow = arrowFrom && {
+      x: arrowFrom[0], y: arrowFrom[1],
+      heading: (Math.atan2(arrowTo[1] - arrowFrom[1], arrowTo[0] - arrowFrom[0]) * 180) / Math.PI
+    };
+    return { band, lines, arrow };
+  });
+}
+
+// Descente d'un escalier en arc, point par point.
+function arcRoute(piece) {
   const points = [];
-  for (let angle = 0; angle <= 90; angle += 6) points.push(stairPoint(angle, 0.5));
+  const step = (piece.to - piece.from) / 15;
+  for (let i = 0; i <= 15; i++) points.push(arcPoint(piece, piece.from + step * i, 0.5));
   return points;
 }
 
-// Trajet depuis l'escalier jusqu'à un meuble, en suivant les allées.
 export function routeTo(id) {
   const s = byId.get(id);
   if (!s) return null;
   const { exit, main, top, columns } = BASEMENT.aisles;
   // Le trajet descend l'escalier, sort du palier et rejoint la grande allée.
-  const start = [...stairsRoute(), exit, [exit[0], main]];
+  const start = [...arcRoute(BASEMENT.stairs[0]), exit, [exit[0], main]];
   const [cx, cy] = centre(s);
   const nearest = (x) => columns.reduce((best, c) => (Math.abs(c - x) < Math.abs(best - x) ? c : best), columns[0]);
   const [ax, ay] = s.access || [null, null];
@@ -192,3 +247,68 @@ export function routeTo(id) {
   const edge = column < cx ? s.x - 3 : s.x + s.w + 3;
   return [...start, [column, main], [column, cy], [edge, cy]];
 }
+
+// =====================================================================
+// Rez-de-chaussée (plan de l'architecte, 396 × 567).
+// La borne est à l'entrée ; l'escalier « accès sous-sol » est une volée
+// droite qui tourne ensuite vers la droite.
+// =====================================================================
+export const GROUND = {
+  width: 396,
+  height: 567,
+  view: [14, 30, 344, 426],   // cadrage sur le magasin (le reste du plan est hors surface de vente)
+
+  outline: "M27 133 L195 57 L204 41 L256 41 L262 92 L231 108 L264 174 L302 160 L345 330 L243 368 L237 405 " +
+           "L147 425 L133 390 Q 108 352 77 348 L34 352 Z",
+
+  stairs: [
+    { type: "flight", from: [196, 226], to: [242, 284], width: 44, treads: 8, arrow: 0.5 },
+    { type: "arc", cx: 206, cy: 306, inner: [30, 30], outer: [82, 82], from: -22, to: 62, steps: [-22, 62], treads: 9 }
+  ],
+
+  shapes: [
+    // --- Téléphonie : murales du mur en biais et du mur de gauche, tables, postes de démo ---
+    { id: "T1", kind: "mural", from: [42, 138], to: [163, 85], t: 9 },
+    { id: "T2", kind: "mural", x: 32, y: 146, w: 10, h: 86 },
+    { id: "T3", kind: "mural", from: [40, 250], to: [60, 342], t: 9 },
+    { id: "T4", kind: "gondola", from: [82, 196], to: [172, 161], t: 20 },
+    { id: "T5", kind: "gondola", from: [90, 252], to: [101, 338], t: 22 },
+    { id: "T6", kind: "gondola", x: 133, y: 222, w: 30, h: 20 },
+    // --- Objets connectés ---
+    { id: "O1", kind: "mural", from: [224, 112], to: [258, 172], t: 9 },
+    { id: "O2", kind: "mural", from: [211, 198], to: [252, 180], t: 9 },
+    { id: "O3", kind: "gondola", x: 175, y: 117, w: 16, h: 15 },
+    // --- Le long de l'escalier : LEGO, POP, Pokémon ---
+    { id: "L1", kind: "mural", from: [292, 196], to: [313, 258], t: 9 },
+    // --- Entrée et poste de sécurité ---
+    { id: "ENTREE", kind: "entrance", from: [150, 421], to: [235, 403], t: 7 },
+    { id: "SECU", kind: "neutral", x: 157, y: 310, w: 40, h: 15 }
+  ],
+
+  labels: {
+    telephonie: [80, 232],
+    objets: [214, 150],
+    escalier: [290, 210, "end", 0, "full"],
+    entree: [192, 440]
+  },
+
+  here: [192, 380],
+
+  // Trajets depuis la borne (à l'entrée), en contournant tables et poste sécu.
+  routes: {
+    stairs: [[150, 352], [145, 300], [168, 262], [194, 234]],
+    telephonie: [[150, 352], [124, 300]],
+    objets: [[150, 352], [145, 300], [168, 262], [172, 215], [200, 160]]
+  }
+};
+
+const groundById = new Map(GROUND.shapes.map((shape) => [shape.id, shape]));
+
+// Trajet au rez-de-chaussée : de la borne au rayon, ou jusqu'en haut de
+// l'escalier pour un rayon du sous-sol.
+export function routeGround(zoneId, floors) {
+  if (zoneId === "entree") return null;
+  const way = floors.includes("0") && GROUND.routes[zoneId] ? GROUND.routes[zoneId] : GROUND.routes.stairs;
+  return [GROUND.here, ...way];
+}
+export const groundShape = (id) => groundById.get(id);
