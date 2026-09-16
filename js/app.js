@@ -116,8 +116,46 @@ function pickVoice(lang) {
 // Voix neuronale Piper si elle est prête, sinon voix du navigateur.
 let lastEngine = "aucune lecture pour l'instant";
 
+// Phrases enregistrées d'avance : texte → fichier, par langue (assets/voix/manifest.json).
+let clipManifest = {};
+const clipUrl = (text, lang) => clipManifest[lang]?.[text] && `assets/voix/${clipManifest[lang][text]}${VERSION}`;
+
+async function loadClipManifest() {
+  try {
+    const response = await fetch(`assets/voix/manifest.json${VERSION}`);
+    if (response.ok) clipManifest = await response.json();
+  } catch { /* pas de phrases enregistrées : voix de synthèse */ }
+  preloadLanguage(state.lang);
+}
+
+function preloadLanguage(lang) {
+  const files = Object.keys(clipManifest[lang] || {}).map((text) => clipUrl(text, lang));
+  if (files.length) voice.preloadClips(files);
+}
+
 function speak(text, lang = state.lang) {
   stopSpeaking();
+  const url = clipUrl(text, lang);
+  if (url) {
+    lastEngine = `phrase enregistrée (${lang})`;
+    updateVoiceStatus();
+    voice.playClip(url, {
+      onStart: () => setSpeaking(true),
+      onLevel: (level) => { if (avatar) avatar.setLevel(level); },
+      onEnd: () => {
+        setSpeaking(false);
+        if (avatar) avatar.setLevel(null);
+      }
+    }).then((handled) => {
+      if (!handled) speakSynthesized(text, lang);
+    });
+    return;
+  }
+  speakSynthesized(text, lang);
+}
+
+// Voix de synthèse, pour une phrase qui n'a pas été enregistrée.
+function speakSynthesized(text, lang = state.lang) {
   if (settings.neuralVoice && voice.isReady(lang)) {
     lastEngine = `voix neuronale Piper (${lang})`;
     updateVoiceStatus();
@@ -200,7 +238,10 @@ async function initVoice() {
   try {
     await voice.init();
     updateVoiceStatus();
-    if (settings.neuralVoice) await downloadVoices(["fr"]);
+    // La voix Piper (≈ 70 Mo) ne sert plus que de secours : on ne la télécharge
+    // d'office que si le site n'a pas de phrases enregistrées.
+    await clipManifestReady;
+    if (settings.neuralVoice && !Object.keys(clipManifest).length) await downloadVoices(["fr"]);
   } catch (error) {
     console.info("Voix neuronale indisponible :", error && error.message ? error.message : error);
     updateVoiceStatus();
@@ -296,8 +337,8 @@ function addMessage(role, text) {
   els.chat.scrollTo({ top: els.chat.scrollHeight, behavior: motionReduced() ? "auto" : "smooth" });
 }
 
-function reply(text) {
-  addMessage("jeanne", text);
+function reply(text, prefix = "") {
+  addMessage("jeanne", prefix + text);
   speak(text);
 }
 
@@ -334,13 +375,13 @@ const zoneLabel = (id) => ZONES[id].label[state.lang];
 function answerZone(id, prefix = "", place = null) {
   if (ZONES[id].external) {
     showOtherStore();
-    reply(prefix + t().otherStore);
+    reply(t().otherStore, prefix);
     return;
   }
   showZone(id, place);
-  if (id === "escalier") reply(prefix + t().foundStairs);
-  else if (id === "entree") reply(prefix + t().foundEntrance);
-  else reply(prefix + t().found(zoneLabel(id), ZONES[id].floors[0]));
+  if (id === "escalier") reply(t().foundStairs, prefix);
+  else if (id === "entree") reply(t().foundEntrance, prefix);
+  else reply(t().found(zoneLabel(id), ZONES[id].floors[0]), prefix);
 }
 
 // =====================================================================
@@ -681,7 +722,8 @@ function setLang(lang) {
   abortMic();
   state.lang = lang;
   applyLang();
-  if (settings.neuralVoice && voice.supports(lang) && !voice.isReady(lang)) downloadVoices([lang]);
+  preloadLanguage(lang);
+  if (settings.neuralVoice && !clipManifest[lang] && voice.supports(lang) && !voice.isReady(lang)) downloadVoices([lang]);
   reply(t().switched);
 }
 
@@ -1073,6 +1115,7 @@ if ("speechSynthesis" in window) {
 
 // --- Démarrage ---
 buildPlans();
+const clipManifestReady = loadClipManifest();
 els.app.inert = true;
 $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); });
 applyLang();
