@@ -170,8 +170,12 @@ function speak(text, lang = state.lang) {
 }
 
 // Voix de synthèse, pour une phrase qui n'a pas été enregistrée.
+// La voix de femme de l'appareil passe en premier : elle démarre tout de suite.
+// Piper, plus naturelle mais qui calcule toute la phrase avant de parler
+// (1 à 3 s d'attente), ne sert que si l'appareil n'a aucune voix de femme.
 function speakSynthesized(text, lang = state.lang) {
-  if (settings.neuralVoice && voice.isReady(lang)) {
+  const browserVoice = "speechSynthesis" in window && pickVoice(lang);
+  if (!browserVoice && settings.neuralVoice && voice.isReady(lang)) {
     lastEngine = `voix neuronale Piper (${lang})`;
     updateVoiceStatus();
     voice.speak(text, lang, {
@@ -183,11 +187,7 @@ function speakSynthesized(text, lang = state.lang) {
         if (avatar) avatar.setLevel(null);
       }
     }).then((handled) => {
-      if (!handled) {
-        lastEngine = `voix du navigateur (${lang}) — Piper indisponible`;
-        updateVoiceStatus();
-        speakWithBrowser(text, lang);
-      }
+      if (!handled) speakWithBrowser(text, lang);
     });
     return;
   }
