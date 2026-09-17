@@ -276,6 +276,25 @@ async function initVoice() {
 // Annulé dès que le client touche l'écran : il a pris la main.
 let afterSpeaking = null;
 
+// Conversation « mains libres » : tant que le client parle au micro, le micro se
+// rouvre tout seul après chaque réponse de Jeanne. Elle s'arrête dès que le client
+// touche l'écran, ou après un silence (micro rouvert sans que personne ne parle).
+let handsFree = false;
+const SILENCE_MS = 8000;
+
+function listenWhenDone() {
+  if (!handsFree || state.screen !== "app" || !SpeechRecognition) return;
+  let opened = false;
+  const listen = () => {
+    if (opened || !handsFree || state.screen !== "app" || state.listening || state.speaking || els.survey.open) return;
+    opened = true;
+    toggleMic({ auto: true });
+  };
+  afterSpeaking = listen;
+  // Si aucune voix ne se lance (appareil sans son), le micro s'ouvre quand même.
+  setTimeout(() => { if (!state.speaking && afterSpeaking === listen) { afterSpeaking = null; listen(); } }, 2500);
+}
+
 function setSpeaking(on) {
   state.speaking = on;
   if (avatar) avatar.setSpeaking(on);
@@ -309,20 +328,26 @@ function toggleMic({ auto = false } = {}) {
   let interimText = "";
   let error = null;
   let settleTimer = null;
+  // Micro rouvert tout seul : après 8 s sans un mot, on le referme.
+  let silenceTimer = auto ? setTimeout(() => finish(""), SILENCE_MS) : null;
 
   // Répondre dès que la phrase est connue, sans attendre que le navigateur
   // ferme le micro (il ajoute souvent une demi-seconde, parfois plus).
   const finish = (text) => {
     clearTimeout(settleTimer);
+    clearTimeout(silenceTimer);
     if (recognition !== rec) return;
     recognition = null;
     rec.abort();
     setListening(false);
     els.input.value = "";
     if (text) ask(text, "voice");
+    // Personne n'a parlé : fin du mode mains libres jusqu'à la prochaine question au micro.
+    else handsFree = false;
   };
 
   rec.onresult = (event) => {
+    clearTimeout(silenceTimer);
     interimText = "";
     for (let i = event.resultIndex; i < event.results.length; i++) {
       const result = event.results[i];
@@ -340,21 +365,29 @@ function toggleMic({ auto = false } = {}) {
   rec.onerror = (event) => { error = event.error; };
   rec.onend = () => {
     clearTimeout(settleTimer);
+    clearTimeout(silenceTimer);
     if (recognition !== rec) return;
     recognition = null;
     setListening(false);
     const text = (finalText + " " + interimText).trim();
     els.input.value = "";
-    if (text) ask(text, "voice");
+    if (text) { ask(text, "voice"); return; }
+    handsFree = false;
     // Micro ouvert tout seul : en cas de silence ou de micro bloqué, on n'affiche rien.
-    else if (auto) return;
-    else if (error === "not-allowed" || error === "service-not-allowed") reply(t().micDenied);
+    if (auto) return;
+    if (error === "not-allowed" || error === "service-not-allowed") reply(t().micDenied);
     else if (error && error !== "aborted") reply(t().micError);
   };
 
   recognition = rec;
   setListening(true);
-  try { rec.start(); } catch { recognition = null; setListening(false); if (!auto) reply(t().micError); }
+  try { rec.start(); } catch {
+    clearTimeout(silenceTimer);
+    recognition = null;
+    handsFree = false;
+    setListening(false);
+    if (!auto) reply(t().micError);
+  }
 }
 
 function abortMic() {
@@ -439,11 +472,14 @@ function noteVisit(text) {
 function reply(text, prefix = "") {
   addMessage("jeanne", prefix + text);
   speak(text);
+  listenWhenDone();
 }
 
 function ask(text, source = "text") {
   afterSpeaking = null;
   abortMic();
+  // Question posée au micro : Jeanne réécoutera après sa réponse.
+  handsFree = source === "voice";
   addMessage("user", text);
   bump();
   hideOtherStore();
@@ -1072,21 +1108,15 @@ function enterApp() {
     speak(t().hello);
     if (avatar) avatar.wave();
     if (state.screen !== "app") return;
-    let opened = false;
-    const listen = () => {
-      if (opened || state.screen !== "app" || state.listening || state.speaking) return;
-      opened = true;
-      toggleMic({ auto: true });
-    };
-    afterSpeaking = listen;
-    // Si aucune voix ne se lance (appareil sans son), le micro s'ouvre quand même.
-    setTimeout(() => { if (!state.speaking && afterSpeaking === listen) { afterSpeaking = null; listen(); } }, 2500);
+    handsFree = true;
+    listenWhenDone();
   }, 450);
   bump();
 }
 
 function exitToIdle() {
   afterSpeaking = null;
+  handsFree = false;
   closeWarning();
   closeSurvey();
   closeChoices();
@@ -1342,7 +1372,21 @@ els.idle.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key ===
 
 els.mic.addEventListener("click", () => toggleMic());
 // Le client touche l'écran pendant que Jeanne parle : il prend la main, la borne n'ouvre pas le micro toute seule.
-document.addEventListener("pointerdown", () => { if (state.screen === "app") afterSpeaking = null; }, { capture: true });
+document.addEventListener("pointerdown", (e) => {
+  if (state.screen !== "app") return;
+  afterSpeaking = null;
+  // Le bouton du micro garde la conversation à la voix ; tout autre toucher l'arrête.
+  if (e.target.closest("#micButton")) return;
+  handsFree = false;
+  // Le client choisit à la main pendant que le micro écoute : on le ferme.
+  if (state.listening) abortMic();
+}, { capture: true });
+document.addEventListener("keydown", () => {
+  if (state.screen !== "app") return;
+  afterSpeaking = null;
+  handsFree = false;
+  if (state.listening) abortMic();
+}, { capture: true });
 els.form.addEventListener("submit", (e) => {
   e.preventDefault();
   const text = els.input.value.trim();
