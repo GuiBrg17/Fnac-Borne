@@ -33,7 +33,10 @@ export const normalize = (text) => text.toLowerCase()
   .replace(/[^a-z0-9]+/g, " ")
   // « Wi-Fi », « wi fi » et « wifi » : une seule écriture
   .replace(/\bwi fi\b/g, "wifi")
-  .trim();
+  .trim()
+  // Sigles épelés par la reconnaissance vocale : « u s b », « p s 5 », « h d m i »
+  // redeviennent « usb », « ps 5 », « hdmi » (« il y a » n'est pas un sigle).
+  .replace(/\b(?:[a-z] ){1,}[a-z]\b/g, (letters) => (letters === "y a" ? letters : letters.replace(/ /g, "")));
 
 // À l'oral, la reconnaissance vocale écrit les nombres en lettres :
 // « je veux une PS cinq », « une télé soixante-cinq pouces », « la Switch deux ».
@@ -146,9 +149,11 @@ const phonetic = (word) => word
 
 // Chaque mot-clé retient son rayon et, s'il y en a un, son emplacement précis
 // dans le rayon (« aspirateur balai » → rayon électroménager, gondole E2).
+// Un mot-clé fait uniquement de petits mots ignorés (« dèl » → « del ») serait vide
+// et correspondrait à n'importe quelle phrase : on l'écarte.
 const matchersFor = (id, zone, place, keywords) =>
   Object.entries(keywords).flatMap(([lang, words]) =>
-    words.map((word) => ({
+    words.filter((word) => clean(word)).map((word) => ({
       id, place, lang, word,
       re: phraseRe(word),
       weight: clean(word).length + (zone.boost || 0),
@@ -164,7 +169,7 @@ const MATCHERS = Object.entries(ZONES).flatMap(([id, zone]) => [
 ]);
 
 const INTENT_MATCHERS = Object.fromEntries(
-  Object.entries(INTENTS).map(([name, words]) => [name, words.map(phraseRe)]));
+  Object.entries(INTENTS).map(([name, words]) => [name, words.filter((word) => clean(word)).map(phraseRe)]));
 
 // Distance d'édition (nombre de lettres à changer), arrêtée dès qu'elle dépasse "max".
 function editDistance(a, b, max) {
@@ -313,7 +318,7 @@ export function findZone(text, lang) {
 
 // Questions pratiques (horaires, toilettes, parking) : ni produit, ni rayon.
 const INFO_MATCHERS = Object.entries(INFO).flatMap(([name, entry]) =>
-  Object.values(entry.keywords).flat().map((word) => ({ name, re: phraseRe(word), length: clean(word).length })));
+  Object.values(entry.keywords).flat().filter((word) => clean(word)).map((word) => ({ name, re: phraseRe(word), length: clean(word).length })));
 
 export function findInfo(text) {
   const query = clean(text);
@@ -342,7 +347,7 @@ export function findIntent(text) {
 const CLARIFY_WORDS = CLARIFY.map((entry) => ({
   entry,
   forms: new Set(Object.values(entry.words).flat().map(clean)),
-  res: Object.values(entry.words).flat().map(phraseRe)
+  res: Object.values(entry.words).flat().filter((word) => clean(word)).map(phraseRe)
 }));
 
 const clarifyFor = (word) => (CLARIFY_WORDS.find(({ forms }) => forms.has(clean(word))) || {}).entry || null;

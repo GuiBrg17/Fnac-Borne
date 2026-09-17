@@ -875,3 +875,58 @@ largeAppliances|une plaque à induction
 largeAppliances|un sèche-linge
 human|je ne sais pas ce que je cherche
 human|pouvez-vous m'aider
+
+# Reconnaissance vocale : marques écrites comme on les entend, phrases hésitantes
+gaming|une pèce cinq
+gaming|une p s cinq
+gaming|une ixe box
+gaming|une Xbox série X
+gaming|une plaie station 5
+gaming|la souitch
+gaming|une Nintendo swiche
+gaming|une ma nette de PS5
+apple|un ail pad
+apple|des ère pods
+apple|des air pod pro
+apple|un mac bouc air
+audio|une enceinte j b l
+audio|un casque boze
+audio|des écouteurs bits
+audio|une enceinte marchal
+audio|une sono
+informatique|une clé u s b
+informatique|un câble h d m i
+electromenager|un aspirateur daïson
+electromenager|un sèche cheveux baby lisse
+electromenager|une brosse à dents oral bé
+electromenager|un fer rovanta
+electromenager|une cafetière de longhi
+electromenager|un robot moulinexe
+electromenager|une poêle téfal
+electromenager|une cafetière crups
+electromenager|un rasoir brown
+photo|une go pro
+photo|un appareil fuji film
+photo|un polaroïde
+photo|un appareil nikkon
+liseuses|une cobo
+escalier|une figurine funco pop
+escalier|des cartes poké mon
+escalier|des légo
+telephonie|un téléphone wawé
+telephonie|un téléphone chaomi
+objets|une montre garmine
+objets|un fit bit
+pcwindows|un PC azus
+pcwindows|un lénovo
+pcwindows|un ordinateur acère
+trottinettes|une trottinette nine bot
+trottinettes|un over board
+gaming|euh bonjour alors en fait je cherche euh une manette pour la PlayStation 5 s'il vous plaît
+audio|bonjour madame je voudrais savoir si vous aviez des écouteurs sans fil pas trop chers merci
+apple|oui alors c'est pour mon fils il voudrait un iPhone mais je sais pas lequel
+electromenager|voilà je cherche une machine à café mais une avec les capsules vous voyez
+savRetrait|bonjour j'ai acheté un casque chez vous la semaine dernière et depuis hier il ne marche plus du tout
+tv|je regarde pour une télé assez grande pour mon salon genre 65 pouces
+telephonie|c'est pour ma maman elle a besoin d'un nouveau portable
+photo|ma fille veut un appareil photo instantané pour son anniversaire
