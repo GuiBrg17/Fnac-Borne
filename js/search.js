@@ -35,8 +35,9 @@ export const normalize = (text) => text.toLowerCase()
   .replace(/\bwi fi\b/g, "wifi")
   .trim()
   // Sigles épelés par la reconnaissance vocale : « u s b », « p s 5 », « h d m i »
-  // redeviennent « usb », « ps 5 », « hdmi » (« il y a » n'est pas un sigle).
-  .replace(/\b(?:[a-z] ){1,}[a-z]\b/g, (letters) => (letters === "y a" ? letters : letters.replace(/ /g, "")));
+  // redeviennent « usb », « ps 5 », « hdmi ». « a » et « y » n'en font jamais partie :
+  // « tombé à l'eau » (a l) et « il y a » restent des mots.
+  .replace(/\b(?:[b-xz] ){1,}[b-xz]\b/g, (letters) => letters.replace(/ /g, ""));
 
 // À l'oral, la reconnaissance vocale écrit les nombres en lettres :
 // « je veux une PS cinq », « une télé soixante-cinq pouces », « la Switch deux ».
