@@ -621,7 +621,7 @@ export const ZONES = {
            "lector de tarjetas", "lector dvd externo", "cable", "cable hdmi", "hdmi", "displayport", "vga",
            "cable vga", "rj45", "ethernet", "cable ethernet", "cable usb", "alargador usb", "hub usb",
            "estación de acoplamiento", "dock usb c", "adaptador", "adaptador hdmi", "adaptador usb c", "regleta",
-           "alargador", "protector de sobretensión", "sai", "repetidor wifi", "router", "powerline", "adaptador wifi",
+           "alargador", "protector de sobretensión", "sai onduleur", "repetidor wifi", "router", "powerline", "adaptador wifi",
            "limpiador de pantallas", "aire comprimido"]
     }
   },
@@ -1079,7 +1079,7 @@ const SPOKEN = {
          "localizador para perro"]
   },
   escalier: {
-    fr: ["dragon ball super card game", "carte dragon ball super", "bandai", "tamashii", "banpresto", "figurine banpresto", "hot toys", "figurine hot toys", "gundam", "gunpla", "maquette gundam", "lego 2026", "nouveautés lego", "précommande lego", "lego star wars ucs", "ucs", "set lego collector", "légo", "pokémon 30 ans", "coffret pokemon 30 ans", "méga évolution", "mega evolution", "pokemon méga évolution", "booster méga évolution", "ascended heroes", "précommande pokemon", "précommande cartes pokemon", "display précommande", "lorcana précommande", "one piece op13", "lego ninjago", "lego marvel", "lego creator", "lego architecture", "lego duplo", "duplo", "lego minecraft",
+    fr: ["pikachu", "cartes pikachu", "grosse tête", "personnages à grosse tête", "figurine à grosse tête", "porte-clés pokémon", "mini figurines", "dragon ball super card game", "carte dragon ball super", "bandai", "tamashii", "banpresto", "figurine banpresto", "hot toys", "figurine hot toys", "gundam", "gunpla", "maquette gundam", "lego 2026", "nouveautés lego", "précommande lego", "lego star wars ucs", "ucs", "set lego collector", "légo", "pokémon 30 ans", "coffret pokemon 30 ans", "méga évolution", "mega evolution", "pokemon méga évolution", "booster méga évolution", "ascended heroes", "précommande pokemon", "précommande cartes pokemon", "display précommande", "lorcana précommande", "one piece op13", "lego ninjago", "lego marvel", "lego creator", "lego architecture", "lego duplo", "duplo", "lego minecraft",
          "lego speed champions", "lego ideas", "lego disney", "lego pour adulte", "lego botanique", "lego fleurs",
          "fleurs lego", "bouquet lego", "bonsaï lego", "lego technic voiture", "lego star wars vaisseau",
          "lego jurassic world", "lego super mario", "lego pokemon", "boîte de lego", "legos", "pop marvel",
@@ -1102,12 +1102,12 @@ const SPOKEN = {
          "yugioh", "magic", "cartas one piece", "lata pokemon", "fundas de cartas", "archivador pokemon", "deck box"]
   },
   entree: {
-    fr: ["je cherche la sortie", "sortir du magasin", "la porte de sortie", "retourner dehors", "remonter à la sortie"],
+    fr: ["sors", "je sors", "sortir", "m'en aller", "quitter le magasin", "je cherche la sortie", "sortir du magasin", "la porte de sortie", "retourner dehors", "remonter à la sortie"],
     en: ["how do i get out", "i want to leave"],
     es: ["quiero salir", "busco la salida"]
   },
   gaming: {
-    fr: ["nacon", "manette nacon", "bigben", "pdp", "powera", "hori", "backbone", "backbone pour mon téléphone", "manette backbone", "manette pour smartphone", "manette turtle beach", "casque turtle beach ps5", "razer kishi", "manette pour téléphone", "carte cadeau nintendo", "carte cadeau playstation", "carte cadeau psn", "carte cadeau xbox", "carte cadeau steam", "carte cadeau roblox", "carte cadeau fortnite", "carte cadeau eshop", "carte cadeau jeux vidéo", "gta 6", "gta vi", "gta six", "grand theft auto 6", "grand theft auto vi", "précommande gta", "précommander gta 6", "réserver gta 6", "sortie gta 6", "quand sort gta 6", "gta 6 ps5", "gta 6 xbox", "ps6", "playstation 6", "ps 6", "xbox next", "prochaine xbox", "prochaine playstation", "switch 3", "précommander un jeu", "réserver un jeu", "jeu à réserver", "réservation jeu", "jeux à venir", "bonus de précommande", "fc 27", "fifa 27", "call of duty 2026", "black ops 8", "the witcher 4", "witcher 4", "elder scrolls 6", "marvel's wolverine", "wolverine ps5", "007 first light", "resident evil requiem", "metroid prime 4", "kirby air riders", "pokemon pokopia", "pokopia", "pokemon vents et vagues", "zelda switch 2", "mario kart world", "nba 2k27", "gears of war", "gears of war e-day", "clair obscur", "expedition 33", "ghost of yotei", "onimusha", "phantom blade zero", "crimson desert", "pragmata", "nintendo swiche", "switche", "switch deux", "ixbox", "x box", "iks box", "plais station", "playstaïtion", "pléstation", "ps cinq", "manette ps cinq", "dual sense", "joy cone", "game pass ultimate", "la play", "une play", "play 5", "play 4", "la ps", "playstation portal", "ps portal", "ps5 slim",
+    fr: ["bonhommes carrés", "petits bonhommes carrés", "jeu avec des cubes", "jeu de cubes", "jeu harry potter", "jeu spider-man", "jeu pokémon switch", "jeu star wars", "jeu lego star wars", "jeu marvel", "nacon", "manette nacon", "bigben", "pdp", "powera", "hori", "backbone", "backbone pour mon téléphone", "manette backbone", "manette pour smartphone", "manette turtle beach", "casque turtle beach ps5", "razer kishi", "manette pour téléphone", "carte cadeau nintendo", "carte cadeau playstation", "carte cadeau psn", "carte cadeau xbox", "carte cadeau steam", "carte cadeau roblox", "carte cadeau fortnite", "carte cadeau eshop", "carte cadeau jeux vidéo", "gta 6", "gta vi", "gta six", "grand theft auto 6", "grand theft auto vi", "précommande gta", "précommander gta 6", "réserver gta 6", "sortie gta 6", "quand sort gta 6", "gta 6 ps5", "gta 6 xbox", "ps6", "playstation 6", "ps 6", "xbox next", "prochaine xbox", "prochaine playstation", "switch 3", "précommander un jeu", "réserver un jeu", "jeu à réserver", "réservation jeu", "jeux à venir", "bonus de précommande", "fc 27", "fifa 27", "call of duty 2026", "black ops 8", "the witcher 4", "witcher 4", "elder scrolls 6", "marvel's wolverine", "wolverine ps5", "007 first light", "resident evil requiem", "metroid prime 4", "kirby air riders", "pokemon pokopia", "pokopia", "pokemon vents et vagues", "zelda switch 2", "mario kart world", "nba 2k27", "gears of war", "gears of war e-day", "clair obscur", "expedition 33", "ghost of yotei", "onimusha", "phantom blade zero", "crimson desert", "pragmata", "nintendo swiche", "switche", "switch deux", "ixbox", "x box", "iks box", "plais station", "playstaïtion", "pléstation", "ps cinq", "manette ps cinq", "dual sense", "joy cone", "game pass ultimate", "la play", "une play", "play 5", "play 4", "la ps", "playstation portal", "ps portal", "ps5 slim",
          "ps5 digital", "ps5 édition digitale", "ps5 standard", "xbox game pass",
          "nintendo switch 2", "la switch", "switch 1", "console nintendo", "console sony", "console microsoft",
          "console pour enfant", "console pour jouer", "jouer à la console", "rog ally", "legion go",
@@ -1180,7 +1180,7 @@ const SPOKEN = {
          "brazo para monitor", "monitor portátil", "segundo monitor"]
   },
   "accessoiresGaming.accessoires": {
-    fr: ["trust gaming", "mars gaming", "oplite", "trust", "fauteuil", "fauteuil de bureau", "chaise de bureau", "siège de bureau", "clavier lumineux", "clavier qui s'allume", "clavier de couleur", "souris lumineuse", "jouer longtemps", "webcam", "caméra pour pc", "caméra pour ordinateur", "webcam logitech", "logitech g", "souris logitech",
+    fr: ["discord", "micro discord", "micro pour discord", "casque discord", "parler sur discord", "parler en jouant", "trust gaming", "mars gaming", "oplite", "trust", "fauteuil", "fauteuil de bureau", "chaise de bureau", "siège de bureau", "clavier lumineux", "clavier qui s'allume", "clavier de couleur", "souris lumineuse", "jouer longtemps", "webcam", "caméra pour pc", "caméra pour ordinateur", "webcam logitech", "logitech g", "souris logitech",
          "clavier logitech", "souris razer", "clavier razer", "casque razer", "razer kraken", "razer blackshark",
          "corsair void", "hyperx cloud", "steelseries arctis", "arctis nova", "logitech g pro", "logitech g502",
          "g502", "souris ergonomique", "souris verticale", "souris bluetooth", "souris silencieuse",
@@ -1220,7 +1220,7 @@ const SPOKEN = {
          "tóner láser", "cartucho de impresora"]
   },
   electromenager: {
-    fr: ["shark", "aspirateur shark", "sage", "princess", "livoo", "h koenig", "domo", "philips cuisine", "électro", "électroménager cuisine", "appareil de cuisine", "petit appareil", "moulinex", "seb", "tefal",
+    fr: ["cocotte électrique", "faire des gâteaux", "pâtisserie", "faire de la pâtisserie", "pop corn", "popcorn", "machine à popcorn", "machine à pop-corn", "faire du pop-corn", "appareil à cookies", "faire des cookies", "machine à hot-dog", "four", "petit four", "four électrique", "shark", "aspirateur shark", "sage", "princess", "livoo", "h koenig", "domo", "philips cuisine", "électro", "électroménager cuisine", "appareil de cuisine", "petit appareil", "moulinex", "seb", "tefal",
          "calor", "philips cuisine", "bosch", "kenwood", "smeg", "russell hobbs", "riviera et bar", "cuiseur vapeur", "cuiseur à riz", "autocuiseur", "cocotte minute électrique", "multicuiseur", "mijoteuse",
          "slow cooker", "fondue", "appareil à fondue", "panini",
          "machine à pâtes", "hachoir à viande", "machine à glace", "turbine à glace", "ninja creami", "creami",
@@ -1400,7 +1400,7 @@ const SPOKEN = {
          "lector de ebooks a color", "funda kobo", "funda para lector", "epub", "tableta para leer"]
   },
   pcwindows: {
-    fr: ["acer aspire", "acer swift go", "swift go", "pc copilot plus", "copilot+ pc", "windows 12", "ordinateur portable 2026", "ordinnateur", "ordinatteur", "pécé", "l'ordi", "un ordi", "ordi portable", "ordinateur de bureau", "pc de bureau", "ordinateur fixe",
+    fr: ["ordinateurs portables", "pc portables", "portable avec un grand écran", "pc avec un grand écran", "ordinateur avec un grand écran", "acer aspire", "acer swift go", "swift go", "pc copilot plus", "copilot+ pc", "windows 12", "ordinateur portable 2026", "ordinnateur", "ordinatteur", "pécé", "l'ordi", "un ordi", "ordi portable", "ordinateur de bureau", "pc de bureau", "ordinateur fixe",
          "ordinateur pour l'école", "ordinateur pour les études", "ordinateur pour mes études", "pc pour étudiant",
          "ordinateur étudiant", "pc étudiant", "ordinateur pour travailler", "pc pour le travail",
          "ordinateur pour le bureau", "pc pour la maison", "ordinateur familial", "ordinateur pour internet",
@@ -1623,7 +1623,7 @@ const SPOKEN = {
          "macos", "ios"]
   },
   jeuxSociete: {
-    fr: ["goliath", "iello", "repos production", "days of wonder", "bombyx", "lansay", "dujardin", "jeu goliath", "casse-tête", "casse tête", "jeu casse-tête", "skyjo", "6 qui prend", "six qui prend", "bonanza",
+    fr: ["apprendre à compter", "jeu pour apprendre", "apprendre à lire", "jeu d'apprentissage", "jeu montessori", "montessori", "goliath", "iello", "repos production", "days of wonder", "bombyx", "lansay", "dujardin", "jeu goliath", "casse-tête", "casse tête", "jeu casse-tête", "skyjo", "6 qui prend", "six qui prend", "bonanza",
          "codenames", "code names", "splendor", "les aventuriers du rail", "aventuriers du rail", "ticket to ride",
          "exploding kittens", "unlock", "escape game en boîte", "the mind", "just one", "love letter", "pandemic",
          "wingspan", "king of tokyo", "bang", "perudo", "yams", "yahtzee", "qwirkle", "rummikub", "pictionary",
@@ -1993,7 +1993,7 @@ export const CLARIFY = [
     },
     options: [
       { zone: "caisse", label: { fr: "Prise de voyage", en: "Travel plug", es: "Enchufe de viaje" },
-        say: { fr: ["voyage", "etranger", "prise", "anglaise", "americaine", "angleterre"], en: ["travel", "plug", "uk", "us", "abroad"], es: ["viaje", "enchufe", "extranjero"] } },
+        say: { fr: ["voyage", "voyager", "etranger", "prise", "anglaise", "americaine", "angleterre", "etats unis", "usa", "amerique", "londres", "japon", "australie", "suisse", "vacances"], en: ["travel", "plug", "uk", "us", "abroad"], es: ["viaje", "enchufe", "extranjero"] } },
       { zone: "informatique", label: { fr: "HDMI, USB", en: "HDMI, USB", es: "HDMI, USB" },
         say: { fr: ["hdmi", "usb", "ordinateur", "vga", "displayport"], en: ["hdmi", "usb", "computer", "vga"], es: ["hdmi", "usb", "ordenador", "vga"] } },
       { zone: "audio", place: "adaptateurs", label: { fr: "Audio jack", en: "Audio jack", es: "Audio jack" },
@@ -2140,7 +2140,8 @@ export const INFO = {
     keywords: {
       fr: ["gros électroménager", "lave-linge", "machine à laver", "lave-vaisselle", "sèche-linge", "frigo",
            "réfrigérateur", "congélateur", "four encastrable", "plaque de cuisson", "table de cuisson", "hotte",
-           "cuisinière", "chauffe-eau", "cave à vin"],
+           "cuisinière", "chauffe-eau", "cave à vin", "plaque à induction", "plaque induction", "table à induction",
+           "four encastré", "four à encastrer", "micro-ondes encastrable", "sèche linge", "lave linge", "congélateur coffre"],
       en: ["large appliance", "large appliances", "washing machine", "dishwasher", "tumble dryer", "fridge",
            "refrigerator", "freezer", "built in oven", "hob", "cooker hood", "wine cooler"],
       es: ["gran electrodoméstico", "lavadora", "lavavajillas", "secadora", "nevera", "frigorífico", "congelador",
@@ -2214,6 +2215,8 @@ export const INTENTS = {
     "cadeau", "idée cadeau", "idées cadeaux", "un cadeau", "cadeau anniversaire", "cadeau de noël", "cadeau pour mon fils",
     "cadeau pour ma fille", "quoi offrir", "gift", "gift idea", "present idea", "what to buy", "regalo", "idea de regalo", "qué regalar",
     // Besoin d'un conseil, sans produit précis
+    "je ne sais pas ce que je cherche", "je sais pas ce que je cherche", "je ne sais pas quoi", "m'aider", "aidez-moi",
+    "pouvez-vous m'aider", "vous pouvez m'aider", "besoin d'aide", "un coup de main",
     "conseil", "conseils", "un conseil", "besoin de conseils", "renseignement", "un renseignement", "une question",
     "parler à quelqu'un", "parler a un vendeur", "employé", "un employé", "responsable", "le responsable", "directeur",
     "manager", "je sais pas quoi prendre", "je ne sais pas quoi prendre", "je ne sais pas quoi choisir",
