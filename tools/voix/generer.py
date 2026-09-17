@@ -60,10 +60,34 @@ def hauteur(wav, sr):
     return float(np.median(f0)) if len(f0) else 0.0
 
 
-def fin_de_parole(segments):
-    """Fin du dernier mot prononcé (en secondes), d'après Whisper ; None si aucun mot."""
-    mots_dits = [w for seg in segments for w in (seg.words or []) if re.search(r"\w", w.word)]
-    return mots_dits[-1].end if mots_dits else None
+def fin_de_parole(segments, texte):
+    """Fin (en secondes) du dernier mot de la phrase voulue, d'après Whisper, et
+    le texte entendu jusque-là ; (None, texte entendu) si aucun mot.
+
+    Le modèle continue parfois à parler après la phrase (« …en bas du plan. En
+    bas du plan se font même… ») : on s'arrête au mot entendu qui correspond au
+    dernier mot voulu, et le reste est coupé.
+    """
+    entendus = []   # (mot normalisé, fin, mot tel qu'entendu)
+    for seg in segments:
+        for w in (seg.words or []):
+            for m in mots(w.word):
+                entendus.append((m, w.end, w.word))
+    if not entendus:
+        return None, " ".join(seg.text for seg in segments).strip()
+    voulus = mots(texte)
+    blocs = difflib.SequenceMatcher(None, voulus, [m for m, _, _ in entendus], autojunk=False).get_matching_blocks()
+    dernier = None
+    for bloc in blocs:
+        if bloc.size and bloc.a + bloc.size >= len(voulus) - 3:
+            dernier = bloc.b + bloc.size - 1
+    if dernier is None:
+        dernier = len(entendus) - 1
+    garde = []
+    for _, _, mot_entendu in entendus[:dernier + 1]:
+        if not garde or garde[-1] is not mot_entendu:
+            garde.append(mot_entendu)
+    return entendus[dernier][1], "".join(garde).strip()
 
 
 def nettoyer(wav, sr, fin_mot):
@@ -121,15 +145,17 @@ def main():
                 torchaudio.save(brut.name, wav, tts.sr)
                 segments, _ = oreille.transcribe(brut.name, language=lang, beam_size=1, word_timestamps=True)
                 segments = list(segments)
-            entendu = " ".join(seg.text for seg in segments).strip()
-            wav = nettoyer(wav, tts.sr, fin_de_parole(segments))
+            fin_mot, entendu = fin_de_parole(segments, texte)
+            wav = nettoyer(wav, tts.sr, fin_mot)
             wav = wav / max(wav.abs().max().item(), 1e-6) * 0.89          # crête à -1 dB
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
                 torchaudio.save(tmp.name, wav, tts.sr)
                 score = ressemblance(texte, entendu)
                 duree = wav.shape[-1] / tts.sr
                 hz = hauteur(wav, tts.sr)
-                valide = score >= SEUIL and hz >= HAUTEUR_MIN
+                # Garde-fou : une phrase bien plus longue que son texte a déraillé.
+                trop_long = duree > len(texte) * 0.11 + 2.5
+                valide = score >= SEUIL and hz >= HAUTEUR_MIN and not trop_long
                 # le meilleur essai : d'abord un essai valide, puis le texte le plus fidèle
                 cle = (valide, hz >= HAUTEUR_MIN, score)
                 if meilleur is None or cle > meilleur[0]:
