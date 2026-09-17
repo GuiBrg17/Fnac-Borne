@@ -5,6 +5,7 @@ Fabrique les voix de Jeanne : un fichier audio par phrase, publié avec le site.
 
 - Lit tools/voix/phrases.json (node tools/voix/phrases.mjs).
 - LANGUES=fr pour ne fabriquer qu'une langue (ex. le français en priorité).
+- Refaire une phrase ratée : supprimer son fichier, puis ESSAIS=10 SEMENCE=2000.
 - Ne refait que les phrases nouvelles ou modifiées (assets/voix/manifest.json).
 - Contrôle chaque phrase par transcription (Whisper) : si le texte entendu
   s'éloigne du texte voulu (phrase coupée, mot avalé), on recommence.
@@ -26,7 +27,9 @@ PHRASES = Path(os.environ.get("PHRASES", ROOT / "tools/voix/phrases.json"))
 OUT = Path(os.environ.get("SORTIE", ROOT / "assets/voix"))
 MANIFEST = OUT / "manifest.json"
 REPORT = OUT / "controle.txt" if "SORTIE" in os.environ else ROOT / "tools/voix/controle.txt"
-TRIES = 4
+TRIES = int(os.environ.get("ESSAIS", 4))
+# Graine du premier essai : en changer (SEMENCE=2000) pour refaire une phrase ratée autrement.
+SEMENCE = int(os.environ.get("SEMENCE", 1000))
 SEUIL = 0.80
 HAUTEUR_MIN = 170   # Hz : en dessous, la voix peut sonner masculine
 
@@ -145,7 +148,7 @@ def main():
         lang, texte, fichier = p["lang"], p["text"], nom(p["lang"], p["text"])
         meilleur = None
         for essai in range(1, TRIES + 1):
-            torch.manual_seed(1000 + essai)
+            torch.manual_seed(SEMENCE + essai)
             wav = tts.generate(texte, language_id=lang, audio_prompt_path=REFERENCES[lang], **REGLAGES).cpu()
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as brut:
                 torchaudio.save(brut.name, wav, tts.sr)
