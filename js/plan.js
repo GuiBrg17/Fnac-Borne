@@ -91,7 +91,10 @@ export const BASEMENT = {
     { id: "39", kind: "counter", x: 700, y: 28, w: 12, h: 10 },
     { id: "40", kind: "counter", x: 717, y: 50, w: 12, h: 10 },
     { id: "41", kind: "counter", x: 735, y: 72, w: 12, h: 10 },
-    { id: "42", kind: "counter", x: 752, y: 94, w: 12, h: 10 }
+    { id: "42", kind: "counter", x: 752, y: 94, w: 12, h: 10 },
+
+    // --- Ascenseur PMR (8 personnes), porte côté gauche ---
+    { id: "ASC", kind: "elevator", from: [759, 152.7], to: [789, 141.3], t: 30, access: [748, 162] }
   ],
 
   // Étiquettes posées dans les allées : [x, y, alignement, rotation].
@@ -115,7 +118,8 @@ export const BASEMENT = {
     jeuxSociete: [752, 226],
     caisse: [688, 64, "end"],
     adhesion: [722, 97, "end"],
-    escalier: [797, 285]
+    escalier: [797, 285],
+    ascenseur: [744, 128, "end"]
   },
 
   // Allées : la grande allée courbe devant la rangée du bas, l'allée du haut
@@ -321,6 +325,8 @@ export const GROUND = {
     { id: "O3", kind: "gondola", x: 175, y: 117, w: 16, h: 15 },
     // --- Le long de l'escalier : LEGO, POP, Pokémon ---
     { id: "L1", kind: "mural", from: [292, 196], to: [313, 258], t: 9 },
+    // --- Ascenseur PMR (8 personnes), porte côté gauche ---
+    { id: "ASC", kind: "elevator", from: [208.5, 73.2], to: [241.5, 58.8], t: 34 },
     // --- Entrée et poste de sécurité ---
     { id: "ENTREE", kind: "entrance", from: [150, 421], to: [235, 403], t: 7 },
     { id: "SECU", kind: "neutral", x: 157, y: 310, w: 40, h: 15 }
@@ -330,6 +336,7 @@ export const GROUND = {
     telephonie: [80, 232],
     objets: [214, 150],
     escalier: [290, 210, "end", 0, "full"],
+    ascenseur: [186, 64, "end"],
     entree: [192, 440]
   },
 
@@ -339,7 +346,8 @@ export const GROUND = {
   routes: {
     stairs: [[150, 352], [145, 300], [168, 262], [192, 264]],
     telephonie: [[150, 352], [124, 300]],
-    objets: [[150, 352], [145, 300], [168, 262], [172, 215], [200, 160]]
+    objets: [[150, 352], [145, 300], [168, 262], [172, 215], [200, 160]],
+    ascenseur: [[150, 352], [145, 300], [168, 262], [172, 215], [200, 160], [196, 92]]
   }
 };
 

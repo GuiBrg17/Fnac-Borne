@@ -337,6 +337,15 @@ export const ZONES = {
            "abajo", "planta de abajo"]
     }
   },
+  // Ascenseur PMR : pas un rayon, mais il s'allume sur le plan quand on le demande
+  // (questions « ascenseur », « fauteuil roulant »… : INFO.elevator plus bas).
+  ascenseur: {
+    floors: ["0", "-1"], icon: "access",
+    label: { fr: "Ascenseur", en: "Lift", es: "Ascensor" },
+    detail: { fr: "", en: "", es: "" },
+    spots: ["ASC"],
+    keywords: { fr: [], en: [], es: [] }
+  },
   entree: {
     floors: ["0"], icon: "door",
     label: { fr: "Entrée / Sortie", en: "Entrance / Exit", es: "Entrada / Salida" },

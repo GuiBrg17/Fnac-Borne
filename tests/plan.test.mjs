@@ -63,7 +63,7 @@ function checkRoutes(label, routes, shapes) {
 }
 checkRoutes("sous-sol", BASEMENT.shapes.map((s) => [s.id, routeTo(s.id)]), BASEMENT.shapes);
 checkRoutes("rez-de-chaussée",
-  ["telephonie", "objets", "escalier", "apple"].map((id) => [id, routeGround(id, ZONES[id].floors)]),
+  ["telephonie", "objets", "escalier", "apple", "ascenseur"].map((id) => [id === "ascenseur" ? "ASC" : id, routeGround(id, ZONES[id].floors)]),
   GROUND.shapes.filter((s) => s.kind !== "entrance"));
 
 // 3. Chaque étiquette désigne un rayon ou un emplacement qui existe.

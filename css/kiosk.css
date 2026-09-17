@@ -789,6 +789,10 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .bm-counter { fill: var(--yellow-light); }
 .bm-entrance { fill: var(--paper); }
 .bm-neutral { fill: rgba(255, 255, 255, 0.16); stroke: none; cursor: default; }
+/* Ascenseur PMR : bleu « accessibilité », reconnaissable même sans lire. */
+.bm-elevator { fill: #2F6FEB; stroke: var(--paper); stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
+.bm-elevator-icon { color: var(--paper); fill: none; stroke: currentColor; stroke-width: 2.4; pointer-events: none; }
+.bm-shape.bm-elevator.is-hit { fill: #2F6FEB; stroke: var(--yellow); stroke-width: 3px; animation: none; }
 
 /* Vous êtes ici (la borne, à l'entrée) */
 .bm-here { pointer-events: none; }

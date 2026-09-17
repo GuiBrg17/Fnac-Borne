@@ -15,7 +15,7 @@ for (const lang of Object.keys(UI)) {
   [t.surveyAsk, t.surveyThanksYes, t.surveyThanksNo, t.a11yOn, t.a11yOff].forEach(add);
   add(t.vendorConfirm(null));
   for (const [id, zone] of Object.entries(ZONES)) {
-    if (zone.external) continue;
+    if (zone.external || id === "ascenseur") continue;
     const label = zone.label[lang];
     if (id !== "escalier" && id !== "entree") add(t.found(label, zone.floors[0]));
     add(t.vendorConfirm(label));
