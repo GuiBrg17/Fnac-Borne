@@ -54,7 +54,7 @@ const state = { screen: "idle", lang: "fr", floor: "0", zone: null, place: null,
   // clarify : question en attente (« Quel genre de casque ? »), avec la source de la demande
   clarify: null, clarifySource: null,
   // visite en cours : nombre de demandes, dernière demande, sondage déjà répondu
-  visit: { count: 0, last: null, surveyed: false } };
+  visit: { count: 0, last: null, surveyed: false, surveyOffered: false } };
 const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const motionReduced = () => prefersReduced || state.a11y;
 const t = () => UI[state.lang];
@@ -151,14 +151,19 @@ function preloadLanguage(lang) {
   if (files.length) voice.preloadClips(files);
 }
 
+// Une phrase est en préparation (fichier qui se charge, voix qui démarre) :
+// le micro ne doit pas s'ouvrir par-dessus, sinon il couperait Jeanne.
+let speechPending = false;
+
 function speak(text, lang = state.lang) {
   stopSpeaking();
+  speechPending = true;
   const url = clipUrl(text, lang);
   if (url) {
     lastEngine = `phrase enregistrée (${lang})`;
     updateVoiceStatus();
     voice.playClip(url, {
-      onStart: () => setSpeaking(true),
+      onStart: () => { speechPending = false; setSpeaking(true); },
       onLevel: (level) => { if (avatar) avatar.setLevel(level); },
       onEnd: () => {
         setSpeaking(false);
@@ -183,7 +188,7 @@ function speakSynthesized(text, lang = state.lang) {
     updateVoiceStatus();
     voice.speak(text, lang, {
       rate: state.a11y ? 0.88 : 1,
-      onStart: () => setSpeaking(true),
+      onStart: () => { speechPending = false; setSpeaking(true); },
       onLevel: (level) => { if (avatar) avatar.setLevel(level); },
       onEnd: () => {
         setSpeaking(false);
@@ -197,8 +202,15 @@ function speakSynthesized(text, lang = state.lang) {
   speakWithBrowser(text, lang);
 }
 
+// Chrome oublie parfois de signaler la fin d'une phrase : Jeanne resterait
+// « en train de parler » pour toujours, et la borne ne reviendrait jamais à
+// l'accueil. Au-delà de la durée normale de la phrase, on la considère finie.
+let speechWatchdog = null;
+
 function speakWithBrowser(text, lang = state.lang) {
+  clearTimeout(speechWatchdog);
   if (!("speechSynthesis" in window)) {
+    speechPending = false;
     lastEngine = "aucune voix disponible sur cet appareil";
     updateVoiceStatus();
     return;
@@ -208,6 +220,7 @@ function speakWithBrowser(text, lang = state.lang) {
   utterance.lang = LANGS[lang].speech;
   const chosen = pickVoice(lang);
   if (!chosen) {
+    speechPending = false;
     // Aucune voix de femme sur cet appareil : la réponse reste affichée, sans voix d'homme.
     lastEngine = `aucune voix féminine disponible sur cet appareil (${lang}) — réponse affichée seulement`;
     updateVoiceStatus();
@@ -218,15 +231,22 @@ function speakWithBrowser(text, lang = state.lang) {
   updateVoiceStatus();
   utterance.rate = state.a11y ? 0.86 : 1;
   utterance.pitch = 1.05;
-  utterance.onstart = () => setSpeaking(true);
-  utterance.onend = () => setSpeaking(false);
-  utterance.onerror = () => setSpeaking(false);
+  const done = () => { clearTimeout(speechWatchdog); speechPending = false; if (currentUtterance === utterance) setSpeaking(false); };
+  utterance.onstart = () => {
+    speechPending = false;
+    setSpeaking(true);
+    speechWatchdog = setTimeout(done, text.length * 110 + 4000);
+  };
+  utterance.onend = done;
+  utterance.onerror = done;
   utterance.onboundary = () => avatar && avatar.pulse();
   currentUtterance = utterance; // garde une référence : évite un arrêt prématuré sous Chrome
   window.speechSynthesis.speak(utterance);
 }
 
 function stopSpeaking() {
+  clearTimeout(speechWatchdog);
+  speechPending = false;
   voice.stop();
   if (avatar) avatar.setLevel(null);
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
@@ -291,8 +311,16 @@ function listenWhenDone() {
     toggleMic({ auto: true });
   };
   afterSpeaking = listen;
-  // Si aucune voix ne se lance (appareil sans son), le micro s'ouvre quand même.
-  setTimeout(() => { if (!state.speaking && afterSpeaking === listen) { afterSpeaking = null; listen(); } }, 2500);
+  // Si aucune voix ne se lance (appareil sans son), le micro s'ouvre quand même,
+  // mais jamais pendant qu'une phrase se prépare (réseau lent) : on attend jusqu'à 10 s.
+  const started = Date.now();
+  const fallback = () => {
+    if (afterSpeaking !== listen || state.speaking) return;
+    if (speechPending && Date.now() - started < 10000) { setTimeout(fallback, 500); return; }
+    afterSpeaking = null;
+    listen();
+  };
+  setTimeout(fallback, 2500);
 }
 
 function setSpeaking(on) {
@@ -458,6 +486,7 @@ function addChoices(choices, { className = "", ariaLabel = "" } = {}) {
 
 function closeChoices() {
   state.clarify = null;
+  surveyPending = false;
   $$(".msg-choices:not(.is-done)", els.chat).forEach((group) => {
     group.classList.add("is-done");
     group.querySelectorAll("button").forEach((b) => { b.disabled = true; });
@@ -483,6 +512,17 @@ function ask(text, source = "text") {
   addMessage("user", text);
   bump();
   hideOtherStore();
+  // Réponse au sondage, au micro ou au clavier : « oui », « non merci »…
+  if (surveyPending) {
+    const answer = normalize(text);
+    const found = SURVEY_YES.test(answer) ? true : SURVEY_NO.test(answer) ? false : null;
+    closeChoices();
+    if (found !== null) {
+      answerSurvey(found);
+      reply(found ? t().surveyThanksYes : t().surveyThanksNo);
+      return;
+    }
+  }
   // Réponse à la question de Jeanne : « pour jouer », « Samsung », « l'iPad »…
   if (state.clarify) {
     const entry = state.clarify;
@@ -558,8 +598,15 @@ function answerSurvey(found) {
   recordFeedback({ found, question: state.visit.last, zone: state.zone });
 }
 
+let surveyPending = false;
+const SURVEY_YES = /^(?:oui|ouais|ouai|yes|yeah|yep|si|claro|bien sur|tout a fait|absolument|parfait|super|nickel)\b/;
+const SURVEY_NO = /^(?:non|nan|no|nope|pas vraiment|pas du tout)\b/;
+
 function offerSurvey() {
-  if (!state.visit.count || state.visit.surveyed) return;
+  // Une seule proposition par visite : un deuxième « merci » ne relance pas la question.
+  if (!state.visit.count || state.visit.surveyed || state.visit.surveyOffered) return;
+  state.visit.surveyOffered = true;
+  surveyPending = true;
   addMessage("jeanne", t().surveyAsk);
   addChoices([
     { label: "👍 " + t().surveyYes, onChoose: () => { answerSurvey(true); reply(t().surveyThanksYes); } },
@@ -1095,7 +1142,9 @@ function enterApp() {
   els.app.inert = false;
   if (els.idleVideo && els.idleVideo.isConnected && !els.idleVideo.hidden) els.idleVideo.pause();
   state.lang = "fr";
-  state.visit = { count: 0, last: null, surveyed: false };
+  state.visit = { count: 0, last: null, surveyed: false, surveyOffered: false };
+  // Retour rapide après un « Terminer » : le nettoyage prévu ne doit pas effacer le nouveau bonjour.
+  clearTimeout(chatClearTimer);
   applyLang();
   placeAvatar();
   if (avatar) avatar.setFraming("docked");
@@ -1114,9 +1163,13 @@ function enterApp() {
   bump();
 }
 
+let chatClearTimer = null;
 function exitToIdle() {
   afterSpeaking = null;
   handsFree = false;
+  // Réglages du personnel laissés ouverts : on les ferme (les statistiques ne
+  // doivent pas rester affichées devant les clients).
+  if (els.settings.open) els.settings.close();
   closeWarning();
   closeSurvey();
   closeChoices();
@@ -1136,7 +1189,8 @@ function exitToIdle() {
   if (avatar) avatar.setFraming("hero");
   if (els.idleVideo && els.idleVideo.isConnected && !els.idleVideo.hidden) els.idleVideo.play().catch(() => {});
   startIdleCycle();
-  setTimeout(() => { els.chat.textContent = ""; }, 600);
+  clearTimeout(chatClearTimer);
+  chatClearTimer = setTimeout(() => { els.chat.textContent = ""; }, 600);
 }
 
 // --- Inactivité ----------------------------------------------------------
@@ -1295,6 +1349,9 @@ async function checkMonthlyReport() {
   const now = new Date();
   const month = dayKey(now).slice(0, 7);
   if (now.getDate() < report.day || store.get("reportLastMonth", "") === month) return;
+  // Échec (pas d'internet, adresse pas encore activée) : on réessaie au plus toutes les 6 heures.
+  if (Date.now() - store.get("reportLastAttempt", 0) < 6 * 3600 * 1000) return;
+  store.set("reportLastAttempt", Date.now());
   monthlySending = true;
   const scheduled = new Date(now.getFullYear(), now.getMonth(), report.day);
   if (await sendReport(scheduled, { automatic: true })) store.set("reportLastMonth", month);
