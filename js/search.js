@@ -309,11 +309,16 @@ export function findProblem(text) {
 
 // Renvoie { id, place, keyword, fuzzy, vague } ou null (place : emplacement précis, ou null ;
 // vague : mot vague gardé, voir findClarify).
+// « pas un iPhone, un Samsung » : le produit refusé ne doit pas l'emporter.
+const NEGATED = /\b(?:pas|plutot que|au lieu d|au lieu de|not|instead of) (?:un |une |des |de |d |le |la |les |l |a |an )?[a-z0-9]+(?: [0-9]+)?/g;
+
 export function findZoneDetailed(text, lang) {
-  const query = clean(text);
-  if (!query) return null;
+  if (!clean(text)) return null;
   const problem = findProblem(text);
   if (problem) return { id: "savRetrait", place: null, keyword: problem, fuzzy: false };
+  const positive = normalize(text).replace(NEGATED, " ");
+  if (clean(positive) && clean(positive) !== clean(text)) text = positive;
+  const query = clean(text);
   const exact = bestMatch(text, query, lang) || bestMatch(text, query, null);
   if (exact) return { id: exact.id, place: exact.place, keyword: exact.word, fuzzy: false, vague: Boolean(exact.vague) };
   const fuzzy = fuzzyMatch(query, lang) || fuzzyMatch(query, null);

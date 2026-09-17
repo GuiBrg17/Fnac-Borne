@@ -1028,3 +1028,37 @@ null|quelle heure est-il
 null|je suis perdu
 adhesion|Fnac+
 null|je suis à la Fnac
+
+# Noms de rayons à l'oral, négations, plusieurs produits
+audio|le rayon son
+audio|le rayon hifi
+tv|le rayon image
+tv|le rayon télévision
+gaming|le rayon gaming
+gaming|le rayon console
+pcwindows|le rayon micro
+pcwindows|le rayon ordinateurs
+electromenager|le rayon électro
+electromenager|le rayon cuisine
+electromenager|le rayon beauté
+electromenager|le rayon soin
+objets|le rayon maison connectée
+objets|le rayon montres
+telephonie|le rayon téléphone
+telephonie|le rayon mobile
+photo|le rayon vidéo
+trottinettes|le rayon mobilité
+jeuxSociete|le rayon jeux de société
+jeuxSociete|le rayon jouets
+escalier|le rayon figurines
+apple|le coin Apple
+apple|l'espace Apple
+savRetrait|le comptoir SAV
+savRetrait|le point retrait
+human|l'accueil
+human|le high-tech
+telephonie|pas un iPhone, un Samsung
+audio|pas des écouteurs, un casque audio
+audio|une télé et une barre de son
+gaming|une PS5 et une manette en plus
+apple|un iPhone et une coque
