@@ -1111,7 +1111,7 @@ const SPOKEN = {
          "yugioh", "magic", "cartas one piece", "lata pokemon", "fundas de cartas", "archivador pokemon", "deck box"]
   },
   entree: {
-    fr: ["sors", "je sors", "sortir", "m'en aller", "quitter le magasin", "je cherche la sortie", "sortir du magasin", "la porte de sortie", "retourner dehors", "remonter à la sortie"],
+    fr: ["sort du magasin", "on sort", "comment on sort", "sortir d'ici", "sors", "je sors", "sortir", "m'en aller", "quitter le magasin", "je cherche la sortie", "sortir du magasin", "la porte de sortie", "retourner dehors", "remonter à la sortie"],
     en: ["how do i get out", "i want to leave"],
     es: ["quiero salir", "busco la salida"]
   },
@@ -1666,7 +1666,7 @@ const SPOKEN = {
          "puzle 500 piezas", "puzle 2000 piezas", "puzle infantil", "speedcube", "fichas de póker", "póker"]
   },
   savRetrait: {
-    fr: ["réparateur", "réparer mon téléphone", "réparer mon ordinateur", "réparer mon ordi", "remplacement écran",
+    fr: ["faire livrer", "se faire livrer", "me faire livrer", "livrer à domicile", "livraison à domicile", "livrer chez moi", "colis pas arrivé", "pas reçu ma commande", "commande en retard", "suivre ma commande", "code de retrait ne marche pas", "perdu mon ticket", "réparateur", "réparer mon téléphone", "réparer mon ordinateur", "réparer mon ordi", "remplacement écran",
          "remplacer l'écran", "remplacer la batterie", "changer l'écran", "écran à changer", "batterie à changer",
          "pièce détachée", "pièces détachées", "prise en charge", "dépôt sav", "déposer au sav", "suivi sav",
          "suivi de réparation", "où en est ma réparation", "réparation terminée", "récupérer ma réparation",
@@ -1701,7 +1701,7 @@ const SPOKEN = {
          "reciclar"]
   },
   caisse: {
-    fr: ["passer en caisse", "passer à la caisse", "je veux payer", "où je paye", "où je paie", "où est-ce qu'on paye",
+    fr: ["carte bleue", "payer par carte bleue", "carte visa", "mastercard", "american express", "amex", "paypal", "lydia", "passer en caisse", "passer à la caisse", "où je paye", "où je paie", "où est-ce qu'on paye",
          "régler mes achats", "payer par carte", "payer en carte", "payer en espèces", "payer en liquide",
          "payer avec mon téléphone", "paiement mobile", "paiement sans contact", "payer par chèque", "chèque",
          "ticket de caisse perdu", "duplicata ticket", "reçu",
@@ -1719,7 +1719,7 @@ const SPOKEN = {
          "adaptador americano", "adaptador universal de viaje"]
   },
   adhesion: {
-    fr: ["payer en 4 fois", "payer en quatre fois", "en 4 fois", "en 3 fois", "en 10 fois", "en 12 fois", "payer en 12 fois", "paiement échelonné", "facilité de paiement", "fnac+", "carte fnac+", "fnac plus carte", "carte fnac darty", "carte one", "fnac one", "adhérer",
+    fr: ["je veux payer en 10 fois", "je veux payer en 3 fois", "je veux payer en 4 fois", "avantages de la carte fnac", "prix de la carte fnac", "payer en 4 fois", "payer en quatre fois", "en 4 fois", "en 3 fois", "en 10 fois", "en 12 fois", "payer en 12 fois", "paiement échelonné", "facilité de paiement", "fnac+", "carte fnac+", "fnac plus carte", "carte fnac darty", "carte one", "fnac one", "adhérer",
          "je veux adhérer", "devenir membre", "cumuler des points", "cagnotte", "cagnotte adhérent", "chèque fidélité",
          "chèque cadeau adhérent", "bon d'achat adhérent", "remise adhérent", "prix adhérent", "tarif adhérent",
          "livraison gratuite adhérent", "carte gratuite", "carte fnac gratuite", "carte payante",
@@ -1737,7 +1737,7 @@ const SPOKEN = {
          "crédito al consumo", "cetelem", "descuento estudiante"]
   },
   editorial: {
-    fr: ["astérix", "asterix", "tintin", "gaston lagaffe", "lucky luke", "les schtroumpfs", "spirou",
+    fr: ["autre fnac", "l'autre fnac", "fnac wilson", "adresse fnac wilson", "l'adresse de la fnac wilson", "autre magasin fnac", "l'autre magasin", "fnac de wilson", "fnac place wilson", "fnac jean jaurès", "astérix", "asterix", "tintin", "gaston lagaffe", "lucky luke", "les schtroumpfs", "spirou",
          "blake et mortimer", "largo winch", "thorgal", "xiii", "les sisters", "mortelle adèle", "l'arabe du futur",
          "dragon ball", "demon slayer", "jujutsu kaisen", "my hero academia", "l'attaque des titans",
          "attaque des titans", "chainsaw man", "blue lock", "spy x family", "harry potter", "le seigneur des anneaux",
@@ -2170,7 +2170,8 @@ export const INFO = {
            "handicap", "handicapé", "personne handicapée", "pmr", "mobilité réduite", "personne à mobilité réduite",
            "poussette", "avec une poussette", "béquilles", "je ne peux pas prendre l'escalier",
            "je peux pas prendre les escaliers", "sans escalier", "éviter l'escalier", "accès handicapé",
-           "accès pmr", "accessible en fauteuil", "déambulateur"],
+           "accès pmr", "accessible en fauteuil", "déambulateur", "accès fauteuil", "accès pour les fauteuils",
+           "accès pour fauteuil", "fauteuils roulants", "personnes handicapées", "accessibilité"],
       en: ["lift", "elevator", "wheelchair", "disabled access", "disability", "reduced mobility", "pushchair",
            "stroller", "pram", "crutches", "can't use the stairs", "cannot take the stairs", "step free access",
            "accessible entrance"],
@@ -2224,6 +2225,8 @@ export const INTENTS = {
     "cadeau", "idée cadeau", "idées cadeaux", "un cadeau", "cadeau anniversaire", "cadeau de noël", "cadeau pour mon fils",
     "cadeau pour ma fille", "quoi offrir", "gift", "gift idea", "present idea", "what to buy", "regalo", "idea de regalo", "qué regalar",
     // Besoin d'un conseil, sans produit précis
+    "promo", "promos", "promotion", "promotions", "en promo", "soldes", "les soldes", "black friday", "bons plans",
+    "bon plan", "offres du moment", "réductions", "remises", "déstockage", "french days", "sales", "discount", "ofertas", "rebajas",
     "je ne sais pas ce que je cherche", "je sais pas ce que je cherche", "je ne sais pas quoi", "m'aider", "aidez-moi",
     "pouvez-vous m'aider", "vous pouvez m'aider", "besoin d'aide", "un coup de main",
     "conseil", "conseils", "un conseil", "besoin de conseils", "renseignement", "un renseignement", "une question",
