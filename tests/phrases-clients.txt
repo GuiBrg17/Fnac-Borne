@@ -6,7 +6,7 @@ telephonie|un Samsung A55
 telephonie|un chargeur rapide Samsung
 telephonie|une coque pour Galaxy S24
 telephonie|un câble USB-C vers USB-C
-telephonie|un support de téléphone pour la voiture
+notSold|un support de téléphone pour la voiture
 telephonie|une carte SIM Free
 telephonie|un téléphone Xiaomi Redmi
 telephonie|un Google Pixel 9 Pro
@@ -738,3 +738,9 @@ audio|un casque Sony
 jeuxSociete|un jeu Goliath
 escalier|une figurine Banpresto
 escalier|un Gundam
+
+# Produits non vendus dans ce magasin
+notSold|un support de téléphone pour le vélo
+notSold|un support voiture pour iPhone
+notSold|a phone holder for my car
+tv|un support mural pour télé

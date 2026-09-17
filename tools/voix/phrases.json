@@ -65,6 +65,10 @@
  },
  {
   "lang": "fr",
+  "text": "Désolée, ce magasin ne vend pas ce produit. Vous pouvez le commander sur fnac.com, ou demander conseil à un vendeur."
+ },
+ {
+  "lang": "fr",
   "text": "Le magasin n'a pas de parking. Il faut vous garer dans le quartier."
  },
  {
@@ -393,6 +397,10 @@
  },
  {
   "lang": "en",
+  "text": "Sorry, this store doesn't sell that product. You can order it on fnac.com, or ask a member of staff for advice."
+ },
+ {
+  "lang": "en",
   "text": "The store has no car park. You'll need to park in the neighbourhood."
  },
  {
@@ -718,6 +726,10 @@
  {
   "lang": "es",
   "text": "Sí, hay un ascensor para las personas que lo necesiten. Toque «Llamar a un vendedor» y alguien del equipo le acompañará."
+ },
+ {
+  "lang": "es",
+  "text": "Lo siento, esta tienda no vende ese producto. Puede pedirlo en fnac.com o pedir consejo a un vendedor."
  },
  {
   "lang": "es",

@@ -238,7 +238,7 @@ export const ZONES = {
            "oreillette bluetooth", "coque", "coque téléphone", "coque samsung", "coque xiaomi", "étui téléphone",
            "housse téléphone", "verre trempé", "protection écran", "protège écran", "film protecteur", "carte sim",
            "sim", "carte prépayée", "forfait", "forfait mobile", "abonnement mobile", "recharge téléphonique", "sfr",
-           "orange", "bouygues", "free mobile", "support téléphone", "support voiture", "porte téléphone",
+           "orange", "bouygues", "free mobile", "porte téléphone",
            "perche à selfie", "anneau téléphone", "popsocket", "reprise téléphone", "rachat téléphone",
            "téléphone enfant"],
       en: ["phone", "mobile phone", "mobile", "cell phone", "cellphone", "smartphone", "android", "android phone",
@@ -251,7 +251,7 @@ export const ZONES = {
            "wired earphone", "wired earphones", "jack earphones", "hands free kit", "earpiece", "bluetooth earpiece",
            "phone case", "case", "samsung case", "phone cover", "phone pouch", "tempered glass", "screen protector",
            "screen film", "sim card", "sim", "prepaid card", "mobile plan", "phone plan", "top up", "phone holder",
-           "car mount", "selfie stick", "phone ring", "popsocket", "phone trade in", "kids phone"],
+           "selfie stick", "phone ring", "popsocket", "phone trade in", "kids phone"],
       es: ["teléfono", "teléfono móvil", "móvil", "celular", "smartphone", "android", "teléfono android", "samsung",
            "teléfono samsung", "galaxy", "samsung galaxy", "galaxy s24", "galaxy s25", "xiaomi", "redmi", "poco",
            "google pixel", "pixel", "oppo", "honor", "motorola", "nokia", "oneplus", "realme", "fairphone",
@@ -262,7 +262,7 @@ export const ZONES = {
            "auricular con cable", "auriculares con cable", "auriculares jack", "manos libres", "auricular bluetooth",
            "funda", "funda móvil", "funda samsung", "carcasa", "cristal templado", "protector de pantalla",
            "lámina protectora", "tarjeta sim", "sim", "tarjeta prepago", "tarifa móvil", "recarga", "soporte móvil",
-           "soporte de coche", "palo selfie", "anillo para móvil", "popsocket", "móvil para niños"]
+           "palo selfie", "anillo para móvil", "popsocket", "móvil para niños"]
     }
   },
   objets: {
@@ -829,7 +829,7 @@ export const ZONES = {
            "coque ipad", "verre trempé iphone", "protection iphone", "chargeur iphone", "chargeur apple",
            "câble lightning", "câble apple", "adaptateur apple", "clavier ipad", "tablette apple", "ordinateur apple",
            "écouteurs apple", "carte cadeau apple", "applecare", "icloud", "app store", "itunes",
-           "airpods de remplacement", "embouts airpods", "bracelet apple watch", "support iphone", "dock apple"],
+           "airpods de remplacement", "embouts airpods", "bracelet apple watch", "dock apple"],
       en: ["apple", "apple store", "iphone", "i phone", "iphone 15", "iphone 16", "iphone 17", "iphone 18",
            "iphone pro", "iphone pro max", "refurbished iphone", "ipad", "i pad", "ipad air", "ipad pro", "ipad mini",
            "ipod", "airpods", "air pods", "airpods pro", "airpods max", "mac", "macbook", "mac book", "macbook air",
@@ -838,7 +838,7 @@ export const ZONES = {
            "iphone cover", "ipad case", "ipad sleeve", "iphone screen protector", "iphone charger", "apple charger",
            "lightning cable", "apple cable", "apple adapter", "ipad keyboard", "apple tablet", "apple laptop",
            "apple earphones", "apple gift card", "applecare", "icloud", "app store", "itunes", "airpods tips",
-           "apple watch band", "iphone stand"],
+           "apple watch band"],
       es: ["apple", "apple store", "iphone", "i phone", "iphone 15", "iphone 16", "iphone 17", "iphone 18",
            "iphone pro", "iphone pro max", "iphone reacondicionado", "ipad", "i pad", "ipad air", "ipad pro",
            "ipad mini", "ipod", "airpods", "air pods", "airpods pro", "airpods max", "mac", "macbook", "mac book",
@@ -847,7 +847,7 @@ export const ZONES = {
            "funda iphone", "carcasa iphone", "funda ipad", "protector de pantalla iphone", "cargador iphone",
            "cargador apple", "cable lightning", "cable apple", "adaptador apple", "teclado ipad", "tableta apple",
            "portátil apple", "auriculares apple", "tarjeta regalo apple", "applecare", "icloud", "app store",
-           "itunes", "correa apple watch", "soporte iphone"]
+           "itunes", "correa apple watch"]
     }
   },
   jeuxSociete: {
@@ -1042,7 +1042,7 @@ const SPOKEN = {
          "coque transparente", "coque rabat", "étui portefeuille", "protection de téléphone", "vitre de protection",
          "verre de protection", "protection d'écran", "film écran", "film de protection", "cordon téléphone",
          "dragonne", "tour de cou téléphone", "bandoulière téléphone", "support vélo téléphone",
-         "support téléphone vélo", "support moto", "support voiture magnétique", "support grille aération",
+         "support grille aération",
          "écouteurs usb c", "écouteurs type c", "kit piéton", "écouteurs avec fil", "casque avec fil téléphone",
          "trépied téléphone", "stabilisateur de téléphone", "objectif pour téléphone", "reprise de mon téléphone",
          "revendre mon téléphone", "portable pour enfant", "premier téléphone"],
@@ -1051,11 +1051,11 @@ const SPOKEN = {
          "big button phone", "dual sim phone", "5g phone", "esim", "nano sim", "usb charger", "usb c charger",
          "type c", "type c cable", "charging lead", "charging cord", "phone battery", "magnetic battery",
          "clear case", "rugged case", "wallet case", "screen guard", "phone strap", "phone lanyard",
-         "bike phone mount", "usb c earphones", "phone tripod", "first phone"],
+         "usb c earphones", "phone tripod", "first phone"],
     es: ["galaxy s26", "galaxy s26 ultra", "galaxy z fold 8", "pixel 11", "reservar el galaxy", "nuevo samsung", "razr", "móvil plegable", "teléfono plegable", "galaxy s24 ultra", "galaxy s25 ultra", "galaxy a55", "redmi note",
          "pixel 9", "pixel 10", "móvil para personas mayores", "móvil de teclas grandes", "móvil 5g", "esim",
          "nano sim", "cargador usb", "cargador usb c", "tipo c", "cable tipo c", "funda transparente", "funda antigolpes", "funda cartera", "protector de pantalla móvil",
-         "cordón para móvil", "soporte de bici para móvil", "auriculares usb c", "primer móvil"]
+         "cordón para móvil", "auriculares usb c", "primer móvil"]
   },
   objets: {
     fr: ["montre polar", "polar vantage", "polar pacer", "coros", "whoop", "bracelet whoop", "bracelet", "bracelets", "sommeil", "mesurer mon sommeil", "suivre mon sommeil", "compter mes pas", "rythme cardiaque", "fréquence cardiaque", "suivre mon activité", "caméra pour la porte", "voir qui sonne", "qui sonne à la porte", "judas connecté", "surveiller mon chien", "surveiller mon chat", "surveiller la maison", "caméra animaux", "qui on parle", "on lui parle", "qu'on parle", "commande vocale", "parler à mon enceinte", "ampoule", "ampoules", "allumer avec mon téléphone", "piloter avec mon téléphone", "contrôler avec mon téléphone", "depuis mon téléphone", "à distance", "maison intelligente", "retrouver mes clés", "retrouver mon sac", "retrouver mon vélo", "ne plus perdre mes clés", "localiser", "galaxy watch 9", "pixel watch 4", "garmin fenix 8", "forerunner 970", "oura ring 4", "montre connectée 2026", "smart ouatch", "garmin forerunner", "forerunner", "garmin venu", "garmin fenix", "fenix", "garmin instinct",
@@ -2171,6 +2171,23 @@ export const INFO = {
       fr: "Oui, il y a un ascenseur pour les personnes qui en ont besoin. Touchez « Appeler un vendeur » : un membre de l'équipe vous y accompagne.",
       en: "Yes, there is a lift for anyone who needs it. Tap “Call a staff member” and a member of the team will take you there.",
       es: "Sí, hay un ascensor para las personas que lo necesiten. Toque «Llamar a un vendedor» y alguien del equipo le acompañará."
+    }
+  },
+  // Produits que ce magasin ne vend pas (confirmé par le magasin) : Jeanne le dit
+  // au lieu d'envoyer le client dans un rayon. Liste à compléter au fil des retours.
+  notSold: {
+    keywords: {
+      fr: ["support téléphone", "support de téléphone", "support pour téléphone", "support smartphone", "support voiture",
+           "support téléphone voiture", "support voiture magnétique", "support grille aération", "support vélo téléphone",
+           "support téléphone vélo", "support moto", "support iphone", "support de portable", "porte téléphone",
+           "porte-téléphone", "support magsafe voiture", "support pare-brise", "support tableau de bord"],
+      en: ["phone holder", "phone mount", "car mount", "car phone holder", "bike phone mount", "iphone stand", "iphone car mount"],
+      es: ["soporte móvil", "soporte para móvil", "soporte de coche", "soporte de bici para móvil", "soporte iphone"]
+    },
+    answer: {
+      fr: "Désolée, ce magasin ne vend pas ce produit. Vous pouvez le commander sur fnac.com, ou demander conseil à un vendeur.",
+      en: "Sorry, this store doesn't sell that product. You can order it on fnac.com, or ask a member of staff for advice.",
+      es: "Lo siento, esta tienda no vende ese producto. Puede pedirlo en fnac.com o pedir consejo a un vendedor."
     }
   },
   parking: {
