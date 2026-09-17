@@ -744,3 +744,134 @@ notSold|un support de téléphone pour le vélo
 notSold|un support voiture pour iPhone
 notSold|a phone holder for my car
 tv|un support mural pour télé
+
+# Façons de parler : enfants, personnes âgées, « vous avez… ? », cadeaux
+gaming|vous avez la Switch 2 en stock ?
+gaming|il vous reste des PS5 ?
+apple|c'est où les iPhone ?
+audio|vous vendez des casques Bose ?
+tv|il y a des télés en promo ?
+electromenager|c'est par où l'électroménager ?
+photo|je cherche le rayon photo
+pcwindows|où sont les ordinateurs portables ?
+gaming|je voudrais offrir une PS5 à mon fils
+apple|un cadeau pour ma copine, des AirPods ou un casque Bose
+electromenager|un cadeau pour ma mère, un Airwrap
+gaming|mon petit-fils veut une Nintendo
+tablettes|une tablette pour ma grand-mère pour faire des appels vidéo
+telephonie|un téléphone avec des grosses touches pour mon père
+telephonie|un portable facile à utiliser pour une personne âgée
+gaming|la console avec Mario
+gaming|le jeu avec les petits bonhommes carrés
+escalier|les cartes Pikachu
+escalier|les petits personnages avec une grosse tête
+gaming|la manette de la Play
+gaming|un jeu de Spider-Man
+gaming|un jeu de Harry Potter sur Switch
+audio|des oreillettes sans fil
+audio|des écouteurs qui vont dans l'oreille
+audio|un casque qui entoure les oreilles
+audio|une enceinte qu'on emmène à la plage
+tv|une grande télé plate
+tv|un projecteur pour le jardin
+telephonie|un chargeur qui charge vite
+telephonie|une batterie de secours pour le téléphone
+telephonie|un fil pour charger mon Samsung
+apple|un fil pour charger mon iPhone
+telephonie|une prise pour recharger mon téléphone
+informatique|une clé USB pour mettre des photos
+informatique|un disque pour sauvegarder mon ordinateur
+informatique|une imprimante qui scanne aussi
+informatique|une imprimante pas chère
+cartouches|l'encre de mon imprimante Canon
+electromenager|une machine pour faire le café avec des dosettes
+electromenager|un appareil à croque-monsieur
+electromenager|une cocotte électrique
+electromenager|un robot pour faire les gâteaux
+electromenager|un truc pour faire du pop-corn
+electromenager|une machine à popcorn
+electromenager|une machine à hot-dog
+electromenager|un appareil à fondue
+electromenager|un chauffe-biberon
+electromenager|une brosse soufflante
+electromenager|un sèche cheveux de voyage
+electromenager|une tondeuse pour le corps
+electromenager|un épilateur électrique
+electromenager|un appareil pour faire des cookies
+trottinettes|une trottinette pour aller au collège
+trottinettes|un casque pour mon fils pour la trottinette
+trottinettes|un cadenas pour ma trottinette
+trottinettes|des pneus de trottinette
+photo|un appareil photo pour faire des vlogs
+photo|une caméra pour mon casque de moto
+photo|une caméra étanche pour la plongée
+photo|un sac pour mon appareil photo
+photo|une pellicule 35mm
+photo|du papier pour Instax
+objets|une montre pour nager
+objets|une montre pour surveiller mon cœur
+objets|un tensiomètre
+objets|un thermomètre connecté
+objets|un détecteur de mouvement
+jeuxSociete|un jeu pour apprendre à compter
+jeuxSociete|un jeu de société pour les apéros
+jeuxSociete|un jeu de cartes pour enfant
+jeuxSociete|un jeu de mémoire
+jeuxSociete|des cartes à jouer
+jeuxSociete|un casse-tête en bois
+escalier|un set LEGO pour adulte
+escalier|une figurine Naruto
+escalier|un porte-clés Pokémon
+escalier|des mini figurines
+pcwindows|un ordinateur pour faire de la bureautique
+pcwindows|un PC portable avec un grand écran
+accessoiresGaming|une souris pour mon PC portable
+pcwindows|un ordinateur pour mon fils qui rentre au collège
+pcwindows|un ordinateur avec Windows
+accessoiresGaming|un écran pour ma PS5
+accessoiresGaming|un casque avec micro pour Discord
+accessoiresGaming|un micro pour parler sur Discord
+accessoiresGaming|une souris pour jouer
+accessoiresGaming|un clavier pour jouer
+tablettes|une tablette avec un clavier
+liseuses|une tablette pour lire des BD
+liseuses|une liseuse avec de la lumière
+liseuses|une liseuse étanche pour la baignade
+savRetrait|je viens pour le SAV
+savRetrait|j'ai reçu un message pour venir chercher ma commande
+savRetrait|ma commande est prête ?
+savRetrait|je viens rapporter un article défectueux
+savRetrait|mon téléphone est tombé dans la piscine
+savRetrait|l'écran de ma tablette est cassé
+savRetrait|mon aspirateur fait un bruit bizarre
+savRetrait|ma montre ne s'allume plus
+savRetrait|mon imprimante ne marche plus
+savRetrait|je voudrais échanger un cadeau
+savRetrait|j'ai un bon de retrait
+savRetrait|c'est pour une livraison en magasin
+savRetrait|je viens chercher mon téléphone en réparation
+savRetrait|je voudrais transférer mes données sur mon nouveau téléphone
+caisse|je voudrais un paquet cadeau
+caisse|des piles pour une montre
+caisse|un adaptateur pour aller aux États-Unis
+caisse|des piles LR44
+adhesion|la carte Fnac c'est gratuit ?
+adhesion|je voudrais ouvrir un compte Fnac
+adhesion|payer en 3 fois sans frais
+editorial|un livre de recettes Airfryer
+editorial|le dernier tome de One Piece
+editorial|un Astérix
+editorial|des feutres
+editorial|un calendrier de l'Avent
+editorial|un coloriage
+notSold|un support de téléphone
+entree|par où je sors
+hours|vous êtes ouverts demain ?
+hours|vous fermez à quelle heure ce soir ?
+toilets|je cherche les toilettes
+parking|il y a un parking à côté ?
+electromenager|un four
+largeAppliances|une plaque à induction
+largeAppliances|un sèche-linge
+human|je ne sais pas ce que je cherche
+human|pouvez-vous m'aider

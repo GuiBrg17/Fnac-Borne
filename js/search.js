@@ -226,7 +226,9 @@ function fuzzyMatch(query, lang) {
   let best = null;
   for (const m of MATCHERS) {
     if ((lang && m.lang !== lang) || m.sound.length < 5) continue;
-    const max = m.sound.length >= 10 ? 2 : 1;
+    // Mot d'une autre langue (lang = null) : même son exact, sans faute tolérée
+    // (« compter » ressemblait à l'anglais « computer »).
+    const max = !lang ? 0 : m.sound.length >= 10 ? 2 : 1;
     for (const gram of grams) {
       // Même première lettre : évite « table » → « câble ».
       if (gram[0] !== m.sound[0]) continue;
