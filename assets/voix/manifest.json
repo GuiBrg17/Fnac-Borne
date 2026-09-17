@@ -79,7 +79,9 @@
   "Le rayon Caisses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/475a40170ac6.m4a",
   "C'est noté : un vendeur du rayon Caisses a été prévenu.": "fr/88c419ecab2c.m4a",
   "Le rayon Adhésion & financement est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/57a47664738f.m4a",
-  "C'est noté : un vendeur du rayon Adhésion & financement a été prévenu.": "fr/02cf72f305e2.m4a"
+  "C'est noté : un vendeur du rayon Adhésion & financement a été prévenu.": "fr/02cf72f305e2.m4a",
+  "Quel produit Sony ? Une télé, un casque ou une enceinte, une PlayStation, ou un appareil photo ?": "fr/5aac56462840.m4a",
+  "Quel produit Philips ? Un rasoir, une tondeuse ou une brosse à dents, une machine à café ou un airfryer, une télé, ou des ampoules Hue ?": "fr/9bcc7c8898d7.m4a"
  },
  "en": {
   "Hello and welcome to Fnac Jeanne d'Arc! Tell me what you're looking for and I'll show you the section on the map.": "en/0ebd0470a5f5.m4a",
@@ -87,6 +89,15 @@
   "Hello! What product are you looking for?": "en/ddbc05c8681f.m4a",
   "You're welcome! Enjoy your visit to Fnac.": "en/1720bd331f76.m4a",
   "Of course. Tap “Call a staff member” and someone from the team will come to help you.": "en/355e3eb2cbe0.m4a",
-  "I couldn't find that product. Try another word, or call a staff member who will come and help you.": "en/785d519916d3.m4a"
+  "I couldn't find that product. Try another word, or call a staff member who will come and help you.": "en/785d519916d3.m4a",
+  "Books, comics, school books, stationery, CDs, vinyl records and DVDs are at Fnac Wilson, 16 allées Franklin-Roosevelt, near Jean-Jaurès. Here at Fnac Jeanne d'Arc, we specialise in technology.": "en/e3f64cfe7552.m4a",
+  "LEGO, POP figures and Pokémon cards are in the staircase between floor 0 and the basement.": "en/ed925b96cea1.m4a",
+  "The entrance and exit are on floor 0, at the bottom of the map.": "en/0ceebea049ae.m4a",
+  "The microphone isn't available on this device. You can type your question.": "en/38a2eca785d9.m4a",
+  "The microphone is blocked. Allow it in the browser, or type your question.": "en/731254567967.m4a",
+  "I didn't quite catch that. Try again, or type your question.": "en/36c7792ee90e.m4a",
+  "The store is open Monday to Saturday, from 10 am to 7.30 pm. We are closed on Sundays.": "en/7aebefae9dd8.m4a",
+  "I'm sorry, there are no toilets in this store.": "en/33f99bc25ce5.m4a",
+  "We don't sell large appliances here. In the small appliances aisle, the largest item is the cordless stick vacuum.": "en/7d5e8bcb3dc5.m4a"
  }
 }
