@@ -1062,3 +1062,6 @@ audio|pas des écouteurs, un casque audio
 audio|une télé et une barre de son
 gaming|une PS5 et une manette en plus
 apple|un iPhone et une coque
+savRetrait|pas de son sur ma télé
+savRetrait|ma télé n'a pas d'image
+savRetrait|aucun son dans mon casque
