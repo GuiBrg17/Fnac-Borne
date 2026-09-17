@@ -7,6 +7,7 @@ Fabrique les voix de Jeanne : un fichier audio par phrase, publié avec le site.
 - Ne refait que les phrases nouvelles ou modifiées (assets/voix/manifest.json).
 - Contrôle chaque phrase par transcription (Whisper) : si le texte entendu
   s'éloigne du texte voulu (phrase coupée, mot avalé), on recommence.
+- Coupe le bruit que le modèle ajoute après le dernier mot (nettoyer).
 - Voix féminine uniquement : chaque langue imite une voix de femme de
   référence, et une phrase trop grave (hauteur médiane < 170 Hz) est refaite.
 """
@@ -32,7 +33,10 @@ HAUTEUR_MIN = 170   # Hz : en dessous, la voix peut sonner masculine
 # téléchargées par tools/voix/installer.sh). Pour une mise en magasin, les
 # remplacer par l'enregistrement d'une personne qui a donné son accord.
 REFERENCES = {lang: os.path.expanduser(f"~/.cache/fnac-borne/voix/references/{lang}_f1.flac") for lang in ("fr", "en", "es")}
-VOIX = "f1"   # change le nom des fichiers quand on change de voix, pour tout refabriquer
+VOIX = "f1b"   # change le nom des fichiers quand on change de voix, pour tout refabriquer
+# Réglages du modèle : réglage « B, posé », choisi par le magasin le 17/09/2026
+# parmi 4 essais (débit plus naturel que les valeurs par défaut 0.5 / 0.5 / 0.8).
+REGLAGES = dict(exaggeration=0.5, cfg_weight=0.3, temperature=0.8)
 
 
 def mots(texte):
@@ -56,11 +60,45 @@ def hauteur(wav, sr):
     return float(np.median(f0)) if len(f0) else 0.0
 
 
+def fin_de_parole(segments):
+    """Fin du dernier mot prononcé (en secondes), d'après Whisper ; None si aucun mot."""
+    mots_dits = [w for seg in segments for w in (seg.words or []) if re.search(r"\w", w.word)]
+    return mots_dits[-1].end if mots_dits else None
+
+
+def nettoyer(wav, sr, fin_mot):
+    """Coupe le bruit de fin de phrase.
+
+    Le modèle ajoute souvent, après le dernier mot, un bourdonnement qui monte
+    presque aussi fort que la voix (entendu à la fin de « Bonjour ! Quel produit
+    cherchez-vous ? »). On coupe au premier silence de 100 ms qui suit le dernier
+    mot reconnu (ou 350 ms après lui), avec un court fondu.
+    """
+    y = wav.squeeze(0).numpy()
+    if fin_mot is None:
+        return wav
+    hop = int(sr * 0.01)
+    rms = librosa.feature.rms(y=y, frame_length=hop * 2, hop_length=hop)[0]
+    db = 20 * np.log10(rms + 1e-6)
+    seuil = db.max() - 40
+    coupe = int((fin_mot + 0.35) * sr)
+    for i in range(int(fin_mot / 0.01), min(len(db) - 10, int((fin_mot + 0.6) / 0.01))):
+        if (db[i:i + 10] < seuil).all():
+            coupe = i * hop + int(sr * 0.08)
+            break
+    y = y[:min(len(y), coupe)].copy()
+    fondu = min(len(y), int(sr * 0.06))
+    y[-fondu:] *= np.linspace(1, 0, fondu)
+    return torch.from_numpy(y).unsqueeze(0)
+
+
 def main():
     phrases = json.loads(PHRASES.read_text())
     manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
     voulues = {(p["lang"], p["text"]) for p in phrases}
-    manifest = {lang: {t: f for t, f in textes.items() if (lang, t) in voulues and f == nom(lang, t)}
+    # On garde les anciennes versions tant que la nouvelle n'est pas faite :
+    # le site continue de parler pendant la fabrication.
+    manifest = {lang: {t: f for t, f in textes.items() if (lang, t) in voulues and (OUT / f).exists()}
                 for lang, textes in manifest.items()}
     a_faire = [p for p in phrases if manifest.get(p["lang"], {}).get(p["text"]) != nom(p["lang"], p["text"])
                or not (OUT / nom(p["lang"], p["text"])).exists()]
@@ -78,12 +116,16 @@ def main():
         meilleur = None
         for essai in range(1, TRIES + 1):
             torch.manual_seed(1000 + essai)
-            wav = tts.generate(texte, language_id=lang, audio_prompt_path=REFERENCES[lang]).cpu()
+            wav = tts.generate(texte, language_id=lang, audio_prompt_path=REFERENCES[lang], **REGLAGES).cpu()
+            with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as brut:
+                torchaudio.save(brut.name, wav, tts.sr)
+                segments, _ = oreille.transcribe(brut.name, language=lang, beam_size=1, word_timestamps=True)
+                segments = list(segments)
+            entendu = " ".join(seg.text for seg in segments).strip()
+            wav = nettoyer(wav, tts.sr, fin_de_parole(segments))
             wav = wav / max(wav.abs().max().item(), 1e-6) * 0.89          # crête à -1 dB
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
                 torchaudio.save(tmp.name, wav, tts.sr)
-                segments, _ = oreille.transcribe(tmp.name, language=lang, beam_size=1)
-                entendu = " ".join(s.text for s in segments).strip()
                 score = ressemblance(texte, entendu)
                 duree = wav.shape[-1] / tts.sr
                 hz = hauteur(wav, tts.sr)
@@ -106,6 +148,11 @@ def main():
         print(f"{n}/{len(a_faire)} {ligne}", flush=True)
 
     REPORT.write_text("\n".join(rapport) + "\n")
+    # Fichiers des anciennes voix, remplacés : on les supprime.
+    gardes = {f for textes in manifest.values() for f in textes.values()}
+    for ancien in OUT.glob("*/*.m4a"):
+        if f"{ancien.parent.name}/{ancien.name}" not in gardes:
+            ancien.unlink()
     faibles = [l for l in rapport if l.startswith("[À ÉCOUTER]")]
     print(f"\nTerminé : {len(rapport)} phrases, {len(faibles)} à écouter (voir tools/voix/controle.txt)", flush=True)
 
