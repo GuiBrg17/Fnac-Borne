@@ -30,7 +30,10 @@ export const normalize = (text) => text.toLowerCase()
   // « cent quarante-quatre hertz » doit rejoindre « écran 144 hz »
   .replace(/\bhertz\b/g, "hz")
   .normalize("NFD").replace(/[̀-ͯ]/g, "")
-  .replace(/[^a-z0-9]+/g, " ").trim();
+  .replace(/[^a-z0-9]+/g, " ")
+  // « Wi-Fi », « wi fi » et « wifi » : une seule écriture
+  .replace(/\bwi fi\b/g, "wifi")
+  .trim();
 
 // À l'oral, la reconnaissance vocale écrit les nombres en lettres :
 // « je veux une PS cinq », « une télé soixante-cinq pouces », « la Switch deux ».
@@ -213,7 +216,12 @@ function fuzzyMatch(query, lang) {
   const tokens = query.split(" ");
   const grams = new Set();
   for (let n = 1; n <= 3; n++) {
-    for (let i = 0; i + n <= tokens.length; i++) grams.add(phonetic(tokens.slice(i, i + n).join("")));
+    for (let i = 0; i + n <= tokens.length; i++) {
+      const part = tokens.slice(i, i + n);
+      // Des petits mots collés ne font pas un produit : « est-ce que » ressemblait à « chèque ».
+      if (n > 1 && part.every((word) => word.length <= 3)) continue;
+      grams.add(phonetic(part.join("")));
+    }
   }
   let best = null;
   for (const m of MATCHERS) {
@@ -246,13 +254,13 @@ const OBJECT = "(?:mon|ma|mes|ce|cet|cette|ces|le|la|les|l|un|une|des|son|sa|ses
 const PROBLEM_PATTERNS = [
   // « il marche plus », « ne s'allume pas », « ne charge toujours pas »
   // (mais pas « charge plus vite », « tient plus longtemps », « pas cher »)
-  /\b(?:marche|marchent|marchait|fonctionne|fonctionnent|fonctionnait|allume|allument|allumait|charge|chargent|recharge|demarre|demarrent|connecte|connectent|affiche|repond|lit|lisent|capte|detecte|reconnait|synchronise|imprime|aspire|chauffe|sonne|ouvre|eteint|tient|tourne|lance|s allume|s eteint|s ouvre|s affiche|se connecte|se charge|se lance)(?: [a-z]+)? (?:pas|plus)\b(?! (?:vite|rapide|rapidement|longtemps|fort|puissant|de|d|que|grand|cher|chere|mal|trop|beaucoup|chaud|lourd|leger|petit|gros|loin|facilement|bien|longue)\b)/,
-  /\b(?:n a plus|n y a plus|n ai plus|plus aucun|plus aucune|plus rien|rien ne marche|rien ne fonctionne|a plus de (?:son|image|reseau|connexion|wifi|bluetooth|signal))\b/,
+  /\b(?:marche|marchent|marchait|fonctionne|fonctionnent|fonctionnait|allume|allument|allumait|charge|chargent|recharge|demarre|demarrent|connecte|connectent|affiche|repond|lit|lisent|capte|detecte|reconnait|synchronise|imprime|aspire|chauffe|sonne|seche|souffle|rase|lave|refroidit|coule|ouvre|eteint|tient|tourne|lance|s allume|s eteint|s ouvre|s affiche|se connecte|se charge|se lance)(?: [a-z]+)? (?:pas|plus)\b(?! (?:vite|rapide|rapidement|longtemps|fort|puissant|de|d|que|grand|cher|chere|mal|trop|beaucoup|chaud|lourd|leger|petit|gros|loin|facilement|bien|longue)\b)/,
+  /\b(?:ne fait plus|fait plus rien|n a plus|n y a plus|n ai plus|plus aucun|plus aucune|plus rien|rien ne marche|rien ne fonctionne|a plus de (?:son|image|reseau|connexion|wifi|bluetooth|signal))\b/,
   // état de l'appareil
   /\b(?:casse|cassee|casses|cassees|pete|petee|brise|brisee|fissure|fissuree|fele|felee|raye|rayee|rayure|rayures|abime|abimee|abimes|endommage|endommagee|defectueux|defectueuse|hs|bloque|bloquee|fige|figee|gele|oxyde|oxydee|gonfle|gonflee|foutu|foutue|bousille|bousillee|flingue|flinguee|explose|explosee|crame|cramee|mouille|mouillee|noye|noyee|panne|pannes|bug|bugue|beug|beugue|freeze|drift|fuit|fuite|gresille|gresillent|gresillement|crepite|surchauffe|pixel mort|pixels morts)\b/,
   /\b(?:(?:est|sont|s est) grill(?:e|ee|es)|(?:est|suis|a|ai|fait|faire|fais) tomb(?:e|ee|es|er)|tombe (?:par terre|dans|a l eau))\b/,
   /\b(?:ca|il|elle|ils|elles|tout) (?:rame|plante|bug|bugue|beugue|freeze|lag|lague|saute|coupe|redemarre)\b/,
-  /\b(?:bruit bizarre|bruit anormal|fait du bruit|fait un bruit|chauffe trop|chauffe beaucoup|des lignes|une ligne|ecran noir|ecran blanc|ecran bleu|ecran fissure|dans l eau|probleme avec|souci avec|un probleme|un souci|code oublie|mot de passe oublie|oublie (?:mon|le|ma) (?:code|mot de passe|schema|identifiant)|code pin|code puk|compte bloque|icloud bloque)\b/,
+  /\b(?:il manque|manque une piece|manque des pieces|piece manquante|trompe de|erreur de modele|pas le bon modele|mauvais produit|mauvais article|n arrive plus a|arrive plus a|n arrive pas a (?:allumer|charger|connecter|demarrer|installer|configurer)|perdu mes (?:photos|donnees|contacts|fichiers|messages)|efface mes|supprime mes (?:photos|donnees)|bruit bizarre|bruit anormal|fait du bruit|fait un bruit|chauffe trop|chauffe beaucoup|des lignes|une ligne|ecran noir|ecran blanc|ecran bleu|ecran fissure|dans l eau|probleme avec|souci avec|un probleme|un souci|code oublie|mot de passe oublie|oublie (?:mon|le|ma) (?:code|mot de passe|schema|identifiant)|code pin|code puk|compte bloque|icloud bloque)\b/,
   // retours, échanges, remboursements
   /\b(?:sav|service apres vente|apres vente|reparation|reparations|reparer|repare|reparee|rembourse|remboursement|garantie|pour un retour|faire un retour|retour (?:de|d|du|pour|sur)|s eteint tout|s allume tout|s eteint (?:sans arret|tout le temps)|se coupe|s arrete tout|redemarre tout)\b(?! (?:5|2|3|ans?)\b)/,
   new RegExp(`\\b(?:rendre|rapporter|ramener|retourner|renvoyer|echanger|deposer|recuperer|reprendre|reparer|rembourser)(?: [a-z]+)? ${OBJECT}\\b(?! monnaie)`),
@@ -272,7 +280,7 @@ const PROBLEM_PATTERNS = [
   /\b(?:mi pedido|mi paquete|pedido online|pedi por internet|compre por internet)\b/
 ];
 // Mots composés qui contiennent un mot de panne sans en être une.
-const NOT_PROBLEMS = /\b(?:casse tete|casse tetes|grille pain|tombe pile|rendre la monnaie|rendre service)\b/g;
+const NOT_PROBLEMS = /\b(?:casse tete|casse tetes|grille pain|tombe pile|rendre la monnaie|rendre service|rendre (?:\w+ ){0,2}(?:connecte|connectee|intelligent|intelligente|compatible|smart|sans fil))\b/g;
 
 export function findProblem(text) {
   const plain = normalize(text).replace(NOT_PROBLEMS, " ");
@@ -302,17 +310,20 @@ export function findZone(text, lang) {
 }
 
 // Questions pratiques (horaires, toilettes, parking) : ni produit, ni rayon.
-const INFO_MATCHERS = Object.fromEntries(
-  Object.entries(INFO).map(([name, entry]) => [
-    name,
-    Object.values(entry.keywords).flat().map(phraseRe)
-  ]));
+const INFO_MATCHERS = Object.entries(INFO).flatMap(([name, entry]) =>
+  Object.values(entry.keywords).flat().map((word) => ({ name, re: phraseRe(word), length: clean(word).length })));
 
 export function findInfo(text) {
   const query = clean(text);
   // « mon colis est ouvert » ou « l'appli s'est fermée » : c'est un souci, pas les horaires.
   if (!query || findProblem(text)) return null;
-  return Object.keys(INFO_MATCHERS).find((name) => INFO_MATCHERS[name].some((re) => re.test(query))) || null;
+  const hits = INFO_MATCHERS.filter((m) => m.re.test(query)).sort((a, b) => b.length - a.length);
+  if (!hits.length) return null;
+  // Un produit plus précis dans la même phrase l'emporte : « un support pour la
+  // voiture » n'est pas une question de parking, « un casque ouvert » pas d'horaires.
+  const product = exactMatches(query, null)[0];
+  if (product && clean(product.word).length > hits[0].length) return null;
+  return hits[0].name;
 }
 
 export function findIntent(text) {
