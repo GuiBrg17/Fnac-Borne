@@ -1559,6 +1559,25 @@ if ("speechSynthesis" in window) {
   window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
 }
 
+// --- Mise à jour automatique ---------------------------------------------------
+// La borne reste ouverte des jours entiers : sans cela, une nouvelle version publiée
+// n'arriverait qu'au prochain rechargement manuel. Toutes les 30 minutes, à l'écran
+// d'accueil seulement, on regarde si index.html annonce un autre ?v=N. On ne recharge
+// que si la nouvelle version se télécharge bien (pas de page d'erreur si le wifi coupe).
+async function checkForUpdate() {
+  if (state.screen !== "idle" || els.settings.open) return;
+  try {
+    const page = await fetch(`index.html?check=${Date.now()}`, { cache: "no-store" });
+    if (!page.ok) return;
+    const published = (await page.text()).match(/js\/app\.js(\?v=\d+)/);
+    if (!published || published[1] === VERSION) return;
+    const app = await fetch(`js/app.js${published[1]}`, { cache: "no-store" });
+    if (!app.ok || state.screen !== "idle") return;
+    location.reload();
+  } catch { /* hors ligne : on garde la version en cours */ }
+}
+setInterval(checkForUpdate, 30 * 60 * 1000);
+
 // --- Démarrage ---
 buildPlans();
 const clipManifestReady = loadClipManifest();
