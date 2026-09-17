@@ -4,6 +4,7 @@ Fabrique les voix de Jeanne : un fichier audio par phrase, publié avec le site.
     ~/.cache/fnac-borne/voix/venv/bin/python tools/voix/generer.py
 
 - Lit tools/voix/phrases.json (node tools/voix/phrases.mjs).
+- LANGUES=fr pour ne fabriquer qu'une langue (ex. le français en priorité).
 - Ne refait que les phrases nouvelles ou modifiées (assets/voix/manifest.json).
 - Contrôle chaque phrase par transcription (Whisper) : si le texte entendu
   s'éloigne du texte voulu (phrase coupée, mot avalé), on recommence.
@@ -118,8 +119,13 @@ def nettoyer(wav, sr, fin_mot):
 
 def main():
     phrases = json.loads(PHRASES.read_text())
+    # LANGUES=fr : ne fabriquer que ces langues (les autres gardent leurs fichiers).
+    langues = os.environ.get("LANGUES")
+    a_garder = list(phrases)
+    if langues:
+        phrases = [p for p in phrases if p["lang"] in langues.split(",")]
     manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
-    voulues = {(p["lang"], p["text"]) for p in phrases}
+    voulues = {(p["lang"], p["text"]) for p in a_garder}
     # On garde les anciennes versions tant que la nouvelle n'est pas faite :
     # le site continue de parler pendant la fabrication.
     manifest = {lang: {t: f for t, f in textes.items() if (lang, t) in voulues and (OUT / f).exists()}
