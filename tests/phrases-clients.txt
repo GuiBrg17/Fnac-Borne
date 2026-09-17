@@ -1,5 +1,5 @@
 # Phrases de clients, telles qu'on les dit à la borne.
-# Une ligne = réponse attendue|phrase. Réponse : un rayon (ZONES), une info (INFO),
+# Une ligne = réponse attendue|phrase (|en ou |es à la fin pour une autre langue). Réponse : un rayon (ZONES), une info (INFO),
 # une intention (hello, thanks, human) ou null (rien à trouver). Lancer : node tests/phrases.test.mjs
 telephonie|je cherche un téléphone pas trop cher pour ma mère
 telephonie|un Samsung A55
@@ -574,3 +574,167 @@ editorial|un cahier de vacances
 editorial|un dictionnaire
 editorial|des vinyles
 editorial|des films en DVD
+
+# Touristes : anglais (|en) et espagnol (|es)
+audio|where can I find headphones|en
+audio|I'm looking for a bluetooth speaker|en
+audio|noise cancelling headphones|en
+audio|some wireless earbuds|en
+audio|a record player|en
+audio|a soundbar for my TV|en
+apple|do you sell iPhones|en
+apple|an iPhone charger|en
+apple|a USB-C cable for my iPhone|en
+apple|AirPods|en
+apple|a MacBook|en
+apple|an Apple Watch strap|en
+apple|an iPad case|en
+telephonie|a phone charger|en
+telephonie|a Samsung phone|en
+telephonie|a power bank|en
+telephonie|a screen protector for Samsung|en
+telephonie|a SIM card|en
+telephonie|a prepaid SIM card for France|en
+telephonie|a phone case|en
+caisse|a travel adapter for UK plugs|en
+caisse|a European plug adapter|en
+caisse|batteries|en
+caisse|where do I pay|en
+caisse|tax free shopping|en
+caisse|a gift card|en
+gaming|a Nintendo Switch game|en
+gaming|a PS5|en
+gaming|an Xbox controller|en
+gaming|video games|en
+gaming|a gaming headset for PS5|en
+accessoiresGaming|a gaming mouse|en
+accessoiresGaming|a mechanical keyboard|en
+accessoiresGaming|a computer monitor|en
+photo|a camera|en
+photo|an SD card for my camera|en
+photo|a GoPro|en
+photo|a tripod|en
+photo|instant camera film|en
+photo|a drone|en
+tv|a TV|en
+tv|a projector|en
+tv|a TV remote|en
+electromenager|a hair straightener|en
+electromenager|an electric toothbrush|en
+electromenager|a vacuum cleaner|en
+electromenager|a kettle|en
+electromenager|a Nespresso machine|en
+electromenager|a shaver|en
+electromenager|an air fryer|en
+informatique|a USB stick|en
+informatique|an HDMI cable|en
+informatique|a printer|en
+informatique|an external hard drive|en
+informatique|an extension lead|en
+pcwindows|a laptop|en
+pcwindows|a Windows laptop|en
+pcwindows|a laptop bag|en
+tablettes|an Android tablet|en
+liseuses|a Kobo e-reader|en
+trottinettes|an electric scooter|en
+trottinettes|a bike helmet|en
+objets|a smartwatch|en
+objets|a Garmin watch|en
+objets|a smart plug|en
+jeuxSociete|a board game|en
+jeuxSociete|a jigsaw puzzle|en
+jeuxSociete|playing cards|en
+escalier|Pokémon cards|en
+escalier|LEGO|en
+escalier|a Funko Pop|en
+editorial|books in English|en
+editorial|English books|en
+editorial|manga|en
+editorial|vinyl records|en
+savRetrait|my phone is broken|en
+savRetrait|I need to return this|en
+savRetrait|I have an order to collect|en
+savRetrait|my laptop screen is cracked|en
+savRetrait|can you fix my phone|en
+savRetrait|repair service|en
+savRetrait|my headphones stopped working|en
+hours|what are your opening hours|en
+hours|are you open on Sunday|en
+toilets|is there a toilet|en
+elevator|is there a lift|en
+human|can I talk to someone|en
+human|I need help|en
+entree|where is the exit|en
+audio|¿dónde están los altavoces?|es
+audio|unos auriculares con cancelación de ruido|es
+audio|un tocadiscos|es
+apple|un iPhone 16|es
+apple|un cargador de iPhone|es
+apple|unos AirPods|es
+telephonie|una funda para el móvil|es
+telephonie|una tarjeta SIM|es
+telephonie|una batería externa|es
+caisse|un adaptador de enchufe|es
+caisse|pilas|es
+caisse|¿dónde se paga?|es
+gaming|una PS5|es
+gaming|juegos de Switch|es
+gaming|un mando de Xbox|es
+photo|una cámara de fotos|es
+photo|una GoPro|es
+photo|una tarjeta SD|es
+tv|un televisor|es
+tv|un proyector|es
+electromenager|un secador de pelo|es
+electromenager|una plancha de pelo|es
+electromenager|un cepillo de dientes eléctrico|es
+electromenager|una freidora de aire|es
+electromenager|un aspirador robot|es
+informatique|un pendrive|es
+informatique|una impresora|es
+informatique|un cable HDMI|es
+pcwindows|un portátil|es
+trottinettes|un patinete eléctrico|es
+objets|un reloj inteligente|es
+jeuxSociete|un juego de mesa|es
+jeuxSociete|un puzle|es
+escalier|cartas Pokémon|es
+editorial|libros en español|es
+savRetrait|mi móvil está roto|es
+savRetrait|quiero devolver esto|es
+savRetrait|vengo a recoger un pedido|es
+savRetrait|mi portátil no carga|es
+hours|¿a qué hora cierran?|es
+toilets|¿hay baño?|es
+elevator|¿hay ascensor?|es
+human|necesito ayuda|es
+
+# Marques
+telephonie|un chargeur Anker
+telephonie|une coque Spigen
+telephonie|un téléphone Blackview
+objets|une montre Coros
+gaming|une manette Nacon
+gaming|un Backbone pour mon téléphone
+accessoiresGaming|un boîtier NZXT
+accessoiresGaming|de la RAM Kingston Fury
+electromenager|un aspirateur Shark
+electromenager|une machine Sage
+informatique|une imprimante Epson
+informatique|une imprimante Brother
+informatique|un SSD Samsung
+liseuses|une PocketBook
+trottinettes|une trottinette Dualtron
+trottinettes|une Navee
+photo|un Leica
+photo|un trépied Manfrotto
+photo|un sac Peak Design
+tv|une télé TCL
+tv|une TV Thomson
+tv|un support mural Vogels
+audio|une enceinte Bowers & Wilkins
+audio|une platine Technics
+audio|un casque Sony
+jeuxSociete|un jeu Goliath
+escalier|une figurine Banpresto
+escalier|un Gundam

@@ -276,7 +276,7 @@ const PROBLEM_PATTERNS = [
   // espagnol
   /\bno (?:me |se |le )?(?:funciona|funcionan|enciende|encienden|carga|cargan|arranca|conecta|responde|va|sirve|suena|lee|enciende)\b/,
   /\b(?:roto|rota|rotos|rotas|estropeado|estropeada|averiado|averiada|danado|danada|defectuoso|defectuosa|bloqueado|bloqueada|se ha caido|se me cayo|se cayo|mojado|mojada|pantalla rota)\b/,
-  /\b(?:devolver|cambiar|reparar|arreglar|recoger|reembolsar)(?: [a-z]+)? (?:mi|mis|este|esta|estos|estas)\b/,
+  /\b(?:devolver|cambiar|reparar|arreglar|recoger|reembolsar)(?: [a-z]+)? (?:mi|mis|este|esta|estos|estas|esto|eso|lo|la|el)\b|\b(?:devolverlo|devolverla|devolucion)\b/,
   /\b(?:mi pedido|mi paquete|pedido online|pedi por internet|compre por internet)\b/
 ];
 // Mots composés qui contiennent un mot de panne sans en être une.

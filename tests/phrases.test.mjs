@@ -5,14 +5,14 @@ import { findZone, findIntent, findInfo } from "../js/search.js";
 
 const lines = readFileSync(new URL("./phrases-clients.txt", import.meta.url), "utf8")
   .split("\n").map((line) => line.trim()).filter((line) => line && !line.startsWith("#"));
-// Langue devinée par les premiers mots (les phrases sont surtout en français).
+// Langue : troisième colonne facultative (|en, |es), sinon devinée par les premiers mots.
 const langOf = (text) => /^(a|an|my|i|where|what|is|headphones)\b/i.test(text) ? "en"
   : /^(un|una|unos|mi|el|la)\b.*\b(móvil|mando|funda|cafetera|tele|cargador|auriculares)\b/i.test(text) && !/[èàù]/.test(text) ? "es" : "fr";
 
 let failures = 0;
 for (const line of lines) {
-  const [expected, text] = line.split("|");
-  const lang = langOf(text);
+  const [expected, text, given] = line.split("|");
+  const lang = given || langOf(text);
   const got = findInfo(text) || findZone(text, lang) || findIntent(text) || "null";
   if (got !== expected) {
     failures++;

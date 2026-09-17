@@ -393,6 +393,10 @@ const clarifyCases = [
   ["fr", "un aspirateur robot", "electromenager"],
   ["fr", "une machine à café", "?machine à café"],
   ["en", "a charger", "?chargeur"],
+  ["fr", "un Sony", "?sony"],
+  ["fr", "je cherche du Philips", "?philips"],
+  ["fr", "une télé Sony", "tv"],
+  ["fr", "un rasoir Philips", "electromenager"],
   ["es", "una batería", "?batterie"]
 ];
 // Réponses du client à la question (au micro) : [mot vague, réponse, rayon choisi]
