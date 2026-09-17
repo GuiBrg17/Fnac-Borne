@@ -1,0 +1,332 @@
+[OK ] en 0.86 210Hz  4.6s essai 1 | Hello and welcome to Fnac Jeanne d'Arc! Tell me what you're looking for and I'll show you the section on the map.
+      entendu : Hello and welcome to Phenac Gene Dark. Tell me what you're looking for and I'll show you the section on the map.
+[OK ] en 1.00 225Hz  3.1s essai 1 | Sure, let's continue in English. What are you looking for?
+      entendu : Sure, let's continue in English. What are you looking for?
+[OK ] en 1.00 205Hz  2.2s essai 1 | Hello! What product are you looking for?
+      entendu : Hello, what product are you looking for?
+[OK ] en 1.00 235Hz  2.6s essai 1 | You're welcome! Enjoy your visit to Fnac.
+      entendu : You're welcome. Enjoy your visit to Fnac.
+[OK ] en 1.00 223Hz  4.4s essai 1 | Of course. Tap “Call a staff member” and someone from the team will come to help you.
+      entendu : Of course, tap call a staff member and someone from the team will come to help you.
+[OK ] en 1.00 205Hz  4.9s essai 1 | I couldn't find that product. Try another word, or call a staff member who will come and help you.
+      entendu : I couldn't find that product. Try another word or call a staff member who will come and help you.
+[À ÉCOUTER] en 0.79 220Hz 12.1s essai 3 | Books, comics, school books, stationery, CDs, vinyl records and DVDs are at Fnac Wilson, 16 allées Franklin-Roosevelt, near Jean-Jaurès. Here at Fnac Jeanne d'Arc, we specialise in technology.
+      entendu : Books, comics, school books, stationery, CDs, vinyl records and DVDs are at Fennec Wilson, 16 Elise Franklin Roosevelt, near Jean Jaurès. Here at Fennec Jean Dark, we specialize in technology.
+[OK ] en 0.94 216Hz  5.2s essai 1 | LEGO, POP figures and Pokémon cards are in the staircase between floor 0 and the basement.
+      entendu : Lego, Pop figures, and Pokemon cards are in the staircase between Floor Zero and the basement.
+[OK ] en 0.93 216Hz  3.4s essai 1 | The entrance and exit are on floor 0, at the bottom of the map.
+      entendu : The entrance and exit are on floor zero at the bottom of the map.
+[OK ] en 1.00 223Hz  4.4s essai 1 | The microphone isn't available on this device. You can type your question.
+      entendu : The microphone isn't available on this device. You can type your question.
+[OK ] en 1.00 224Hz  3.9s essai 1 | The microphone is blocked. Allow it in the browser, or type your question.
+      entendu : The microphone is blocked. Allow it in the browser or type your question.
+[OK ] en 1.00 235Hz  4.9s essai 1 | I didn't quite catch that. Try again, or type your question.
+      entendu : I didn't quite catch that. Try again or type your question.
+[OK ] en 0.83 221Hz  6.3s essai 2 | The store is open Monday to Saturday, from 10 am to 7.30 pm. We are closed on Sundays.
+      entendu : The store is open Monday to Saturday from 10am to 7.30pm. We are closed on Sundays.
+[OK ] en 1.00 203Hz  2.3s essai 1 | I'm sorry, there are no toilets in this store.
+      entendu : I'm sorry, there are no toilets in this store.
+[OK ] en 1.00 214Hz  6.4s essai 1 | We don't sell large appliances here. In the small appliances aisle, the largest item is the cordless stick vacuum.
+      entendu : We don't sell large appliances here. In the small appliances aisle, the largest item is the cordless stick vacuum.
+[OK ] en 1.00 213Hz  6.1s essai 1 | Yes, there is a lift for anyone who needs it. Tap “Call a staff member” and a member of the team will take you there.
+      entendu : Yes, there is a lift for anyone who needs it. Tap call a staff member and a member of the team will take you there.
+[OK ] en 0.96 222Hz  6.2s essai 1 | Sorry, this store doesn't sell that product. You can order it on fnac.com, or ask a member of staff for advice.
+      entendu : Sorry, this store doesn't sell that product. You can order it on finac.com or ask a member of staff for advice.
+[OK ] en 0.81 218Hz  3.2s essai 1 | The store has no car park. You'll need to park in the neighbourhood.
+      entendu : This door has no car park. You'll need to park in the
+[OK ] en 0.94 210Hz  4.7s essai 1 | What kind? Headphones for music, a gaming headset, a VR headset, or a bike and scooter helmet?
+      entendu : What kind? Headphones for music, a gaming headset, a vor headset, or a bike and scooter helmet?
+[OK ] en 1.00 215Hz  6.3s essai 1 | A charger for which device? An Android phone, an iPhone or Apple product, a laptop, or a scooter?
+      entendu : a charger for which device, an Android phone, an iPhone or Apple product, a laptop or a scooter.
+[OK ] en 0.91 213Hz  6.4s essai 1 | Which cable? For a phone, for an iPhone, an HDMI, USB or network cable for a computer or TV, or an audio cable?
+      entendu : Which cable for a phone, for an iPhone, an iDemi, UC, or network cable for a computer or TV, or an audio cable?
+[OK ] en 1.00 232Hz  4.4s essai 1 | Which screen? A computer monitor, a TV, or a phone screen protector?
+      entendu : which screen, a computer monitor, a TV or a phone screen protector?
+[OK ] en 0.88 239Hz  4.4s essai 1 | Which watch? An Apple Watch, or another smartwatch like Samsung or Garmin?
+      entendu : Which watch? An Apple Watch or another smart watch like Samsung or Garmin?
+[OK ] en 1.00 217Hz  5.6s essai 1 | Which tablet? An iPad, an Android tablet like Samsung, or an e-reader for books?
+      entendu : Which tablet? An iPad? An Android tablet like Samsung or an e-reader for books?
+[OK ] en 0.90 233Hz  3.7s essai 1 | Which computer? A Windows PC, a Mac, or a gaming PC?
+      entendu : a Windows PC, a Mac, or a gaming PC?
+[OK ] en 1.00 223Hz  3.6s essai 1 | A keyboard for what? For a computer, or for an iPad?
+      entendu : A keyboard for what? For a computer or for an iPad?
+[OK ] en 1.00 219Hz  4.9s essai 1 | A case for which device? An iPhone, an Android phone, or a tablet?
+      entendu : a case for which device, an iPhone, an Android phone, or a tablet.
+[OK ] en 1.00 210Hz  4.3s essai 1 | What kind of game? A video game, a board game, or trading cards like Pokémon?
+      entendu : What kind of game, a video game, a board game, or trading cards like Pokemon?
+[OK ] en 0.93 271Hz  5.8s essai 1 | Which battery? A phone power bank, AA-type batteries, a laptop, camera or scooter battery?
+      entendu : Which battery? A phone power bank? A type batteries? A laptop? Camera? Or scooter battery?
+[OK ] en 1.00 221Hz  6.9s essai 1 | Which speaker? A Bluetooth or hi-fi speaker for music, or a smart speaker with a voice assistant like Alexa?
+      entendu : Which speaker? A Bluetooth or Hi-Fi speaker for music or a smart speaker with a voice assistant like Alexa?
+[OK ] en 1.00 229Hz  5.4s essai 1 | Which microphone? For filming or podcasts, for gaming or streaming, or for karaoke?
+      entendu : Which microphone for filming or podcasts for gaming or streaming or for karaoke?
+[OK ] en 0.89 210Hz  6.4s essai 1 | Which adapter? A travel plug adapter, an HDMI or USB adapter, an audio jack adapter, or for an iPhone?
+      entendu : which adapter, a travel plug adapter, an odmy or usp adapter, an audio jack adapter or for an iPhone.
+[OK ] en 1.00 230Hz  5.9s essai 1 | Which vacuum? A cordless stick or robot vacuum, or a cylinder, Dyson or steam cleaner?
+      entendu : Which vacuum? A cordless stick or robot vacuum? Or a cylinder, Dyson or steam cleaner?
+[OK ] en 1.00 227Hz  7.4s essai 1 | Which coffee machine? A capsule machine like Nespresso, a bean-to-cup or espresso machine, or a filter coffee maker?
+      entendu : Which coffee machine? A capsule machine like Nespresso, a bean to cup or espresso machine, or a filter coffee maker?
+[OK ] en 1.00 227Hz  5.2s essai 1 | Which Sony product? A TV, headphones or a speaker, a PlayStation, or a camera?
+      entendu : which Sony product, a TV, headphones, or a speaker, a PlayStation or a camera?
+[OK ] en 0.95 239Hz  6.7s essai 1 | Which Philips product? A shaver, trimmer or toothbrush, a coffee machine or air fryer, a TV, or Hue bulbs?
+      entendu : which Phillips product. A shaver, trimmer or toothbrush, a coffee machine or air fryer, a TV or hue bulbs.
+[OK ] en 0.91 224Hz  5.7s essai 1 | Which card? A gift card, the Fnac membership card, a memory card, Pokémon cards, or a graphics card?
+      entendu : Which card? A gift card, the snack membership card, a memory card, Pokémon cards, or graphics card?
+[OK ] en 1.00 239Hz  3.9s essai 1 | Before you go: did you find what you were looking for?
+      entendu : Before you go, did you find what you were looking for?
+[OK ] en 1.00 228Hz  1.6s essai 1 | Thank you! Enjoy your visit.
+      entendu : Thank you. Enjoy your visit.
+[OK ] en 1.00 213Hz  3.7s essai 1 | Thank you for telling us. A member of staff can help: tap “Call a staff member”.
+      entendu : Thank you for telling us. A member of staff can help. Tap call a staff member.
+[OK ] en 1.00 214Hz  8.1s essai 1 | Accessibility mode: larger text and stronger contrast. If you can't use the stairs, there is a lift: tap “Call a staff member” and we'll take you there.
+      entendu : accessibility mode, larger text and stronger contrast. If you can't use the stairs, there is a lift, tap, call a staff member and we'll take you there.
+[OK ] en 1.00 219Hz  1.0s essai 1 | Standard display.
+      entendu : Standard display.
+[OK ] en 1.00 208Hz  3.3s essai 1 | Done: a staff member has been notified and is on their way.
+      entendu : done, a staff member has been notified and is on their way.
+[OK ] en 0.87 214Hz  4.1s essai 1 | Android phones is right here on floor 0. I'm showing it on the map.
+      entendu : Android phones is right here on floor zero. I'm shelling it on the map.
+[OK ] en 1.00 210Hz  3.6s essai 1 | Done: a staff member from Android phones has been notified.
+      entendu : Done, a staff member from Android phones has been notified.
+[OK ] en 0.87 210Hz  3.9s essai 1 | Connected devices is right here on floor 0. I'm showing it on the map.
+      entendu : Connected devices is right here on Flure Zero. I'm showing it on the map.
+[OK ] en 1.00 220Hz  3.7s essai 1 | Done: a staff member from Connected devices has been notified.
+      entendu : Done, a staff member from Connected Devices has been notified.
+[OK ] en 0.96 209Hz  4.5s essai 1 | Done: a staff member from Stairs · LEGO, POP & Pokémon has been notified.
+      entendu : done, a staff member from Stairs, LEGO Pop and Pokemon has been notified.
+[OK ] en 1.00 216Hz  4.1s essai 1 | Done: a staff member from Entrance / Exit has been notified.
+      entendu : Done. A staff member from entrance exit has been notified.
+[OK ] en 1.00 210Hz  4.0s essai 1 | Video games is in the basement. Take the stairs down, then follow the map.
+      entendu : Video games is in the basement. Take the stairs down, then follow the map.
+[OK ] en 1.00 237Hz  3.1s essai 1 | Done: a staff member from Video games has been notified.
+      entendu : Done, a staff member from Video Games has been notified.
+[OK ] en 0.97 228Hz  6.2s essai 1 | Gaming PCs & accessories is in the basement. Take the stairs down, then follow the map.
+      entendu : Gaming PCs and accessories is in the basement. Take the stairs down, then follow the map.
+[OK ] en 0.96 207Hz  4.5s essai 1 | Done: a staff member from Gaming PCs & accessories has been notified.
+      entendu : Done! A staff member from Gaming PCs and Accessories has been notified.
+[OK ] en 0.93 211Hz  4.2s essai 1 | Ink cartridges is in the basement. Take the stairs down, then follow the map.
+      entendu : In cartridges is in the basement. Take the stairs down then follow the map.
+[OK ] en 0.90 202Hz  3.6s essai 1 | Done: a staff member from Ink cartridges has been notified.
+      entendu : Done, a staff member from INC cartridges has been notified.
+[OK ] en 1.00 232Hz  4.5s essai 1 | Home appliances is in the basement. Take the stairs down, then follow the map.
+      entendu : Home appliances is in the basement. Take the stairs down, then follow the map.
+[OK ] en 1.00 203Hz  3.8s essai 1 | Done: a staff member from Home appliances has been notified.
+      entendu : Done, a staff member from home appliances has been notified.
+[OK ] en 0.97 218Hz  5.0s essai 1 | Printers, cables & storage is in the basement. Take the stairs down, then follow the map.
+      entendu : Printers cables and storage is in the basement. Take the stairs down, then follow the map.
+[OK ] en 0.96 207Hz  4.4s essai 1 | Done: a staff member from Printers, cables & storage has been notified.
+      entendu : done, a staff member from printers, cables, and storage has been notified.
+[OK ] en 1.00 202Hz  4.3s essai 1 | Android tablets is in the basement. Take the stairs down, then follow the map.
+      entendu : Android Tablets is in the basement. Take the stairs down, then follow the map.
+[OK ] en 1.00 213Hz  3.4s essai 1 | Done: a staff member from Android tablets has been notified.
+      entendu : Done, a staff member from Android Tablets has been notified.
+[OK ] en 0.89 209Hz  3.5s essai 1 | E-readers is in the basement. Take the stairs down, then follow the map.
+      entendu : eReaders is in the basement. Take the stairs down, then follow the map.
+[OK ] en 1.00 215Hz  3.5s essai 1 | Done: a staff member from E-readers has been notified.
+      entendu : Done, a staff member from e-readers has been notified.
+[OK ] en 0.90 214Hz  4.4s essai 1 | Windows PCs is in the basement. Take the stairs down, then follow the map.
+      entendu : Windows PC's is in the basement. Take the stairs down, then follow the map.
+[OK ] en 0.90 219Hz  3.6s essai 1 | Done: a staff member from Windows PCs has been notified.
+      entendu : Done, a staff number from Windows PCs has been notified.
+[OK ] en 1.00 220Hz  4.5s essai 1 | Urban mobility is in the basement. Take the stairs down, then follow the map.
+      entendu : Urban Mobility is in the basement. Take the stairs down, then follow the map.
+[OK ] en 1.00 218Hz  3.7s essai 1 | Done: a staff member from Urban mobility has been notified.
+      entendu : Done. A staff member from Urban Mobility has been notified.
+[OK ] en 0.97 202Hz  5.2s essai 1 | Photo & microphones is in the basement. Take the stairs down, then follow the map.
+      entendu : Photo and microphones is in the basement. Take the stairs down, then follow the map.
+[OK ] en 0.95 229Hz  4.0s essai 1 | Done: a staff member from Photo & microphones has been notified.
+      entendu : Done, a staff member from photo and microphones has been notified.
+[OK ] en 0.96 229Hz  3.7s essai 1 | TV is in the basement. Take the stairs down, then follow the map.
+      entendu : and TV is in the basement. Take the stairs down, then follow the map.
+[OK ] en 0.95 215Hz  3.3s essai 1 | Done: a staff member from TV has been notified.
+      entendu : A Done, a staff member from TV has been notified.
+[OK ] en 1.00 215Hz  3.9s essai 1 | Audio is in the basement. Take the stairs down, then follow the map.
+      entendu : Audio is in the basement, take the stairs down, then follow the map.
+[OK ] en 1.00 215Hz  3.3s essai 1 | Done: a staff member from Audio has been notified.
+      entendu : Done, a staff member from audio has been notified.
+[OK ] en 1.00 211Hz  3.9s essai 1 | Apple is in the basement. Take the stairs down, then follow the map.
+      entendu : Apple is in the basement. Take the stairs down, then follow the map.
+[OK ] en 1.00 202Hz  3.4s essai 1 | Done: a staff member from Apple has been notified.
+      entendu : Done, a staff member from Apple has been notified.
+[OK ] en 1.00 207Hz  3.9s essai 1 | Board games is in the basement. Take the stairs down, then follow the map.
+      entendu : Board games is in the basement. Take the stairs down, then follow the map.
+[OK ] en 1.00 224Hz  3.5s essai 1 | Done: a staff member from Board games has been notified.
+      entendu : Done, a staff member from Board Games has been notified.
+[OK ] en 0.97 210Hz  5.1s essai 1 | After-sales & order pickup is in the basement. Take the stairs down, then follow the map.
+      entendu : After sales and order pickup is in the basement. Take the stairs down, then follow the map.
+[OK ] en 0.96 209Hz  3.9s essai 1 | Done: a staff member from After-sales & order pickup has been notified.
+      entendu : done, a staff member from after sales and order pickup has been notified.
+[OK ] en 0.89 221Hz  3.2s essai 1 | Checkout is in the basement. Take the stairs down, then follow the map.
+      entendu : Check out Is In The Basement, take the stairs down, then follow the map.
+[OK ] en 1.00 203Hz  3.1s essai 1 | Done: a staff member from Checkout has been notified.
+      entendu : Done. A staff member from checkout has been notified.
+[OK ] en 0.97 205Hz  4.6s essai 1 | Membership & financing is in the basement. Take the stairs down, then follow the map.
+      entendu : Membership and financing is in the basement. Take the stairs down, then follow the map.
+[OK ] en 0.95 212Hz  4.0s essai 1 | Done: a staff member from Membership & financing has been notified.
+      entendu : Done, a staff member from Membership and Financing has been notified.
+[OK ] es 0.87 192Hz  6.9s essai 1 | ¡Hola y bienvenido a la Fnac Jeanne d'Arc! Dígame qué busca y le muestro la sección en el plano.
+      entendu : Hola y bienvenido a la Fnac Jan Dark. Dígame que busca y le muestro la sección en el plano.
+[OK ] es 1.00 221Hz  3.3s essai 1 | Muy bien, seguimos en español. ¿Qué busca?
+      entendu : Muy bien, seguimos en español. ¡Qué busca!
+[OK ] es 1.00 266Hz  2.2s essai 1 | ¡Hola! ¿Qué producto busca?
+      entendu : Hola, qué producto busca,
+[OK ] es 1.00 211Hz  3.7s essai 1 | ¡Con mucho gusto! Disfrute de su visita a la Fnac.
+      entendu : con mucho gusto. Disfrute de su visita a la FNAC.
+[OK ] es 1.00 185Hz  6.2s essai 1 | Por supuesto. Toque «Llamar a un vendedor» y alguien del equipo vendrá a ayudarle.
+      entendu : Por supuesto, toque llamar a un vendedor y alguien del equipo vendrá a ayudarle.
+[OK ] es 1.00 197Hz  6.1s essai 2 | No he encontrado ese producto. Pruebe con otra palabra, o llame a un vendedor: vendrá a ayudarle.
+      entendu : no he encontrado ese producto. Pruebe con otra palabra o llame a un vendedor, vendrá a ayudarle.
+[À ÉCOUTER] es 0.79 193Hz 15.9s essai 1 | Los libros, cómics, libros de texto, la papelería, los CD, vinilos y DVD están en la Fnac Wilson, 16 allées Franklin-Roosevelt, cerca de Jean-Jaurès. Aquí, en la Fnac Jeanne d'Arc, estamos especializados en tecnología.
+      entendu : Los libros, cómics, libros de texto, la papelería, los exed, vinilos y Dostel están en la Fnac Wilson, dice Isaayez Franklin Roosevelt cerca de Jean Jaurez. Aquí en la Fnac Gen Dark estamos especializados en tecnología.
+[OK ] es 0.95 186Hz  8.3s essai 1 | Los LEGO, las figuras POP y las cartas Pokémon están en la escalera que une la planta 0 con el sótano.
+      entendu : Los LEGO, las figuras Pop y las cartas Pokémon están en la escalera que une la planta cero con el sótano.
+[OK ] es 1.00 187Hz  5.1s essai 1 | La entrada y la salida están en la planta 0, abajo en el plano.
+      entendu : La entrada y la salida están en la planta. 0, abajo en el plano.
+[OK ] es 1.00 195Hz  5.0s essai 1 | El micrófono no está disponible en este dispositivo. Puede escribir su pregunta.
+      entendu : El micrófono no está disponible en este dispositivo. Puede escribir su pregunta.
+[OK ] es 0.92 189Hz  5.0s essai 1 | El micrófono está bloqueado. Permítalo en el navegador o escriba su pregunta.
+      entendu : El micrófono está bloqueado. Permítelo en el navegador o escriba su pregunta.
+[OK ] es 0.87 182Hz  4.4s essai 1 | No le he entendido bien. Inténtelo de nuevo o escriba su pregunta.
+      entendu : No leé entendido bien, inténtelo de nuevo o escriba su pregunta.
+[OK ] es 1.00 192Hz  6.4s essai 1 | La tienda abre de lunes a sábado, de 10 a 19:30. Los domingos está cerrada.
+      entendu : La tienda abre de lunes a sábado de 10 a 19.30. Los domingos está cerrada.
+[OK ] es 1.00 198Hz  3.2s essai 1 | Lo siento, esta tienda no tiene baños.
+      entendu : Lo siento. Esta tienda no tiene baños.
+[OK ] es 0.97 204Hz  7.3s essai 1 | Aquí no vendemos grandes electrodomésticos. En pequeños electrodomésticos, lo más grande es el aspirador escoba.
+      entendu : Aquí no vendemos grandes electrodomésticos. En pequeños electrodomésticos, lo más grande es el aspirador
+[OK ] es 0.95 201Hz  7.4s essai 1 | Sí, hay un ascensor para las personas que lo necesiten. Toque «Llamar a un vendedor» y alguien del equipo le acompañará.
+      entendu : Sí, hay un asensor para las personas que lo necesiten. Toque llamar a un vendedor y alguien del equipo le acompañará.
+[OK ] es 0.89 218Hz  7.4s essai 1 | Lo siento, esta tienda no vende ese producto. Puede pedirlo en fnac.com o pedir consejo a un vendedor.
+      entendu : Lo siento, esta tienda no vende ese producto. Puede pedirlo en Fnac en non pedir consejo a un vendedor.
+[OK ] es 1.00 184Hz  4.0s essai 1 | La tienda no tiene aparcamiento. Hay que aparcar por el barrio.
+      entendu : La tienda no tiene aparcamiento, hay que aparcar por el barrio.
+[OK ] es 1.00 211Hz  6.4s essai 1 | ¿Qué tipo de casco? ¿Para escuchar música, para jugar, de realidad virtual o para bici y patinete?
+      entendu : ¿Qué tipo de casco para escuchar música para jugar de realidad virtual o para bici y patinete?
+[OK ] es 1.00 211Hz  7.3s essai 1 | ¿Un cargador para qué aparato? ¿Un móvil Android, un iPhone o producto Apple, un portátil o un patinete?
+      entendu : ¿Un cargador para qué aparato? ¿Un móvil Android? ¿Un iPhone o producto Apple? ¿Un portátil o un patinete?
+[OK ] es 0.89 215Hz  8.2s essai 1 | ¿Qué cable? ¿Para un móvil, para un iPhone, un cable HDMI, USB o de red para ordenador o tele, o un cable de audio?
+      entendu : ¿Qué cable? ¿Para un móvil, para un iPhone, un cable admi, usoso de red para ordenador, o tele, o un cable de audio?
+[OK ] es 0.97 228Hz  5.7s essai 1 | ¿Qué pantalla? ¿Un monitor de ordenador, una tele o un protector de pantalla para móvil?
+      entendu : ¿Qué pantalla, un monitor de ordenador, una tele o un protector de pantalla para
+[OK ] es 1.00 207Hz  5.3s essai 1 | ¿Qué reloj? ¿Un Apple Watch u otro reloj inteligente como Samsung o Garmin?
+      entendu : ¿Qué reloj? ¿Un Apple Watch u otro reloj inteligente como Samsung o Garmin?
+[OK ] es 0.93 197Hz  5.2s essai 1 | ¿Qué tableta? ¿Un iPad, una tableta Android como Samsung o un lector de libros?
+      entendu : ¿Qué tableta? Un iPad, una tablet Android como Samsung o un lector de libros.
+[OK ] es 1.00 199Hz  4.5s essai 1 | ¿Qué ordenador? ¿Un PC Windows, un Mac o un PC gaming?
+      entendu : ¿Qué ordenador? Un PC Windows, un Mac o un PC GAMING.
+[OK ] es 1.00 181Hz  3.5s essai 1 | ¿Un teclado para qué? ¿Para un ordenador o para un iPad?
+      entendu : Un teclado para qué, para un ordenador o para un iPad.
+[OK ] es 1.00 220Hz  4.5s essai 1 | ¿Una funda para qué aparato? ¿Un iPhone, un móvil Android o una tableta?
+      entendu : Una funda para qué aparato, un iPhone, un móvil Android o una tableta.
+[OK ] es 1.00 225Hz  5.7s essai 1 | ¿Qué tipo de juego? ¿Un videojuego, un juego de mesa o cartas coleccionables como Pokémon?
+      entendu : ¿Qué tipo de juego? ¿Un videojuego? ¿Un juego de mesa o cartas coleccionables como Pokémon?
+[OK ] es 0.97 193Hz  6.5s essai 1 | ¿Qué batería? ¿Una batería externa para el móvil, pilas, o una batería de portátil, de cámara o de patinete?
+      entendu : ¿Qué batería? Una batería externa para el móvil, pilas o una batería de portátil, de cámara o de
+[OK ] es 0.94 218Hz  7.6s essai 1 | ¿Qué altavoz? ¿Un altavoz bluetooth o hifi para música, o uno inteligente con asistente de voz como Alexa?
+      entendu : ¿Qué altavoz? Un altavoz Bluetooth o ify para música o uno inteligente con asistente de voz como Alexa.
+[OK ] es 1.00 208Hz  6.7s essai 1 | ¿Qué micrófono? ¿Para grabar vídeo o pódcast, para jugar o hacer streaming, o para karaoke?
+      entendu : que micrófono para grabar vídeo o podcast para jugar o hacer streaming o para karaoke.
+[OK ] es 0.84 223Hz  7.2s essai 1 | ¿Qué adaptador? ¿Un enchufe de viaje, un adaptador HDMI o USB, un adaptador de audio jack, o para iPhone?
+      entendu : ¿Qué adaptador? ¿Un enchufe de viaje? ¿Un adaptador a Dimi o USB? ¿Un adaptador de Audiojack o para iPhone?
+[OK ] es 0.88 201Hz  6.2s essai 1 | ¿Qué aspiradora? ¿Una escoba sin cable o un robot, o una de trineo, Dyson o de vapor?
+      entendu : Qué aspiradora. Una escoba sin cable o un robot o una de tineo, disón o de vapor.
+[OK ] es 0.80 210Hz  6.0s essai 1 | ¿Qué cafetera? ¿De cápsulas como Nespresso, superautomática o espresso, o de goteo?
+      entendu : ¿Qué cafetera? De cápsulas como un expreso, superautomática o expreso o de goteo.
+[OK ] es 0.86 189Hz  5.8s essai 1 | ¿Qué producto Sony? ¿Una tele, auriculares o un altavoz, una PlayStation o una cámara?
+      entendu : ¿Qué producto son? ¿Una tele auriculares o una altavoz, una PlayStation o una cámara?
+[OK ] es 0.91 201Hz 10.4s essai 1 | ¿Qué producto Philips? ¿Una afeitadora, un cortapelos o un cepillo de dientes, una cafetera o freidora de aire, una tele o bombillas Hue?
+      entendu : ¿Qué producto Phillips? ¿Una afeitadora, un cortapelos o un cepillo de rientes, una cafetera o freidora de aire, una tele o bombillas Hue?
+[OK ] es 0.97 216Hz  8.2s essai 1 | ¿Qué tarjeta? ¿Una tarjeta regalo, la tarjeta Fnac, una tarjeta de memoria, cartas Pokémon o una tarjeta gráfica?
+      entendu : ¿Qué tarjeta? Una tarjeta al regalo. La tarjeta Fnac. Una tarjeta de memoria. Cartas Pokémon o una tarjeta gráfica.
+[OK ] es 1.00 178Hz  2.9s essai 1 | Antes de irse: ¿ha encontrado lo que buscaba?
+      entendu : Antes de irse, ¿ha encontrado lo que buscaba?
+[OK ] es 0.80 198Hz  2.6s essai 1 | ¡Gracias! Disfrute de su visita.
+      entendu : Gracias. Disfruta de su visita.
+[OK ] es 1.00 211Hz  6.0s essai 1 | Gracias por decírnoslo. Un vendedor puede ayudarle: toque «Llamar a un vendedor».
+      entendu : Gracias por decírnoslo. Un vendedor puede ayudarle. Toque llamar a un vendedor.
+[OK ] es 1.00 189Hz 10.3s essai 3 | Modo accesibilidad: texto más grande y más contraste. Si no puede usar la escalera, hay un ascensor: toque «Llamar a un vendedor» y le acompañaremos.
+      entendu : modo accesibilidad, texto más grande y más contraste. Si no puede usar la escalera, hay un ascensor, toque, llamar a un vendedor y le acompañaremos.
+[OK ] es 1.00 181Hz  1.0s essai 2 | Vista normal.
+      entendu : Vista normal.
+[OK ] es 1.00 195Hz  3.1s essai 1 | Hecho: se ha avisado a un vendedor y ya viene.
+      entendu : hecho se ha avisado a un vendedor y ya viene.
+[OK ] es 0.94 185Hz  6.0s essai 1 | La sección Telefonía Android está aquí, en la planta 0. Se la indico en el plano.
+      entendu : La sección telefonía Android está aquí, en la planta cero. Se la indico en el plano.
+[OK ] es 1.00 195Hz  4.3s essai 1 | Hecho: se ha avisado a un vendedor de la sección Telefonía Android.
+      entendu : hecho se ha avisado a un vendedor de la sección telefonía Android.
+[OK ] es 0.94 207Hz  6.7s essai 2 | La sección Objetos conectados está aquí, en la planta 0. Se la indico en el plano.
+      entendu : La sección Objetos Conectados está aquí, en la planta Cetros. Se la indico en el plano.
+[OK ] es 0.92 188Hz  4.2s essai 1 | Hecho: se ha avisado a un vendedor de la sección Objetos conectados.
+      entendu : Echos se ha avisado a un vendedor de la sección Objetos Conectados.
+[OK ] es 1.00 189Hz  5.3s essai 1 | Hecho: se ha avisado a un vendedor de la sección Escalera · LEGO, POP y Pokémon.
+      entendu : hecho se ha avisado a un vendedor de la sección escalera, LEGO, Pop y Pokémon.
+[OK ] es 1.00 181Hz  4.3s essai 1 | Hecho: se ha avisado a un vendedor de la sección Entrada / Salida.
+      entendu : hecho se ha avisado a un vendedor de la sección entrada. Salida.
+[OK ] es 0.93 185Hz  5.8s essai 1 | La sección Videojuegos está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección videojuegos está en el sótano. Baje por la escalera y sigue el plano.
+[OK ] es 0.86 192Hz  3.6s essai 1 | Hecho: se ha avisado a un vendedor de la sección Videojuegos.
+      entendu : hecho sea avisado a un vendedor de la sección videojuegos.
+[OK ] es 0.91 198Hz  6.7s essai 2 | La sección PC gaming y accesorios está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Pegamin y accesorios está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 0.89 193Hz  4.6s essai 1 | Hecho: se ha avisado a un vendedor de la sección PC gaming y accesorios.
+      entendu : hecho se ha avisado a un vendedor de la sección Pegamin y accesorios.
+[OK ] es 1.00 190Hz  6.2s essai 1 | La sección Cartuchos de tinta está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Cartuchos de Tinta está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 201Hz  4.6s essai 1 | Hecho: se ha avisado a un vendedor de la sección Cartuchos de tinta.
+      entendu : hecho. Se ha avisado a un vendedor de la sección Cartuchos de Tinta.
+[OK ] es 1.00 198Hz  7.0s essai 1 | La sección Pequeños electrodomésticos está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Pequeños Electrodomésticos está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 180Hz  5.2s essai 1 | Hecho: se ha avisado a un vendedor de la sección Pequeños electrodomésticos.
+      entendu : hecho se ha avisado a un vendedor de la sección pequeños electrodomésticos.
+[OK ] es 1.00 198Hz  7.7s essai 1 | La sección Impresoras, cables y almacenamiento está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección impresoras, cables y almacenamiento está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 188Hz  5.4s essai 1 | Hecho: se ha avisado a un vendedor de la sección Impresoras, cables y almacenamiento.
+      entendu : hecho se ha avisado a un vendedor de la sección impresoras, cables y almacenamiento.
+[OK ] es 1.00 182Hz  6.3s essai 1 | La sección Tabletas Android está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Tabletas Android está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 189Hz  3.7s essai 1 | Hecho: se ha avisado a un vendedor de la sección Tabletas Android.
+      entendu : hecho se ha avisado a un vendedor de la sección tabletas Android.
+[OK ] es 1.00 183Hz  5.6s essai 1 | La sección Lectores de libros está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Lectores de Libros está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 183Hz  3.8s essai 1 | Hecho: se ha avisado a un vendedor de la sección Lectores de libros.
+      entendu : hecho se ha avisado a un vendedor de la sección lectores de libros.
+[OK ] es 1.00 180Hz  5.8s essai 1 | La sección PC Windows está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección PC Windows está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 209Hz  3.4s essai 1 | Hecho: se ha avisado a un vendedor de la sección PC Windows.
+      entendu : hecho se ha avisado a un vendedor de la sección PC Windows.
+[OK ] es 1.00 195Hz  5.8s essai 1 | La sección Movilidad urbana está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección movilidad urbana está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 181Hz  4.0s essai 1 | Hecho: se ha avisado a un vendedor de la sección Movilidad urbana.
+      entendu : hecho se ha avisado a un vendedor de la sección movilidad urbana.
+[OK ] es 1.00 194Hz  6.0s essai 2 | La sección Foto y micrófonos está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección foto y micrófonos está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 194Hz  4.0s essai 1 | Hecho: se ha avisado a un vendedor de la sección Foto y micrófonos.
+      entendu : hecho se ha avisado a un vendedor de la sección foto y micrófonos.
+[OK ] es 0.90 186Hz  4.8s essai 1 | La sección TV está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Tobuestá en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 0.95 177Hz  3.1s essai 1 | Hecho: se ha avisado a un vendedor de la sección TV.
+      entendu : hecho se ha avisado a un vendedor de la sección
+[OK ] es 1.00 189Hz  5.3s essai 1 | La sección Audio está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección audio está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 194Hz  3.4s essai 1 | Hecho: se ha avisado a un vendedor de la sección Audio.
+      entendu : hecho se ha avisado a un vendedor de la sección audio.
+[OK ] es 0.93 178Hz  5.9s essai 1 | La sección Apple está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Aple está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 193Hz  3.5s essai 1 | Hecho: se ha avisado a un vendedor de la sección Apple.
+      entendu : hecho se ha avisado a un vendedor de la sección Apple.
+[OK ] es 1.00 190Hz  5.6s essai 1 | La sección Juegos de mesa está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Juegos de Mesa está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 199Hz  4.1s essai 1 | Hecho: se ha avisado a un vendedor de la sección Juegos de mesa.
+      entendu : hecho se ha avisado a un vendedor de la sección Juegos de mesa.
+[OK ] es 0.91 189Hz  7.2s essai 1 | La sección Posventa y recogida está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección posventa y le cogida está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 0.92 184Hz  4.5s essai 1 | Hecho: se ha avisado a un vendedor de la sección Posventa y recogida.
+      entendu : hecho se ha avisado a un vendedor de la sección postventa y recogida.
+[OK ] es 1.00 183Hz  5.2s essai 1 | La sección Caja está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección caja está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 187Hz  3.1s essai 1 | Hecho: se ha avisado a un vendedor de la sección Caja.
+      entendu : hecho se ha avisado a un vendedor de la sección caja
+[OK ] es 0.94 205Hz  6.0s essai 2 | La sección Socios y financiación está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Socio y financiación está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 196Hz  5.7s essai 1 | Hecho: se ha avisado a un vendedor de la sección Socios y financiación.
+      entendu : hecho se ha avisado a un vendedor de la sección, socios y financiación.
