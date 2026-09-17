@@ -80,5 +80,13 @@
   "C'est noté : un vendeur du rayon Caisses a été prévenu.": "fr/88c419ecab2c.m4a",
   "Le rayon Adhésion & financement est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/57a47664738f.m4a",
   "C'est noté : un vendeur du rayon Adhésion & financement a été prévenu.": "fr/02cf72f305e2.m4a"
+ },
+ "en": {
+  "Hello and welcome to Fnac Jeanne d'Arc! Tell me what you're looking for and I'll show you the section on the map.": "en/0ebd0470a5f5.m4a",
+  "Sure, let's continue in English. What are you looking for?": "en/f11ab1bdd636.m4a",
+  "Hello! What product are you looking for?": "en/ddbc05c8681f.m4a",
+  "You're welcome! Enjoy your visit to Fnac.": "en/1720bd331f76.m4a",
+  "Of course. Tap “Call a staff member” and someone from the team will come to help you.": "en/355e3eb2cbe0.m4a",
+  "I couldn't find that product. Try another word, or call a staff member who will come and help you.": "en/785d519916d3.m4a"
  }
 }
