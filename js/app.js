@@ -537,7 +537,9 @@ function ask(text, source = "text") {
   if (info) {
     noteVisit(text);
     recordQuestion({ text: null, zone: null, lang: state.lang, source });
-    clearZone();
+    // L'ascenseur s'allume sur le plan, avec le trajet depuis la borne.
+    if (info === "elevator") showZone("ascenseur");
+    else clearZone();
     reply(INFO[info].answer[state.lang]);
     return;
   }
@@ -657,7 +659,8 @@ function answerZone(id, prefix = "", place = null) {
     return;
   }
   showZone(id, place);
-  if (id === "escalier") reply(t().foundStairs, prefix);
+  if (id === "ascenseur") reply(INFO.elevator.answer[state.lang], prefix);
+  else if (id === "escalier") reply(t().foundStairs, prefix);
   else if (id === "entree") reply(t().foundEntrance, prefix);
   else reply(t().found(zoneLabel(id), ZONES[id].floors[0]), prefix);
 }
@@ -718,6 +721,11 @@ function buildPlan(svg, plan) {
       if (owner.place) attrs["data-place"] = owner.place;
     }
     svgEl("rect", attrs, svg);
+    // Ascenseur : pictogramme accessibilité, droit même si la cabine est en biais.
+    if (shape.kind === "elevator") {
+      const size = Math.min(w, h) * 0.8;
+      svgEl("use", { href: "#i-access", x: cx - size / 2, y: cy - size / 2, width: size, height: size, class: "bm-elevator-icon" }, svg);
+    }
   }
   svgEl("g", { class: "bm-labels" }, svg);
   svgEl("g", { class: "route-layer" }, svg);
@@ -1017,7 +1025,7 @@ function toggleA11y(force) {
 }
 
 function callVendor() {
-  const label = state.zone && !["entree", "escalier"].includes(state.zone) ? zoneLabel(state.zone) : null;
+  const label = state.zone && !["entree", "escalier", "ascenseur"].includes(state.zone) ? zoneLabel(state.zone) : null;
   reply(t().vendorConfirm(label));
   showToast(t().vendorToast(label));
 }
