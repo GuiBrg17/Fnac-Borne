@@ -29,6 +29,9 @@ export const normalize = (text) => text.toLowerCase()
   .replace(/\bdés?(?![a-zà-ÿ])/g, "dice")
   // « cent quarante-quatre hertz » doit rejoindre « écran 144 hz »
   .replace(/\bhertz\b/g, "hz")
+  // « Fnac+ » : sans cela le « + » disparaît et le mot-clé devient « fnac », qui
+  // captait toutes les phrases où l'on dit « Fnac ».
+  .replace(/\+/g, " plus ")
   .normalize("NFD").replace(/[̀-ͯ]/g, "")
   .replace(/[^a-z0-9]+/g, " ")
   // « Wi-Fi », « wi fi » et « wifi » : une seule écriture
@@ -218,8 +221,13 @@ function bestMatch(text, query, lang) {
   return { ...top, vague: true };
 }
 
+// Mots courants qui ressemblent à un produit sans en être : jamais de rapprochement
+// approximatif (« magasin » → « magazine », « vendeur » → « vendeuse »…).
+const NO_FUZZY = new Set(["magasin", "magasins", "vendeur", "vendeuse", "bonjour", "madame", "monsieur", "merci",
+  "cherche", "voudrais", "voulais", "besoin", "comment", "combien", "pourquoi", "quelque", "aujourd", "demain"]);
+
 function fuzzyMatch(query, lang) {
-  const tokens = query.split(" ");
+  const tokens = query.split(" ").filter((word) => !NO_FUZZY.has(word));
   const grams = new Set();
   for (let n = 1; n <= 3; n++) {
     for (let i = 0; i + n <= tokens.length; i++) {

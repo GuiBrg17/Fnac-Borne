@@ -930,3 +930,101 @@ savRetrait|bonjour j'ai acheté un casque chez vous la semaine dernière et depu
 tv|je regarde pour une télé assez grande pour mon salon genre 65 pouces
 telephonie|c'est pour ma maman elle a besoin d'un nouveau portable
 photo|ma fille veut un appareil photo instantané pour son anniversaire
+
+# Occasions, accessoires d'un produit précis, prix, stock, commandes, promotions
+gaming|c'est combien la PS5 ?
+apple|il coûte combien l'iPhone 17 ?
+tv|quel est le prix de cette télé 65 pouces
+gaming|quelle est la différence entre la PS5 et la Xbox
+apple|vous avez encore des iPhone 17 Pro Max ?
+gaming|la Switch 2 est disponible ?
+audio|quel est le meilleur casque à réduction de bruit
+telephonie|quel téléphone Samsung me conseillez-vous
+electromenager|c'est quoi le meilleur airfryer
+pcwindows|un ordinateur portable à moins de 500 euros
+tv|une télé à moins de 400 euros
+audio|des écouteurs à moins de 50 euros
+gaming|un cadeau de Noël pour un ado qui aime les jeux vidéo
+escalier|un cadeau pour un fan de Pokémon
+escalier|un cadeau pour un fan de LEGO
+electromenager|un cadeau pour la fête des mères, un lisseur
+electromenager|un cadeau fête des pères, un rasoir
+pcwindows|pour la rentrée un ordinateur portable
+audio|une enceinte pour Noël
+apple|des AirPods pour Noël
+apple|une coque pour AirPods
+apple|un étui pour AirPods Pro
+apple|un verre trempé pour iPhone 16
+apple|un chargeur pour Apple Watch
+objets|un bracelet pour ma montre Garmin
+objets|un chargeur pour montre Garmin
+objets|un bracelet pour Galaxy Watch
+gaming|un chargeur pour manette PS5
+gaming|une protection d'écran pour Switch 2
+gaming|une housse pour Nintendo Switch
+caisse|des piles rechargeables pour manette Xbox
+liseuses|un étui pour Kobo
+tablettes|une coque pour Galaxy Tab
+trottinettes|une sacoche pour trottinette
+trottinettes|un garde-boue de trottinette
+trottinettes|un chargeur de trottinette Xiaomi
+photo|une batterie pour GoPro
+informatique|une carte mémoire pour GoPro
+photo|un filtre pour objectif
+photo|un pare-soleil d'objectif
+informatique|un câble HDMI pour la télé
+tv|une barre de son pour ma TV Samsung
+audio|des coussinets pour casque Bose
+audio|des embouts pour écouteurs
+audio|un câble pour platine vinyle
+electromenager|des filtres pour carafe Brita
+electromenager|des capsules pour machine Dolce Gusto
+electromenager|des sacs pour aspirateur Rowenta
+electromenager|des brossettes Oral-B
+electromenager|une batterie pour aspirateur Dyson
+electromenager|du détartrant pour cafetière
+cartouches|de l'encre pour Epson EcoTank
+informatique|du papier photo
+informatique|un câble pour brancher mon imprimante
+pcwindows|une souris pour ordinateur portable Dell
+pcwindows|une housse pour PC 15 pouces
+accessoiresGaming|un repose-poignet pour clavier
+accessoiresGaming|un casque gaming sans fil pour PC
+savRetrait|faire une extension de garantie sur ma télé
+savRetrait|j'ai acheté une télé et je voudrais la faire livrer
+savRetrait|installation de télé à domicile
+savRetrait|je voudrais faire reprendre mon ancien téléphone
+savRetrait|comment on fait pour un retour
+savRetrait|j'ai perdu mon ticket pour un échange
+savRetrait|mon colis n'est pas arrivé
+savRetrait|je n'ai pas reçu ma commande
+savRetrait|ma commande est en retard
+savRetrait|je veux suivre ma commande
+savRetrait|mon code de retrait ne marche pas
+adhesion|la carte Fnac donne quels avantages
+adhesion|combien coûte la carte adhérent
+adhesion|je veux payer en 10 fois
+caisse|c'est où pour payer
+caisse|vous acceptez les chèques ?
+caisse|vous prenez la carte bleue ?
+caisse|une carte cadeau de 50 euros
+caisse|une e-carte cadeau
+editorial|où est l'autre Fnac
+editorial|l'adresse de la Fnac Wilson
+editorial|des livres en anglais
+editorial|un roman de Stephen King
+editorial|une BD Tintin
+human|il y a des promotions ?
+human|c'est les soldes ?
+human|vous avez des offres Black Friday ?
+pcwindows|je voudrais un conseil sur un ordinateur
+hours|vous êtes ouverts le 1er mai ?
+hours|horaires de Noël
+toilets|je peux aller aux toilettes ?
+elevator|il y a un accès pour les fauteuils ?
+entree|comment on sort du magasin
+null|il fait beau aujourd'hui
+null|quelle heure est-il
+null|je suis perdu
+adhesion|Fnac+
+null|je suis à la Fnac
