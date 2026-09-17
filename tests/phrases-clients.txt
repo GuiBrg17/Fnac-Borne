@@ -1,0 +1,576 @@
+# Phrases de clients, telles qu'on les dit à la borne.
+# Une ligne = réponse attendue|phrase. Réponse : un rayon (ZONES), une info (INFO),
+# une intention (hello, thanks, human) ou null (rien à trouver). Lancer : node tests/phrases.test.mjs
+telephonie|je cherche un téléphone pas trop cher pour ma mère
+telephonie|un Samsung A55
+telephonie|un chargeur rapide Samsung
+telephonie|une coque pour Galaxy S24
+telephonie|un câble USB-C vers USB-C
+telephonie|un support de téléphone pour la voiture
+telephonie|une carte SIM Free
+telephonie|un téléphone Xiaomi Redmi
+telephonie|un Google Pixel 9 Pro
+telephonie|un téléphone pour mon fils de 11 ans
+telephonie|une protection d'écran Samsung
+telephonie|des écouteurs avec fil pour mon téléphone
+telephonie|une batterie externe 20000 mAh
+telephonie|un chargeur à induction
+telephonie|un chargeur allume-cigare
+telephonie|un téléphone Crosscall
+telephonie|un Oppo Reno
+telephonie|une perche à selfie
+apple|un iPhone 16 128 Go
+apple|la coque MagSafe transparente
+apple|un chargeur MagSafe
+apple|des AirPods Pro 2
+apple|une Apple Watch Series 10
+apple|un bracelet pour ma montre Apple
+apple|un iPad pour dessiner
+apple|un Apple Pencil
+apple|un MacBook Air M3
+apple|un iMac
+apple|le câble USB-C Lightning
+apple|un adaptateur USB-C pour MacBook
+apple|un AirTag pour mes clés
+apple|l'iPhone le moins cher
+apple|un iPhone reconditionné
+objets|une montre Garmin pour courir
+objets|une Galaxy Watch
+objets|une montre connectée pour enfant
+objets|un bracelet Fitbit
+objets|une caméra de surveillance extérieure
+objets|une ampoule Philips Hue
+objets|un Google Nest
+objets|une Alexa
+objets|une sonnette vidéo Ring
+objets|une balance connectée Withings
+objets|un traceur GPS pour mon vélo
+objets|un babyphone vidéo
+gaming|une PS5 Slim
+gaming|une manette DualSense blanche
+gaming|FIFA 26 sur PS5
+gaming|la Nintendo Switch 2
+gaming|Mario Kart World
+gaming|une carte PSN de 50 euros
+gaming|un abonnement Xbox Game Pass
+gaming|un jeu Switch pour enfant
+gaming|Pokémon Légendes Z-A
+gaming|un casque PS5
+gaming|Call of Duty
+gaming|une Xbox Series S
+gaming|un volant pour PS5
+gaming|le nouveau Zelda
+gaming|un Steam Deck
+gaming|un Meta Quest 3
+gaming|une console rétro
+gaming|Minecraft sur Switch
+gaming|des jeux d'occasion
+gaming|une carte cadeau Nintendo
+gaming|Assassin's Creed Shadows
+accessoiresGaming|une souris Logitech G Pro
+accessoiresGaming|un clavier Razer
+accessoiresGaming|un tapis de souris
+accessoiresGaming|un casque HyperX
+accessoiresGaming|un fauteuil gamer
+accessoiresGaming|un micro pour streamer
+accessoiresGaming|une webcam Logitech
+accessoiresGaming|une carte graphique RTX 5070
+accessoiresGaming|un écran 27 pouces 144 Hz
+accessoiresGaming|un processeur Ryzen 7
+accessoiresGaming|de la RAM DDR5
+accessoiresGaming|un PC portable gamer
+accessoiresGaming|un écran incurvé
+cartouches|de l'encre pour imprimante HP
+cartouches|une cartouche Epson 603
+cartouches|du toner Brother
+cartouches|des cartouches Canon
+electromenager|un aspirateur Dyson
+electromenager|un aspirateur robot Roborock
+electromenager|une friteuse sans huile Ninja
+electromenager|un Cookeo
+electromenager|une machine à café à grain De'Longhi
+electromenager|des capsules Nespresso
+electromenager|une bouilloire
+electromenager|un grille-pain
+electromenager|un sèche-cheveux Dyson
+electromenager|un lisseur GHD
+electromenager|une tondeuse à barbe Philips
+electromenager|un rasoir Braun
+electromenager|une brosse à dents Oral-B
+electromenager|un fer à repasser
+electromenager|un blender
+electromenager|un robot pâtissier KitchenAid
+electromenager|un appareil à raclette
+electromenager|un ventilateur
+electromenager|un épilateur lumière pulsée
+electromenager|un pèse-personne
+electromenager|une SodaStream
+electromenager|un micro-ondes
+electromenager|un climatiseur mobile
+electromenager|une centrale vapeur
+electromenager|un extracteur de jus
+informatique|une clé USB 64 Go
+informatique|un disque dur externe 1 To
+informatique|un SSD externe Samsung
+informatique|une imprimante HP multifonction
+informatique|une imprimante Epson EcoTank
+informatique|un câble HDMI 2 mètres
+informatique|un répéteur Wi-Fi
+informatique|une multiprise
+informatique|un hub USB-C
+informatique|une carte micro SD 128 Go
+informatique|un câble Ethernet
+informatique|un routeur TP-Link
+informatique|une ramette de papier A4
+tablettes|une Galaxy Tab S10
+tablettes|une tablette Lenovo pour enfant
+tablettes|une tablette pas chère
+tablettes|une housse de tablette Samsung
+liseuses|une Kobo Clara
+liseuses|une liseuse pour lire au soleil
+liseuses|une Kindle
+pcwindows|un PC portable Asus
+pcwindows|un ordinateur portable HP 15 pouces
+pcwindows|un Lenovo IdeaPad
+pcwindows|un PC portable pour l'école
+pcwindows|Microsoft Office
+pcwindows|un antivirus Norton
+pcwindows|une sacoche pour PC portable
+pcwindows|un Microsoft Surface
+pcwindows|un PC fixe
+pcwindows|un chargeur de PC portable
+trottinettes|une trottinette électrique Xiaomi
+trottinettes|une trottinette Segway Ninebot
+trottinettes|un hoverboard
+trottinettes|un vélo électrique
+trottinettes|un casque de vélo
+trottinettes|un antivol
+trottinettes|une chambre à air de trottinette
+photo|un appareil photo Canon
+photo|un appareil photo pour débuter
+photo|un Instax Mini
+photo|des films Instax
+photo|une GoPro Hero 13
+photo|un drone DJI
+photo|un trépied
+photo|un micro sans fil DJI
+photo|un objectif Sony
+photo|une carte SD pour appareil photo
+photo|un appareil photo jetable
+photo|une caméra 360
+photo|un ring light
+photo|des jumelles
+tv|une télé Samsung 55 pouces
+tv|une TV OLED LG
+tv|un vidéoprojecteur
+tv|un support mural pour télé
+tv|une télécommande Samsung
+tv|un Chromecast
+tv|une Fire TV Stick
+tv|une télé 4K pas chère
+tv|une petite télé pour la cuisine
+tv|une antenne TNT
+tv|une TV Philips Ambilight
+audio|un casque Sony WH-1000XM5
+audio|des écouteurs Bose
+audio|une enceinte JBL Charge 5
+audio|une barre de son Samsung
+audio|une platine vinyle
+audio|des écouteurs sans fil pas chers
+audio|une Sonos Era 100
+audio|un casque Marshall
+audio|une radio réveil
+audio|une chaîne hi-fi
+audio|un home cinéma
+audio|une enceinte Marshall
+audio|des écouteurs pour le sport
+audio|un casque pour enfant
+audio|un casque Beats
+audio|des Galaxy Buds 3
+audio|un ampli
+audio|un micro karaoké
+jeuxSociete|un Monopoly
+jeuxSociete|un jeu de société pour 2
+jeuxSociete|un puzzle 1000 pièces
+jeuxSociete|un Uno
+jeuxSociete|le Loup-Garou
+jeuxSociete|un Rubik's Cube
+jeuxSociete|un jeu de cartes
+jeuxSociete|Dobble
+jeuxSociete|un jeu d'échecs
+jeuxSociete|un escape game
+jeuxSociete|un jeu pour enfant de 6 ans
+jeuxSociete|Catan
+jeuxSociete|Time's Up
+escalier|des LEGO Technic
+escalier|une figurine Funko Pop
+escalier|des cartes Pokémon
+escalier|un booster Pokémon
+escalier|des cartes Magic
+escalier|des cartes Yu-Gi-Oh
+escalier|un LEGO Harry Potter
+escalier|une figurine One Piece
+escalier|un coffret Pokémon
+escalier|LEGO Icons
+savRetrait|je viens chercher un colis
+savRetrait|j'ai une commande à retirer
+savRetrait|mon téléphone ne charge plus
+savRetrait|la batterie de mon iPhone ne tient plus
+savRetrait|mon ordi est lent
+savRetrait|je voudrais faire un échange
+savRetrait|je veux rendre un cadeau
+savRetrait|mon casque grésille
+savRetrait|ma télé ne s'allume plus
+savRetrait|je voudrais une réparation
+savRetrait|c'est pour un remboursement
+savRetrait|où est le SAV
+savRetrait|le service après-vente
+savRetrait|j'ai un souci avec ma commande
+savRetrait|ma commande internet est arrivée
+savRetrait|je viens déposer ma PS5
+savRetrait|récupérer mon ordinateur réparé
+savRetrait|mon écran d'iPhone est fissuré
+savRetrait|ma machine à café ne fait plus de café
+savRetrait|faire jouer la garantie
+caisse|où je peux payer
+caisse|une carte cadeau Fnac
+caisse|des piles
+caisse|des piles AAA
+caisse|un adaptateur pour prise anglaise
+caisse|la caisse
+adhesion|la carte Fnac
+adhesion|devenir adhérent
+adhesion|payer en plusieurs fois
+adhesion|Fnac+
+adhesion|mes avantages adhérent
+editorial|un livre
+editorial|des mangas One Piece
+editorial|une BD
+editorial|un roman
+editorial|un vinyle de Taylor Swift
+editorial|un DVD
+editorial|un Blu-ray
+editorial|des stylos
+editorial|un agenda 2027
+editorial|un livre de cuisine
+editorial|le dernier Guillaume Musso
+editorial|un livre pour enfant
+entree|la sortie
+entree|où est la sortie
+audio|un truc pour écouter de la musique dans le train
+audio|quelque chose pour mettre du son dans mon salon
+audio|des écouteurs qui tiennent bien dans les oreilles pour courir
+audio|un casque qui coupe le bruit dans l'avion
+tv|un écran pour regarder Netflix dans le salon
+tv|de quoi projeter un film sur le mur
+tv|un boîtier pour rendre ma télé connectée
+electromenager|un appareil pour faire des frites sans huile
+electromenager|un truc pour faire des smoothies
+electromenager|quelque chose pour se sécher les cheveux
+electromenager|un appareil pour se raser la tête
+electromenager|un truc pour nettoyer par terre sans fil
+electromenager|un robot qui passe l'aspirateur tout seul
+electromenager|un appareil pour faire des gaufres
+electromenager|quelque chose pour chauffer de l'eau pour le thé
+electromenager|une machine pour faire de l'eau pétillante
+electromenager|un truc pour se lisser les cheveux
+electromenager|un appareil pour se couper la barbe
+photo|un appareil pour filmer mes descentes en ski
+photo|un truc pour faire des photos instantanées qu'on imprime tout de suite
+photo|un drone pour filmer
+photo|un micro pour faire des vidéos TikTok
+photo|un appareil pour prendre des photos d'oiseaux de loin
+objets|une montre qui compte mes pas
+objets|un bracelet qui mesure mon sommeil
+objets|une caméra pour voir qui sonne à la porte
+objets|une enceinte à qui on parle
+objets|un truc pour retrouver mes clés
+objets|des ampoules que je peux allumer avec mon téléphone
+gaming|un jeu de foot sur la Play
+gaming|la nouvelle console de Nintendo
+gaming|une manette pour la Xbox
+gaming|un jeu de voiture pour la Switch
+gaming|un casque de réalité virtuelle
+gaming|un jeu vidéo pour un enfant de 8 ans
+accessoiresGaming|un bon PC pour jouer à Fortnite
+accessoiresGaming|un fauteuil pour jouer longtemps
+accessoiresGaming|un clavier qui s'allume de toutes les couleurs
+accessoiresGaming|des composants pour monter mon PC
+informatique|de quoi brancher mon ordi sur la télé
+informatique|un truc pour sauvegarder mes photos
+informatique|une clé pour stocker mes fichiers
+informatique|quelque chose pour avoir du wifi dans ma chambre
+informatique|une prise avec plusieurs branchements
+informatique|un appareil pour scanner des documents
+pcwindows|un ordinateur pour faire mes devoirs
+pcwindows|un ordi pas cher pour aller sur internet
+pcwindows|un ordinateur léger pour la fac
+pcwindows|Word et Excel
+pcwindows|une sacoche pour transporter mon ordi
+telephonie|un portable avec une bonne batterie
+telephonie|un téléphone qui prend de belles photos
+telephonie|un téléphone simple pour ma grand-mère
+telephonie|de quoi recharger mon téléphone sans fil
+telephonie|un téléphone qui résiste aux chocs
+apple|un ordinateur Apple
+apple|la montre d'Apple
+apple|les écouteurs d'Apple
+apple|une tablette Apple
+tablettes|une tablette pour que mes enfants regardent des dessins animés
+liseuses|un appareil pour lire des livres numériques
+trottinettes|un moyen de transport électrique pour aller au travail
+trottinettes|une trott électrique
+trottinettes|une gyroroue
+jeuxSociete|un jeu pour une soirée entre amis
+jeuxSociete|un jeu à jouer en famille
+jeuxSociete|un casse-tête
+jeuxSociete|un jeu de stratégie
+escalier|des boîtes LEGO
+escalier|des figurines de manga
+escalier|des cartes à collectionner
+cartouches|de l'encre
+savRetrait|il ne s'allume plus depuis ce matin
+savRetrait|il est tombé par terre et l'écran est noir
+savRetrait|ça fait trois jours qu'il ne marche plus
+savRetrait|je l'ai acheté la semaine dernière et il ne fonctionne déjà plus
+savRetrait|j'ai reçu un produit abîmé
+savRetrait|il manque une pièce dans la boîte
+savRetrait|je me suis trompé de modèle
+savRetrait|je veux annuler ma commande
+savRetrait|où je récupère mon colis Fnac
+savRetrait|j'ai commandé sur fnac point com
+savRetrait|il fait un bruit bizarre
+savRetrait|mes AirPods ne se connectent plus
+savRetrait|la batterie de ma trottinette ne charge plus
+savRetrait|mon PC a un virus
+savRetrait|je n'arrive plus à allumer ma console
+savRetrait|j'ai perdu mes photos
+caisse|je voudrais payer
+caisse|où sont les caisses
+caisse|je peux payer par carte ?
+adhesion|comment on devient adhérent
+adhesion|je voudrais la carte de fidélité
+adhesion|c'est combien la carte Fnac
+adhesion|je peux payer en quatre fois ?
+editorial|où sont les livres
+editorial|un cadeau livre
+editorial|des CD
+editorial|la papeterie
+editorial|des cahiers pour l'école
+audio|headphones
+audio|a bluetooth speaker
+gaming|a PS5 controller
+apple|an iPhone case
+electromenager|a hair dryer
+electromenager|a coffee machine with capsules
+savRetrait|my phone doesn't work anymore
+savRetrait|I want to pick up my order
+tv|a 65 inch TV
+photo|a camera for travelling
+pcwindows|a laptop for university
+audio|unos auriculares inalámbricos
+gaming|un mando de PS5
+apple|una funda para iPhone
+electromenager|una cafetera Nespresso
+savRetrait|mi móvil no enciende
+tv|una tele grande
+telephonie|un cargador para Samsung
+null|je cherche ma femme
+null|il fait chaud ici
+null|vous êtes un robot ?
+null|comment tu t'appelles
+null|qui est-ce que je peux appeler
+human|j'attends quelqu'un
+null|c'est quoi ton prénom
+hello|salut Jeanne
+thanks|merci beaucoup Jeanne
+human|je voudrais parler à un conseiller
+human|il y a un vendeur ?
+elevator|où est l'ascenseur
+hours|vous fermez à quelle heure le samedi
+toilets|il y a des WC ?
+parking|où est-ce que je peux me garer
+largeAppliances|un réfrigérateur américain
+largeAppliances|un lave-vaisselle
+telephonie|un Samsung Galaxy S25
+telephonie|un téléphone Honor
+telephonie|un téléphone Motorola
+telephonie|un chargeur 65 watts
+telephonie|une coque Xiaomi
+telephonie|un anneau pour téléphone
+telephonie|un téléphone à clapet
+telephonie|un Fairphone
+apple|un chargeur pour iPad
+apple|une Apple TV
+apple|un HomePod mini
+apple|une housse pour MacBook
+apple|un Mac mini
+apple|un iPad Air
+apple|des EarPods
+apple|un clavier Magic Keyboard
+objets|une montre Huawei
+objets|une montre Amazfit
+objets|un thermostat connecté
+objets|une prise connectée
+objets|une serrure connectée
+objets|un détecteur de fumée
+objets|une Echo Dot
+gaming|une Nintendo Switch OLED
+gaming|une carte mémoire pour Switch
+gaming|des Joy-Con
+gaming|une PlayStation Portal
+gaming|un jeu Xbox
+gaming|EA Sports FC 26
+gaming|Just Dance
+gaming|Les Sims 4
+gaming|Hogwarts Legacy
+gaming|une station de charge pour manette
+gaming|une housse pour Switch
+gaming|Animal Crossing
+gaming|Super Mario Bros Wonder
+gaming|Elden Ring
+gaming|GTA 5
+accessoiresGaming|une souris sans fil
+accessoiresGaming|un clavier mécanique Corsair
+accessoiresGaming|un casque SteelSeries
+accessoiresGaming|un Stream Deck
+accessoiresGaming|une carte mère
+accessoiresGaming|un boîtier PC
+accessoiresGaming|une alimentation PC
+accessoiresGaming|un écran PC 24 pouces
+accessoiresGaming|un bureau gamer
+electromenager|un robot cuiseur Moulinex
+electromenager|un Thermomix
+electromenager|une cafetière filtre
+electromenager|un moulin à café
+electromenager|un mixeur plongeant
+electromenager|une plancha
+electromenager|une crêpière
+electromenager|un gaufrier
+electromenager|une yaourtière
+electromenager|un hydropulseur
+electromenager|une tondeuse cheveux
+electromenager|un fer à boucler
+electromenager|un Airwrap
+electromenager|un purificateur d'air
+electromenager|un déshumidificateur
+electromenager|un radiateur d'appoint
+electromenager|un nettoyeur vapeur
+electromenager|un Kärcher
+electromenager|un aspirateur sans sac
+electromenager|des sacs d'aspirateur
+electromenager|un Senseo
+electromenager|une Dolce Gusto
+electromenager|une Tassimo
+informatique|un scanner
+informatique|un câble USB
+informatique|un adaptateur HDMI
+informatique|un onduleur
+informatique|un CPL
+informatique|une station d'accueil
+informatique|un lecteur DVD externe
+informatique|une rallonge électrique
+informatique|une clé Wi-Fi
+tablettes|une Samsung Galaxy Tab A9
+tablettes|un stylet
+tablettes|une tablette Xiaomi
+liseuses|une Kobo Libra Colour
+liseuses|une housse pour liseuse
+pcwindows|un PC portable Acer
+pcwindows|un Dell
+pcwindows|un ordinateur tout-en-un
+pcwindows|un Chromebook
+pcwindows|un PC portable 17 pouces
+pcwindows|un Lenovo Yoga
+pcwindows|Windows 11
+pcwindows|un sac à dos pour ordinateur
+trottinettes|une trottinette pour enfant
+trottinettes|un skate électrique
+trottinettes|des genouillères
+trottinettes|une pompe à vélo
+trottinettes|un casque de trottinette
+trottinettes|un gyropode
+photo|un appareil photo Sony
+photo|un appareil photo Nikon
+photo|un Fujifilm
+photo|un appareil reflex
+photo|un hybride
+photo|un appareil compact
+photo|un stabilisateur
+photo|une DJI Osmo Pocket
+photo|un Polaroid
+photo|un flash
+photo|un sac photo
+photo|une batterie pour appareil photo
+photo|un cadre photo numérique
+photo|un micro Rode
+photo|un micro cravate sans fil
+tv|une TV TCL
+tv|une TV Hisense
+tv|une télé Sony
+tv|une télé 43 pouces
+tv|un décodeur TNT
+tv|un meuble TV
+tv|un écran de projection
+tv|une télécommande universelle
+tv|une TV QLED
+audio|une enceinte Bose
+audio|des écouteurs JBL
+audio|un casque Sennheiser
+audio|une enceinte Ultimate Ears
+audio|un lecteur CD
+audio|un tourne-disque
+audio|un caisson de basse
+audio|une radio DAB
+audio|des écouteurs Sony
+audio|un casque audio filaire
+audio|une enceinte waterproof
+audio|un réveil
+audio|un casque sans fil pour la télé
+audio|un adaptateur Bluetooth
+jeuxSociete|un Scrabble
+jeuxSociete|un Cluedo
+jeuxSociete|un Trivial Pursuit
+jeuxSociete|un Mille Bornes
+jeuxSociete|un Jungle Speed
+jeuxSociete|des dés
+jeuxSociete|un jeu de tarot
+jeuxSociete|un puzzle 3D
+jeuxSociete|un Skyjo
+jeuxSociete|un jeu de rôle Donjons et Dragons
+escalier|un LEGO Star Wars
+escalier|un LEGO City
+escalier|des LEGO Friends
+escalier|une Funko Pop Marvel
+escalier|des cartes One Piece
+escalier|des cartes Lorcana
+escalier|un classeur pour cartes Pokémon
+escalier|des protège-cartes
+cartouches|une cartouche HP 305 XL
+cartouches|une cartouche noire Canon
+caisse|des piles pour ma télécommande
+caisse|une pile bouton
+caisse|un chèque cadeau
+caisse|un emballage cadeau
+caisse|la détaxe
+adhesion|la carte adhérent
+adhesion|mes points de fidélité
+adhesion|renouveler ma carte Fnac
+savRetrait|je viens chercher ma commande
+savRetrait|faire réparer mon téléphone
+savRetrait|la garantie de ma télé
+savRetrait|j'ai un problème avec mon ordinateur
+savRetrait|mon casque ne se connecte plus au bluetooth
+savRetrait|mon aspirateur ne tient plus la charge
+savRetrait|ma PS5 surchauffe
+savRetrait|mon téléphone est bloqué
+savRetrait|un retour produit
+savRetrait|je veux me faire rembourser mon casque
+editorial|un roman policier
+editorial|des BD Astérix
+editorial|un livre Harry Potter
+editorial|des cahiers
+editorial|un cahier de vacances
+editorial|un dictionnaire
+editorial|des vinyles
+editorial|des films en DVD

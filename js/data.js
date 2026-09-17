@@ -937,8 +937,8 @@ export const ZONES = {
     spots: ["39","40"],
     keywords: {
       fr: ["caisse", "caisses", "payer", "où payer", "paiement", "encaissement", "carte bancaire", "cb", "espèces",
-           "liquide", "sans contact", "ticket", "ticket de caisse", "facture", "détaxe", "tax free", "carte cadeau",
-           "chèque cadeau", "bon d'achat", "avoir", "emballage cadeau", "papier cadeau", "file d'attente",
+           "payer en liquide", "sans contact", "ticket", "ticket de caisse", "facture", "détaxe", "tax free", "carte cadeau",
+           "chèque cadeau", "bon d'achat", "un avoir en caisse", "bon d'avoir", "emballage cadeau", "papier cadeau", "file d'attente",
            "caisse automatique", "borne de paiement", "réservation", "piles", "pile", "piles rechargeables",
            "pile bouton", "adaptateur de voyage", "adaptateur prise étrangère", "adaptateur international",
            "prise anglaise", "prise américaine", "carte cadeau fnac", "e-carte cadeau"],
@@ -1058,7 +1058,7 @@ const SPOKEN = {
          "cordón para móvil", "soporte de bici para móvil", "auriculares usb c", "primer móvil"]
   },
   objets: {
-    fr: ["galaxy watch 9", "pixel watch 4", "garmin fenix 8", "forerunner 970", "oura ring 4", "montre connectée 2026", "smart ouatch", "garmin forerunner", "forerunner", "garmin venu", "garmin fenix", "fenix", "garmin instinct",
+    fr: ["bracelet", "bracelets", "sommeil", "mesurer mon sommeil", "suivre mon sommeil", "compter mes pas", "rythme cardiaque", "fréquence cardiaque", "suivre mon activité", "caméra pour la porte", "voir qui sonne", "qui sonne à la porte", "judas connecté", "surveiller mon chien", "surveiller mon chat", "surveiller la maison", "caméra animaux", "qui on parle", "on lui parle", "qu'on parle", "commande vocale", "parler à mon enceinte", "ampoule", "ampoules", "allumer avec mon téléphone", "piloter avec mon téléphone", "contrôler avec mon téléphone", "depuis mon téléphone", "à distance", "maison intelligente", "retrouver mes clés", "retrouver mon sac", "retrouver mon vélo", "ne plus perdre mes clés", "localiser", "galaxy watch 9", "pixel watch 4", "garmin fenix 8", "forerunner 970", "oura ring 4", "montre connectée 2026", "smart ouatch", "garmin forerunner", "forerunner", "garmin venu", "garmin fenix", "fenix", "garmin instinct",
          "galaxy watch 8", "galaxy watch ultra", "pixel watch", "huawei watch gt", "xiaomi smart band", "redmi watch",
          "montre pour courir", "montre running", "montre pour le sport", "montre pour enfant", "montre enfant",
          "montre gps enfant", "montre qui compte les pas", "compter mes pas", "bracelet de sport", "galaxy ring",
@@ -1107,7 +1107,7 @@ const SPOKEN = {
     es: ["quiero salir", "busco la salida"]
   },
   gaming: {
-    fr: ["gta 6", "gta vi", "gta six", "grand theft auto 6", "grand theft auto vi", "précommande gta", "précommander gta 6", "réserver gta 6", "sortie gta 6", "quand sort gta 6", "gta 6 ps5", "gta 6 xbox", "ps6", "playstation 6", "ps 6", "xbox next", "prochaine xbox", "prochaine playstation", "switch 3", "précommander un jeu", "réserver un jeu", "jeu à réserver", "réservation jeu", "jeux à venir", "bonus de précommande", "fc 27", "fifa 27", "call of duty 2026", "black ops 8", "the witcher 4", "witcher 4", "elder scrolls 6", "marvel's wolverine", "wolverine ps5", "007 first light", "resident evil requiem", "metroid prime 4", "kirby air riders", "pokemon pokopia", "pokopia", "pokemon vents et vagues", "zelda switch 2", "mario kart world", "nba 2k27", "gears of war", "gears of war e-day", "clair obscur", "expedition 33", "ghost of yotei", "onimusha", "phantom blade zero", "crimson desert", "pragmata", "nintendo swiche", "switche", "switch deux", "ixbox", "x box", "iks box", "plais station", "playstaïtion", "pléstation", "ps cinq", "manette ps cinq", "dual sense", "joy cone", "game pass ultimate", "la play", "une play", "play 5", "play 4", "la ps", "playstation portal", "ps portal", "ps5 slim",
+    fr: ["carte cadeau nintendo", "carte cadeau playstation", "carte cadeau psn", "carte cadeau xbox", "carte cadeau steam", "carte cadeau roblox", "carte cadeau fortnite", "carte cadeau eshop", "carte cadeau jeux vidéo", "gta 6", "gta vi", "gta six", "grand theft auto 6", "grand theft auto vi", "précommande gta", "précommander gta 6", "réserver gta 6", "sortie gta 6", "quand sort gta 6", "gta 6 ps5", "gta 6 xbox", "ps6", "playstation 6", "ps 6", "xbox next", "prochaine xbox", "prochaine playstation", "switch 3", "précommander un jeu", "réserver un jeu", "jeu à réserver", "réservation jeu", "jeux à venir", "bonus de précommande", "fc 27", "fifa 27", "call of duty 2026", "black ops 8", "the witcher 4", "witcher 4", "elder scrolls 6", "marvel's wolverine", "wolverine ps5", "007 first light", "resident evil requiem", "metroid prime 4", "kirby air riders", "pokemon pokopia", "pokopia", "pokemon vents et vagues", "zelda switch 2", "mario kart world", "nba 2k27", "gears of war", "gears of war e-day", "clair obscur", "expedition 33", "ghost of yotei", "onimusha", "phantom blade zero", "crimson desert", "pragmata", "nintendo swiche", "switche", "switch deux", "ixbox", "x box", "iks box", "plais station", "playstaïtion", "pléstation", "ps cinq", "manette ps cinq", "dual sense", "joy cone", "game pass ultimate", "la play", "une play", "play 5", "play 4", "la ps", "playstation portal", "ps portal", "ps5 slim",
          "ps5 digital", "ps5 édition digitale", "ps5 standard", "xbox game pass",
          "nintendo switch 2", "la switch", "switch 1", "console nintendo", "console sony", "console microsoft",
          "console pour enfant", "console pour jouer", "jouer à la console", "rog ally", "legion go",
@@ -1157,7 +1157,7 @@ const SPOKEN = {
          "thrustmaster", "pedales", "funda de transporte switch", "ssd ps5"]
   },
   "accessoiresGaming.pc": {
-    fr: ["rtx 5060 ti", "rtx 5050", "rtx 6070", "rtx 6080", "rtx 6090", "rx 9060 xt", "ryzen 9000", "ryzen 9 9950x3d", "9800x3d", "core ultra 7", "core ultra 9", "écran 500 hz", "écran 240hz oled", "composant", "composants", "composant pc", "pièces pc", "pièce pour pc", "monter mon pc", "monter un pc",
+    fr: ["bon pc pour jouer", "pc pour jouer", "ordinateur pour jouer", "pc pour les jeux", "pc pour jouer à fortnite", "pc qui fait tourner les jeux", "faire tourner les jeux", "jouer sur pc", "jeux sur pc", "monter un pc gamer", "améliorer mon pc", "upgrade pc", "plus de fps", "fps", "rtx 5060 ti", "rtx 5050", "rtx 6070", "rtx 6080", "rtx 6090", "rx 9060 xt", "ryzen 9000", "ryzen 9 9950x3d", "9800x3d", "core ultra 7", "core ultra 9", "écran 500 hz", "écran 240hz oled", "composant", "composants", "composant pc", "pièces pc", "pièce pour pc", "monter mon pc", "monter un pc",
          "config gamer", "configuration gamer", "pc de gamer", "ordinateur gamer", "ordinateur gaming",
          "pc portable gamer", "pc portable gaming", "ordinateur portable gamer", "asus tuf", "tuf gaming",
          "msi katana", "lenovo legion", "hp omen", "hp victus", "victus", "acer nitro", "acer predator", "alienware", "rtx 4060", "rtx 4070", "rtx 5060", "rtx 5070", "rtx 5070 ti",
@@ -1180,7 +1180,7 @@ const SPOKEN = {
          "brazo para monitor", "monitor portátil", "segundo monitor"]
   },
   "accessoiresGaming.accessoires": {
-    fr: ["webcam", "caméra pour pc", "caméra pour ordinateur", "webcam logitech", "logitech g", "souris logitech",
+    fr: ["fauteuil", "fauteuil de bureau", "chaise de bureau", "siège de bureau", "clavier lumineux", "clavier qui s'allume", "clavier de couleur", "souris lumineuse", "jouer longtemps", "webcam", "caméra pour pc", "caméra pour ordinateur", "webcam logitech", "logitech g", "souris logitech",
          "clavier logitech", "souris razer", "clavier razer", "casque razer", "razer kraken", "razer blackshark",
          "corsair void", "hyperx cloud", "steelseries arctis", "arctis nova", "logitech g pro", "logitech g502",
          "g502", "souris ergonomique", "souris verticale", "souris bluetooth", "souris silencieuse",
@@ -1238,7 +1238,7 @@ const SPOKEN = {
          "pistola de masaje", "almohadilla térmica", "manta eléctrica"]
   },
   "electromenager.sols": {
-    fr: ["dyson v16", "dyson pencilvac", "pencilvac", "daïson", "daisonne", "dayson", "aspirateur dyson", "dyson v8", "dyson v10", "dyson v11", "dyson v12", "dyson v15", "dyson v16",
+    fr: ["nettoyer par terre", "nettoyer le sol", "laver le sol", "laver par terre", "nettoyer les sols", "poils d'animaux", "poils de chien", "poils de chat", "aspirer les poils", "dyson v16", "dyson pencilvac", "pencilvac", "daïson", "daisonne", "dayson", "aspirateur dyson", "dyson v8", "dyson v10", "dyson v11", "dyson v12", "dyson v15", "dyson v16",
          "dyson gen5", "dyson gen 5", "dyson detect", "aspirateur laveur", "aspirateur eau et poussière",
          "nettoyeur de sol", "laveur de sol", "serpillère électrique", "lave-vitre", "nettoyeur vitres",
          "karcher vitres", "aspirateur de chantier", "aspirateur souffleur", "aspirateur traineau sans sac",
@@ -1263,7 +1263,7 @@ const SPOKEN = {
          "cepillo de dientes", "cabezales de recambio", "sonicare", "waterpik", "depilación", "lumea"]
   },
   "electromenager.cheveux": {
-    fr: ["dyson airwrap", "airwrap dyson", "dyson supersonic", "supersonic", "sèche-cheveux dyson", "lisseur dyson",
+    fr: ["sécher mes cheveux", "se sécher les cheveux", "lisser mes cheveux", "boucler mes cheveux", "couper les cheveux", "se couper les cheveux", "raser la tête", "tailler ma barbe", "couper la barbe", "rasage", "dyson airwrap", "airwrap dyson", "dyson supersonic", "supersonic", "sèche-cheveux dyson", "lisseur dyson",
          "dyson airstrait", "airstrait", "sèche cheveux", "fer à lisser", "lisseur ghd", "ghd", "lisseur vapeur",
          "steampod", "boucleur automatique", "brosse lissante", "brosse chauffante", "diffuseur cheveux",
          "coiffure", "pour les cheveux", "rasoir philips", "oneblade", "philips oneblade", "braun series",
@@ -1293,7 +1293,7 @@ const SPOKEN = {
          "cepillo facial", "espejo con luz"]
   },
   "electromenager.preparation": {
-    fr: ["blender chauffant", "soup maker", "soupe maker", "blender nutribullet", "nutribullet", "blender ninja",
+    fr: ["eau pétillante", "eau gazeuse maison", "faire de l'eau gazeuse", "faire des jus", "faire des soupes", "faire des compotes", "mixer", "hacher", "me peser", "perdre du poids", "suivre mon poids", "blender chauffant", "soup maker", "soupe maker", "blender nutribullet", "nutribullet", "blender ninja",
          "smoothie", "faire des smoothies", "faire du jus", "jus de fruits", "extracteur", "presse agrumes",
          "presse-orange", "batteur", "batteur électrique", "fouet électrique", "hachoir électrique", "mini hachoir",
          "robot coupe", "gazéifieur", "eau gazeuse", "cylindre sodastream", "recharge sodastream",
@@ -1328,7 +1328,7 @@ const SPOKEN = {
          "robot de cocina", "thermomix", "cook expert", "kitchenaid artisan", "batidora de brazo"]
   },
   "electromenager.capsules": {
-    fr: ["air frayeur", "ère frayeur", "air friteuse", "airfrayer", "nes presso", "vertuo next", "vertuo creatista", "capsules nespresso", "capsule nespresso", "nespresso vertuo", "vertuo", "capsules vertuo", "vertuo pop",
+    fr: ["chauffer de l'eau", "faire bouillir de l'eau", "eau chaude", "faire des frites", "frites sans huile", "cuire sans huile", "faire des toasts", "griller du pain", "pain grillé", "air frayeur", "ère frayeur", "air friteuse", "airfrayer", "nes presso", "vertuo next", "vertuo creatista", "capsules nespresso", "capsule nespresso", "nespresso vertuo", "vertuo", "capsules vertuo", "vertuo pop",
          "machine nespresso", "machine dolce gusto", "capsules dolce gusto", "capsules tassimo", "dosettes senseo",
          "l'or barista", "machine l'or", "aeroccino", "bouilloire électrique", "bouilloire température réglable",
          "grille pain", "toasteur", "grille-pain 4 tranches", "air fryer ninja", "ninja air fryer",
@@ -1341,7 +1341,7 @@ const SPOKEN = {
          "hervidor eléctrico", "tostador", "freidora ninja", "cosori", "ninja foodi", "easy fry"]
   },
   informatique: {
-    fr: ["carte mémoire", "carte micro sd 128 go", "micro sd", "microsd", "carte sd pour téléphone", "sandisk",
+    fr: ["brancher", "brancher mon ordi sur la télé", "brancher mon ordinateur sur la télé", "brancher mon pc sur la télé", "relier mon ordi à la télé", "connecter mon ordi à la télé", "sauvegarder", "sauvegarder mes photos", "sauvegarder mes fichiers", "stocker", "stocker mes photos", "stocker mes fichiers", "fichiers", "mes fichiers", "transférer des fichiers", "plus de stockage", "manque de place", "plus de place", "wifi dans ma chambre", "wifi dans la maison", "wifi qui capte mal", "capter le wifi", "réseau internet", "internet à la maison", "plusieurs branchements", "prise avec plusieurs", "brancher plusieurs appareils", "rallonger", "rallonge de câble", "scanner des documents", "scanner des photos", "imprimer des photos", "imprimer des documents", "carte mémoire", "carte micro sd 128 go", "micro sd", "microsd", "carte sd pour téléphone", "sandisk",
          "clé usb 32 go", "clé usb 64 go", "clé usb 128 go", "clé usb c", "clé usb 3.0", "disque dur 1 to",
          "disque dur 2 to", "disque dur 4 to", "stockage externe", "disque externe", "seagate",
          "western digital", "wd", "lacie", "kingston", "crucial", "samsung t7", "ssd samsung", "boîtier disque dur",
@@ -1373,7 +1373,7 @@ const SPOKEN = {
          "impresora epson", "impresora canon", "imprimir", "toallitas para pantalla"]
   },
   tablettes: {
-    fr: ["tablette lenovo", "lenovo tab", "tablette xiaomi", "xiaomi pad", "redmi pad", "tablette huawei",
+    fr: ["samsung galaxy tab", "samsung galaxy tab a9", "samsung galaxy tab s10", "samsung galaxy tab s9", "tablette galaxy", "tablette lenovo", "lenovo tab", "tablette xiaomi", "xiaomi pad", "redmi pad", "tablette huawei",
          "matepad", "honor pad", "galaxy tab s10", "galaxy tab s9", "galaxy tab a9", "tab s10", "tab a9",
          "galaxy tab s10 fe", "tablette amazon", "amazon fire", "fire hd", "fire hd 10", "tablette fire",
          "tablette pas chère", "tablette pour enfant", "tablette pour mon fils", "tablette pour ma fille",
@@ -1434,7 +1434,7 @@ const SPOKEN = {
          "bitdefender", "bolsa para portátil", "cargador universal portátil"]
   },
   trottinettes: {
-    fr: ["trotinnette", "trotinet", "trotinette électrique", "ninebot max g3", "xiaomi scooter 5", "segway gt3", "trott", "trottinette xiaomi", "xiaomi electric scooter", "trottinette ninebot", "ninebot max",
+    fr: ["se déplacer", "transport électrique", "moyen de transport", "aller au travail", "aller au lycée", "aller à la fac", "trajet domicile travail", "déplacements urbains", "vélotaf", "mobilité électrique", "trotinnette", "trotinet", "trotinette électrique", "ninebot max g3", "xiaomi scooter 5", "segway gt3", "trott", "trottinette xiaomi", "xiaomi electric scooter", "trottinette ninebot", "ninebot max",
          "segway ninebot", "ninebot g30", "ninebot f2", "ninebot e2", "trottinette pliable", "trottinette adulte",
          "trottinette pour ado", "trottinette électrique enfant", "trottinette tout terrain", "trottinette puissante",
          "trottinette légère", "trottinette pas chère", "vélo", "vélo à assistance électrique", "vae",
@@ -1502,7 +1502,7 @@ const SPOKEN = {
          "filtro nd"]
   },
   tv: {
-    fr: ["tv 2026", "télé 2026", "nouvelle télé", "samsung s95", "lg c6", "lg g6", "oled evo", "micro rgb", "tv micro led", "rgb mini led", "tévé", "té vé", "la télé du salon", "télévision connectée", "téloche", "écran géant", "tv 32 pouces", "tv 40 pouces", "tv 43 pouces", "tv 50 pouces", "tv 55 pouces", "tv 65 pouces",
+    fr: ["projeter", "projeter un film", "projeter des films", "regarder netflix", "regarder des séries", "regarder le sport", "regarder la tv", "regarder youtube sur la télé", "rendre ma télé connectée", "télé connectée", "écran pour le salon", "cinéma dans le salon", "tv 2026", "télé 2026", "nouvelle télé", "samsung s95", "lg c6", "lg g6", "oled evo", "micro rgb", "tv micro led", "rgb mini led", "tévé", "té vé", "la télé du salon", "télévision connectée", "téloche", "écran géant", "tv 32 pouces", "tv 40 pouces", "tv 43 pouces", "tv 50 pouces", "tv 55 pouces", "tv 65 pouces",
          "tv 75 pouces", "tv 77 pouces", "tv 85 pouces", "tv 98 pouces", "tv 100 pouces", "32 pouces", "43 pouces",
          "50 pouces", "77 pouces", "85 pouces", "98 pouces", "100 pouces", "télé 4k", "télé oled", "tv oled",
          "tv qled", "tv mini led", "tv led", "neo qled", "tv lg oled", "lg oled", "lg c5", "lg c4", "lg g5",
@@ -1533,7 +1533,7 @@ const SPOKEN = {
          "samsung freestyle", "benq", "pantalla para proyector", "cine en casa"]
   },
   audio: {
-    fr: ["sony wh-1000xm6", "wh-1000xm6", "bose quietcomfort ultra 2", "jbl flip 8", "jbl charge 6", "sonos arc ultra", "sonos era 100 pro", "ji bi elle", "jibiel", "gbl", "enceinte jibiel", "marchal", "bitz", "musique", "écouter de la musique", "pour écouter de la musique", "écouter mes musiques", "enceinte jbl", "jbl flip", "jbl flip 7", "jbl flip 6", "jbl charge", "jbl charge 6", "jbl charge 5",
+    fr: ["mettre du son", "son dans le salon", "sonoriser", "sonorisation", "ambiance musicale", "écouter la radio", "écouter des podcasts", "musique dans la voiture", "musique dans le train", "musique en marchant", "musique à la maison", "gros son", "basses", "bon son", "qualité audio", "hi-res", "vinyles à écouter", "écouter mes vinyles", "écouter mes cd", "sony wh-1000xm6", "wh-1000xm6", "bose quietcomfort ultra 2", "jbl flip 8", "jbl charge 6", "sonos arc ultra", "sonos era 100 pro", "ji bi elle", "jibiel", "gbl", "enceinte jibiel", "marchal", "bitz", "musique", "écouter de la musique", "pour écouter de la musique", "écouter mes musiques", "enceinte jbl", "jbl flip", "jbl flip 7", "jbl flip 6", "jbl charge", "jbl charge 6", "jbl charge 5",
          "jbl go", "jbl go 4", "jbl clip", "jbl xtreme", "jbl boombox", "jbl partybox", "partybox", "jbl tune",
          "jbl tour", "jbl live", "enceinte de soirée", "enceinte pour faire la fête", "enceinte avec lumière",
          "enceinte lumineuse", "grosse enceinte bluetooth", "enceinte puissante", "enceinte de salon",
@@ -1627,10 +1627,10 @@ const SPOKEN = {
          "codenames", "code names", "splendor", "les aventuriers du rail", "aventuriers du rail", "ticket to ride",
          "exploding kittens", "unlock", "escape game en boîte", "the mind", "just one", "love letter", "pandemic",
          "wingspan", "king of tokyo", "bang", "perudo", "yams", "yahtzee", "qwirkle", "rummikub", "pictionary",
-         "taboo", "jenga", "puissance 4", "bataille navale", "docteur maboul", "qui est-ce", "mastermind", "hanabi",
+         "taboo", "jenga", "puissance 4", "bataille navale", "docteur maboul", "jeu qui est-ce", "mastermind", "hanabi",
          "mysterium", "blanc manger coco", "limite limite", "cards against humanity", "trio", "cortex", "dixit odyssée",
          "kingdomino", "terraforming mars", "7 wonders duel", "harry potter jeu de société",
-         "mölkky", "molkky", "flip 7", "cafard", "cartatoto", "top ten", "dobble kids", "la bonne paye", "destins",
+         "mölkky", "molkky", "flip 7", "jeu cafard", "cartatoto", "top ten", "dobble kids", "la bonne paye", "destins",
          "jeu de l'oie", "jeu de mémoire", "memory", "tangram", "jeu de logique", "jeu de stratégie",
          "jeu de société pour enfant", "jeu de société enfant", "jeu de société adulte", "jeu pour adulte",
          "jeu pour 2", "jeu à deux", "jeu à 2 joueurs", "jeu pour jouer à deux", "jeu entre amis", "jeu en famille",
@@ -1693,7 +1693,7 @@ const SPOKEN = {
   },
   caisse: {
     fr: ["passer en caisse", "passer à la caisse", "je veux payer", "où je paye", "où je paie", "où est-ce qu'on paye",
-         "régler", "régler mes achats", "payer par carte", "payer en carte", "payer en espèces", "payer en liquide",
+         "régler mes achats", "payer par carte", "payer en carte", "payer en espèces", "payer en liquide",
          "payer avec mon téléphone", "paiement mobile", "paiement sans contact", "payer par chèque", "chèque",
          "ticket de caisse perdu", "duplicata ticket", "reçu",
          "facture pro", "facture entreprise", "achat professionnel", "carte cadeau fnac darty", "recharger une carte cadeau",
@@ -1710,7 +1710,7 @@ const SPOKEN = {
          "adaptador americano", "adaptador universal de viaje"]
   },
   adhesion: {
-    fr: ["fnac+", "carte fnac+", "fnac plus carte", "carte fnac darty", "carte one", "fnac one", "adhérer",
+    fr: ["payer en 4 fois", "payer en quatre fois", "en 4 fois", "en 3 fois", "en 10 fois", "en 12 fois", "payer en 12 fois", "paiement échelonné", "facilité de paiement", "fnac+", "carte fnac+", "fnac plus carte", "carte fnac darty", "carte one", "fnac one", "adhérer",
          "je veux adhérer", "devenir membre", "cumuler des points", "cagnotte", "cagnotte adhérent", "chèque fidélité",
          "chèque cadeau adhérent", "bon d'achat adhérent", "remise adhérent", "prix adhérent", "tarif adhérent",
          "livraison gratuite adhérent", "carte gratuite", "carte fnac gratuite", "carte payante",
