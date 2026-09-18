@@ -14,6 +14,7 @@ for (const lang of Object.keys(UI)) {
   for (const entry of CLARIFY) add(entry.question[lang]);
   [t.surveyAsk, t.surveyThanksYes, t.surveyThanksNo, t.a11yOn, t.a11yOff].forEach(add);
   add(t.vendorConfirm(null));
+  add(t.vendorUnavailable);
   for (const [id, zone] of Object.entries(ZONES)) {
     if (zone.external || id === "ascenseur") continue;
     const label = zone.label[lang];
