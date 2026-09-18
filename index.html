@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=42">
+<link rel="stylesheet" href="css/kiosk.css?v=43">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=42"></script>
+<script type="module" src="js/app.js?v=43"></script>
 </head>
 <body class="is-idle">
 
@@ -248,6 +248,8 @@
       <h3 id="vendorTitle">Appeler un vendeur</h3>
       <p class="neural-status">Quand un client touche « Appeler un vendeur », une alerte arrive sur le téléphone des vendeurs abonnés dans l'application gratuite ntfy. Indiquez le même nom de canal ici et dans l'application. Sans canal réglé, Jeanne demande au client de s'adresser à un membre de l'équipe.</p>
       <label>Nom du canal ntfy<input type="text" id="vendorTopic" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="jeanne-fnac-…"></label>
+      <label>Adresses e-mail (Outlook), séparées par des virgules<input type="text" id="vendorEmails" inputmode="email" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="prenom.nom@fnac.com"></label>
+      <p class="neural-status">E-mail : la première fois, un message « Activate form » de FormSubmit arrive sur la première adresse ; cliquez sur le lien, puis refaites le test. L'e-mail peut mettre une minute à arriver et peut être classé en indésirable : vérifiez au premier essai.</p>
       <p class="neural-status" id="vendorStatus" role="status"></p>
       <button type="button" class="neural-download" id="vendorTest">Envoyer une alerte de test</button>
     </section>

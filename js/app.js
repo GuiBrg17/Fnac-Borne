@@ -10,7 +10,7 @@ const { NEWS } = await import("./news.js" + VERSION);
 const { recordSession, recordQuestion, recordFeedback, readStats, readPeriod, resetStats, dayKey } = await import("./stats.js" + VERSION);
 const { buildReport, monthlyPeriod, downloadReport, emailReport, isEmail } = await import("./report.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
-const { sendVendorAlert, isTopic } = await import("./alert.js" + VERSION);
+const { sendVendorAlert, sendVendorEmail, emailList, isTopic } = await import("./alert.js" + VERSION);
 const { BASEMENT, GROUND, box, routeTo, routeGround, stairsDrawing } = await import("./plan.js" + VERSION);
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -78,7 +78,7 @@ const els = {
   reportEmail: $("#reportEmail"), reportDay: $("#reportDay"), reportMonthly: $("#reportMonthly"),
   reportStatus: $("#reportStatus"), reportSend: $("#reportSend"), reportDownload: $("#reportDownload"),
   settings: $("#settings"), idleSeconds: $("#idleSeconds"), testVoice: $("#testVoice"),
-  vendorTopic: $("#vendorTopic"), vendorStatus: $("#vendorStatus"), vendorTest: $("#vendorTest"),
+  vendorTopic: $("#vendorTopic"), vendorEmails: $("#vendorEmails"), vendorStatus: $("#vendorStatus"), vendorTest: $("#vendorTest"),
   neuralToggle: $("#neuralToggle"), voiceStatus: $("#voiceStatus"), voiceDownload: $("#voiceDownload"),
   toast: $("#toast"),
   otherStore: $("#otherStore"), otherStoreClose: $("#otherStoreClose"), otherStoreAddress: $("#otherStoreAddress"),
@@ -1040,7 +1040,13 @@ async function callVendor() {
   if (Date.now() - lastVendorAlert < VENDOR_COOLDOWN) { confirm(); return; }
   vendorSending = true;
   const zone = state.zone && ZONES[state.zone] && label ? ZONES[state.zone].label.fr : null;
-  const sent = await sendVendorAlert(store.get("vendorTopic", ""), { zone, floor: zone ? ZONES[state.zone].floors[0] : null });
+  const where = { zone, floor: zone ? ZONES[state.zone].floors[0] : null };
+  // ntfy et e-mail en même temps : il suffit que l'un des deux parte.
+  const [pushed, mailed] = await Promise.all([
+    sendVendorAlert(store.get("vendorTopic", ""), where),
+    emailList(store.get("vendorEmails", "")).length ? sendVendorEmail(store.get("vendorEmails", ""), where) : "failed"
+  ]);
+  const sent = pushed || mailed === "sent";
   vendorSending = false;
   if (sent) {
     lastVendorAlert = Date.now();
@@ -1525,7 +1531,8 @@ els.logo.addEventListener("click", () => {
     renderStats();
     fillReportSettings();
     els.vendorTopic.value = store.get("vendorTopic", "");
-    els.vendorStatus.textContent = els.vendorTopic.value ? "" : "Aucun canal réglé : les alertes ne partent pas.";
+    els.vendorEmails.value = store.get("vendorEmails", "");
+    els.vendorStatus.textContent = els.vendorTopic.value || els.vendorEmails.value ? "" : "Ni canal ni e-mail réglé : les alertes ne partent pas.";
     els.neuralToggle.checked = settings.neuralVoice;
     updateVoiceStatus();
     els.idleSeconds.value = settings.idleSeconds;
@@ -1550,26 +1557,44 @@ els.settings.addEventListener("change", (e) => {
 });
 els.testVoice.addEventListener("click", () => speak(t().hello));
 els.statsReset.addEventListener("click", handleStatsReset);
-els.vendorTopic.addEventListener("change", () => {
+function saveVendorSettings() {
   const topic = els.vendorTopic.value.trim();
   if (topic && !isTopic(topic)) {
-    els.vendorStatus.textContent = "Nom invalide : lettres, chiffres et tirets seulement, 6 caractères au moins.";
-    return;
+    els.vendorStatus.textContent = "Nom de canal invalide : lettres, chiffres et tirets seulement, 6 caractères au moins.";
+    return false;
+  }
+  const emails = emailList(els.vendorEmails.value);
+  if (els.vendorEmails.value.trim() && !emails.length) {
+    els.vendorStatus.textContent = "Adresse e-mail invalide.";
+    return false;
   }
   store.set("vendorTopic", topic);
-  els.vendorStatus.textContent = topic ? `Canal enregistré : ${topic}.` : "Aucun canal réglé : les alertes ne partent pas.";
-});
+  store.set("vendorEmails", emails.join(", "));
+  els.vendorEmails.value = emails.join(", ");
+  const how = [topic && `ntfy (${topic})`, emails.length && `e-mail (${emails.join(", ")})`].filter(Boolean);
+  els.vendorStatus.textContent = how.length ? `Alertes envoyées par ${how.join(" et ")}.` : "Ni canal ni e-mail réglé : les alertes ne partent pas.";
+  return true;
+}
+els.vendorTopic.addEventListener("change", saveVendorSettings);
+els.vendorEmails.addEventListener("change", saveVendorSettings);
 els.vendorTest.addEventListener("click", async () => {
-  const topic = els.vendorTopic.value.trim();
-  if (!isTopic(topic)) { els.vendorStatus.textContent = "Indiquez d'abord un nom de canal valide."; return; }
-  store.set("vendorTopic", topic);
+  if (!saveVendorSettings()) return;
+  const topic = store.get("vendorTopic", "");
+  const emails = store.get("vendorEmails", "");
+  if (!topic && !emails) { els.vendorStatus.textContent = "Indiquez d'abord un canal ntfy ou une adresse e-mail."; return; }
   els.vendorTest.disabled = true;
   els.vendorStatus.textContent = "Envoi du test…";
-  const ok = await sendVendorAlert(topic, { test: true });
+  const [pushed, mailed] = await Promise.all([
+    topic ? sendVendorAlert(topic, { test: true }) : null,
+    emails ? sendVendorEmail(emails, { test: true }) : null
+  ]);
   els.vendorTest.disabled = false;
-  els.vendorStatus.textContent = ok
-    ? "Test envoyé : l'alerte doit apparaître sur les téléphones abonnés à ce canal."
-    : "Envoi impossible : vérifiez la connexion internet.";
+  const parts = [];
+  if (topic) parts.push(pushed ? "ntfy : test envoyé, il doit sonner sur les téléphones abonnés." : "ntfy : envoi impossible (connexion internet ?).");
+  if (emails) parts.push(mailed === "sent" ? "E-mail : test envoyé (vérifiez aussi les indésirables)."
+    : mailed === "activation" ? "E-mail : première fois, ouvrez le message « Activate form », cliquez sur le lien, puis refaites le test."
+    : "E-mail : envoi impossible (connexion internet ?).");
+  els.vendorStatus.textContent = parts.join(" ");
 });
 els.reportEmail.addEventListener("change", saveReportSettings);
 els.reportDay.addEventListener("change", saveReportSettings);
