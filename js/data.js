@@ -66,6 +66,7 @@ export const UI = {
     vendorConfirm: (zone) => zone
       ? `C'est noté : un vendeur du rayon ${zone} a été prévenu.`
       : "C'est noté : un vendeur a été prévenu et arrive.",
+    vendorUnavailable: "Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe dans le magasin, il vous aidera avec plaisir.",
     vendorToast: (zone) => zone ? `Vendeur prévenu · rayon ${zone}` : "Vendeur prévenu",
     micUnsupported: "Le micro n'est pas disponible sur cet appareil. Vous pouvez écrire votre question.",
     micError: "Je n'ai pas bien entendu. Réessayez, ou écrivez votre question.",
@@ -128,6 +129,7 @@ export const UI = {
     vendorConfirm: (zone) => zone
       ? `Done: a staff member from ${zone} has been notified.`
       : "Done: a staff member has been notified and is on their way.",
+    vendorUnavailable: "I couldn't reach a staff member. Please ask any member of the team in the store, they'll be happy to help.",
     vendorToast: (zone) => zone ? `Staff notified · ${zone}` : "Staff notified",
     micUnsupported: "The microphone isn't available on this device. You can type your question.",
     micError: "I didn't quite catch that. Try again, or type your question.",
@@ -190,6 +192,7 @@ export const UI = {
     vendorConfirm: (zone) => zone
       ? `Hecho: se ha avisado a un vendedor de la sección ${zone}.`
       : "Hecho: se ha avisado a un vendedor y ya viene.",
+    vendorUnavailable: "No he podido avisar a un vendedor. Diríjase a cualquier miembro del equipo en la tienda, le ayudará con gusto.",
     vendorToast: (zone) => zone ? `Vendedor avisado · ${zone}` : "Vendedor avisado",
     micUnsupported: "El micrófono no está disponible en este dispositivo. Puede escribir su pregunta.",
     micError: "No le he entendido bien. Inténtelo de nuevo o escriba su pregunta.",

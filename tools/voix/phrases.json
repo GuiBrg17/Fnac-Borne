@@ -173,6 +173,10 @@
  },
  {
   "lang": "fr",
+  "text": "Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe dans le magasin, il vous aidera avec plaisir."
+ },
+ {
+  "lang": "fr",
   "text": "Le rayon Téléphonie Android est ici, à l'étage 0. Je vous l'indique sur le plan."
  },
  {
@@ -505,6 +509,10 @@
  },
  {
   "lang": "en",
+  "text": "I couldn't reach a staff member. Please ask any member of the team in the store, they'll be happy to help."
+ },
+ {
+  "lang": "en",
   "text": "Android phones is right here on floor 0. I'm showing it on the map."
  },
  {
@@ -834,6 +842,10 @@
  {
   "lang": "es",
   "text": "Hecho: se ha avisado a un vendedor y ya viene."
+ },
+ {
+  "lang": "es",
+  "text": "No he podido avisar a un vendedor. Diríjase a cualquier miembro del equipo en la tienda, le ayudará con gusto."
  },
  {
   "lang": "es",

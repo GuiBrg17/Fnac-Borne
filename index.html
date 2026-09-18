@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=41">
+<link rel="stylesheet" href="css/kiosk.css?v=42">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=41"></script>
+<script type="module" src="js/app.js?v=42"></script>
 </head>
 <body class="is-idle">
 
@@ -243,6 +243,14 @@
     <label>Voix anglaise<select data-voice="en"></select></label>
     <label>Voix espagnole<select data-voice="es"></select></label>
     <label>Retour à l'accueil après (secondes)<input type="number" id="idleSeconds" min="20" max="600" step="10"></label>
+
+    <section class="neural" aria-labelledby="vendorTitle">
+      <h3 id="vendorTitle">Appeler un vendeur</h3>
+      <p class="neural-status">Quand un client touche « Appeler un vendeur », une alerte arrive sur le téléphone des vendeurs abonnés dans l'application gratuite ntfy. Indiquez le même nom de canal ici et dans l'application. Sans canal réglé, Jeanne demande au client de s'adresser à un membre de l'équipe.</p>
+      <label>Nom du canal ntfy<input type="text" id="vendorTopic" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="jeanne-fnac-…"></label>
+      <p class="neural-status" id="vendorStatus" role="status"></p>
+      <button type="button" class="neural-download" id="vendorTest">Envoyer une alerte de test</button>
+    </section>
 
     <section class="neural" aria-labelledby="neuralTitle">
       <h3 id="neuralTitle">Voix de Jeanne</h3>
