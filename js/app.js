@@ -16,19 +16,8 @@ const { BASEMENT, GROUND, box, routeTo, routeGround, stairsDrawing } = await imp
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
-// Avatar de la borne. Quand Jeanne est prête, remplacer par "assets/avatar/Jeanne.vrm".
-const AVATAR_FILE = "assets/avatar/Jeanne.glb";
-const FALLBACK_AVATAR = "assets/avatar/placeholder.vrm";
-// Retouches de l'avatar d'essai : cheveux blond doré et yeux bleus (non appliquées aux autres avatars).
-const PLACEHOLDER_LOOK = { hair: "golden", eyes: "blue" };
-// Test sans modifier le code : ajouter ?avatar=Jeanne.glb à l'adresse de la borne.
-function avatarFile() {
-  const requested = new URLSearchParams(location.search).get("avatar");
-  return requested && /^[\w-]+(\/[\w-]+)*\.(glb|vrm)$/i.test(requested) ? "assets/avatar/" + requested : AVATAR_FILE;
-}
 const WARNING_SECONDS = 15;
 // Visuel de l'écran de veille :
-//   "3d"    → l'avatar animé (il respire, cligne des yeux, salue, signe)
 //   "photo" → assets/jeanne-accueil.png
 //   "video" → assets/jeanne-accueil.mp4, avec la photo en secours
 const IDLE_VISUAL = "video";
@@ -65,8 +54,7 @@ const els = {
   idleGreet: $("#idleGreet"), idleNews: $("#idleNews"), idleNewsTitle: $("#idleNewsTitle"), idleNewsText: $("#idleNewsText"),
   idleNewsDate: $("#idleNewsDate"), idleNewsExample: $("#idleNewsExample"), idleNewsImage: $("#idleNewsImage"),
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
-  idleSlot: $("#idleAvatarSlot"), dockSlot: $("#dockAvatarSlot"),
-  app: $("#appScreen"), stageEl: $("#avatarStage"), canvas: $("#avatarCanvas"),
+  app: $("#appScreen"), signVideo: $("#signVideo"),
   chat: $("#chatLog"), chips: $("#suggestions"), status: $("#status"), statusText: $("#statusText"),
   mic: $("#micButton"), micLabel: $("#micLabel"), form: $("#askForm"), input: $("#askInput"), send: $("#askSend"),
   vendor: $("#vendorButton"), a11y: $("#a11yButton"), end: $("#endButton"), logo: $("#logoButton"),
@@ -166,11 +154,7 @@ function speak(text, lang = state.lang) {
     updateVoiceStatus();
     voice.playClip(url, {
       onStart: () => { speechPending = false; setSpeaking(true); },
-      onLevel: (level) => { if (avatar) avatar.setLevel(level); },
-      onEnd: () => {
-        setSpeaking(false);
-        if (avatar) avatar.setLevel(null);
-      }
+      onEnd: () => setSpeaking(false)
     }).then((handled) => {
       if (!handled) speakSynthesized(text, lang);
     });
@@ -191,11 +175,7 @@ function speakSynthesized(text, lang = state.lang) {
     voice.speak(text, lang, {
       rate: state.a11y ? 0.88 : 1,
       onStart: () => { speechPending = false; setSpeaking(true); },
-      onLevel: (level) => { if (avatar) avatar.setLevel(level); },
-      onEnd: () => {
-        setSpeaking(false);
-        if (avatar) avatar.setLevel(null);
-      }
+      onEnd: () => setSpeaking(false)
     }).then((handled) => {
       if (!handled) speakWithBrowser(text, lang);
     });
@@ -241,7 +221,6 @@ function speakWithBrowser(text, lang = state.lang) {
   };
   utterance.onend = done;
   utterance.onerror = done;
-  utterance.onboundary = () => avatar && avatar.pulse();
   currentUtterance = utterance; // garde une référence : évite un arrêt prématuré sous Chrome
   window.speechSynthesis.speak(utterance);
 }
@@ -250,7 +229,6 @@ function stopSpeaking() {
   clearTimeout(speechWatchdog);
   speechPending = false;
   voice.stop();
-  if (avatar) avatar.setLevel(null);
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   setSpeaking(false);
 }
@@ -327,7 +305,6 @@ function listenWhenDone() {
 
 function setSpeaking(on) {
   state.speaking = on;
-  if (avatar) avatar.setSpeaking(on);
   updateStatus();
   if (!on && afterSpeaking) {
     const next = afterSpeaking;
@@ -501,8 +478,7 @@ function noteVisit(text) {
 }
 
 function reply(text, prefix = "") {
-  // Une réponse doit rester lisible : on arrête les signes en cours, qui
-  // agrandissent l'avatar par-dessus la conversation.
+  // Une réponse chasse le signe en cours : le portrait revient avec la réponse.
   stopSigning();
   addMessage("jeanne", prefix + text);
   speak(text);
@@ -938,7 +914,6 @@ function showZone(id, place = null) {
   els.mapStage.classList.add("has-focus");
   renderRoute();
   scheduleRouteDraw(true);
-  if (avatar && state.screen === "app") avatar.glance();
 
   if (basementOnly) {
     // Parcours guidé : on montre d'abord l'escalier à l'étage 0, puis le rayon au sous-sol.
@@ -1026,8 +1001,6 @@ function toggleA11y(force) {
   state.a11y = typeof force === "boolean" ? force : !state.a11y;
   document.documentElement.classList.toggle("a11y", state.a11y);
   els.a11y.setAttribute("aria-pressed", String(state.a11y));
-  if (avatar) avatar.setReducedMotion(motionReduced());
-  requestAnimationFrame(() => placeAvatar());
 }
 
 // Alerte envoyée aux vendeurs (js/alert.js). Au plus une par minute : un
@@ -1077,7 +1050,6 @@ const GREETING_MS = 5200;
 const NEWS_MS = 8500;
 let idleStep = 0;
 let newsIndex = 0;
-let greetings = 0;
 let idleCycle = null;
 
 function setIdleLang(lang) {
@@ -1122,62 +1094,73 @@ function startIdleCycle() {
       if (isNews) showNews(NEWS[newsIndex++ % NEWS.length]);
       else showGreeting(IDLE_ORDER[idleStep]);
       els.idle.classList.remove("is-swapping");
-      // Un tour sur deux : « Bonjour » en langue des signes plutôt qu'un signe de la main.
-      if (idleStep === 0 && avatar) {
-        greetings += 1;
-        if (greetings % 2 !== 0 || !signLSF("bonjour")) avatar.wave();
-      }
       idleCycle = setTimeout(next, isNews ? NEWS_MS : GREETING_MS);
     }, 420);
   };
   idleCycle = setTimeout(next, GREETING_MS);
 }
 
-// expand > 1 : agrandit temporairement la scène 3D autour de son emplacement
-// (utile pour qu'un signe en LSF reste visible sur la page principale).
-function placeAvatar(expand = 1) {
-  const slot = state.screen === "app" ? els.dockSlot : els.idleSlot;
-  const r = slot.getBoundingClientRect();
-  const width = r.width * expand;
-  const height = r.height * expand;
-  const margin = 8;
-  // La scène grandit vers le bas et la droite pour ne pas sortir du panneau.
-  const left = Math.max(margin, Math.min(window.innerWidth - width - margin, r.left));
-  const top = Math.max(margin, Math.min(window.innerHeight - height - margin, r.top));
-  const s = els.stageEl.style;
-  s.left = left + "px";
-  s.top = top + "px";
-  s.width = width + "px";
-  s.height = height + "px";
+// =====================================================================
+// Langue des signes (LSF)
+//
+// Jeanne signe en vidéo : un clip par signe, tourné avec une personne qui
+// signe, dans assets/lsf/<langue>/<signe>.mp4 (bonjour, bienvenue, aider,
+// merci, abientot). Le clip remplace le portrait le temps du geste.
+// Tant qu'un clip n'existe pas, la borne n'affiche rien de plus : le texte
+// de Jeanne reste à l'écran, comme pour un client qui n'entend pas.
+// =====================================================================
+const SIGN_DIR = "assets/lsf/";
+let signQueue = [];
+// Clips présents sur la borne : on le demande une fois par fichier, sinon la
+// vidéo s'affiche une seconde dans le vide quand un signe n'a pas été tourné.
+const signClips = new Map();
+
+const signUrl = (name) => `${SIGN_DIR}${state.lang}/${name}.mp4${VERSION}`;
+
+function hasClip(url) {
+  if (!signClips.has(url)) {
+    signClips.set(url, fetch(url, { method: "HEAD" }).then((r) => r.ok).catch(() => false));
+  }
+  return signClips.get(url);
 }
 
-// Signe en langue des signes. Sur la page principale, la scène s'agrandit
-// le temps du geste pour que la main soit visible.
-let signTimer = null;
-// Un ou plusieurs signes enchaînés. La photo s'efface, l'avatar 3D apparaît
-// agrandi le temps des gestes, puis la photo revient.
-function signLSF(names) {
-  if (!avatar) return false;
-  const liste = Array.isArray(names) ? names : [names];
-  const duration = avatar.signAll ? avatar.signAll(liste) : avatar.sign(liste[0]);
-  if (!duration) return false;
-  if (state.screen === "app") {
-    clearTimeout(signTimer);
-    document.body.classList.add("is-signing");
-    // Cadrage large : un signe ne sert à rien si les mains sortent du cadre.
-    if (avatar.setFraming) avatar.setFraming("hero");
-    placeAvatar(2.6);
-    signTimer = setTimeout(stopSigning, duration);
+async function signLSF(names) {
+  if (!els.signVideo || state.screen !== "app") return false;
+  const wanted = [];
+  for (const name of Array.isArray(names) ? names : [names]) {
+    if (await hasClip(signUrl(name))) wanted.push(signUrl(name));
   }
+  // Rien de tourné dans cette langue, ou le client est reparti entre-temps.
+  if (!wanted.length || state.screen !== "app") return false;
+  signQueue = wanted;
+  // Le cadre s'ouvre avant la première image, et la lecture attend que
+  // l'écran soit redessiné : Chrome refuse de lire une vidéo muette tant
+  // qu'elle n'est pas visible (économie d'énergie).
+  document.body.classList.add("is-signing");
+  requestAnimationFrame(() => requestAnimationFrame(playNextSign));
   return true;
 }
 
+function playNextSign() {
+  const next = signQueue.shift();
+  if (!next) return stopSigning();
+  els.signVideo.src = next;
+  els.signVideo.play().catch((error) => { console.warn("Signe non lu :", error.name, error.message); stopSigning(); });
+}
+
 function stopSigning() {
-  clearTimeout(signTimer);
-  if (!document.body.classList.contains("is-signing")) return;
+  signQueue = [];
   document.body.classList.remove("is-signing");
-  if (avatar && avatar.setFraming) avatar.setFraming(state.screen === "app" ? "docked" : "hero");
-  placeAvatar();
+  if (!els.signVideo || !els.signVideo.getAttribute("src")) return;
+  els.signVideo.pause();
+  els.signVideo.removeAttribute("src");
+  els.signVideo.load();
+}
+
+if (els.signVideo) {
+  els.signVideo.addEventListener("ended", playNextSign);
+  // Clip illisible : on en reste au texte affiché.
+  els.signVideo.addEventListener("error", () => { if (els.signVideo.getAttribute("src")) stopSigning(); });
 }
 
 function enterApp() {
@@ -1194,8 +1177,6 @@ function enterApp() {
   // Retour rapide après un « Terminer » : le nettoyage prévu ne doit pas effacer le nouveau bonjour.
   clearTimeout(chatClearTimer);
   applyLang();
-  placeAvatar();
-  if (avatar) avatar.setFraming("docked");
   els.chat.textContent = "";
   setTimeout(() => {
     // Le message complet s'affiche, mais Jeanne dit seulement « Bonjour ! Quel
@@ -1204,7 +1185,7 @@ function enterApp() {
     addMessage("jeanne", t().greeting);
     speak(t().hello);
     // Accueil en langue des signes : « bonjour », « bienvenue », « puis-je vous aider ? ».
-    if (!signLSF(["bonjour", "bienvenue", "aider"]) && avatar) avatar.wave();
+    signLSF(["bonjour", "bienvenue", "aider"]);
     if (state.screen !== "app") return;
     handsFree = true;
     listenWhenDone();
@@ -1235,8 +1216,6 @@ function exitToIdle() {
   hideOtherStore();
   setFloor("0");
   if (state.a11y) toggleA11y(false);
-  placeAvatar();
-  if (avatar) avatar.setFraming("hero");
   if (els.idleVideo && els.idleVideo.isConnected && !els.idleVideo.hidden) els.idleVideo.play().catch(() => {});
   startIdleCycle();
   clearTimeout(chatClearTimer);
@@ -1439,38 +1418,6 @@ function disarmReset() {
 }
 
 // =====================================================================
-// Avatar 3D (chargé à part : si la 3D échoue, la borne fonctionne quand même)
-// =====================================================================
-let avatar = null;
-
-async function initAvatar() {
-  placeAvatar();
-  try {
-    const { createAvatar } = await import("./avatar.js" + VERSION);
-    const optionsFor = (file) => ({
-      reducedMotion: motionReduced(),
-      shirtLogo: "assets/fnac-logo.svg",
-      look: file === FALLBACK_AVATAR ? PLACEHOLDER_LOOK : null
-    });
-    const file = avatarFile();
-    try {
-      avatar = await createAvatar(els.canvas, file, optionsFor(file));
-    } catch (error) {
-      if (file === FALLBACK_AVATAR) throw error;
-      console.warn(`Avatar « ${file} » indisponible, avatar d'essai utilisé :`, error);
-      avatar = await createAvatar(els.canvas, FALLBACK_AVATAR, optionsFor(FALLBACK_AVATAR));
-    }
-    avatar.setFraming(state.screen === "app" ? "docked" : "hero");
-    avatar.setSpeaking(state.speaking);
-    els.stageEl.classList.add("is-ready");
-    setTimeout(() => avatar.wave(), 900);
-  } catch (error) {
-    console.warn("Avatar 3D indisponible :", error);
-    els.stageEl.classList.add("has-fallback");
-  }
-}
-
-// =====================================================================
 // Événements
 // =====================================================================
 els.idle.tabIndex = 0;
@@ -1643,7 +1590,6 @@ els.voiceDownload.addEventListener("click", () => downloadVoices());
 
 let resizeTimer = null;
 window.addEventListener("resize", () => {
-  placeAvatar();
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => { if (state.zone) drawRoute(false); }, 200);
 });
@@ -1679,13 +1625,7 @@ $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); }
 applyLang();
 startIdleCycle();
 // Vidéo de Jeanne en boucle : utilisée si le fichier existe, sinon la photo.
-if (IDLE_VISUAL === "3d") {
-  // L'avatar 3D occupe l'écran de veille : ni photo ni vidéo à charger.
-  els.idleVideo.remove();
-  els.idlePhoto.remove();
-} else if (IDLE_VISUAL !== "video") {
-  els.idleVideo.remove();
-}
+if (IDLE_VISUAL !== "video") els.idleVideo.remove();
 
 // En mode vidéo, la photo ne sert que de secours : on ne l'affiche pas tout
 // de suite, sinon elle apparaît une seconde puis saute quand la vidéo démarre.
@@ -1729,18 +1669,10 @@ if (els.idlePhoto.isConnected) {
   if (els.idlePhoto.complete && els.idlePhoto.naturalWidth > 0) useIdlePhoto();
 }
 
-document.fonts.ready.then(() => placeAvatar());
-initAvatar();
 initVoice();
 
-// Aide au réglage : ouvrir la borne avec ?debug pour déclencher les gestes à la main
-// depuis la console du navigateur (jeanne.sign(), jeanne.wave(), jeanne.glance()).
+// Aide au réglage : ouvrir la borne avec ?debug pour lancer un signe à la main
+// depuis la console du navigateur (jeanne.sign("merci")).
 if (new URLSearchParams(location.search).has("debug")) {
-  window.jeanne = {
-    pose: (values) => avatar && avatar.setOverride(values),
-    state: () => avatar && avatar.debugState(),
-    sign: (name) => signLSF(name || "bonjour"),
-    wave: () => avatar && avatar.wave(),
-    glance: () => avatar && avatar.glance()
-  };
+  window.jeanne = { sign: (name) => signLSF(name || "bonjour") };
 }

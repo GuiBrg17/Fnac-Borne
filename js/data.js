@@ -711,7 +711,7 @@ export const ZONES = {
   },
   photo: {
     floors: ["-1"], icon: "camera",
-    label: { fr: "Photo & micros", en: "Photo & microphones", es: "Foto y micrófonos" },
+    label: { fr: "Photo", en: "Photo", es: "Foto" },
     detail: { fr: "Appareils, drones, micros-cravates", en: "Cameras, drones, lapel mics", es: "Cámaras, drones, micrófonos de corbata" },
     spots: ["M2","M3"],
     keywords: {

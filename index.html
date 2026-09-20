@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=46">
+<link rel="stylesheet" href="css/kiosk.css?v=47">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=46"></script>
+<script type="module" src="js/app.js?v=47"></script>
 </head>
 <body class="is-idle">
 
@@ -62,12 +62,6 @@
   <symbol id="flag-es" viewBox="0 0 30 20"><rect width="30" height="20" fill="#AA151B"/><rect y="5" width="30" height="10" fill="#F1BF00"/></symbol>
 </svg>
 
-<!-- Jeanne en 3D : une seule scène qui passe de l'écran de veille à la page principale -->
-<div class="avatar-stage" id="avatarStage" aria-hidden="true">
-  <canvas id="avatarCanvas"></canvas>
-  <div class="avatar-fallback" id="avatarFallback"><span>J</span></div>
-</div>
-
 <!-- ============ ÉCRAN DE VEILLE ============ -->
 <section class="idle" id="idleScreen" aria-label="Accueil — touchez l'écran pour commencer">
   <header class="idle-top">
@@ -90,10 +84,8 @@
   </div>
 
   <div class="idle-avatar-slot" id="idleAvatarSlot">
-    <!-- Jeanne sur l'écran de veille, par ordre de préférence :
-         1. vidéo en boucle (assets/jeanne-accueil.mp4)
-         2. photo (assets/jeanne-accueil.png)
-         3. avatar 3D, si aucun des deux fichiers n'existe. -->
+    <!-- Jeanne sur l'écran de veille : la vidéo en boucle
+         (assets/jeanne-accueil.mp4), ou la photo si elle manque. -->
     <video class="idle-video" id="idleVideo" data-src="assets/jeanne-accueil.mp4" poster="assets/jeanne-accueil-poster.jpg" muted loop playsinline aria-hidden="true" hidden></video>
     <img class="idle-photo" id="idlePhoto" data-src="assets/jeanne-accueil.png" alt="Jeanne, votre guide à la Fnac Jeanne d'Arc" hidden>
     <p class="idle-bubble" data-i18n="idleBubble">Bienvenue ! En quoi puis-je vous aider ?</p>
@@ -127,9 +119,11 @@
 
     <div class="jeanne">
       <div class="jeanne-slot" id="dockAvatarSlot">
-        <!-- Portrait réaliste de Jeanne. L'avatar 3D ne revient que le temps d'un signe en LSF. -->
+        <!-- Portrait de Jeanne. Le temps d'un signe en langue des signes, un
+             clip vidéo (assets/lsf/…) prend sa place. -->
         <img class="jeanne-photo" id="dockPhoto" src="assets/jeanne-portrait.jpg" alt="" width="560" height="560">
       </div>
+      <video class="sign-video" id="signVideo" muted playsinline aria-hidden="true"></video>
       <div class="jeanne-id">
         <p class="jeanne-name">Jeanne</p>
         <p class="jeanne-status" id="status"><span class="status-dot"></span><span id="statusText">Posez votre question</span></p>
