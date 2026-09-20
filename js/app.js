@@ -559,7 +559,7 @@ function ask(text, source = "text") {
   if (intent) {
     reply(t()[intent]);
     if (intent === "thanks") {
-      signLSF("merci");
+      signLSF(["merci", "abientot"]);
       // « Merci » arrive souvent en fin de visite : c'est le moment du sondage.
       offerSurvey();
     }
@@ -1150,20 +1150,27 @@ function placeAvatar(expand = 1) {
 // Signe en langue des signes. Sur la page principale, la scène s'agrandit
 // le temps du geste pour que la main soit visible.
 let signTimer = null;
-function signLSF(name) {
+// Un ou plusieurs signes enchaînés. La photo s'efface, l'avatar 3D apparaît
+// agrandi le temps des gestes, puis la photo revient.
+function signLSF(names) {
   if (!avatar) return false;
-  const duration = avatar.sign(name);
+  const liste = Array.isArray(names) ? names : [names];
+  const duration = avatar.signAll ? avatar.signAll(liste) : avatar.sign(liste[0]);
   if (!duration) return false;
   if (state.screen === "app") {
     clearTimeout(signTimer);
     document.body.classList.add("is-signing");
     placeAvatar(1.95);
-    signTimer = setTimeout(() => {
-      document.body.classList.remove("is-signing");
-      placeAvatar();
-    }, duration);
+    signTimer = setTimeout(stopSigning, duration);
   }
   return true;
+}
+
+function stopSigning() {
+  clearTimeout(signTimer);
+  if (!document.body.classList.contains("is-signing")) return;
+  document.body.classList.remove("is-signing");
+  placeAvatar();
 }
 
 function enterApp() {
@@ -1189,7 +1196,8 @@ function enterApp() {
     // de toucher « Appuyez pour parler ».
     addMessage("jeanne", t().greeting);
     speak(t().hello);
-    if (avatar) avatar.wave();
+    // Accueil en langue des signes : « bonjour », « bienvenue », « puis-je vous aider ? ».
+    if (!signLSF(["bonjour", "bienvenue", "aider"]) && avatar) avatar.wave();
     if (state.screen !== "app") return;
     handsFree = true;
     listenWhenDone();
@@ -1201,6 +1209,7 @@ let chatClearTimer = null;
 function exitToIdle() {
   afterSpeaking = null;
   handsFree = false;
+  stopSigning();
   // Réglages du personnel laissés ouverts : on les ferme (les statistiques ne
   // doivent pas rester affichées devant les clients).
   if (els.settings.open) els.settings.close();
@@ -1469,6 +1478,7 @@ document.addEventListener("pointerdown", (e) => {
   // Le bouton du micro garde la conversation à la voix ; tout autre toucher l'arrête.
   if (e.target.closest("#micButton")) return;
   handsFree = false;
+  stopSigning();
   // Le client choisit à la main pendant que le micro écoute : on le ferme.
   if (state.listening) abortMic();
 }, { capture: true });

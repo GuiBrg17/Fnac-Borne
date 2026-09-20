@@ -607,8 +607,7 @@ export const ZONES = {
   },
   informatique: {
     floors: ["-1"], icon: "printer",
-    label: { fr: "Imprimantes, câbles & stockage", en: "Printers, cables & storage", es: "Impresoras, cables y almacenamiento" },
-    short: { fr: "Imprimantes, câbles, stockage", en: "Printers, cables, storage", es: "Impresoras, cables" },
+    label: { fr: "Connectique", en: "Cables & storage", es: "Conectividad" },
     detail: { fr: "Clés USB, disques durs, réseau", en: "USB sticks, hard drives, networking", es: "Memorias USB, discos duros, redes" },
     spots: ["15","16","17","20"],
     keywords: {
@@ -775,7 +774,7 @@ export const ZONES = {
   },
   audio: {
     floors: ["-1"], icon: "headphones",
-    label: { fr: "Audio", en: "Audio", es: "Audio" },
+    label: { fr: "Son", en: "Sound", es: "Sonido" },
     detail: { fr: "Casques, enceintes, platines", en: "Headphones, speakers, turntables", es: "Auriculares, altavoces, tocadiscos" },
     spots: ["M7","M8","31","32"],
     keywords: {
