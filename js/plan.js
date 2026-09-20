@@ -110,7 +110,7 @@ export const BASEMENT = {
     liseuses: [495, 191, "start"],
     pcwindows: [565, 301],
     trottinettes: [56, 128, "middle", -90],
-    photo: [56, 236, "middle", -90],
+    photo: [52, 235, "start"],
     tv: [112, 339],
     audio: [357, 342],
     apple: [532, 352],
@@ -338,8 +338,9 @@ export const GROUND = {
   labels: {
     telephonie: [80, 232],
     objets: [214, 150],
-    // Étiquette posée dans l'espace libre à droite de la volée, contre l'escalier.
-    escalier: [272, 236, "middle", 0, "full"],
+    // Étiquette posée dans le creux entre la volée et le mur des LEGO : le nom
+    // complet débordait du magasin et recouvrait les marches.
+    escalier: [262, 250],
     ascenseur: [186, 64, "end"],
     entree: [192, 440]
   },

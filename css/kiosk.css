@@ -68,47 +68,6 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 /* =====================================================================
    Jeanne en 3D (une scène qui se déplace entre les deux écrans)
    ===================================================================== */
-.avatar-stage {
-  position: fixed;
-  z-index: 5;
-  pointer-events: none;
-  border-radius: 0;
-  overflow: hidden;
-  opacity: 1;
-  transition: opacity 0.5s ease, left 0.95s var(--ease-out), top 0.95s var(--ease-out), width 0.95s var(--ease-out), height 0.95s var(--ease-out), border-radius 0.95s var(--ease-out), background-color 0.4s ease;
-}
-.is-app .avatar-stage { border-radius: var(--radius-l); background-color: transparent; }
-/* Signe en LSF : la scène s'agrandit, son fond jaune grandit avec elle
-   (sinon le petit carré jaune restait seul à sa taille normale). */
-.is-app.is-signing .avatar-stage { background-color: var(--yellow); }
-#avatarCanvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
-.avatar-stage.is-ready #avatarCanvas { opacity: 1; }
-.avatar-fallback {
-  position: absolute;
-  inset: 0;
-  display: none;
-  place-items: center;
-}
-.avatar-fallback span {
-  display: grid;
-  place-items: center;
-  width: min(60%, 60vh);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--ink);
-  color: var(--yellow);
-  font-size: min(14rem, 30vh);
-  font-weight: 900;
-  font-stretch: 125%;
-}
-.is-app .avatar-fallback span { font-size: 3.4rem; width: 70%; }
-.avatar-stage.has-fallback .avatar-fallback { display: grid; }
 
 /* =====================================================================
    Écran de veille
@@ -200,10 +159,10 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   -webkit-mask-composite: source-in;
 }
 .idle-video[hidden] { display: none; }
-/* Quand la vidéo est là, la photo et l'avatar 3D s'effacent. */
+/* Quand la vidéo est là, la photo s'efface. */
 .has-idle-video .idle-photo { display: none; }
 
-/* Photo de Jeanne sur l'écran de veille (remplace l'avatar 3D à cet endroit). */
+/* Photo de Jeanne sur l'écran de veille, si la vidéo manque. */
 .idle-photo {
   position: absolute;
   inset: 0;
@@ -220,9 +179,6 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   from { transform: scale(1) translateY(0); }
   to { transform: scale(1.045) translateY(-0.6%); }
 }
-/* En mode photo : pas d'avatar 3D ni de bulle sur la veille (la bulle est dans l'image). */
-.has-idle-photo.is-idle .avatar-stage,
-.has-idle-video.is-idle .avatar-stage { opacity: 0; }
 /* La bulle de l'image d'origine est hors cadre : la borne affiche la sienne,
    qui change de langue. */
 .has-idle-photo .idle-bubble { top: 6%; left: 4%; }
@@ -413,11 +369,12 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .langs button svg { width: 1.6rem; height: 1.07rem; border-radius: 0.18rem; stroke: none; }
 .langs button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
-/* Pendant un signe en LSF, la scène 3D s'agrandit : on efface le nom pour la laisser respirer. */
-.is-signing .jeanne-id, .is-signing .chat { opacity: 0; transition: opacity 0.3s ease; }
+/* Pendant un signe en LSF, le clip occupe la largeur du panneau : le nom
+   s'efface, la conversation reste lisible en dessous. */
+.is-signing .jeanne-id { opacity: 0; transition: opacity 0.3s ease; }
 .jeanne-id, .chat { transition: opacity 0.4s ease; }
 
-.jeanne { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.1rem; }
+.jeanne { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.1rem; }
 .jeanne-slot {
   position: relative;
   width: 8.6rem;
@@ -426,7 +383,7 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   background: var(--yellow);
   overflow: hidden;
 }
-/* Photo de Jeanne dans le panneau : l'avatar 3D ne sert plus qu'aux signes en LSF. */
+/* Photo de Jeanne dans le panneau, remplacée par un clip pendant un signe. */
 .jeanne-photo {
   width: 100%;
   height: 100%;
@@ -434,9 +391,27 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   transition: opacity 0.35s ease;
 }
 .is-signing .jeanne-photo { opacity: 0; }
-/* Page principale : la scène 3D reste cachée derrière la photo, sauf pendant un signe. */
-.is-app .avatar-stage { opacity: 0; }
-.is-app.is-signing .avatar-stage { opacity: 1; }
+/* Clip de langue des signes : il remplace le portrait et déborde sur la zone
+   de la conversation (effacée le temps du geste), sinon les mains seraient
+   trop petites pour être lues. Le clip est affiché en entier (contain) :
+   on ne connaît pas d'avance le cadrage des vidéos tournées en magasin. */
+.sign-video {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+  height: 19rem;
+  object-fit: contain;
+  border-radius: var(--radius-l);
+  background: var(--yellow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+/* Le clip apparaît d'un coup : une opacité qui monte en fondu est encore
+   « invisible » pour Chrome, qui refuse alors de lancer la lecture. */
+.is-signing .sign-video { opacity: 1; transition: none; }
 .jeanne-name {
   margin: 0;
   font-size: 2.3rem;

@@ -6,12 +6,12 @@ Conçu pour un **grand écran tactile en paysage** (PC portable Windows) placé 
 
 ## Parcours
 
-1. **Écran de veille** : Jeanne, avatar 3D, accueille les clients en grand. Le texte d'accueil alterne entre français, anglais et espagnol, puis une actualité du magasin s'affiche. Jeanne salue régulièrement, une fois sur deux d'un signe de la main, une fois sur deux en **langue des signes française**.
+1. **Écran de veille** : Jeanne, filmée, accueille les clients en grand (vidéo en boucle). Le texte d'accueil alterne entre français, anglais et espagnol, puis une actualité du magasin s'affiche.
 2. **Au toucher**, Jeanne se range dans la colonne de gauche et la page principale s'ouvre :
    - discussion à la voix (bouton micro) ou par écrit, en FR / EN / ES ;
    - plan du magasin redessiné d'après les plans d'architecte (Étage 0 et Sous-sol), avec le rayon demandé mis en évidence ;
    - pour un rayon du sous-sol, le plan montre d'abord l'escalier à l'étage 0, puis descend au sous-sol, avec l'itinéraire « Entrée → Escalier → Rayon » ;
-   - un **tracé animé** relie « Vous êtes ici » à l'escalier, puis l'escalier au rayon, et Jeanne tourne la tête vers le plan ;
+   - un **tracé animé** relie « Vous êtes ici » à l'escalier, puis l'escalier au rayon ;
    - recherches fréquentes, bouton « Appeler un vendeur », mode Accessibilité.
 3. **Sans activité pendant 60 secondes**, une fenêtre « Vous êtes toujours là ? » s'affiche. Sans réponse sous 15 secondes, la borne revient à l'écran de veille et efface la conversation.
 
@@ -28,9 +28,9 @@ Conçu pour un **grand écran tactile en paysage** (PC portable Windows) placé 
 | `js/stats.js` | Statistiques anonymes enregistrées sur la borne |
 | `js/voice.js` et `js/voice-worker.js` | Voix neuronale Piper (hors ligne) et lecture du son |
 | `tests/search.test.mjs` | Vérifie que des phrases types mènent au bon rayon |
-| `js/avatar.js` | Avatar 3D (three.js + three-vrm) : animations, couleurs, logo sur le T-shirt |
 | `assets/fnac-logo.svg` | Logo Fnac |
-| `assets/avatar/` | Fichiers de l'avatar (`placeholder.vrm` en attendant `Jeanne.vrm`) |
+| `assets/jeanne-portrait.jpg` | Portrait de Jeanne affiché dans le panneau |
+| `assets/lsf/` | Clips en langue des signes (voir `assets/lsf/LISEZ-MOI.md`) |
 
 ## Modifier les rayons ou les mots-clés
 
@@ -78,40 +78,34 @@ Modifier `js/news.js`. Chaque actualité comporte un titre, un texte court, une 
 
 ## Avatar de Jeanne
 
-La borne utilise **`assets/avatar/Jeanne.glb`**, créé sur [MetaPerson Creator](https://metaperson.avatarsdk.com) (Avatar SDK). Le fichier à charger est indiqué par `AVATAR_FILE` dans `js/app.js`.
+Jeanne est **filmée, pas modélisée** :
 
-Ce que l'export gratuit contient et que la borne exploite :
+- écran de veille : `assets/jeanne-accueil.mp4`, en boucle (la photo
+  `assets/jeanne-accueil.png` prend le relais si la vidéo manque) ;
+- page principale : le portrait `assets/jeanne-portrait.jpg`, fixe.
 
-- **squelette complet** (type Mixamo) : tête, cou, bras, mains — c'est lui qui porte les gestes et les signes ;
-- **formes de visage ARKit** : `jawOpen` (bouche, pilotée par le volume de la voix), `eyeBlinkLeft/Right` (clignements), `mouthSmileLeft/Right`, `mouthPucker`, `mouthFunnel`. Les « Visemes » payants ne sont **pas nécessaires** ;
-- le **logo Fnac** est ajouté automatiquement sur le vêtement (matériau `outfit`).
-
-⚠️ **Licence** : l'export gratuit de MetaPerson est marqué **non commercial**. Il convient pour un prototype et une démonstration interne, mais **pas pour une borne ouverte au public**. Pour une mise en service, il faut une licence commerciale chez Avatar SDK, ou un avatar créé dans **VRoid Studio** (gratuit, tous droits, format `.vrm`).
-
-Autres formats acceptés sans rien changer au code :
-
-- `.vrm` (VRoid Studio) — l'avatar d'essai `placeholder.vrm` reste dans le dossier ;
-- `.glb` à squelette Mixamo (Avaturn type T2, MetaPerson).
-
-Pour tester un autre fichier sans modifier le code, ouvrir la borne avec `?avatar=NomDuFichier.glb`. Si l'avatar ne charge pas, la borne revient sur `placeholder.vrm` ; si la 3D est indisponible, un médaillon « J » s'affiche et le reste fonctionne.
+Sa bouche ne bouge pas quand elle parle : le magasin a choisi un portrait
+réaliste plutôt qu'un personnage animé. L'ancien avatar 3D (three.js, fichiers
+`.glb`/`.vrm`) a été retiré le 20/09/2026 ; il reste dans l'historique Git.
 
 ## Langue des signes française (LSF)
 
-Deux signes sont animés :
+Jeanne signe **en vidéo** : un clip par signe, tourné avec une personne qui
+pratique la langue des signes, dans `assets/lsf/<langue>/<signe>.mp4`.
+Le mode d'emploi du tournage est dans **`assets/lsf/LISEZ-MOI.md`**.
 
-| Signe | Quand | Geste |
-|---|---|---|
-| **Bonjour** | écran de veille, un tour sur deux (sinon signe de la main) | main plate près du menton, paume vers le visage, puis vers l'avant et le bas |
-| **Merci** | quand un client remercie Jeanne (FR, EN ou ES) | main plate qui part des lèvres et avance vers l'interlocuteur, paume vers le haut, avec un hochement de tête |
+| Signes enchaînés | Quand |
+|---|---|
+| `bonjour`, `bienvenue`, `aider` | à l'arrivée d'un client sur la page principale |
+| `merci`, `abientot` | quand un client remercie Jeanne (FR, EN ou ES) |
 
-Un sourire accompagne les deux gestes : en LSF, l'expression du visage fait partie du signe.
-
-- Chaque geste dure environ 3,4 s. La caméra recule pendant le signe pour que la main soit visible. Sur la page principale, la scène 3D s'agrandit et le nom de Jeanne s'efface le temps du geste.
-- Réglages dans `js/avatar.js`, table `SIGNS` (valeurs mises au point à l'écran).
-- Disponible avec les avatars **VRM** et `.glb` (les positions sont réglées séparément : table `SIGNS` pour le VRM, `GLB_SIGNS` pour le GLB).
-- ⚠️ **Les gestes sont des approximations à faire valider par une personne qui pratique la LSF.** Ils ont été réglés d'après des descriptions écrites. La forme de la main reste celle du modèle 3D (main détendue, pas parfaitement plate). « Bonjour » et « merci » se ressemblent beaucoup dans les descriptions consultées : c'est le premier point à vérifier.
-- Pour ajouter un signe, il faut une **référence fiable** (vidéo ou personne signant) : les descriptions écrites ne suffisent pas. C'est pourquoi « bienvenue » n'est pas encore animé.
-- Mise au point : ouvrir la borne avec `?debug`, puis dans la console du navigateur `jeanne.sign("bonjour")`, `jeanne.sign("merci")`, `jeanne.wave()`, `jeanne.glance()`, `jeanne.pose({upperZ, upperX, upperY, lowerZ, lowerY})` et `jeanne.state()`.
+- Le clip remplace le portrait et occupe la largeur du panneau ; la
+  conversation reste lisible en dessous. Une réponse de Jeanne, ou un toucher
+  du client, interrompt le signe.
+- Tant qu'un clip n'existe pas, la borne ne montre rien de plus : le texte
+  reste affiché, ce qui est déjà l'essentiel pour un client sourd.
+- Mise au point : ouvrir la borne avec `?debug`, puis dans la console
+  `jeanne.sign("bonjour")` ou `jeanne.sign(["merci", "abientot"])`.
 
 ## Installer la borne sur le PC Windows
 
@@ -138,10 +132,10 @@ Les réglages et les statistiques sont enregistrés uniquement sur la borne : ri
 
 | Dans cette version | Pour une mise en service réelle |
 |---|---|
-| « Appeler un vendeur » affiche une confirmation, mais **aucune notification n'est réellement envoyée** | Brancher un vrai webhook Microsoft Teams ou Graph vers l'équipe du rayon |
+| « Appeler un vendeur » prévient par ntfy et par e-mail (réglages sur la borne) | Canal Teams (Workflows), en attente de l'accès demandé au magasin |
 | Compréhension par mots-clés | Possible évolution vers une IA (nécessite un serveur) |
 | Micro du navigateur | Service de reconnaissance vocale dédié |
-| Avatar MetaPerson sous licence non commerciale | Licence commerciale Avatar SDK, ou avatar VRoid Studio |
+| Langue des signes : aucun clip tourné pour l'instant | Filmer les 5 signes avec une personne qui pratique la LSF (`assets/lsf/LISEZ-MOI.md`) |
 
 ## Tester en local
 
