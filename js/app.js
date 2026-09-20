@@ -501,6 +501,9 @@ function noteVisit(text) {
 }
 
 function reply(text, prefix = "") {
+  // Une réponse doit rester lisible : on arrête les signes en cours, qui
+  // agrandissent l'avatar par-dessus la conversation.
+  stopSigning();
   addMessage("jeanne", prefix + text);
   speak(text);
   listenWhenDone();
@@ -508,6 +511,7 @@ function reply(text, prefix = "") {
 
 function ask(text, source = "text") {
   afterSpeaking = null;
+  stopSigning();
   abortMic();
   // Question posée au micro : Jeanne réécoutera après sa réponse.
   handsFree = source === "voice";
