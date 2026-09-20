@@ -189,6 +189,8 @@ export async function createAvatar(canvas, url, options = {}) {
   let raf = requestAnimationFrame(tick);
 
   return {
+    // Os du squelette : sert aux réglages des gestes (borne ouverte avec ?debug).
+    get bones() { return rig.bones; },
     setSpeaking(on) {
       speaking = on;
       happyTarget = on ? 0.18 : 0.25;
@@ -545,6 +547,7 @@ function createGlbRig(gltf) {
     lookAt() { /* regard fixe vers l'avant : l'avatar fait face à la caméra */ },
     canSign: true,
     signs: GLB_SIGNS,
+    bones,
     pose({ t, amp, speaking, wave, glance = 0, sign = null }) {
       restore();
       const breath = Math.sin(t * 1.55);

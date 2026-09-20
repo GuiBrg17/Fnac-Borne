@@ -1164,7 +1164,9 @@ function signLSF(names) {
   if (state.screen === "app") {
     clearTimeout(signTimer);
     document.body.classList.add("is-signing");
-    placeAvatar(1.95);
+    // Cadrage large : un signe ne sert à rien si les mains sortent du cadre.
+    if (avatar.setFraming) avatar.setFraming("hero");
+    placeAvatar(2.6);
     signTimer = setTimeout(stopSigning, duration);
   }
   return true;
@@ -1174,6 +1176,7 @@ function stopSigning() {
   clearTimeout(signTimer);
   if (!document.body.classList.contains("is-signing")) return;
   document.body.classList.remove("is-signing");
+  if (avatar && avatar.setFraming) avatar.setFraming(state.screen === "app" ? "docked" : "hero");
   placeAvatar();
 }
 
