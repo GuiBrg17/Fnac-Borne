@@ -22,6 +22,8 @@ const GLANCE_SECONDS = 2.8;
 // près du menton, paume vers soi, puis la main part vers l'avant et vers le bas.
 // L'expression du visage (sourire) fait partie du signe.
 const SIGN_SECONDS = 3.4;
+// Durée propre à un signe (les signes enchaînés de l'accueil sont plus courts).
+const signSeconds = (dict, name) => (dict && dict[name] && dict[name].dur) || SIGN_SECONDS;
 
 // Positions clés réglées à l'écran (rotations des os du bras droit, en radians).
 // « bonjour » : main plate près du menton, paume vers le visage, puis vers l'avant et le bas.
@@ -150,7 +152,8 @@ export async function createAvatar(canvas, url, options = {}) {
     const w = t - waveStart;
     const waveProgress = !reduced && w >= 0 && w < WAVE_SECONDS ? w : -1;
     const s = t - signStart;
-    const signProgress = s >= 0 && s < SIGN_SECONDS ? s : -1;
+    const signDur = signSeconds(rig.signs, signName);
+    const signProgress = s >= 0 && s < signDur ? s : -1;
     const sign = signProgress >= 0 ? { name: signName, at: signProgress } : null;
     // Regard vers le plan (à droite de l'écran) : montée rapide, maintien, retour doux.
     const g = t - glanceStart;
@@ -203,12 +206,26 @@ export async function createAvatar(canvas, url, options = {}) {
     // Signe en langue des signes française (avatars VRM uniquement).
     // Renvoie la durée du geste en millisecondes, ou 0 si l'avatar ne peut pas signer.
     sign(name = "bonjour") {
-      if (!rig.canSign || !SIGNS[name]) return 0;
+      if (!rig.canSign || !rig.signs || !rig.signs[name]) return 0;
       signName = name;
       signStart = timer.getElapsed();
       happyTarget = 0.55;
-      setTimeout(() => { happyTarget = 0.25; }, SIGN_SECONDS * 1000);
-      return SIGN_SECONDS * 1000;
+      const ms = signSeconds(rig.signs, name) * 1000;
+      setTimeout(() => { happyTarget = 0.25; }, ms);
+      return ms;
+    },
+    // Enchaîne plusieurs signes (« bonjour, bienvenue, puis-je vous aider ? »).
+    // Renvoie la durée totale en millisecondes.
+    signAll(names) {
+      let retard = 0;
+      for (const name of names) {
+        if (!rig.canSign || !rig.signs || !rig.signs[name]) continue;
+        const ms = signSeconds(rig.signs, name) * 1000;
+        if (retard === 0) this.sign(name);
+        else setTimeout(() => this.sign(name), retard);
+        retard += ms;
+      }
+      return retard;
     },
     wave() {
       waveStart = timer.getElapsed();
@@ -297,6 +314,7 @@ function createVrmRig(gltf) {
     headWorld,
     lookAt(position) { lookTarget.position.copy(position); },
     canSign: true,
+    signs: SIGNS,
     pose({ t, amp, speaking, wave, glance = 0, sign = null, override = null }) {
       rest();
       if (override) {
@@ -369,6 +387,48 @@ const GLB_SIGNS = {
       { at: 1.0, arm: [-0.28, -0.85, 0.30], fore: [0.34, 0.78, 0.52] },
       { at: 2.0, arm: [-0.42, -0.70, 0.55], fore: [0.05, 0.10, 0.99] },
       { at: SIGN_SECONDS, arm: null, fore: null }
+    ]
+  },
+  // --- Gestes à deux mains (armL / foreL = bras gauche) ---------------------
+  // ATTENTION : comme « bonjour » et « merci », ces gestes sont inspirés de la
+  // LSF mais ne sont PAS validés par un locuteur. À faire vérifier avant une
+  // mise en service ; le texte reste affiché à l'écran dans tous les cas.
+  //
+  // « bienvenue » : les deux mains ouvertes, paumes vers le haut, s'écartent
+  // devant soi puis reviennent vers le corps, comme pour accueillir.
+  bienvenue: {
+    dur: 2.8, nod: 0.08,
+    stops: [
+      { at: 0, arm: null, fore: null, armL: null, foreL: null },
+      { at: 0.8, arm: [-0.55, -0.45, 0.70], fore: [0.35, 0.05, 0.94],
+                 armL: [0.55, -0.45, 0.70], foreL: [-0.35, 0.05, 0.94] },
+      { at: 1.9, arm: [-0.30, -0.55, 0.78], fore: [0.12, 0.10, 0.99],
+                 armL: [0.30, -0.55, 0.78], foreL: [-0.12, 0.10, 0.99] },
+      { at: 2.8, arm: null, fore: null, armL: null, foreL: null }
+    ]
+  },
+  // « aider » (puis-je vous aider ?) : la main gauche est plate, paume vers le
+  // haut ; la main droite se pose dessus et les deux avancent vers la personne.
+  aider: {
+    dur: 2.8, nod: 0.14,
+    stops: [
+      { at: 0, arm: null, fore: null, armL: null, foreL: null },
+      { at: 0.8, arm: [-0.20, -0.55, 0.80], fore: [0.10, 0.20, 0.97],
+                 armL: [0.30, -0.60, 0.74], foreL: [-0.20, 0.05, 0.98] },
+      { at: 1.9, arm: [-0.18, -0.35, 0.92], fore: [0.05, 0.10, 0.99],
+                 armL: [0.26, -0.42, 0.87], foreL: [-0.12, 0.05, 0.99] },
+      { at: 2.8, arm: null, fore: null, armL: null, foreL: null }
+    ]
+  },
+  // « à bientôt » : la main ouverte part vers l'avant, deux petits mouvements.
+  abientot: {
+    dur: 2.8, nod: 0.1,
+    stops: [
+      { at: 0, arm: null, fore: null },
+      { at: 0.7, arm: [-0.45, -0.55, 0.70], fore: [0.20, 0.55, 0.81] },
+      { at: 1.3, arm: [-0.38, -0.45, 0.81], fore: [0.10, 0.25, 0.96] },
+      { at: 1.9, arm: [-0.45, -0.55, 0.70], fore: [0.20, 0.55, 0.81] },
+      { at: 2.8, arm: null, fore: null }
     ]
   }
 };
@@ -484,6 +544,7 @@ function createGlbRig(gltf) {
     headWorld,
     lookAt() { /* regard fixe vers l'avant : l'avatar fait face à la caméra */ },
     canSign: true,
+    signs: GLB_SIGNS,
     pose({ t, amp, speaking, wave, glance = 0, sign = null }) {
       restore();
       const breath = Math.sin(t * 1.55);
@@ -553,7 +614,19 @@ function createGlbRig(gltf) {
         aimQuaternion(bones.rFore, bones.rHand, mixDir(from.fore, to.fore, restFore, restFore), aimed);
         bones.rFore.quaternion.copy(aimed);
         bones.rFore.updateMatrixWorld(true);
-        if (nod && bones.neck) rotateWorld(bones.neck, X, nod * Math.sin(Math.min(1, sign.at / SIGN_SECONDS) * Math.PI));
+        // Signes à deux mains : le bras gauche suit ses propres étapes (miroir).
+        if ((from.armL || to.armL) && bones.lArm && bones.lFore && bones.lHand) {
+          const restArmL = [0.16, -1, 0.04];
+          const restForeL = [0.08, -1, 0.14];
+          aimQuaternion(bones.lArm, bones.lFore, mixDir(from.armL, to.armL, restArmL, restArmL), aimed);
+          bones.lArm.quaternion.copy(aimed);
+          bones.lArm.updateMatrixWorld(true);
+          aimQuaternion(bones.lFore, bones.lHand, mixDir(from.foreL, to.foreL, restForeL, restForeL), aimed);
+          bones.lFore.quaternion.copy(aimed);
+          bones.lFore.updateMatrixWorld(true);
+        }
+        const duree = GLB_SIGNS[sign.name].dur || SIGN_SECONDS;
+        if (nod && bones.neck) rotateWorld(bones.neck, X, nod * Math.sin(Math.min(1, sign.at / duree) * Math.PI));
       } else if (wave >= 0 && bones.rArm && bones.rFore && bones.rHand) {
         const ease = waveEase(wave);
         aimQuaternion(bones.rArm, bones.rFore, new THREE.Vector3(-0.8, -0.45, 0.35), aimed);
