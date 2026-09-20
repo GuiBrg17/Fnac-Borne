@@ -338,9 +338,9 @@ export const GROUND = {
   labels: {
     telephonie: [80, 232],
     objets: [214, 150],
-    // Étiquette posée dans le creux entre la volée et le mur des LEGO : le nom
-    // complet débordait du magasin et recouvrait les marches.
-    escalier: [262, 250],
+    // Étiquette collée au mur de droite, le long de l'escalier (comme au
+    // sous-sol) : au milieu de l'allée, elle recouvrait les marches.
+    escalier: [312, 300, "middle", -90],
     ascenseur: [186, 64, "end"],
     entree: [192, 440]
   },
