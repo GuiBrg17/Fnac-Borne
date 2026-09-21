@@ -270,49 +270,28 @@ export const GROUND = {
   outline: "M27 133 L195 57 L204 41 L256 41 L262 92 L231 108 L264 174 L302 160 L345 330 L243 368 L237 405 " +
            "L147 425 L133 390 Q 108 352 77 348 L34 352 Z",
 
-  // Escalier relevé sur le plan d'architecte (contours et marches), puis
-  // rapproché de la façade à la demande du magasin (il paraissait flotter au
-  // milieu de l'allée) :
-  // en haut à gauche la volée en biais « accès sous-sol », en dessous à droite
-  // la partie courbe qui longe le mur du poste sécu.
+  // Escalier vers le sous-sol : une seule volée dessinée le long du mur de
+  // droite, marches perpendiculaires au mur (comme au sous-sol, où l'escalier
+  // épouse la façade). Le plan d'architecte montre une volée droite puis une
+  // partie tournante ; le magasin a préféré ce dessin simple, collé au bord.
   stairs: [
     {
       type: "drawn",
-      outline: "M216.9 224.6 L247.9 212.7 L270 260.7 L237.9 275 Z",
+      outline: "M321.7 249.9 L340.8 325.5 L296.2 336.8 L277.1 261.2 Z",
       treads: [
-        [219.7, 223.5, 240.8, 273.7],
-        [222.5, 222.4, 243.7, 272.4],
-        [225.4, 221.4, 246.7, 271.1],
-        [228.2, 220.3, 249.6, 269.8],
-        [231.0, 219.2, 252.5, 268.5],
-        [233.8, 218.1, 255.4, 267.2],
-        [236.6, 217.0, 258.3, 265.9],
-        [239.4, 215.9, 261.2, 264.6],
-        [242.3, 214.9, 264.2, 263.3],
-        [245.1, 213.8, 267.1, 262.0],
-        [227.4, 249.8, 259.0, 236.7]
-      ]
-    },
-    {
-      type: "drawn",
-      // La partie courbe part du bas de la volée (elles se touchent sur toute la
-      // largeur : sans cela, un trou apparaissait entre les deux morceaux).
-      outline: "M261 258.3 L323 258.3 L323 286.3 Q 320 315.3 305 342.3 L270 347.3 L257 315.3 Q 260 300.3 261 258.3 Z",
-      treads: [
-        [261.4, 264.8, 322.6, 265.6],
-        [261.8, 271.3, 322.1, 272.9],
-        [262.2, 277.8, 321.4, 280.1],
-        [262.5, 284.3, 320.6, 287.3],
-        [262.0, 290.8, 319.5, 294.4],
-        [261.2, 297.3, 318.2, 301.4],
-        [260.3, 303.8, 316.6, 308.3],
-        [259.3, 310.3, 314.7, 315.0],
-        [258.6, 316.8, 312.5, 321.5],
-        [259.5, 323.3, 310.1, 327.7],
-        [261.5, 329.8, 307.4, 333.6],
-        [264.0, 336.3, 304.5, 339.2]
+        [323.2, 256.2, 278.7, 267.5],
+        [324.8, 262.5, 280.2, 273.8],
+        [326.4, 268.8, 281.8, 280.1],
+        [328.0, 275.1, 283.4, 286.4],
+        [329.6, 281.4, 285.0, 292.7],
+        [331.2, 287.7, 286.6, 299.0],
+        [332.8, 294.0, 288.2, 305.3],
+        [334.4, 300.3, 289.8, 311.6],
+        [336.0, 306.6, 291.4, 317.9],
+        [337.6, 312.9, 293.0, 324.2],
+        [339.2, 319.2, 294.6, 330.5]
       ],
-      arrow: [[296.0, 277.3], [292.0, 297.3]]
+      arrow: [[302.3, 267.2], [308.2, 290.5]]
     }
   ],
 
@@ -340,9 +319,8 @@ export const GROUND = {
   labels: {
     telephonie: [80, 232],
     objets: [214, 150],
-    // Étiquette à gauche de l'escalier, la seule place libre depuis qu'il est
-    // collé à la façade.
-    escalier: [226, 300, "end"],
+    // Étiquette à gauche de l'escalier, contre ses marches.
+    escalier: [277.2, 298.3, "end"],
     ascenseur: [186, 64, "end"],
     entree: [192, 440]
   },
@@ -351,7 +329,7 @@ export const GROUND = {
 
   // Trajets depuis la borne (à l'entrée), en contournant tables et poste sécu.
   routes: {
-    stairs: [[150, 352], [145, 300], [168, 262], [222, 262]],
+    stairs: [[150, 352], [145, 300], [168, 262], [265.4, 268.3]],
     telephonie: [[150, 352], [124, 300]],
     objets: [[150, 352], [145, 300], [168, 262], [172, 215], [200, 160]],
     ascenseur: [[150, 352], [145, 300], [168, 262], [172, 215], [200, 160], [196, 92]]
