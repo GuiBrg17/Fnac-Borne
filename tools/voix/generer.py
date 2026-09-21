@@ -6,6 +6,8 @@ Fabrique les voix de Jeanne : un fichier audio par phrase, publié avec le site.
 - Lit tools/voix/phrases.json (node tools/voix/phrases.mjs).
 - LANGUES=fr pour ne fabriquer qu'une langue (ex. le français en priorité).
 - Refaire une phrase ratée : supprimer son fichier, puis ESSAIS=10 SEMENCE=2000.
+- CHOIX=3 : compare 3 versions correctes et garde la plus vivante (intonation).
+- REFAIRE=fr : refait tout le français même si les fichiers existent.
 - Ne refait que les phrases nouvelles ou modifiées (assets/voix/manifest.json).
 - Contrôle chaque phrase par transcription (Whisper) : si le texte entendu
   s'éloigne du texte voulu (phrase coupée, mot avalé), on recommence.
@@ -28,6 +30,11 @@ OUT = Path(os.environ.get("SORTIE", ROOT / "assets/voix"))
 MANIFEST = OUT / "manifest.json"
 REPORT = OUT / "controle.txt" if "SORTIE" in os.environ else ROOT / "tools/voix/controle.txt"
 TRIES = int(os.environ.get("ESSAIS", 4))
+# Nombre d'essais valides à comparer avant de choisir : au-delà de 1, on garde
+# la version la plus vivante (intonation la plus variée), pas la première venue.
+CHOIX = int(os.environ.get("CHOIX", 1))
+# REFAIRE=fr : refaire ces langues même si leurs phrases existent déjà.
+REFAIRE = [l for l in os.environ.get("REFAIRE", "").split(",") if l]
 # Graine du premier essai : en changer (SEMENCE=2000) pour refaire une phrase ratée autrement.
 SEMENCE = int(os.environ.get("SEMENCE", 1000))
 SEUIL = 0.80
@@ -55,6 +62,17 @@ def ressemblance(voulu, entendu):
 
 def nom(lang, texte):
     return f"{lang}/{hashlib.sha1(f'{lang}|{VOIX}|{texte}'.encode()).hexdigest()[:12]}.m4a"
+
+
+def melodie(wav, sr):
+    """Variation de la hauteur, en demi-tons : plus c'est haut, moins c'est plat."""
+    y = librosa.resample(wav.squeeze(0).numpy(), orig_sr=sr, target_sr=16000)
+    f0, voisee, _ = librosa.pyin(y, fmin=80, fmax=400, sr=16000)
+    f0 = f0[voisee & ~np.isnan(f0)]
+    if len(f0) < 10:
+        return 0.0, 0.0
+    demi = 12 * np.log2(f0 / np.median(f0))
+    return float(np.median(f0)), float(np.std(demi))
 
 
 def hauteur(wav, sr):
@@ -133,7 +151,8 @@ def main():
     # le site continue de parler pendant la fabrication.
     manifest = {lang: {t: f for t, f in textes.items() if (lang, t) in voulues and (OUT / f).exists()}
                 for lang, textes in manifest.items()}
-    a_faire = [p for p in phrases if manifest.get(p["lang"], {}).get(p["text"]) != nom(p["lang"], p["text"])
+    a_faire = [p for p in phrases if p["lang"] in REFAIRE
+               or manifest.get(p["lang"], {}).get(p["text"]) != nom(p["lang"], p["text"])
                or not (OUT / nom(p["lang"], p["text"])).exists()]
     print(f"{len(phrases)} phrases, {len(a_faire)} à fabriquer", flush=True)
     if not a_faire:
@@ -147,6 +166,7 @@ def main():
     for n, p in enumerate(a_faire, 1):
         lang, texte, fichier = p["lang"], p["text"], nom(p["lang"], p["text"])
         meilleur = None
+        valides = 0
         for essai in range(1, TRIES + 1):
             torch.manual_seed(SEMENCE + essai)
             wav = tts.generate(texte, language_id=lang, audio_prompt_path=REFERENCES[lang], **REGLAGES).cpu()
@@ -161,24 +181,27 @@ def main():
                 torchaudio.save(tmp.name, wav, tts.sr)
                 score = ressemblance(texte, entendu)
                 duree = wav.shape[-1] / tts.sr
-                hz = hauteur(wav, tts.sr)
+                hz, intonation = melodie(wav, tts.sr)
                 # Garde-fou : une phrase bien plus longue que son texte a déraillé.
                 trop_long = duree > len(texte) * 0.11 + 2.5
                 valide = score >= SEUIL and hz >= HAUTEUR_MIN and not trop_long
-                # le meilleur essai : d'abord un essai valide, puis le texte le plus fidèle
-                cle = (valide, hz >= HAUTEUR_MIN, score)
+                # le meilleur essai : d'abord un essai valide, puis, à texte fidèle,
+                # la version la plus vivante (intonation la plus variée)
+                cle = (valide, hz >= HAUTEUR_MIN, round(score, 2), intonation)
                 if meilleur is None or cle > meilleur[0]:
-                    meilleur = (cle, tmp.name, entendu, duree, essai, score, hz)
+                    meilleur = (cle, tmp.name, entendu, duree, essai, score, hz, intonation)
             if valide:
-                break
-        (valide, _, _), wav_path, entendu, duree, essai, score, hz = meilleur
+                valides += 1
+                if valides >= CHOIX:
+                    break
+        (valide, _, _, _), wav_path, entendu, duree, essai, score, hz, intonation = meilleur
         cible = OUT / fichier
         cible.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(["afconvert", "-f", "m4af", "-d", "aac", "-b", "64000", wav_path, str(cible)], check=True)
         manifest.setdefault(lang, {})[texte] = fichier
         MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
         etat = "OK " if valide else "À ÉCOUTER"
-        ligne = f"[{etat}] {lang} {score:.2f} {hz:3.0f}Hz {duree:4.1f}s essai {essai} | {texte}\n      entendu : {entendu}"
+        ligne = f"[{etat}] {lang} {score:.2f} {hz:3.0f}Hz mélodie {intonation:.1f} {duree:4.1f}s essai {essai} | {texte}\n      entendu : {entendu}"
         rapport.append(ligne)
         print(f"{n}/{len(a_faire)} {ligne}", flush=True)
 
