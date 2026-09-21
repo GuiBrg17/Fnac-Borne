@@ -43,8 +43,13 @@ HAUTEUR_MIN = 170   # Hz : en dessous, la voix peut sonner masculine
 # Voix de femme à imiter, par langue (voix de démonstration de Resemble AI,
 # téléchargées par tools/voix/installer.sh). Pour une mise en magasin, les
 # remplacer par l'enregistrement d'une personne qui a donné son accord.
-REFERENCES = {lang: os.path.expanduser(f"~/.cache/fnac-borne/voix/references/{lang}_f1.flac") for lang in ("fr", "en", "es")}
-VOIX = "f1b"   # change le nom des fichiers quand on change de voix, pour tout refabriquer
+REFERENCES = {lang: os.path.expanduser(f"~/.cache/fnac-borne/voix/references/{lang}_f1.flac") for lang in ("en", "es")}
+# Français : « Jessica », voix libre de Piper (CC-BY-SA 4.0), choisie par le
+# magasin le 21/09/2026. Fabriquée par tools/voix/reference-jessica.py.
+REFERENCES["fr"] = os.path.expanduser("~/.cache/fnac-borne/voix/references/fr_jessica.wav")
+# Change le nom des fichiers quand on change de voix, pour tout refabriquer
+# dans cette langue (les autres langues gardent leurs fichiers).
+VOIX = {"fr": "jessica1", "en": "f1b", "es": "f1b"}
 # Réglages du modèle : réglage « B, posé », choisi par le magasin le 17/09/2026
 # parmi 4 essais (débit plus naturel que les valeurs par défaut 0.5 / 0.5 / 0.8).
 REGLAGES = dict(exaggeration=0.5, cfg_weight=0.3, temperature=0.8)
@@ -61,7 +66,7 @@ def ressemblance(voulu, entendu):
 
 
 def nom(lang, texte):
-    return f"{lang}/{hashlib.sha1(f'{lang}|{VOIX}|{texte}'.encode()).hexdigest()[:12]}.m4a"
+    return f"{lang}/{hashlib.sha1(f'{lang}|{VOIX[lang]}|{texte}'.encode()).hexdigest()[:12]}.m4a"
 
 
 def melodie(wav, sr):
