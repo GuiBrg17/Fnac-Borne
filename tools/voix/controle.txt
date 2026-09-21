@@ -1,94 +1,168 @@
-[OK ] fr 0.92 183Hz mélodie 3.6  3.8s essai 1 | C'est noté : un vendeur du rayon Entrée / Sortie a été prévenu.
-      entendu : C'est noté, un vendeur du rayon entrée sorti à été prévenu.
-[OK ] fr 1.00 184Hz mélodie 3.8  5.4s essai 1 | Le rayon Jeux vidéo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon jeux vidéo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 1.00 178Hz mélodie 2.1  3.2s essai 1 | C'est noté : un vendeur du rayon Jeux vidéo a été prévenu.
-      entendu : C'est noté. Un vendeur du rayon jeux vidéo a été prévenu.
-[OK ] fr 0.88 177Hz mélodie 4.3  5.8s essai 2 | Le rayon PC gamer & accessoires est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon PC Gammaire, un accessoire, est au sous-sol. Prenez l'escalier vers le sous-sol puis suivez le plan.
-[OK ] fr 0.89 172Hz mélodie 3.1  4.2s essai 2 | C'est noté : un vendeur du rayon PC gamer & accessoires a été prévenu.
-      entendu : C'est noté, un vendeur du rayon PC Gamer en accessoire a été prévenu.
-[OK ] fr 0.95 174Hz mélodie 4.4  5.0s essai 1 | Le rayon Cartouches d'encre est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon cartouche d'encre est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 0.92 178Hz mélodie 3.2  3.5s essai 1 | C'est noté : un vendeur du rayon Cartouches d'encre a été prévenu.
+[OK ] fr 1.00 230Hz mélodie 1.8  6.2s essai 1 | Bonjour et bienvenue à la Fnac Jeanne d'Arc ! Dites-moi ce que vous cherchez, je vous montre le rayon sur le plan.
+      entendu : Bonjour et bienvenue à la Fnac, Jeanne d'Arc. Dites-moi ce que vous cherchez. Je vous montre le rayon sur le plan.
+[OK ] fr 1.00 241Hz mélodie 2.2  3.6s essai 1 | Très bien, je continue en français. Que cherchez-vous ?
+      entendu : Très bien, je continue en français. Que cherchez-vous
+[OK ] fr 1.00 241Hz mélodie 2.3  2.5s essai 1 | Bonjour ! Quel produit cherchez-vous ?
+      entendu : Bonjour, quel produit cherchez-vous
+[OK ] fr 1.00 221Hz mélodie 1.2  2.8s essai 1 | Avec plaisir ! Bonne visite à la Fnac.
+      entendu : Avec plaisir. Bonne visite à la Fnac.
+[OK ] fr 0.93 219Hz mélodie 5.8  5.5s essai 1 | Bien sûr. Touchez « Appeler un vendeur » et un membre de l'équipe viendra vous aider.
+      entendu : Bien sûr. Touchez, appelez un vendeur et un membre de l'équipe viendra vous aider.
+[OK ] fr 1.00 228Hz mélodie 1.6  6.2s essai 1 | Je n'ai pas trouvé ce produit. Essayez avec un autre mot, ou appelez un vendeur : il viendra vous aider.
+      entendu : Je n'ai pas trouvé ce produit. Essayez avec un autre mot ou appelez un vendeur, il viendra vous aider.
+[OK ] fr 0.81 221Hz mélodie 2.3 14.2s essai 2 | Les livres, BD, manuels scolaires, la papeterie, les CD, vinyles et DVD se trouvent à la Fnac Wilson, 16 allées Franklin-Roosevelt, près de Jean-Jaurès. Ici, à la Fnac Jeanne d'Arc, nous sommes spécialisés dans la technique.
+      entendu : Les livres, BD, Manuels Scholar, La Papéterie, Les CD, Vinyl et Dédit se trouvent à la Fnac Winston, 16 allées Franklin Roosevelt près de Jean Jaurès. Aussi à la Fnac Jean-Darck, nous sommes spécialisés dans la technique.
+[OK ] fr 0.89 230Hz mélodie 2.1  6.2s essai 1 | Les LEGO, figurines POP et cartes Pokémon sont dans l'escalier qui relie l'étage 0 au sous-sol.
+      entendu : Les Legos, figurines Pop et Cartes Pokémon, sont dans l'escalier qui relient l'étage 0 au sous-sol.
+[OK ] fr 0.93 219Hz mélodie 1.6  3.7s essai 1 | L'entrée et la sortie sont à l'étage 0, en bas du plan.
+      entendu : L'entrée et la sortie sont à l'étage zéro, en bas du plan.
+[OK ] fr 1.00 211Hz mélodie 1.7  5.0s essai 1 | Le micro n'est pas disponible sur cet appareil. Vous pouvez écrire votre question.
+      entendu : Le micro n'est pas disponible sur cet appareil. Vous pouvez écrire votre question.
+[OK ] fr 1.00 217Hz mélodie 5.9  5.8s essai 1 | Le micro est bloqué. Autorisez-le dans le navigateur, ou écrivez votre question.
+      entendu : Le micro est bloqué. Autorisez-le dans le navigateur ou écrivez votre question.
+[OK ] fr 0.87 228Hz mélodie 1.5  4.0s essai 1 | Je n'ai pas bien entendu. Réessayez, ou écrivez votre question.
+      entendu : Je n'ai pas bien entendu. Ves essayer ou écrivez votre question.
+[OK ] fr 0.81 230Hz mélodie 2.0  6.7s essai 1 | Le magasin est ouvert du lundi au samedi, de 10 heures à 19 heures 30. Nous sommes fermés le dimanche.
+      entendu : Le magasin est ouvert du lundi au samedi, de 10h à 19h30. Nous sommes fermés le dimanche.
+[OK ] fr 0.92 210Hz mélodie 1.7  3.1s essai 1 | Je suis désolée, il n'y a pas de toilettes dans ce magasin.
+      entendu : Je suis désolée, il n'y a pas de toilette dans ce magasin.
+[OK ] fr 0.95 219Hz mélodie 4.5  8.1s essai 1 | Nous ne vendons pas de gros électroménager ici. Au rayon petit électroménager, le plus grand appareil est l'aspirateur balai.
+      entendu : Nous ne vendons pas de gros électroménagers ici. Au rayon petit électroménager, le plus grand appareil est l'aspirateur balai.
+[OK ] fr 0.94 212Hz mélodie 2.0  7.2s essai 1 | Oui, il y a un ascenseur pour les personnes qui en ont besoin. Touchez « Appeler un vendeur » : un membre de l'équipe vous y accompagne.
+      entendu : Oui, il y a un ascenseur pour les personnes qui ont besoin. Toucher, appeler un vendeur, un membre de l'équipe vous y accompagne.
+[OK ] fr 0.81 235Hz mélodie 2.1  7.3s essai 1 | Désolée, ce magasin ne vend pas ce produit. Vous pouvez le commander sur fnac.com, ou demander conseil à un vendeur.
+      entendu : Désolé, ce magasin ne vend pas ce produit. Vous pouvez le commander sur Fnacom Comin ou demander conseils à un vendeur.
+[OK ] fr 1.00 229Hz mélodie 1.7  4.2s essai 1 | Le magasin n'a pas de parking. Il faut vous garer dans le quartier.
+      entendu : Le magasin n'a pas de parking. Il faut vous garer dans le quartier.
+[OK ] fr 1.00 224Hz mélodie 1.9  8.7s essai 1 | Quel genre de casque ? Pour écouter de la musique, pour jouer, de réalité virtuelle, ou pour le vélo et la trottinette ?
+      entendu : Quel genre de casque pour écouter de la musique pour jouer de réalité virtuelle ou pour le vélo et la trottinette
+[OK ] fr 0.81 217Hz mélodie 1.7  7.7s essai 1 | Un chargeur pour quel appareil ? Un téléphone Android, un iPhone ou un produit Apple, un ordinateur portable, ou une trottinette ?
+      entendu : Un chargeur pour qu'elle apparaille. Un téléphone en droit, un iPhone ou un produit Apple, un ordinateur portable ou une trottinette.
+[OK ] fr 0.96 226Hz mélodie 2.5  8.7s essai 1 | Quel câble ? Pour un téléphone, pour un iPhone, un câble HDMI, USB ou réseau pour l'ordinateur ou la télé, ou un câble audio ?
+      entendu : Quel câble. Pour un téléphone, pour un iPhone, un câble admis, usb ou réseau pour l'ordinateur ou la télé ou un câble audio.
+[OK ] fr 1.00 225Hz mélodie 1.9  6.4s essai 2 | Quel écran ? Un écran pour ordinateur, une télévision, ou une protection d'écran pour téléphone ?
+      entendu : Quel écran Un écran pour ordinateur, une télévision ou une protection d'écran pour téléphone
+[OK ] fr 0.93 234Hz mélodie 1.9  5.6s essai 1 | Quelle montre ? Une Apple Watch, ou une autre montre connectée comme Samsung ou Garmin ?
+      entendu : Quel montre Une Apple Watch ou une autre montre connectée comme Samsung ou Garmin
+[OK ] fr 0.91 225Hz mélodie 2.0  6.2s essai 1 | Quelle tablette ? Un iPad, une tablette Android comme Samsung, ou une liseuse pour lire des livres ?
+      entendu : Quelle tablette Un iPad Une tablette en droit comme Samsung Ou une liseuse pour lire des livres
+[OK ] fr 0.92 221Hz mélodie 1.5  5.3s essai 1 | Quel ordinateur ? Un PC Windows, un Mac, ou un PC gamer pour jouer ?
+      entendu : Quel ordinateur Un PC Windows, un Mac ou un PC Gami pour jouer
+[OK ] fr 0.86 220Hz mélodie 1.6  4.1s essai 1 | Un clavier pour quoi ? Pour un ordinateur, ou pour un iPad ?
+      entendu : Un clavier, pourquoi Pour un ordinateur ou pour un iPad
+[OK ] fr 0.89 220Hz mélodie 6.1  5.5s essai 2 | Une protection pour quel appareil ? Un iPhone, un téléphone Android, ou une tablette ?
+      entendu : Une protection pour quel appareil Un iPhone Un téléphone en droit Ou une tablette
+[OK ] fr 1.00 236Hz mélodie 1.9  6.8s essai 1 | Quel genre de jeu ? Un jeu vidéo, un jeu de société, ou des cartes à collectionner comme Pokémon ?
+      entendu : Quel genre de jeu Un jeu vidéo Un jeu de société Ou des cartes à collectionner comme Pokémon
+[OK ] fr 0.95 229Hz mélodie 1.3  8.2s essai 1 | Quelle batterie ? Une batterie externe pour téléphone, des piles, une batterie d'ordinateur, d'appareil photo, ou de trottinette ?
+      entendu : Quelle batterie Une batterie externe pour téléphone, des piles, une batterie d'ordinateur, d'appareils photo ou de trottinette.
+[OK ] fr 0.84 236Hz mélodie 2.2  7.8s essai 1 | Quelle enceinte ? Une enceinte bluetooth ou hifi pour la musique, ou une enceinte connectée avec assistant vocal comme Alexa ?
+      entendu : Quelle enceinte Une enceinte Bluetooth ou wifi pour la musique Ou une enceinte connectée avec assistants vocales comme Alexa
+[OK ] fr 0.94 229Hz mélodie 2.4  6.7s essai 1 | Quel micro ? Pour filmer ou faire un podcast, pour jouer ou streamer, ou pour chanter au karaoké ?
+      entendu : quel micro pour filmer ou faire un podcast pour jouer au streamer ou pour chanter au karaoke
+[OK ] fr 0.93 224Hz mélodie 1.4  7.8s essai 1 | Quel adaptateur ? Une prise pour voyager à l'étranger, un adaptateur HDMI ou USB, un adaptateur audio jack, ou pour iPhone ?
+      entendu : Quel adaptateur Une prise pour voyager à l'étranger, un adaptateur en EMI ou USB, un adaptateur audio jack ou pour iPhone.
+[OK ] fr 0.84 216Hz mélodie 4.6  6.4s essai 1 | Quel aspirateur ? Un aspirateur balai ou un robot, ou un aspirateur traîneau, Dyson ou vapeur ?
+      entendu : Quel aspirateur Un aspirateur balai ou un robot ou un aspirateur très no, disons ou vapeur
+[OK ] fr 0.88 242Hz mélodie 2.0  5.9s essai 2 | Quelle machine à café ? À capsules comme Nespresso, à grains ou expresso, ou une cafetière filtre ?
+      entendu : Quelle machine à café, à capsule comme Nespresso, à grain ou expresso ou une cafétière filtre
+[OK ] fr 0.94 219Hz mélodie 1.5  6.4s essai 1 | Quel produit Sony ? Une télé, un casque ou une enceinte, une PlayStation, ou un appareil photo ?
+      entendu : Quel produit sonne Une télé, un casque ou une enceinte, une PlayStation ou un appareil photo
+[OK ] fr 0.84 221Hz mélodie 2.0  8.9s essai 1 | Quel produit Philips ? Un rasoir, une tondeuse ou une brosse à dents, une machine à café ou un airfryer, une télé, ou des ampoules Hue ?
+      entendu : Quel produit Phillips Un rasoir, une tondeuse ou une brosse à dents, une machine à café ou un air frier, une télée ou des ampoules
+[OK ] fr 0.89 229Hz mélodie 2.2  8.8s essai 1 | Quelle carte ? Une carte cadeau, la carte Fnac, une carte mémoire, des cartes Pokémon, ou une carte graphique ?
+      entendu : Quelles cartes Une carte cadeau, la carte Fnac, une carte mémoire, des cartes Pokémon ou une carte graphique
+[OK ] fr 1.00 241Hz mélodie 2.0  3.6s essai 1 | Avant de partir : avez-vous trouvé ce que vous cherchiez ?
+      entendu : Avant de partir, avez-vous trouvé ce que vous cherchiez
+[OK ] fr 1.00 216Hz mélodie 2.2  2.4s essai 1 | Merci ! Bonne visite à la Fnac.
+      entendu : Merci. Bonne visite à la FNAC.
+[OK ] fr 0.93 225Hz mélodie 2.7  5.2s essai 1 | Merci de nous l'avoir dit. Un vendeur peut vous aider : touchez « Appeler un vendeur ».
+      entendu : Merci de nous l'avoir dit. Un vendeur peut vous aider. Touchez, appelez un vendeur.
+[OK ] fr 0.94 212Hz mélodie 2.2 10.7s essai 1 | Mode accessibilité : le texte est agrandi et le contraste renforcé. Si vous ne pouvez pas prendre l'escalier, il y a un ascenseur : touchez « Appeler un vendeur », on vous y accompagne.
+      entendu : Mode Accessibilité, le texte est agrandi et le contraste renforcé. Si vous ne pouvez pas prendre l'escalier, il y a un ascenseur. Touché, appelez un vendeur, on vous y accompagne.
+[OK ] fr 1.00 207Hz mélodie 1.8  2.2s essai 1 | Affichage normal.
+      entendu : affichage normal.
+[OK ] fr 1.00 220Hz mélodie 2.6  3.5s essai 1 | C'est noté : un vendeur a été prévenu et arrive.
+      entendu : C'est noté. Un vendeur a été prévenu et arrive.
+[OK ] fr 0.96 221Hz mélodie 5.0  6.6s essai 1 | Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe dans le magasin, il vous aidera avec plaisir.
+      entendu : Je n'ai pas pu prévenir un vendeur. Addressez-vous à un membre de l'équipe dans le magasin, il vous aidera avec plaisir.
+[OK ] fr 0.91 222Hz mélodie 2.1  5.0s essai 1 | Le rayon Téléphonie Android est ici, à l'étage 0. Je vous l'indique sur le plan.
+      entendu : Le rayon téléphonie en droit est ici, à l'étage 0. Je vous l'indique sur le plan.
+[OK ] fr 0.88 222Hz mélodie 2.3  5.0s essai 1 | C'est noté : un vendeur du rayon Téléphonie Android a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon téléphonie en droit a été prévenu.
+[OK ] fr 0.88 216Hz mélodie 1.5  5.2s essai 1 | Le rayon Objets connectés est ici, à l'étage 0. Je vous l'indique sur le plan.
+      entendu : Le rayon objet connecté est ici, à l'étage 0. Je vous l'indique sur le plan.
+[OK ] fr 0.83 229Hz mélodie 2.4  5.2s essai 1 | C'est noté : un vendeur du rayon Objets connectés a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon objet connecté a été prévenu.
+[OK ] fr 0.93 225Hz mélodie 1.8  5.7s essai 1 | C'est noté : un vendeur du rayon Escalier · LEGO, POP & Pokémon a été prévenu.
+      entendu : C'est noté, un vendeur du rayon escalier Lugo Pop Pokemon a été prévenu.
+[OK ] fr 0.83 234Hz mélodie 2.4  4.6s essai 1 | C'est noté : un vendeur du rayon Entrée / Sortie a été prévenu.
+      entendu : C'est noté, un vendeur du rayon entré, sorti à été prévenu.
+[OK ] fr 0.95 230Hz mélodie 1.8  5.6s essai 1 | Le rayon Jeux vidéo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon jeu vidéo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.83 230Hz mélodie 1.8  4.0s essai 1 | C'est noté : un vendeur du rayon Jeux vidéo a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon jeu, Jdeo, a été prévenu.
+[OK ] fr 0.88 233Hz mélodie 2.1  6.6s essai 1 | Le rayon PC gamer & accessoires est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon PC Gammaire, un accessoire, est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.85 229Hz mélodie 2.2  4.9s essai 1 | C'est noté : un vendeur du rayon PC gamer & accessoires a été prévenu.
+      entendu : C'est noté, un vendeur du rayon PC Gamert Accessoire a été prévenu.
+[OK ] fr 0.95 236Hz mélodie 2.4  5.6s essai 1 | Le rayon Cartouches d'encre est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon cartouche d'encre est au sous-sol. Prenez l'escalier vers le sous-sol. Puis suivez le plan.
+[OK ] fr 0.92 224Hz mélodie 1.8  4.2s essai 1 | C'est noté : un vendeur du rayon Cartouches d'encre a été prévenu.
       entendu : C'est noté. Un vendeur du rayon cartouche d'encre a été prévenu.
-[OK ] fr 1.00 178Hz mélodie 4.5  5.7s essai 1 | Le rayon Petit électroménager est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon petit électroménager est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 1.00 183Hz mélodie 3.5  4.0s essai 5 | C'est noté : un vendeur du rayon Petit électroménager a été prévenu.
+[OK ] fr 0.87 225Hz mélodie 3.1  5.8s essai 1 | Le rayon Petit électroménager est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon de petit électroménager est au sous-sol. Prenez l'escadier vers le sous-sol puis sugez le plan.
+[OK ] fr 1.00 244Hz mélodie 2.0  4.9s essai 1 | C'est noté : un vendeur du rayon Petit électroménager a été prévenu.
       entendu : C'est noté, un vendeur du rayon petit électroménager a été prévenu.
-[OK ] fr 1.00 205Hz mélodie 3.9  4.3s essai 3 | Le rayon Connectique est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 229Hz mélodie 2.3  6.0s essai 1 | Le rayon Connectique est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
       entendu : Le rayon connectique est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 1.00 181Hz mélodie 3.2  3.2s essai 3 | C'est noté : un vendeur du rayon Connectique a été prévenu.
-      entendu : C'est noté. Un vendeur du rayon connectique a été prévenu.
-[OK ] fr 0.89 191Hz mélodie 3.6  5.5s essai 1 | Le rayon Tablettes Android est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon tablette zandroie est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 0.83 190Hz mélodie 3.3  4.2s essai 5 | C'est noté : un vendeur du rayon Tablettes Android a été prévenu.
-      entendu : C'est noté, un vendeur du rayon tablette endroit a été prévenu.
-[OK ] fr 0.94 183Hz mélodie 3.3  4.6s essai 1 | Le rayon Liseuses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon liseuse est au sous-sol. Prenez l'escalier vers le sous-sol puis suivez le plan.
-[OK ] fr 0.91 181Hz mélodie 4.1  3.2s essai 6 | C'est noté : un vendeur du rayon Liseuses a été prévenu.
-      entendu : C'est noté, un vendeur du rayon liseuse a été prévenu.
-[OK ] fr 1.00 211Hz mélodie 4.2  4.6s essai 3 | Le rayon PC Windows est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 237Hz mélodie 1.8  3.8s essai 1 | C'est noté : un vendeur du rayon Connectique a été prévenu.
+      entendu : C'est noté, un vendeur du rayon connectique a été prévenu.
+[OK ] fr 0.87 229Hz mélodie 2.4  5.8s essai 1 | Le rayon Tablettes Android est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon tablette en droit est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.80 224Hz mélodie 2.1  4.7s essai 1 | C'est noté : un vendeur du rayon Tablettes Android a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon tablette en droit a été prévenu.
+[OK ] fr 0.94 229Hz mélodie 1.8  5.3s essai 1 | Le rayon Liseuses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon liseuse est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.91 229Hz mélodie 2.6  4.1s essai 1 | C'est noté : un vendeur du rayon Liseuses a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon liseuse a été prévenu.
+[OK ] fr 1.00 218Hz mélodie 2.0  5.5s essai 1 | Le rayon PC Windows est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
       entendu : Le rayon PC Windows est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 1.00 171Hz mélodie 3.1  3.7s essai 3 | C'est noté : un vendeur du rayon PC Windows a été prévenu.
-      entendu : C'est noté. Un vendeur du rayon PC Windows a été prévenu.
-[OK ] fr 1.00 190Hz mélodie 4.2  5.8s essai 2 | Le rayon Mobilité urbaine est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 226Hz mélodie 3.5  4.2s essai 1 | C'est noté : un vendeur du rayon PC Windows a été prévenu.
+      entendu : C'est noté, un vendeur du rayon PC Windows a été prévenu.
+[OK ] fr 1.00 222Hz mélodie 2.1  6.1s essai 1 | Le rayon Mobilité urbaine est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
       entendu : Le rayon mobilité urbaine est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 1.00 172Hz mélodie 3.2  4.4s essai 4 | C'est noté : un vendeur du rayon Mobilité urbaine a été prévenu.
+[OK ] fr 1.00 219Hz mélodie 2.1  4.5s essai 1 | C'est noté : un vendeur du rayon Mobilité urbaine a été prévenu.
       entendu : C'est noté. Un vendeur du rayon mobilité urbaine a été prévenu.
-[OK ] fr 1.00 178Hz mélodie 3.1  4.2s essai 1 | Le rayon Photo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon photo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 1.00 177Hz mélodie 3.8  3.3s essai 1 | C'est noté : un vendeur du rayon Photo a été prévenu.
+[OK ] fr 0.97 215Hz mélodie 1.8  5.1s essai 1 | Le rayon Photo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon photo est sous sol. Prenez l'escalier vers le sous sol, puis suivez le plan.
+[OK ] fr 1.00 232Hz mélodie 2.2  4.3s essai 1 | C'est noté : un vendeur du rayon Photo a été prévenu.
       entendu : C'est noté. Un vendeur du rayon photo a été prévenu.
-[OK ] fr 0.94 188Hz mélodie 4.1  5.2s essai 1 | Le rayon TV est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon Tivaud est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 0.91 182Hz mélodie 2.7  3.1s essai 6 | C'est noté : un vendeur du rayon TV a été prévenu.
-      entendu : C'est noté, un vendeur du rayon-tive a été prévenu.
-[OK ] fr 1.00 187Hz mélodie 4.0  4.3s essai 2 | Le rayon Son est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.89 236Hz mélodie 2.5  5.4s essai 1 | Le rayon TV est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon Tivaux est au sous-sol. Prenez l'estadier vers le sous-sol. Puis suivez le plan.
+[OK ] fr 0.91 232Hz mélodie 2.4  4.1s essai 1 | C'est noté : un vendeur du rayon TV a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon Thivo a été prévenu.
+[OK ] fr 1.00 229Hz mélodie 2.1  5.1s essai 1 | Le rayon Son est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
       entendu : Le rayon son est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 1.00 179Hz mélodie 2.6  3.3s essai 4 | C'est noté : un vendeur du rayon Son a été prévenu.
-      entendu : C'est noté, un vendeur du rayon son a été prévenu.
-[OK ] fr 0.94 191Hz mélodie 4.0  4.6s essai 3 | Le rayon Apple est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon appel est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 1.00 170Hz mélodie 3.3  3.5s essai 4 | C'est noté : un vendeur du rayon Apple a été prévenu.
-      entendu : C'est noté. Un vendeur du rayon Apple a été prévenu.
-[OK ] fr 1.00 198Hz mélodie 3.8  5.6s essai 2 | Le rayon Jeux de société est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon Jeux de société est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 1.00 173Hz mélodie 3.3  3.6s essai 2 | C'est noté : un vendeur du rayon Jeux de société a été prévenu.
-      entendu : C'est noté, un vendeur du rayon jeux de société a été prévenu.
-[OK ] fr 0.98 185Hz mélodie 3.7  5.8s essai 4 | Le rayon SAV & retrait des colis est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon Sav-Andre, retrait des colis, est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 0.93 173Hz mélodie 3.1  4.1s essai 4 | C'est noté : un vendeur du rayon SAV & retrait des colis a été prévenu.
-      entendu : C'est noté. Un vendeur du rayon savan retrait des colis a été prévenu.
-[OK ] fr 0.94 206Hz mélodie 3.9  5.1s essai 2 | Le rayon Caisses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.91 237Hz mélodie 2.1  4.0s essai 1 | C'est noté : un vendeur du rayon Son a été prévenu.
+      entendu : C'est noté. A vendeur du rayon, son a été prévenu.
+[OK ] fr 0.94 234Hz mélodie 2.4  6.0s essai 1 | Le rayon Apple est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon A est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 217Hz mélodie 1.6  3.6s essai 1 | C'est noté : un vendeur du rayon Apple a été prévenu.
+      entendu : C'est noté, un vendeur du rayon Apple a été prévenu.
+[OK ] fr 0.95 221Hz mélodie 5.7  5.7s essai 1 | Le rayon Jeux de société est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon jeu de société est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.92 222Hz mélodie 2.2  4.2s essai 1 | C'est noté : un vendeur du rayon Jeux de société a été prévenu.
+      entendu : C'est noté, un vendeur du rayon joue de société a été prévenu.
+[OK ] fr 0.91 225Hz mélodie 2.3  6.6s essai 1 | Le rayon SAV & retrait des colis est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon SAV en de retrait des colliers est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.90 232Hz mélodie 2.2  5.4s essai 1 | C'est noté : un vendeur du rayon SAV & retrait des colis a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon save en retrait, des colis a été prévenu.
+[OK ] fr 0.94 229Hz mélodie 2.7  4.8s essai 1 | Le rayon Caisses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
       entendu : Le rayon caisse est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 0.91 172Hz mélodie 3.1  3.2s essai 2 | C'est noté : un vendeur du rayon Caisses a été prévenu.
+[OK ] fr 0.91 219Hz mélodie 1.6  3.5s essai 1 | C'est noté : un vendeur du rayon Caisses a été prévenu.
       entendu : C'est noté, un vendeur du rayon caisse a été prévenu.
-[OK ] fr 0.97 184Hz mélodie 3.4  5.3s essai 3 | Le rayon Adhésion & financement est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le rayon adhésion en financement est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] fr 1.00 170Hz mélodie 3.1  3.6s essai 3 | C'est noté : un vendeur du rayon Adhésion & financement a été prévenu.
-      entendu : C'est noté. Un vendeur du rayon adhésion financement a été prévenu.
-[OK ] en 0.97 234Hz mélodie 3.3  4.2s essai 2 | Cables & storage is in the basement. Take the stairs down, then follow the map.
-      entendu : Cables and storage is in the basement. Take the stairs down, then follow the map.
-[OK ] en 1.00 204Hz mélodie 2.9  3.7s essai 4 | Done: a staff member from Cables & storage has been notified.
-      entendu : Done! A staff member from Cables Storage has been notified.
-[OK ] en 1.00 210Hz mélodie 4.2  3.7s essai 1 | Photo is in the basement. Take the stairs down, then follow the map.
-      entendu : Photo is in the basement, take the stairs down, then follow the map.
-[OK ] en 1.00 198Hz mélodie 2.5  2.9s essai 2 | Done: a staff member from Photo has been notified.
-      entendu : Done. A staff member from photo has been notified.
-[OK ] en 1.00 228Hz mélodie 3.3  4.0s essai 2 | Sound is in the basement. Take the stairs down, then follow the map.
-      entendu : sound is in the basement. Take the stairs down, then follow the map.
-[OK ] en 1.00 216Hz mélodie 2.7  2.9s essai 3 | Done: a staff member from Sound has been notified.
-      entendu : Done. A staff member from Sound has been notified.
-[OK ] es 1.00 194Hz mélodie 4.1  5.8s essai 2 | La sección Conectividad está en el sótano. Baje por la escalera y siga el plano.
-      entendu : La sección Conectividad está en el sótano. Baje por la escalera y siga el plano.
-[OK ] es 1.00 190Hz mélodie 3.4  3.6s essai 1 | Hecho: se ha avisado a un vendedor de la sección Conectividad.
-      entendu : hecho se ha avisado a un vendedor de la sección conectividad.
-[OK ] es 1.00 186Hz mélodie 3.4  5.3s essai 1 | La sección Foto está en el sótano. Baje por la escalera y siga el plano.
-      entendu : La sección foto está en el sótano. Baje por la escalera y siga el plano.
-[OK ] es 1.00 195Hz mélodie 3.6  3.2s essai 2 | Hecho: se ha avisado a un vendedor de la sección Foto.
-      entendu : hecho se ha avisado a un vendedor de la sección foto.
-[OK ] es 1.00 170Hz mélodie 4.7  5.2s essai 2 | La sección Sonido está en el sótano. Baje por la escalera y siga el plano.
-      entendu : La sección sonido está en el sótano. Baje por la escalera y siga el plano.
-[OK ] es 1.00 179Hz mélodie 3.4  3.7s essai 3 | Hecho: se ha avisado a un vendedor de la sección Sonido.
-      entendu : hecho se ha avisado a un vendedor de la sección sonido.
+[OK ] fr 0.92 224Hz mélodie 1.8  6.0s essai 1 | Le rayon Adhésion & financement est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon adhésion en financement est au sous-sol. Prenez l'esquadrie vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.96 221Hz mélodie 2.3  4.8s essai 1 | C'est noté : un vendeur du rayon Adhésion & financement a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon adhésion en financement a été prévenu.
