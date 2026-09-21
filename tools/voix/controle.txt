@@ -1,6 +1,94 @@
-[OK ] fr 0.96 175Hz  5.6s essai 2 | Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe dans le magasin, il vous aidera avec plaisir.
-      entendu : Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe dans le magasin et vous aidera avec plaisir.
-[OK ] en 1.00 213Hz  4.9s essai 1 | I couldn't reach a staff member. Please ask any member of the team in the store, they'll be happy to help.
-      entendu : I couldn't reach a staff member. Please ask any member of the team in the store. They'll be happy to help.
-[OK ] es 0.93 214Hz  6.8s essai 1 | No he podido avisar a un vendedor. Diríjase a cualquier miembro del equipo en la tienda, le ayudará con gusto.
-      entendu : No he podido avisar a un vendedor. Liriha se a cualquier miembro del equipo en la tienda. Le ayudará con gusto.
+[OK ] fr 0.92 183Hz mélodie 3.6  3.8s essai 1 | C'est noté : un vendeur du rayon Entrée / Sortie a été prévenu.
+      entendu : C'est noté, un vendeur du rayon entrée sorti à été prévenu.
+[OK ] fr 1.00 184Hz mélodie 3.8  5.4s essai 1 | Le rayon Jeux vidéo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon jeux vidéo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 178Hz mélodie 2.1  3.2s essai 1 | C'est noté : un vendeur du rayon Jeux vidéo a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon jeux vidéo a été prévenu.
+[OK ] fr 0.88 177Hz mélodie 4.3  5.8s essai 2 | Le rayon PC gamer & accessoires est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon PC Gammaire, un accessoire, est au sous-sol. Prenez l'escalier vers le sous-sol puis suivez le plan.
+[OK ] fr 0.89 172Hz mélodie 3.1  4.2s essai 2 | C'est noté : un vendeur du rayon PC gamer & accessoires a été prévenu.
+      entendu : C'est noté, un vendeur du rayon PC Gamer en accessoire a été prévenu.
+[OK ] fr 0.95 174Hz mélodie 4.4  5.0s essai 1 | Le rayon Cartouches d'encre est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon cartouche d'encre est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.92 178Hz mélodie 3.2  3.5s essai 1 | C'est noté : un vendeur du rayon Cartouches d'encre a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon cartouche d'encre a été prévenu.
+[OK ] fr 1.00 178Hz mélodie 4.5  5.7s essai 1 | Le rayon Petit électroménager est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon petit électroménager est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 183Hz mélodie 3.5  4.0s essai 5 | C'est noté : un vendeur du rayon Petit électroménager a été prévenu.
+      entendu : C'est noté, un vendeur du rayon petit électroménager a été prévenu.
+[OK ] fr 1.00 205Hz mélodie 3.9  4.3s essai 3 | Le rayon Connectique est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon connectique est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 181Hz mélodie 3.2  3.2s essai 3 | C'est noté : un vendeur du rayon Connectique a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon connectique a été prévenu.
+[OK ] fr 0.89 191Hz mélodie 3.6  5.5s essai 1 | Le rayon Tablettes Android est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon tablette zandroie est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.83 190Hz mélodie 3.3  4.2s essai 5 | C'est noté : un vendeur du rayon Tablettes Android a été prévenu.
+      entendu : C'est noté, un vendeur du rayon tablette endroit a été prévenu.
+[OK ] fr 0.94 183Hz mélodie 3.3  4.6s essai 1 | Le rayon Liseuses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon liseuse est au sous-sol. Prenez l'escalier vers le sous-sol puis suivez le plan.
+[OK ] fr 0.91 181Hz mélodie 4.1  3.2s essai 6 | C'est noté : un vendeur du rayon Liseuses a été prévenu.
+      entendu : C'est noté, un vendeur du rayon liseuse a été prévenu.
+[OK ] fr 1.00 211Hz mélodie 4.2  4.6s essai 3 | Le rayon PC Windows est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon PC Windows est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 171Hz mélodie 3.1  3.7s essai 3 | C'est noté : un vendeur du rayon PC Windows a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon PC Windows a été prévenu.
+[OK ] fr 1.00 190Hz mélodie 4.2  5.8s essai 2 | Le rayon Mobilité urbaine est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon mobilité urbaine est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 172Hz mélodie 3.2  4.4s essai 4 | C'est noté : un vendeur du rayon Mobilité urbaine a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon mobilité urbaine a été prévenu.
+[OK ] fr 1.00 178Hz mélodie 3.1  4.2s essai 1 | Le rayon Photo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon photo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 177Hz mélodie 3.8  3.3s essai 1 | C'est noté : un vendeur du rayon Photo a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon photo a été prévenu.
+[OK ] fr 0.94 188Hz mélodie 4.1  5.2s essai 1 | Le rayon TV est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon Tivaud est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.91 182Hz mélodie 2.7  3.1s essai 6 | C'est noté : un vendeur du rayon TV a été prévenu.
+      entendu : C'est noté, un vendeur du rayon-tive a été prévenu.
+[OK ] fr 1.00 187Hz mélodie 4.0  4.3s essai 2 | Le rayon Son est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon son est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 179Hz mélodie 2.6  3.3s essai 4 | C'est noté : un vendeur du rayon Son a été prévenu.
+      entendu : C'est noté, un vendeur du rayon son a été prévenu.
+[OK ] fr 0.94 191Hz mélodie 4.0  4.6s essai 3 | Le rayon Apple est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon appel est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 170Hz mélodie 3.3  3.5s essai 4 | C'est noté : un vendeur du rayon Apple a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon Apple a été prévenu.
+[OK ] fr 1.00 198Hz mélodie 3.8  5.6s essai 2 | Le rayon Jeux de société est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon Jeux de société est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 173Hz mélodie 3.3  3.6s essai 2 | C'est noté : un vendeur du rayon Jeux de société a été prévenu.
+      entendu : C'est noté, un vendeur du rayon jeux de société a été prévenu.
+[OK ] fr 0.98 185Hz mélodie 3.7  5.8s essai 4 | Le rayon SAV & retrait des colis est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon Sav-Andre, retrait des colis, est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.93 173Hz mélodie 3.1  4.1s essai 4 | C'est noté : un vendeur du rayon SAV & retrait des colis a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon savan retrait des colis a été prévenu.
+[OK ] fr 0.94 206Hz mélodie 3.9  5.1s essai 2 | Le rayon Caisses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon caisse est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 0.91 172Hz mélodie 3.1  3.2s essai 2 | C'est noté : un vendeur du rayon Caisses a été prévenu.
+      entendu : C'est noté, un vendeur du rayon caisse a été prévenu.
+[OK ] fr 0.97 184Hz mélodie 3.4  5.3s essai 3 | Le rayon Adhésion & financement est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+      entendu : Le rayon adhésion en financement est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
+[OK ] fr 1.00 170Hz mélodie 3.1  3.6s essai 3 | C'est noté : un vendeur du rayon Adhésion & financement a été prévenu.
+      entendu : C'est noté. Un vendeur du rayon adhésion financement a été prévenu.
+[OK ] en 0.97 234Hz mélodie 3.3  4.2s essai 2 | Cables & storage is in the basement. Take the stairs down, then follow the map.
+      entendu : Cables and storage is in the basement. Take the stairs down, then follow the map.
+[OK ] en 1.00 204Hz mélodie 2.9  3.7s essai 4 | Done: a staff member from Cables & storage has been notified.
+      entendu : Done! A staff member from Cables Storage has been notified.
+[OK ] en 1.00 210Hz mélodie 4.2  3.7s essai 1 | Photo is in the basement. Take the stairs down, then follow the map.
+      entendu : Photo is in the basement, take the stairs down, then follow the map.
+[OK ] en 1.00 198Hz mélodie 2.5  2.9s essai 2 | Done: a staff member from Photo has been notified.
+      entendu : Done. A staff member from photo has been notified.
+[OK ] en 1.00 228Hz mélodie 3.3  4.0s essai 2 | Sound is in the basement. Take the stairs down, then follow the map.
+      entendu : sound is in the basement. Take the stairs down, then follow the map.
+[OK ] en 1.00 216Hz mélodie 2.7  2.9s essai 3 | Done: a staff member from Sound has been notified.
+      entendu : Done. A staff member from Sound has been notified.
+[OK ] es 1.00 194Hz mélodie 4.1  5.8s essai 2 | La sección Conectividad está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Conectividad está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 190Hz mélodie 3.4  3.6s essai 1 | Hecho: se ha avisado a un vendedor de la sección Conectividad.
+      entendu : hecho se ha avisado a un vendedor de la sección conectividad.
+[OK ] es 1.00 186Hz mélodie 3.4  5.3s essai 1 | La sección Foto está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección foto está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 195Hz mélodie 3.6  3.2s essai 2 | Hecho: se ha avisado a un vendedor de la sección Foto.
+      entendu : hecho se ha avisado a un vendedor de la sección foto.
+[OK ] es 1.00 170Hz mélodie 4.7  5.2s essai 2 | La sección Sonido está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección sonido está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 179Hz mélodie 3.4  3.7s essai 3 | Hecho: se ha avisado a un vendedor de la sección Sonido.
+      entendu : hecho se ha avisado a un vendedor de la sección sonido.
