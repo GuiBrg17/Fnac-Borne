@@ -87,14 +87,40 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .is-app .idle { opacity: 0; visibility: hidden; }
 .idle:focus-visible { outline: none; }
 
-.idle-top { grid-column: 1; display: flex; align-items: center; gap: 1.2rem; }
+.idle-top { grid-column: 1; display: flex; align-items: center; gap: 1rem; flex-wrap: nowrap; }
 .idle-top .logo { width: 5.4rem; }
 .store {
+  white-space: nowrap;
   font-size: 1.15rem;
   font-weight: 700;
   font-stretch: 112%;
   letter-spacing: 0.01em;
 }
+
+/* Pastille « Ouvert jusqu'à… », à côté du nom du magasin. */
+.idle-hours {
+  display: inline-flex;
+  white-space: nowrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.09);
+  font-size: 1rem;
+  font-weight: 700;
+}
+.idle-hours[hidden] { display: none; }
+.idle-hours::before {
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: #1c7a3c;
+}
+/* Fermeture proche, puis magasin fermé : la pastille change de couleur. */
+.idle-hours.is-soon { background: var(--ink); color: var(--paper); }
+.idle-hours.is-soon::before { background: #e8b923; }
+.idle-hours.is-closed::before { background: #8a8a8a; }
 
 .idle-copy {
   grid-column: 1;
