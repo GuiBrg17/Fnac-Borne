@@ -18,9 +18,12 @@ const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
 const WARNING_SECONDS = 15;
 // Visuel de l'écran de veille :
-//   "photo" → assets/jeanne-accueil.png
+//   "photo" → assets/jeanne-accueil.png (Jeanne détourée, posée sur le jaune)
 //   "video" → assets/jeanne-accueil.mp4, avec la photo en secours
-const IDLE_VISUAL = "video";
+// Depuis le 24/09/2026 : la photo, qui porte le badge « Jeanne ». L'ancienne
+// vidéo montre une autre Jeanne ; elle reste dans le dépôt en attendant
+// qu'une vidéo soit refaite avec cette apparence.
+const IDLE_VISUAL = "photo";
 
 // --- Réglages enregistrés sur la borne ---------------------------------
 const store = {
