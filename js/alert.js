@@ -16,19 +16,20 @@ const RELAY = "https://formsubmit.co/ajax/";
 export const emailList = (value) =>
   String(value || "").split(/[\s,;]+/).map((a) => a.trim()).filter((a) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a));
 
-const describe = ({ zone, floor }) =>
-  zone ? `rayon ${zone}${floor === "-1" ? " (sous-sol)" : floor === "0" ? " (étage 0)" : ""}` : "à la borne, à l'entrée";
+const describe = ({ zone, floor, motif }) =>
+  motif === "commande" ? "à la borne, à l'entrée — il veut commander un livre, un CD ou un DVD"
+    : zone ? `rayon ${zone}${floor === "-1" ? " (sous-sol)" : floor === "0" ? " (étage 0)" : ""}` : "à la borne, à l'entrée";
 const hour = () => new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
 
 // Envoie l'alerte par e-mail à la première adresse, les autres en copie.
 // Renvoie "sent", "activation" (lien à cliquer la première fois) ou "failed".
-export async function sendVendorEmail(addresses, { zone = null, floor = null, test = false } = {}) {
+export async function sendVendorEmail(addresses, { zone = null, floor = null, motif = null, test = false } = {}) {
   const [to, ...cc] = emailList(addresses);
   if (!to) return "failed";
   const form = new FormData();
   form.append("Message", test
     ? `Test de la borne Jeanne (${hour()}) : les alertes par e-mail arrivent bien.`
-    : `Un client demande un vendeur : ${describe({ zone, floor })}.`);
+    : `Un client demande un vendeur : ${describe({ zone, floor, motif })}.`);
   form.append("Heure", hour());
   form.append("_subject", test ? "Borne Jeanne : test des alertes" : `Borne Jeanne : un client attend (${zone || "entrée"})`);
   form.append("_template", "table");
@@ -49,10 +50,10 @@ export const isTopic = (value) => /^[A-Za-z0-9_-]{6,64}$/.test(String(value).tri
 
 // Envoie l'alerte. Renvoie true si ntfy l'a reçue, false sinon (pas de canal,
 // pas d'internet…) : Jeanne ne dit alors jamais qu'un vendeur a été prévenu.
-export async function sendVendorAlert(topic, { zone = null, floor = null, test = false } = {}) {
+export async function sendVendorAlert(topic, { zone = null, floor = null, motif = null, test = false } = {}) {
   if (!isTopic(topic)) return false;
   const heure = hour();
-  const lieu = describe({ zone, floor });
+  const lieu = describe({ zone, floor, motif });
   const message = test
     ? `Test de la borne Jeanne (${heure}) : les alertes arrivent bien.`
     : `Un client demande un vendeur : ${lieu}. (${heure})`;

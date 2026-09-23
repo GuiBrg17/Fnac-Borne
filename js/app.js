@@ -70,6 +70,7 @@ const els = {
   neuralToggle: $("#neuralToggle"), voiceStatus: $("#voiceStatus"), voiceDownload: $("#voiceDownload"),
   toast: $("#toast"),
   otherStore: $("#otherStore"), otherStoreClose: $("#otherStoreClose"), otherStoreAddress: $("#otherStoreAddress"),
+  otherStoreOrder: $("#otherStoreOrder"),
   idlePhoto: $("#idlePhoto"), idleVideo: $("#idleVideo")
 };
 
@@ -519,8 +520,10 @@ function ask(text, source = "text") {
   if (info) {
     noteVisit(text);
     recordQuestion({ text: null, zone: null, lang: state.lang, source });
-    // L'ascenseur s'allume sur le plan, avec le trajet depuis la borne.
-    if (info === "elevator") showZone("ascenseur");
+    // Certaines réponses s'accompagnent d'un rayon sur le plan : l'ascenseur,
+    // ou la téléphonie pour le retrait d'un téléphone (propriété « zone »).
+    const shown = info === "elevator" ? "ascenseur" : INFO[info].zone;
+    if (shown) showZone(shown);
     else clearZone();
     reply(INFO[info].answer[state.lang]);
     return;
@@ -644,7 +647,17 @@ function answerZone(id, prefix = "", place = null) {
   if (id === "ascenseur") reply(INFO.elevator.answer[state.lang], prefix);
   else if (id === "escalier") reply(t().foundStairs, prefix);
   else if (id === "entree") reply(t().foundEntrance, prefix);
-  else reply(t().found(zoneLabel(id), ZONES[id].floors[0]), prefix);
+  else {
+    // Les caisses, le SAV, l'adhésion et le stand photo ne sont pas des rayons :
+    // ils ont leur propre début de phrase (« intro »), parfois suivi d'un
+    // rappel (« note »), par exemple la carte Fnac à préparer en caisse.
+    const zone = ZONES[id];
+    const floor = zone.floors[0];
+    const phrase = zone.intro
+      ? t().foundPlace(zone.intro[state.lang], floor)
+      : t().found(zoneLabel(id), floor);
+    reply(zone.note ? `${phrase} ${zone.note[state.lang]}` : phrase, prefix);
+  }
 }
 
 // =====================================================================
@@ -1010,14 +1023,19 @@ const VENDOR_COOLDOWN = 60 * 1000;
 let lastVendorAlert = 0;
 let vendorSending = false;
 
-async function callVendor() {
+// motif : « commande » quand le client vient d'un produit que le magasin ne
+// vend pas (livre, CD, DVD) et qu'un vendeur peut lui commander.
+async function callVendor({ motif = null } = {}) {
   if (vendorSending) return;
-  const label = state.zone && !["entree", "escalier", "ascenseur"].includes(state.zone) ? zoneLabel(state.zone) : null;
-  const confirm = () => { reply(t().vendorConfirm(label)); showToast(t().vendorToast(label)); };
+  const label = !motif && state.zone && !["entree", "escalier", "ascenseur"].includes(state.zone) ? zoneLabel(state.zone) : null;
+  const confirm = () => {
+    reply(motif ? t().orderConfirm : t().vendorConfirm(label));
+    showToast(motif ? t().orderToast : t().vendorToast(label));
+  };
   if (Date.now() - lastVendorAlert < VENDOR_COOLDOWN) { confirm(); return; }
   vendorSending = true;
-  const zone = state.zone && ZONES[state.zone] && label ? ZONES[state.zone].label.fr : null;
-  const where = { zone, floor: zone ? ZONES[state.zone].floors[0] : null };
+  const zone = !motif && state.zone && ZONES[state.zone] && label ? ZONES[state.zone].label.fr : null;
+  const where = { zone, floor: zone ? ZONES[state.zone].floors[0] : null, motif };
   // ntfy et e-mail en même temps : il suffit que l'un des deux parte.
   const [pushed, mailed] = await Promise.all([
     sendVendorAlert(store.get("vendorTopic", ""), where),
@@ -1451,6 +1469,9 @@ els.form.addEventListener("submit", (e) => {
 });
 els.vendor.addEventListener("click", callVendor);
 els.otherStoreClose.addEventListener("click", hideOtherStore);
+// « Faire commander par un vendeur » : livres, CD, DVD… que le magasin peut
+// commander même s'il ne les vend pas en rayon.
+els.otherStoreOrder.addEventListener("click", () => { hideOtherStore(); callVendor({ motif: "commande" }); });
 els.a11y.addEventListener("click", () => {
   toggleA11y();
   reply(state.a11y ? t().a11yOn : t().a11yOff);

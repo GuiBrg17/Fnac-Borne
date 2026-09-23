@@ -937,6 +937,20 @@ html.a11y .has-focus .bm-shape:not(.is-hit):not(.is-zone) { opacity: 0.12; }
   font-weight: 700;
 }
 .other-store-near svg { color: var(--yellow); }
+/* « Faire commander par un vendeur » : le magasin commande les livres, CD et
+   DVD qu'il ne vend pas en rayon. Bouton plein, devant « Retour au plan ». */
+.other-store-order {
+  min-height: 3.4rem;
+  margin-top: 1.4rem;
+  padding: 0 1.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+.other-store-order + .other-store-close { margin-top: 0.7rem; }
 .other-store-close {
   min-height: 3.4rem;
   margin-top: 1.4rem;
