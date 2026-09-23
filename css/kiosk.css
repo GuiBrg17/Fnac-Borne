@@ -99,6 +99,9 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .idle-copy {
   grid-column: 1;
   align-self: center;
+  min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
   transition: opacity 0.42s ease, filter 0.42s ease, transform 0.42s var(--ease-out);
 }
 .idle-hello {
@@ -223,19 +226,29 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .idle-news { max-width: 40rem; }
 .idle-news-image {
   display: block;
-  width: 100%;
+  /* La boîte épouse l'image : avec une largeur imposée, une photo 16/9
+     laissait deux bandes blanches sur les côtés. */
+  width: auto;
   max-width: 90%;
   height: auto;
-  max-height: 34vh;
-  margin-bottom: 1.8rem;
+  max-height: 24vh;
+  margin-bottom: 1.2rem;
   border-radius: var(--radius-xl);
   object-fit: contain;
-  background: var(--paper);
   box-shadow: 0 1.4rem 3rem -1.4rem rgba(60, 42, 0, 0.55);
+}
+/* Produit détouré (.png) : il se pose directement sur le jaune, sans carte
+   blanche ni ombre derrière lui. */
+.idle-news-image.is-cutout {
+  max-width: 100%;
+  max-height: 30vh;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
 }
 .idle-news-title {
   margin: 0;
-  font-size: clamp(2.6rem, 4.2vw, 5.4rem);
+  font-size: clamp(2rem, 3vw, 3.6rem);
   font-weight: 900;
   font-stretch: 118%;
   line-height: 0.98;
@@ -243,9 +256,9 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   text-wrap: balance;
 }
 .idle-news-text {
-  margin: 1.3rem 0 0;
+  margin: 0.9rem 0 0;
   max-width: 34ch;
-  font-size: 1.45rem;
+  font-size: 1.2rem;
   line-height: 1.35;
   color: #2c2a22;
   text-wrap: pretty;
@@ -255,8 +268,8 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   flex-wrap: wrap;
   align-items: center;
   gap: 0.6rem;
-  margin: 1.5rem 0 0;
-  font-size: 1.2rem;
+  margin: 1rem 0 0;
+  font-size: 1.05rem;
   font-weight: 750;
 }
 .idle-news-date svg { width: 1.5rem; height: 1.5rem; }
