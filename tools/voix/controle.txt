@@ -1,42 +1,8 @@
-[OK ] fr 0.97 221Hz mélodie 2.4 11.0s essai 1 | Les téléphones et les montres connectées se retirent ici, à l'étage 0, auprès des vendeurs au milieu du magasin. Les autres commandes se retirent au SAV, au sous-sol.
-      entendu : Les téléphones et les montres connectées se retirent ici, à l'étage zéro, auprès des vendeurs au milieu du magasin. Les autres commandes se retirent au SAV au sous-sol.
-[OK ] fr 0.92 222Hz mélodie 2.1  9.0s essai 1 | C'est noté : un vendeur arrive pour prendre votre commande. Livres, BD, CD, DVD… tout ce que nous n'avons pas ici peut être commandé.
-      entendu : C'est noté, un vendeur arrive pour prendre votre commande. Livre, B, CD, DVD, tout ce que nous n'avons pas ici peut être commandé.
-[OK ] fr 1.00 220Hz mélodie 2.4  5.5s essai 1 | Le SAV et le retrait des colis se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : Le sav et le retrait des colis se trouvent au sous-sol. Prenez l'escalier vers le sous-sol puis suivez le plan.
-[OK ] fr 1.00 225Hz mélodie 2.1  8.1s essai 1 | Les caisses se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan. Pensez à préparer votre carte Fnac pour la remettre en caisse.
-      entendu : Les caisses se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan. Pensez à préparer votre carte Fnac pour la remettre en caisse.
-[OK ] fr 1.00 228Hz mélodie 1.9  7.1s essai 1 | Le stand d'impression photo se trouve au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan. Il est juste à côté de l'espace adhésion.
-      entendu : Le stand d'impression photo se trouve au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan. Il est juste à côté de l'espace adhésion.
-[OK ] fr 1.00 225Hz mélodie 1.7  4.0s essai 1 | C'est noté : un vendeur du rayon Impression photo a été prévenu.
-      entendu : C'est noté, un vendeur du rayon impression photo a été prévenu.
-[OK ] fr 0.95 238Hz mélodie 2.6  6.7s essai 1 | L'espace adhésion et financement se trouve au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-      entendu : L'espace adhésion et financement se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.
-[OK ] en 0.92 215Hz mélodie 2.5  9.2s essai 1 | Phones and smartwatches are collected here on floor 0, from the staff in the middle of the store. Other orders are collected at the after-sales desk in the basement.
-      entendu : Phones and smartwatches are collected here on floor zero from the staff in the middle of the store. Other orders are collected at the aftersales desk in the basement.
-[OK ] en 1.00 211Hz mélodie 2.5  7.7s essai 1 | Done: a member of staff is coming to take your order. Books, comics, CDs, DVDs — anything we don't stock here can be ordered.
-      entendu : Done. A member of staff is coming to take your order. Books, comics, CDs, DVDs, anything we don't stock here can be ordered.
-[OK ] en 1.00 206Hz mélodie 2.8  5.3s essai 1 | After-sales and order pickup are in the basement. Take the stairs down, then follow the map.
-      entendu : After sales and order pickup are in the basement. Take the stairs down, then follow the map.
-[OK ] en 0.96 215Hz mélodie 2.7  6.7s essai 1 | The checkouts are in the basement. Take the stairs down, then follow the map. Remember to have your Fnac card ready at the till.
-      entendu : The checkouts are in the basement. Take the stairs down, then follow the map. Remember to have your Fennac card ready at the till.
-[OK ] en 1.00 228Hz mélodie 2.5  6.1s essai 1 | The photo printing stand is in the basement. Take the stairs down, then follow the map. It is right next to the membership desk.
-      entendu : The photo printing stand is in the basement. Take the stairs down, then follow the map. It is right next to the membership desk.
-[OK ] en 0.84 211Hz mélodie 3.5  3.6s essai 1 | Done: a staff member from Photo printing has been notified.
-      entendu : Done, a staff member from PhotoPrinting has been notified.
-[OK ] en 0.94 211Hz mélodie 3.0  4.6s essai 1 | The membership and financing desk is in the basement. Take the stairs down, then follow the map.
-      entendu : The membership and financing desk is in the basement. Take the stairs down and follow the map.
-[OK ] es 0.97 185Hz mélodie 2.8 10.9s essai 1 | Los móviles y los relojes inteligentes se recogen aquí, en la planta 0, con los vendedores del centro de la tienda. Los demás pedidos se recogen en posventa, en el sótano.
-      entendu : Los móviles y los relojes inteligentes se recogen aquí, en la planta cero, con los vendedores del centro de la tienda. Los demás pedidos se recogen en posventa, en el sótano.
-[OK ] es 0.86 217Hz mélodie 3.9  8.1s essai 1 | Anotado: un vendedor viene a tomar su pedido. Libros, cómics, CD, DVD… todo lo que no tenemos aquí se puede encargar.
-      entendu : Anotado, un vendedor viene a tomar su perido. Libros, cómics, sedios, TED. Todo lo que no tenemos aquí se puede encargar.
-[OK ] es 1.00 181Hz mélodie 3.6  8.4s essai 1 | La posventa y la recogida de pedidos están en el sótano. Baje por la escalera al sótano y siga el plano.
-      entendu : La posventa y la recogida de pedidos están en el sótano. Baje por la escalera al sótano y siga el plano.
-[OK ] es 0.92 212Hz mélodie 3.5  8.8s essai 1 | Las cajas están en el sótano. Baje por la escalera al sótano y siga el plano. No olvide preparar su tarjeta Fnac para la caja.
-      entendu : Las cajas están en el sótano. Baje por la escalera al sótano y siga el plano. No olvides preparar su tarjeta FUET para la caja.
-[OK ] es 1.00 196Hz mélodie 3.9  9.7s essai 1 | El puesto de impresión de fotos está en el sótano. Baje por la escalera al sótano y siga el plano. Está justo al lado del espacio de socios.
-      entendu : El puesto de impresión de fotos está en el sótano. Baje por la escalera al sótano y siga el plano. Está justo al lado del espacio de socios.
-[OK ] es 1.00 206Hz mélodie 3.8  3.9s essai 1 | Hecho: se ha avisado a un vendedor de la sección Impresión de fotos.
-      entendu : hecho se ha avisado a un vendedor de la sección impresión de fotos.
-[OK ] es 1.00 183Hz mélodie 3.5  7.2s essai 1 | El espacio de socios y financiación está en el sótano. Baje por la escalera al sótano y siga el plano.
-      entendu : El espacio de socios y financiación está en el sótano. Baje por la escalera al sótano y siga el plano.
+[OK ] es 0.86 203Hz mélodie 3.9  7.6s essai 1 | ¿Un cargador para qué aparato? ¿Un móvil Android, un iPhone o producto Apple, un portátil o un patinete?
+      entendu : un cargador para que aparece, un móvil Android, un iPhone o productoable, un portátil o un patinete
+[OK ] es 0.81 215Hz mélodie 3.1  5.1s essai 1 | ¿Qué reloj? ¿Un Apple Watch u otro reloj inteligente como Samsung o Garmin?
+      entendu : ¿Qué el elog? ¿Un Apple Watch u otro elog inteligente como Samsung o Garmin?
+[OK ] es 0.93 188Hz mélodie 4.1  5.4s essai 2 | La sección Apple está en el sótano. Baje por la escalera y siga el plano.
+      entendu : La sección Aple está en el sótano. Baje por la escalera y siga el plano.
+[OK ] es 1.00 189Hz mélodie 2.9  3.2s essai 1 | Hecho: se ha avisado a un vendedor de la sección Apple.
+      entendu : hecho se ha avisado a un vendedor de la sección Apple.
