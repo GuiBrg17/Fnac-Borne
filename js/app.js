@@ -76,7 +76,7 @@ const els = {
   statsSatisfaction: $("#statsSatisfaction"), statsUnhappy: $("#statsUnhappy"),
   reportEmail: $("#reportEmail"), reportDay: $("#reportDay"), reportMonthly: $("#reportMonthly"),
   reportStatus: $("#reportStatus"), reportSend: $("#reportSend"), reportDownload: $("#reportDownload"),
-  settings: $("#settings"), idleSeconds: $("#idleSeconds"), testVoice: $("#testVoice"),
+  settings: $("#settings"), idleSeconds: $("#idleSeconds"), micPatience: $("#micPatience"), testVoice: $("#testVoice"),
   vendorTopic: $("#vendorTopic"), vendorEmails: $("#vendorEmails"), vendorStatus: $("#vendorStatus"), vendorTest: $("#vendorTest"),
   neuralToggle: $("#neuralToggle"), voiceStatus: $("#voiceStatus"), voiceDownload: $("#voiceDownload"),
   toast: $("#toast"),
@@ -292,13 +292,18 @@ let afterSpeaking = null;
 // rouvre tout seul après chaque réponse de Jeanne. Elle s'arrête dès que le client
 // touche l'écran, ou après un silence (micro rouvert sans que personne ne parle).
 let handsFree = false;
-// Temps laissé au client avant que Jeanne renonce, quand le micro s'ouvre tout
-// seul : il faut le temps de réfléchir, surtout après une question de Jeanne.
-const SILENCE_MS = 12000;
-// Après la dernière parole entendue : court quand la phrase est claire, plus
-// long quand le client vient de commencer (« un casque… ») ou qu'il hésite.
-const SETTLE_MS = 1200;
-const SETTLE_LONG_MS = 2800;
+// Patience du micro, réglable dans le panneau du personnel :
+//   settle  : silence à attendre après une phrase claire ;
+//   long    : après un mot ou deux, le client va sûrement continuer ;
+//   silence : temps avant de renoncer quand personne ne parle.
+const PATIENCE = {
+  rapide: { settle: 1200, long: 2800, silence: 12000 },
+  normal: { settle: 2200, long: 4200, silence: 16000 },
+  pose:   { settle: 3500, long: 6000, silence: 22000 }
+};
+// Réglé sur « posé » par défaut : en magasin, un client qui cherche ses mots
+// vaut mieux qu'une borne qui lui coupe la parole.
+const patience = () => PATIENCE[store.get("micPatience", "pose")] || PATIENCE.pose;
 // Mots de remplissage : « euh, bah, alors… » ne sont pas une demande. Jeanne
 // continue d'écouter au lieu de répondre « je n'ai pas trouvé ».
 const HESITATIONS = /\b(?:euh+|heu+|hum+|hmm+|mmh+|bah|ben|alors|donc|attendez|attends|voil[aà]|um+|uh+|er+|eh+|well|so|este|pues|a ver|bueno)\b/gi;
@@ -358,7 +363,7 @@ function toggleMic({ auto = false } = {}) {
   let error = null;
   let settleTimer = null;
   // Micro rouvert tout seul : après 8 s sans un mot, on le referme.
-  let silenceTimer = auto ? setTimeout(() => finish(""), SILENCE_MS) : null;
+  let silenceTimer = auto ? setTimeout(() => finish(""), patience().silence) : null;
 
   // Répondre dès que la phrase est connue, sans attendre que le navigateur
   // ferme le micro (il ajoute souvent une demi-seconde, parfois plus).
@@ -398,11 +403,11 @@ function toggleMic({ auto = false } = {}) {
         interimText = "";
         els.input.value = "";
         clearTimeout(silenceTimer);
-        silenceTimer = auto ? setTimeout(() => finish(""), SILENCE_MS) : null;
+        silenceTimer = auto ? setTimeout(() => finish(""), patience().silence) : null;
         return;
       }
       finish((finalText + " " + interimText).trim());
-    }, mots.length >= 3 ? SETTLE_MS : SETTLE_LONG_MS);
+    }, mots.length >= 3 ? patience().settle : patience().long);
   };
   rec.onerror = (event) => { error = event.error; };
   rec.onend = () => {
@@ -1768,6 +1773,7 @@ els.logo.addEventListener("click", () => {
     els.neuralToggle.checked = settings.neuralVoice;
     updateVoiceStatus();
     els.idleSeconds.value = settings.idleSeconds;
+    els.micPatience.value = store.get("micPatience", "pose");
     els.settings.showModal();
   }
 });
@@ -1781,6 +1787,7 @@ els.settings.addEventListener("change", (e) => {
     store.set("neuralVoice", settings.neuralVoice);
     updateVoiceStatus();
   }
+  if (e.target === els.micPatience) store.set("micPatience", els.micPatience.value);
   if (e.target === els.idleSeconds) {
     settings.idleSeconds = Math.min(600, Math.max(20, Number(els.idleSeconds.value) || 60));
     els.idleSeconds.value = settings.idleSeconds;
