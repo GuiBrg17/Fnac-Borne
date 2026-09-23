@@ -52,17 +52,52 @@ export const STORY = {
 };
 
 // =====================================================================
-// Encadré de droite sur l'écran de veille : la carte Fnac+.
-// Prix et durée à vérifier en magasin avant la mise en service.
+// Encadré de droite sur l'écran de veille : la carte Fnac+, et le détail
+// qui s'ouvre quand on touche « Plus d'informations ».
+// Avantages relevés sur fnac.com/choisir-carte le 23/09/2026 : à revérifier
+// avant la mise en service, les offres changent.
 // =====================================================================
 export const CARD = {
   tag: "Avez-vous la carte ?",
   title: "Carte Fnac+",
   price: "14,99 € pour 3 ans",
+  image: "assets/news/fnac-plus.png",
   points: [
-    "Des réductions toute l'année sur vos achats",
-    "Des offres et des ventes réservées aux adhérents",
-    "Des avantages sur la billetterie et les services"
+    "5 % de remise en magasin : livres, high-tech, jeux, photo, papeterie",
+    "Livraison express gratuite et illimitée, Fnac et Darty",
+    "Des tarifs réduits sur les spectacles et la billetterie"
   ],
-  foot: "Renseignez-vous à l'espace adhésion, au sous-sol, ou demandez-moi « carte Fnac »."
+  foot: "Renseignez-vous à l'espace adhésion, au sous-sol.",
+  button: "Plus d'informations",
+  // Fenêtre de détail
+  detailTitle: "La carte Fnac+, en détail",
+  detailPrice: "14,99 € pour 3 ans",
+  sections: [
+    {
+      title: "Vos avantages d'adhérent",
+      points: [
+        "5 % de remise immédiate en magasin sur les livres, le high-tech, les jeux et jouets, la photo et la papeterie",
+        "Livraison express gratuite et illimitée à la Fnac et chez Darty (hors livres, billetterie et marketplace)",
+        "Des tarifs réduits sur les spectacles, concerts et parcs",
+        "Week-end adhérent : 10 € offerts sur votre cagnotte tous les 100 € d'achat",
+        "Des offres et des ventes privées réservées aux adhérents"
+      ]
+    },
+    {
+      title: "Gardé même après la carte",
+      points: [
+        "La cagnotte fidélité, à utiliser à la Fnac comme chez Darty",
+        "Le Pass Partenaires : jusqu'à 42 % de remise dans plus de 500 enseignes"
+      ]
+    },
+    {
+      title: "Bon à savoir",
+      points: [
+        "La carte est gratuite pour les 18-20 ans avec le Pass Culture",
+        "Adhésion et renseignements à l'espace adhésion, au sous-sol"
+      ]
+    }
+  ],
+  qr: "assets/qr-carte-fnac.svg",
+  qrLabel: "Tous les détails sur votre téléphone"
 };
