@@ -51,6 +51,11 @@ export const UI = {
     found: (zone, floor) => floor === "-1"
       ? `Le rayon ${zone} est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.`
       : `Le rayon ${zone} est ici, à l'étage 0. Je vous l'indique sur le plan.`,
+    // Caisses, SAV, adhésion : ce ne sont pas des rayons. Le sujet et le verbe
+    // viennent de la zone (propriété « intro »).
+    foundPlace: (sujet, floor) => floor === "-1"
+      ? `${sujet} au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.`
+      : `${sujet} ici, à l'étage 0. Je vous l'indique sur le plan.`,
     foundStairs: "Les LEGO, figurines POP et cartes Pokémon sont dans l'escalier qui relie l'étage 0 au sous-sol.",
     foundEntrance: "L'entrée et la sortie sont à l'étage 0, en bas du plan.",
     notFound: "Je n'ai pas trouvé ce produit. Essayez avec un autre mot, ou appelez un vendeur : il viendra vous aider.",
@@ -62,6 +67,10 @@ export const UI = {
     otherStoreNear: "Près de Jean-Jaurès",
     otherStoreClose: "Retour au plan",
     otherStoreQr: "Itinéraire à pied sur votre téléphone",
+    // Ce magasin ne vend pas de livres, mais un vendeur peut les commander.
+    orderButton: "Faire commander par un vendeur",
+    orderConfirm: "C'est noté : un vendeur arrive pour prendre votre commande. Livres, BD, CD, DVD… tout ce que nous n'avons pas ici peut être commandé.",
+    orderToast: "Vendeur prévenu · commande",
     didYouMean: (word) => `Vous voulez dire « ${word} » ? `,
     vendorConfirm: (zone) => zone
       ? `C'est noté : un vendeur du rayon ${zone} a été prévenu.`
@@ -114,6 +123,9 @@ export const UI = {
     found: (zone, floor) => floor === "-1"
       ? `${zone} is in the basement. Take the stairs down, then follow the map.`
       : `${zone} is right here on floor 0. I'm showing it on the map.`,
+    foundPlace: (sujet, floor) => floor === "-1"
+      ? `${sujet} in the basement. Take the stairs down, then follow the map.`
+      : `${sujet} here on floor 0. I'll show you on the map.`,
     foundStairs: "LEGO, POP figures and Pokémon cards are in the staircase between floor 0 and the basement.",
     foundEntrance: "The entrance and exit are on floor 0, at the bottom of the map.",
     notFound: "I couldn't find that product. Try another word, or call a staff member who will come and help you.",
@@ -125,6 +137,9 @@ export const UI = {
     otherStoreNear: "Near Jean-Jaurès",
     otherStoreClose: "Back to the map",
     otherStoreQr: "Walking directions on your phone",
+    orderButton: "Ask a staff member to order it",
+    orderConfirm: "Done: a member of staff is coming to take your order. Books, comics, CDs, DVDs — anything we don't stock here can be ordered.",
+    orderToast: "Staff notified · order",
     didYouMean: (word) => `Did you mean “${word}”? `,
     vendorConfirm: (zone) => zone
       ? `Done: a staff member from ${zone} has been notified.`
@@ -177,6 +192,9 @@ export const UI = {
     found: (zone, floor) => floor === "-1"
       ? `La sección ${zone} está en el sótano. Baje por la escalera y siga el plano.`
       : `La sección ${zone} está aquí, en la planta 0. Se la indico en el plano.`,
+    foundPlace: (sujet, floor) => floor === "-1"
+      ? `${sujet} en el sótano. Baje por la escalera al sótano y siga el plano.`
+      : `${sujet} aquí, en la planta 0. Se lo indico en el plano.`,
     foundStairs: "Los LEGO, las figuras POP y las cartas Pokémon están en la escalera que une la planta 0 con el sótano.",
     foundEntrance: "La entrada y la salida están en la planta 0, abajo en el plano.",
     notFound: "No he encontrado ese producto. Pruebe con otra palabra, o llame a un vendedor: vendrá a ayudarle.",
@@ -188,6 +206,9 @@ export const UI = {
     otherStoreNear: "Cerca de Jean-Jaurès",
     otherStoreClose: "Volver al plano",
     otherStoreQr: "Ruta a pie en su móvil",
+    orderButton: "Pedir a un vendedor que lo encargue",
+    orderConfirm: "Anotado: un vendedor viene a tomar su pedido. Libros, cómics, CD, DVD… todo lo que no tenemos aquí se puede encargar.",
+    orderToast: "Vendedor avisado · pedido",
     didYouMean: (word) => `¿Quiere decir «${word}»? `,
     vendorConfirm: (zone) => zone
       ? `Hecho: se ha avisado a un vendedor de la sección ${zone}.`
@@ -722,7 +743,7 @@ export const ZONES = {
            "stabilisateur", "gimbal", "trépied", "monopode", "perche photo", "objectif", "objectifs", "téléobjectif",
            "grand angle", "zoom photo", "filtre photo", "flash", "flash cobra", "éclairage studio", "boîte à lumière",
            "fond vert", "sacoche photo", "sac photo", "carte sd", "carte cf", "batterie appareil photo",
-           "chargeur batterie photo", "imprimante photo", "tirage photo", "album photo", "cadre photo numérique",
+           "chargeur batterie photo", "imprimante photo", "album photo", "cadre photo numérique",
            "scanner de diapositives", "jumelles", "micro", "microphone", "micro cravate", "micro podcast",
            "micro studio", "micro usb-c", "perche micro", "rode", "enregistreur audio", "bonnette anti-vent",
            "mixette", "filmer", "faire des vidéos", "prendre des photos", "photographier", "vlog", "youtubeur",
@@ -732,7 +753,7 @@ export const ZONES = {
            "sony alpha", "lumix", "olympus", "pentax", "action camera", "gopro", "go pro", "insta360", "dji", "drone",
            "drones", "osmo", "stabilizer", "gimbal", "tripod", "monopod", "lens", "lenses", "telephoto", "wide angle",
            "photo filter", "flash", "studio light", "softbox", "green screen", "camera bag", "sd card", "cf card",
-           "camera battery", "battery charger", "photo printer", "photo print", "digital photo frame", "binoculars",
+           "camera battery", "battery charger", "photo printer", "digital photo frame", "binoculars",
            "mic", "microphone", "lapel mic", "podcast mic", "studio mic", "boom pole", "rode", "audio recorder",
            "windscreen", "filming", "make videos", "take photos", "vlogging", "youtuber", "shoot video", "video gear",
            "photo gear", "podcast"],
@@ -742,7 +763,7 @@ export const ZONES = {
            "dron", "drones", "osmo", "estabilizador", "gimbal", "trípode", "monopié", "objetivo", "objetivos",
            "teleobjetivo", "gran angular", "filtro fotográfico", "flash", "luz de estudio", "ventana de luz", "croma",
            "bolsa para cámara", "tarjeta sd", "tarjeta cf", "batería de cámara", "cargador de batería",
-           "impresora fotográfica", "revelado de fotos", "marco digital", "prismáticos", "micro", "micrófono",
+           "impresora fotográfica", "marco digital", "prismáticos", "micro", "micrófono",
            "micrófono de corbata", "micrófono de podcast", "micrófono de estudio", "rode", "grabadora de audio",
            "grabar vídeo", "hacer vídeos", "hacer fotos", "vlog", "youtuber", "equipo de vídeo", "equipo de foto",
            "podcast"]
@@ -896,6 +917,8 @@ export const ZONES = {
     // chercher ma commande ») vient de la lecture de la phrase, dans search.js
     // (findProblem), qui passe avant tous les rayons.
     label: { fr: "SAV & retrait des colis", en: "After-sales & order pickup", es: "Posventa y recogida" },
+    intro: { fr: "Le SAV et le retrait des colis se trouvent", en: "After-sales and order pickup are",
+             es: "La posventa y la recogida de pedidos están" },
     short: { fr: "SAV\nretrait colis", en: "Repairs\npickup", es: "Posventa\nrecogida" },
     detail: { fr: "Réparations, retours, commandes", en: "Repairs, returns, orders", es: "Reparaciones, devoluciones, pedidos" },
     spots: ["35"],
@@ -944,7 +967,15 @@ export const ZONES = {
   caisse: {
     floors: ["-1"], icon: "card",
     label: { fr: "Caisses", en: "Checkout", es: "Caja" },
-    detail: { fr: "Paiement, piles, cartes cadeaux", en: "Payment, batteries, gift cards", es: "Pago, pilas, tarjetas regalo" },
+    // « intro » : les caisses ne sont pas un rayon, Jeanne ne dit donc pas
+    // « le rayon Caisses ». « note » s'ajoute à la réponse.
+    intro: { fr: "Les caisses se trouvent", en: "The checkouts are", es: "Las cajas están" },
+    note: { fr: "Pensez à préparer votre carte Fnac pour la remettre en caisse.",
+            en: "Remember to have your Fnac card ready at the till.",
+            es: "No olvide preparar su tarjeta Fnac para la caja." },
+    detail: { fr: "Paiement, billetterie, piles, adaptateurs de voyage, cartes cadeaux",
+              en: "Payment, event tickets, batteries, travel adapters, gift cards",
+              es: "Pago, entradas, pilas, adaptadores de viaje, tarjetas regalo" },
     spots: ["39","40"],
     keywords: {
       fr: ["caisse", "caisses", "payer", "où payer", "paiement", "encaissement", "carte bancaire", "cb", "espèces",
@@ -952,24 +983,57 @@ export const ZONES = {
            "chèque cadeau", "bon d'achat", "un avoir en caisse", "bon d'avoir", "emballage cadeau", "papier cadeau", "file d'attente",
            "caisse automatique", "borne de paiement", "réservation", "piles", "pile", "piles rechargeables",
            "pile bouton", "adaptateur de voyage", "adaptateur prise étrangère", "adaptateur international",
-           "prise anglaise", "prise américaine", "carte cadeau fnac", "e-carte cadeau"],
+           "prise anglaise", "prise américaine", "carte cadeau fnac", "e-carte cadeau",
+           "billetterie", "billet", "billets", "place de concert", "places de concert", "place de spectacle",
+           "places de spectacle", "billet de concert", "billets de concert", "réserver une place", "réserver des places",
+           "acheter des billets", "prendre des places", "spectacle", "concert", "festival", "parc d'attractions",
+           "billet de train", "place de match", "retirer mes billets", "retrait des billets", "e-billet"],
       en: ["checkout", "cashier", "till", "cash register", "pay", "where to pay", "payment", "card payment",
            "credit card", "cash", "contactless", "receipt", "invoice", "tax free", "gift card", "gift voucher",
            "voucher", "credit note", "gift wrapping", "queue", "self checkout", "batteries", "battery",
            "aa batteries", "rechargeable batteries", "travel adapter", "plug adapter", "uk plug adapter",
-           "us plug adapter", "fnac gift card"],
+           "us plug adapter", "fnac gift card", "tickets", "event tickets", "concert tickets", "show tickets",
+           "book tickets", "buy tickets", "box office", "ticket office", "collect my tickets"],
       es: ["caja", "cajas", "pagar", "dónde pagar", "pago", "tarjeta bancaria", "efectivo", "contactless", "ticket",
            "recibo", "factura", "tax free", "tarjeta regalo", "cheque regalo", "vale", "envoltorio de regalo",
            "papel de regalo", "cola", "caja automática", "pilas", "pila", "pilas recargables", "adaptador de viaje",
-           "adaptador de enchufe", "tarjeta regalo fnac"]
+           "adaptador de enchufe", "tarjeta regalo fnac", "entradas", "entradas de concierto",
+           "taquilla", "comprar entradas", "reservar entradas", "recoger mis entradas", "espectáculo", "concierto"]
+    }
+  },
+  // Stand d'impression photo, juste à droite de l'espace adhésion.
+  tirage: {
+    floors: ["-1"], icon: "camera",
+    label: { fr: "Impression photo", en: "Photo printing", es: "Impresión de fotos" },
+    intro: { fr: "Le stand d'impression photo se trouve", en: "The photo printing stand is",
+             es: "El puesto de impresión de fotos está" },
+    note: { fr: "Il est juste à côté de l'espace adhésion.", en: "It is right next to the membership desk.",
+            es: "Está justo al lado del espacio de socios." },
+    detail: { fr: "Tirages et photos d'identité, à côté de l'adhésion",
+              en: "Photo prints, next to the membership desk",
+              es: "Copias de fotos, junto al espacio de socios" },
+    spots: ["42"],
+    keywords: {
+      fr: ["imprimer des photos", "imprimer mes photos", "imprimer une photo", "impression photo", "impression de photos",
+           "tirage photo", "tirages photo", "tirage de photos", "faire développer mes photos", "développer mes photos",
+           "développement photo", "borne photo", "borne d'impression", "borne à photos", "kiosque photo",
+           "imprimer depuis mon téléphone", "imprimer une photo de mon téléphone", "photo d'identité",
+           "photos d'identité", "photomaton", "photo passeport", "photo permis", "agrandissement photo",
+           "poster photo", "livre photo", "album photo à imprimer", "calendrier photo", "carte de vœux photo"],
+      en: ["print photos", "print my photos", "photo printing", "photo prints", "develop my photos", "photo booth",
+           "photo kiosk", "print from my phone", "passport photo", "id photo", "photo enlargement", "photo book"],
+      es: ["imprimir fotos", "imprimir mis fotos", "impresión de fotos", "revelar fotos", "revelado de fotos",
+           "cabina de fotos", "fotomatón", "foto de carnet", "foto de pasaporte", "ampliación de fotos", "álbum de fotos"]
     }
   },
   adhesion: {
     floors: ["-1"], icon: "person",
     label: { fr: "Adhésion & financement", en: "Membership & financing", es: "Socios y financiación" },
+    intro: { fr: "L'espace adhésion et financement se trouve", en: "The membership and financing desk is",
+             es: "El espacio de socios y financiación está" },
     short: { fr: "Adhésion", en: "Membership", es: "Socios" },
     detail: { fr: "Carte Fnac, paiement en plusieurs fois", en: "Fnac card, pay in instalments", es: "Tarjeta Fnac, pago a plazos" },
-    spots: ["41","42"],
+    spots: ["41"],
     keywords: {
       fr: ["adhésion", "adhérent", "devenir adhérent", "carte fnac", "carte adhérent", "carte de fidélité",
            "fidélité", "points fidélité", "avantages adhérent", "réduction adhérent", "offre adhérent", "abonnement",
@@ -1352,7 +1416,7 @@ const SPOKEN = {
          "hervidor eléctrico", "tostador", "freidora ninja", "cosori", "ninja foodi", "easy fry"]
   },
   informatique: {
-    fr: ["epson", "imprimante epson", "brother", "imprimante brother", "imprimante hp", "imprimante canon", "ssd samsung", "samsung ssd", "devolo", "d link", "ubiquiti", "apc", "eaton", "onduleur apc", "câble ugreen", "hub ugreen", "adaptateur belkin", "brancher", "brancher mon ordi sur la télé", "brancher mon ordinateur sur la télé", "brancher mon pc sur la télé", "relier mon ordi à la télé", "connecter mon ordi à la télé", "sauvegarder", "sauvegarder mes photos", "sauvegarder mes fichiers", "stocker", "stocker mes photos", "stocker mes fichiers", "fichiers", "mes fichiers", "transférer des fichiers", "plus de stockage", "manque de place", "plus de place", "wifi dans ma chambre", "wifi dans la maison", "wifi qui capte mal", "capter le wifi", "réseau internet", "internet à la maison", "plusieurs branchements", "prise avec plusieurs", "brancher plusieurs appareils", "rallonger", "rallonge de câble", "scanner des documents", "scanner des photos", "imprimer des photos", "imprimer des documents", "carte mémoire", "carte micro sd 128 go", "micro sd", "microsd", "carte sd pour téléphone", "sandisk",
+    fr: ["epson", "imprimante epson", "brother", "imprimante brother", "imprimante hp", "imprimante canon", "ssd samsung", "samsung ssd", "devolo", "d link", "ubiquiti", "apc", "eaton", "onduleur apc", "câble ugreen", "hub ugreen", "adaptateur belkin", "brancher", "brancher mon ordi sur la télé", "brancher mon ordinateur sur la télé", "brancher mon pc sur la télé", "relier mon ordi à la télé", "connecter mon ordi à la télé", "sauvegarder", "sauvegarder mes photos", "sauvegarder mes fichiers", "stocker", "stocker mes photos", "stocker mes fichiers", "fichiers", "mes fichiers", "transférer des fichiers", "plus de stockage", "manque de place", "plus de place", "wifi dans ma chambre", "wifi dans la maison", "wifi qui capte mal", "capter le wifi", "réseau internet", "internet à la maison", "plusieurs branchements", "prise avec plusieurs", "brancher plusieurs appareils", "rallonger", "rallonge de câble", "scanner des documents", "scanner des photos", "imprimer des documents", "carte mémoire", "carte micro sd 128 go", "micro sd", "microsd", "carte sd pour téléphone", "sandisk",
          "clé usb 32 go", "clé usb 64 go", "clé usb 128 go", "clé usb c", "clé usb 3.0", "disque dur 1 to",
          "disque dur 2 to", "disque dur 4 to", "stockage externe", "disque externe", "seagate",
          "western digital", "wd", "lacie", "kingston", "crucial", "samsung t7", "ssd samsung", "boîtier disque dur",
@@ -1490,7 +1554,7 @@ const SPOKEN = {
          "caisson étanche", "fixation gopro", "harnais gopro", "support casque gopro", "batterie gopro",
          "carte sd 128 go", "carte sd 64 go", "carte sd rapide", "sandisk extreme", "lexar", "trépied téléphone photo",
          "trépied appareil photo", "jumelle", "jumelles de randonnée", "caméscope",
-         "caméra vidéo", "webcam de voyage", "cadre photo connecté", "cadre numérique", "numériser mes photos",
+         "caméra vidéo", "webcam de voyage", "cadre photo connecté", "cadre numérique",
          "photos souvenirs", "faire des photos", "photographie", "sac à dos photo", "dragonne appareil photo",
          "chiffonnette objectif", "objectif canon", "objectif sony", "objectif 50mm", "50mm", "filtre nd", "filtre uv"],
     en: ["leica", "ricoh", "manfrotto", "joby", "peak design", "lowepro", "zhiyun", "sony camera", "canon camera", "nikon camera", "beginner camera", "vlog camera", "canon eos", "eos r50", "sony zv-e10", "zv-e10", "sony a7",
@@ -2184,6 +2248,37 @@ export const INFO = {
       fr: "Oui, il y a un ascenseur pour les personnes qui en ont besoin. Touchez « Appeler un vendeur » : un membre de l'équipe vous y accompagne.",
       en: "Yes, there is a lift for anyone who needs it. Tap “Call a staff member” and a member of the team will take you there.",
       es: "Sí, hay un ascensor para las personas que lo necesiten. Toque «Llamar a un vendedor» y alguien del equipo le acompañará."
+    }
+  },
+  // Retrait des commandes : les colis se retirent au SAV, au sous-sol, mais
+  // les téléphones et les montres connectées se retirent à l'étage 0, auprès
+  // des vendeurs du milieu (réponse du magasin le 23/09/2026). Cette question
+  // passe avant le SAV : voir findInfo dans js/search.js.
+  phonePickup: {
+    zone: "telephonie",
+    keywords: {
+      fr: ["retirer mon téléphone", "retirer mon portable", "retirer mon smartphone", "retirer mon iphone",
+           "retirer ma montre", "retirer ma montre connectée", "récupérer mon téléphone", "récupérer mon portable",
+           "récupérer mon smartphone", "récupérer mon iphone", "récupérer ma montre", "récupérer ma montre connectée",
+           "chercher mon téléphone", "chercher mon portable", "chercher mon smartphone", "chercher mon iphone",
+           "chercher ma montre", "chercher ma montre connectée", "commandé un téléphone", "commandé un portable",
+           "commandé un smartphone", "commandé un iphone", "commandé une montre", "commandé une montre connectée",
+           "retrait de mon téléphone", "retrait du téléphone", "retrait de ma montre", "retrait smartphone",
+           "j'ai commandé un téléphone", "j'ai commandé un iphone", "j'ai commandé une montre",
+           "mon téléphone est arrivé", "ma montre est arrivée", "venir chercher mon téléphone",
+           "venir chercher ma montre", "click and collect téléphone", "commande de téléphone"],
+      en: ["collect my phone", "pick up my phone", "collect my smartphone", "pick up my smartphone",
+           "collect my iphone", "pick up my iphone", "collect my watch", "pick up my watch",
+           "collect my smartwatch", "pick up my smartwatch", "i ordered a phone", "i ordered an iphone",
+           "i ordered a watch", "phone order pickup", "my phone has arrived"],
+      es: ["recoger mi móvil", "recoger mi teléfono", "recoger mi iphone", "recoger mi reloj",
+           "recoger mi reloj inteligente", "he pedido un móvil", "he pedido un iphone", "he pedido un reloj",
+           "mi móvil ha llegado", "recogida de móvil"]
+    },
+    answer: {
+      fr: "Les téléphones et les montres connectées se retirent ici, à l'étage 0, auprès des vendeurs au milieu du magasin. Les autres commandes se retirent au SAV, au sous-sol.",
+      en: "Phones and smartwatches are collected here on floor 0, from the staff in the middle of the store. Other orders are collected at the after-sales desk in the basement.",
+      es: "Los móviles y los relojes inteligentes se recogen aquí, en la planta 0, con los vendedores del centro de la tienda. Los demás pedidos se recogen en posventa, en el sótano."
     }
   },
   // Produits que ce magasin ne vend pas (confirmé par le magasin) : Jeanne le dit

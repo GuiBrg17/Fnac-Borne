@@ -296,7 +296,8 @@ const PROBLEM_PATTERNS = [
   /\b(?:mi pedido|mi paquete|pedido online|pedi por internet|compre por internet)\b/
 ];
 // Mots composés qui contiennent un mot de panne sans en être une.
-const NOT_PROBLEMS = /\b(?:casse tete|casse tetes|grille pain|tombe pile|rendre la monnaie|rendre service|rendre (?:\w+ ){0,2}(?:connecte|connectee|intelligent|intelligente|compatible|smart|sans fil))\b/g;
+// « recoger mis entradas » (retirer ses billets) : c'est la billetterie, pas le SAV.
+const NOT_PROBLEMS = /\b(?:casse tete|casse tetes|grille pain|tombe pile|rendre la monnaie|rendre service|(?:recoger|retirer|retrait de|collect|pick up) (?:my |mis |mes |les |des )?(?:entradas|billets|tickets)|rendre (?:\w+ ){0,2}(?:connecte|connectee|intelligent|intelligente|compatible|smart|sans fil))\b/g;
 
 export function findProblem(text) {
   const plain = normalize(text).replace(NOT_PROBLEMS, " ");
@@ -334,11 +335,19 @@ export function findZone(text, lang) {
 const INFO_MATCHERS = Object.entries(INFO).flatMap(([name, entry]) =>
   Object.values(entry.keywords).flat().filter((word) => clean(word)).map((word) => ({ name, re: phraseRe(word), length: clean(word).length })));
 
+// Mots qui font d'un retrait une affaire de SAV, pas un retrait de commande.
+const REPAIR = /\b(?:reparation|reparations|reparer|repare|reparee|sav|garantie|panne|casse|cassee|abime|abimee|ecran casse)\b/;
+
 export function findInfo(text) {
   const query = clean(text);
-  // « mon colis est ouvert » ou « l'appli s'est fermée » : c'est un souci, pas les horaires.
-  if (!query || findProblem(text)) return null;
+  if (!query) return null;
   const hits = INFO_MATCHERS.filter((m) => m.re.test(query)).sort((a, b) => b.length - a.length);
+  // « mon colis est ouvert » ou « l'appli s'est fermée » : c'est un souci, pas
+  // les horaires. Sauf le retrait d'un téléphone, qui est bien une question
+  // pratique même si la phrase parle d'une commande — mais « je viens chercher
+  // mon téléphone en réparation », lui, reste une affaire de SAV.
+  const pickup = hits[0] && hits[0].name === "phonePickup" && !REPAIR.test(query);
+  if (findProblem(text) && !pickup) return null;
   if (!hits.length) return null;
   // Un produit plus précis dans la même phrase l'emporte : « un support pour la
   // voiture » n'est pas une question de parking, « un casque ouvert » pas d'horaires.

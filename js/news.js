@@ -18,9 +18,9 @@ export const NEWS = [
     image: null
   },
   {
-    title: "Marvel's Wolverine",
-    text: "Le jeu est disponible dès maintenant sur PS5. Rendez-vous au rayon Gaming, au sous-sol.",
-    date: "Disponible dès maintenant",
+    title: "Call of Duty : Modern Warfare 4",
+    text: "Précommandez le prochain Call of Duty au rayon Jeux vidéo, au sous-sol. Nos vendeurs vous renseignent sur les éditions et les bonus de précommande.",
+    date: "Précommande ouverte",
     image: null
   },
   {
