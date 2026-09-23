@@ -6,7 +6,7 @@
 const VERSION = new URL(import.meta.url).search;
 const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE, INFO } = await import("./data.js" + VERSION);
 const { findZoneDetailed, findIntent, findInfo, findClarify, pickClarifyOption, normalize, displayKeyword } = await import("./search.js" + VERSION);
-const { NEWS } = await import("./news.js" + VERSION);
+const { NEWS, STORY, CARD } = await import("./news.js" + VERSION);
 const { recordSession, recordQuestion, recordFeedback, readStats, readPeriod, resetStats, dayKey } = await import("./stats.js" + VERSION);
 const { buildReport, monthlyPeriod, downloadReport, emailReport, isEmail } = await import("./report.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
@@ -55,6 +55,10 @@ const els = {
   idleNewsDate: $("#idleNewsDate"), idleNewsExample: $("#idleNewsExample"), idleNewsImage: $("#idleNewsImage"),
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
   app: $("#appScreen"), signVideo: $("#signVideo"),
+  idleStory: $("#idleStory"), idleStoryTitle: $("#idleStoryTitle"), idleStoryText: $("#idleStoryText"),
+  idleStoryFigure: $("#idleStoryFigure"), idleStoryImage: $("#idleStoryImage"), idleStoryCaption: $("#idleStoryCaption"),
+  idleCard: $("#idleCard"), idleCardTag: $("#idleCardTag"), idleCardTitle: $("#idleCardTitle"),
+  idleCardPrice: $("#idleCardPrice"), idleCardList: $("#idleCardList"), idleCardFoot: $("#idleCardFoot"),
   chat: $("#chatLog"), chips: $("#suggestions"), status: $("#status"), statusText: $("#statusText"),
   mic: $("#micButton"), micLabel: $("#micLabel"), form: $("#askForm"), input: $("#askInput"), send: $("#askSend"),
   vendor: $("#vendorButton"), a11y: $("#a11yButton"), end: $("#endButton"), logo: $("#logoButton"),
@@ -1078,8 +1082,41 @@ function setIdleLang(lang) {
 
 function showGreeting(lang) {
   els.idleNews.hidden = true;
+  els.idleStory.hidden = true;
   els.idleGreet.hidden = false;
   setIdleLang(lang);
+}
+
+// Encart « notre histoire » : pourquoi le magasin s'appelle Jeanne d'Arc.
+// La photo de la statue est facultative : si le fichier manque, le texte reste.
+function showStory() {
+  setIdleLang("fr");
+  els.idleStoryTitle.textContent = STORY.title;
+  els.idleStoryText.textContent = STORY.text;
+  els.idleStoryCaption.textContent = STORY.caption || "";
+  els.idleStoryFigure.hidden = !STORY.image;
+  if (STORY.image) {
+    els.idleStoryImage.onerror = () => { els.idleStoryFigure.hidden = true; };
+    els.idleStoryImage.src = STORY.image;
+  }
+  els.idleGreet.hidden = true;
+  els.idleNews.hidden = true;
+  els.idleStory.hidden = false;
+}
+
+// Encadré fixe à droite : la carte Fnac+.
+function showCard() {
+  if (!CARD) { els.idleCard.hidden = true; return; }
+  els.idleCardTag.textContent = CARD.tag;
+  els.idleCardTitle.textContent = CARD.title;
+  els.idleCardPrice.textContent = CARD.price;
+  els.idleCardFoot.textContent = CARD.foot;
+  els.idleCardList.textContent = "";
+  for (const point of CARD.points || []) {
+    const li = document.createElement("li");
+    li.textContent = point;
+    els.idleCardList.append(li);
+  }
 }
 
 function showNews(item) {
@@ -1103,16 +1140,19 @@ function startIdleCycle() {
   clearTimeout(idleCycle);
   idleStep = 0;
   showGreeting("fr");
-  const steps = IDLE_ORDER.length + (NEWS.length ? 1 : 0);
+  // Déroulé : accueil FR, EN, ES, une actualité, puis l'histoire du magasin.
+  const cards = [NEWS.length ? "news" : null, STORY ? "story" : null].filter(Boolean);
+  const steps = IDLE_ORDER.length + cards.length;
   const next = () => {
     idleStep = (idleStep + 1) % steps;
     els.idle.classList.add("is-swapping");
     setTimeout(() => {
-      const isNews = idleStep === IDLE_ORDER.length;
-      if (isNews) showNews(NEWS[newsIndex++ % NEWS.length]);
+      const card = cards[idleStep - IDLE_ORDER.length];
+      if (card === "news") showNews(NEWS[newsIndex++ % NEWS.length]);
+      else if (card === "story") showStory();
       else showGreeting(IDLE_ORDER[idleStep]);
       els.idle.classList.remove("is-swapping");
-      idleCycle = setTimeout(next, isNews ? NEWS_MS : GREETING_MS);
+      idleCycle = setTimeout(next, card ? NEWS_MS : GREETING_MS);
     }, 420);
   };
   idleCycle = setTimeout(next, GREETING_MS);
@@ -1640,6 +1680,7 @@ setInterval(checkForUpdate, 30 * 60 * 1000);
 
 // --- Démarrage ---
 buildPlans();
+showCard();
 const clipManifestReady = loadClipManifest();
 els.app.inert = true;
 $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); });

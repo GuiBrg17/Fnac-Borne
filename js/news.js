@@ -30,3 +30,34 @@ export const NEWS = [
     image: null
   }
 ];
+
+// =====================================================================
+// Encart « notre histoire », affiché sur l'écran de veille entre deux
+// actualités. Mettre image: null tant que la photo n'est pas prise.
+// La date d'ouverture vient de l'annuaire des entreprises (établissement
+// créé le 4 septembre 2000) : à confirmer auprès du magasin.
+// =====================================================================
+export const STORY = {
+  title: "Pourquoi Jeanne d'Arc ?",
+  text: "Notre magasin a ouvert en 2000 au 77 rue d'Alsace-Lorraine, sur plus de 1 700 m² consacrés à la technique. " +
+        "Il doit son nom à la place Jeanne d'Arc toute proche, et à la statue de Jeanne d'Arc qui s'y dresse — " +
+        "celle qui a donné son prénom à votre guide sur cette borne.",
+  image: "assets/statue-jeanne-darc.jpg",
+  caption: "La statue de Jeanne d'Arc, à deux pas du magasin"
+};
+
+// =====================================================================
+// Encadré de droite sur l'écran de veille : la carte Fnac+.
+// Prix et durée à vérifier en magasin avant la mise en service.
+// =====================================================================
+export const CARD = {
+  tag: "Avez-vous la carte ?",
+  title: "Carte Fnac+",
+  price: "14,99 € pour 3 ans",
+  points: [
+    "Des réductions toute l'année sur vos achats",
+    "Des offres et des ventes réservées aux adhérents",
+    "Des avantages sur la billetterie et les services"
+  ],
+  foot: "Renseignez-vous à l'espace adhésion, au sous-sol, ou demandez-moi « carte Fnac »."
+};

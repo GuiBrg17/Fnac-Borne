@@ -77,10 +77,10 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   z-index: 6;
   inset: 0;
   display: grid;
-  grid-template-columns: minmax(0, 47fr) minmax(0, 53fr);
+  grid-template-columns: minmax(0, 40fr) minmax(0, 35fr) minmax(0, 25fr);
   grid-template-rows: auto minmax(0, 1fr) auto auto;
   column-gap: 2vw;
-  padding: 4.5vh 0 4.5vh 5vw;
+  padding: 4.5vh 3vw 4.5vh 5vw;
   cursor: pointer;
   transition: opacity 0.6s ease, visibility 0.6s;
 }
@@ -103,7 +103,7 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 }
 .idle-hello {
   margin: 0;
-  font-size: clamp(4rem, 8.2vw, 11rem);
+  font-size: clamp(3rem, 5.6vw, 7.5rem);
   font-weight: 900;
   font-stretch: 125%;
   line-height: 0.92;
@@ -141,20 +141,26 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
    bords ci-dessous tombe au bon endroit. */
 .idle-video {
   position: absolute;
-  right: 0;
+  left: 50%;
   bottom: 0;
+  transform: translateX(-50%);
+  /* Jeanne tient dans sa colonne : sinon elle passait par-dessus le texte
+     d'accueil à gauche et la carte Fnac+ à droite. */
   height: 100%;
-  width: auto;
-  object-fit: contain;
-  /* Les bords droit et bas touchent le bord de l'écran ; les bords gauche et
-     haut sont en pleine page, donc estompés : même si le jaune de la vidéo
-     sort décalé d'un point selon le navigateur, aucun trait ne se voit. */
+  width: 100%;
+  /* « cover » : la vidéo remplit sa colonne jusqu'en bas. En « contain », une
+     bande vide apparaissait sous Jeanne, avec un bord net visible. */
+  object-fit: cover;
+  object-position: 50% 100%;
+  /* Jeanne est au milieu de l'écran : ses quatre bords sont en pleine page,
+     donc estompés. Même si le jaune de la vidéo sort décalé d'un point selon
+     le navigateur, aucun trait ne se voit. */
   mask-image:
-    linear-gradient(to right, transparent 0, #000 5%),
+    linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 5%);
   mask-composite: intersect;
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 5%),
+    linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
     linear-gradient(to bottom, transparent 0, #000 5%);
   -webkit-mask-composite: source-in;
 }
@@ -261,6 +267,45 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   color: var(--yellow);
   font-size: 0.9rem;
 }
+
+/* Encart « notre histoire » : texte et, plus tard, la photo de la statue. */
+/* Sans cette règle, « display: grid » l'emporterait sur l'attribut hidden et
+   l'encart resterait affiché par-dessus le message d'accueil. */
+.idle-story[hidden] { display: none; }
+.idle-story { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.9rem 1.6rem; align-items: center; }
+.idle-story-title {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: clamp(2.2rem, 3.4vw, 3.4rem);
+  font-weight: 900;
+  font-stretch: 118%;
+  line-height: 1;
+}
+.idle-story-text { grid-column: 1; margin: 0; max-width: 34ch; font-size: 1.3rem; font-weight: 500; line-height: 1.45; text-wrap: pretty; }
+.idle-story-figure { grid-column: 2; margin: 0; text-align: center; }
+.idle-story-figure[hidden] { display: none; }
+.idle-story-figure img { width: 9rem; height: 12rem; object-fit: cover; border-radius: var(--radius-l); }
+.idle-story-figure figcaption { margin-top: 0.5rem; max-width: 9rem; font-size: 0.85rem; font-weight: 600; opacity: 0.7; }
+
+/* Carte Fnac+, colonne de droite. */
+.idle-card {
+  position: relative;
+  z-index: 2;
+  grid-column: 3;
+  grid-row: 2;
+  align-self: center;
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.8rem 1.6rem;
+  border-radius: var(--radius-l);
+  background: var(--ink);
+  color: var(--paper);
+}
+.idle-card-tag { margin: 0; font-size: 1rem; font-weight: 700; color: var(--yellow); }
+.idle-card-title { margin: 0; font-size: clamp(1.9rem, 2.6vw, 2.6rem); font-weight: 900; font-stretch: 118%; line-height: 1; }
+.idle-card-price { margin: 0 0 0.4rem; font-size: 1.25rem; font-weight: 800; }
+.idle-card-list { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.45rem; font-size: 1rem; font-weight: 500; line-height: 1.35; }
+.idle-card-foot { margin: 0.4rem 0 0; font-size: 0.95rem; font-weight: 500; opacity: 0.78; line-height: 1.35; }
 
 .is-swapping .idle-copy { opacity: 0; filter: blur(0.5rem); transform: translateY(0.6rem); }
 .is-swapping .idle-bubble { opacity: 0; transform: translateY(0.4rem) scale(0.97); }
