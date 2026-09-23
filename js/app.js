@@ -1147,6 +1147,8 @@ function showNews(item) {
   els.idleNewsDate.textContent = item.date;
   els.idleNewsExample.hidden = !item.example;
   els.idleNewsImage.hidden = !item.image;
+  // Une image .png est un produit détouré : pas de carte blanche derrière lui.
+  els.idleNewsImage.classList.toggle("is-cutout", Boolean(item.image) && item.image.endsWith(".png"));
   if (item.image) {
     els.idleNewsImage.onerror = () => { els.idleNewsImage.hidden = true; };
     els.idleNewsImage.src = item.image;
