@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=53">
+<link rel="stylesheet" href="css/kiosk.css?v=54">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=53"></script>
+<script type="module" src="js/app.js?v=54"></script>
 </head>
 <body class="is-idle">
 
@@ -75,6 +75,14 @@
       <h1 class="idle-title" data-i18n="idleTitle">Je suis Jeanne, votre guide à la Fnac Jeanne d'Arc.</h1>
       <p class="idle-sub" data-i18n="idleSub">Dites-moi ce que vous cherchez, je vous montre le rayon.</p>
     </div>
+    <article class="idle-story" id="idleStory" hidden>
+      <h2 class="idle-story-title" id="idleStoryTitle"></h2>
+      <p class="idle-story-text" id="idleStoryText"></p>
+      <figure class="idle-story-figure" id="idleStoryFigure" hidden>
+        <img id="idleStoryImage" alt="" width="420" height="560">
+        <figcaption id="idleStoryCaption"></figcaption>
+      </figure>
+    </article>
     <article class="idle-news" id="idleNews" hidden>
       <img class="idle-news-image" id="idleNewsImage" alt="" hidden>
       <h2 class="idle-news-title" id="idleNewsTitle"></h2>
@@ -90,6 +98,15 @@
     <img class="idle-photo" id="idlePhoto" data-src="assets/jeanne-accueil.png" alt="Jeanne, votre guide à la Fnac Jeanne d'Arc" hidden>
     <p class="idle-bubble" data-i18n="idleBubble">Bienvenue ! En quoi puis-je vous aider ?</p>
   </div>
+
+  <!-- Colonne de droite : la carte Fnac+ (textes dans js/news.js). -->
+  <aside class="idle-card" id="idleCard" aria-hidden="true">
+    <p class="idle-card-tag" id="idleCardTag"></p>
+    <h2 class="idle-card-title" id="idleCardTitle"></h2>
+    <p class="idle-card-price" id="idleCardPrice"></p>
+    <ul class="idle-card-list" id="idleCardList"></ul>
+    <p class="idle-card-foot" id="idleCardFoot"></p>
+  </aside>
 
   <div class="idle-cta">
     <span class="ripple" aria-hidden="true"><i></i><i></i><i></i></span>
