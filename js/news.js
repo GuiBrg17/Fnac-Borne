@@ -41,6 +41,9 @@ export const NEWS = [
 // La date d'ouverture vient de l'annuaire des entreprises (établissement
 // créé le 4 septembre 2000) : à confirmer auprès du magasin.
 // =====================================================================
+// Photo provisoire : le monument à Jeanne d'Arc, place Jeanne-d'Arc, par
+// Patrice Bon (Wikimedia Commons, CC0 — libre de tout usage, sans crédit
+// obligatoire). À remplacer par la photo du magasin quand elle sera prise.
 export const STORY = {
   button: "Notre histoire",
   title: "Pourquoi Jeanne d'Arc ?",
@@ -48,7 +51,7 @@ export const STORY = {
         "Il doit son nom à la place Jeanne d'Arc toute proche, et à la statue de Jeanne d'Arc qui s'y dresse — " +
         "celle qui a donné son prénom à votre guide sur cette borne.",
   image: "assets/statue-jeanne-darc.jpg",
-  caption: "La statue de Jeanne d'Arc, à deux pas du magasin"
+  caption: "Le monument à Jeanne d'Arc, place Jeanne-d'Arc, à deux pas du magasin"
 };
 
 // =====================================================================
