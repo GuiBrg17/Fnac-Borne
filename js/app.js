@@ -54,7 +54,7 @@ const els = {
   idleGreet: $("#idleGreet"), idleNews: $("#idleNews"), idleNewsTitle: $("#idleNewsTitle"), idleNewsText: $("#idleNewsText"),
   idleNewsDate: $("#idleNewsDate"), idleNewsExample: $("#idleNewsExample"), idleNewsImage: $("#idleNewsImage"),
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
-  app: $("#appScreen"), signVideo: $("#signVideo"),
+  app: $("#appScreen"), signVideo: $("#signVideo"), lookVideo: $("#lookVideo"),
   idleStory: $("#idleStory"), idleStoryTitle: $("#idleStoryTitle"), idleStoryText: $("#idleStoryText"),
   idleStoryFigure: $("#idleStoryFigure"), idleStoryImage: $("#idleStoryImage"), idleStoryCaption: $("#idleStoryCaption"),
   idleCard: $("#idleCard"), idleCardTag: $("#idleCardTag"), idleCardTitle: $("#idleCardTitle"),
@@ -545,6 +545,9 @@ function ask(text, source = "text") {
   if (zone) { answerZone(zone, match.fuzzy ? t().didYouMean(displayKeyword(match.keyword)) : "", match.place); return; }
   if (intent) {
     reply(t()[intent]);
+    // « Avez-vous besoin d'assistance ? Souhaitez-vous qu'un vendeur vous
+    // accompagne ? » quand Jeanne oriente vers un vendeur.
+    if (intent === "human") signLSF(["assistance", "accompagner"]);
     if (intent === "thanks") {
       signLSF(["merci", "abientot"]);
       // « Merci » arrive souvent en fin de visite : c'est le moment du sondage.
@@ -554,6 +557,7 @@ function ask(text, source = "text") {
   }
   clearZone();
   reply(t().notFound);
+  signLSF(["assistance", "accompagner"]);
 }
 
 const zoneLabel = (id) => ZONES[id].label[state.lang];
@@ -929,6 +933,7 @@ function showZone(id, place = null) {
   $$("#groundPlan .bm-stairs").forEach((el) => el.classList.toggle("is-route", basementOnly));
   $$('.plan-0 .tile[data-zone="escalier"]').forEach((tile) => tile.classList.toggle("is-route", basementOnly));
   els.mapStage.classList.add("has-focus");
+  lookAtMap();
   renderRoute();
   scheduleRouteDraw(true);
 
@@ -1194,6 +1199,7 @@ async function signLSF(names) {
   // Le cadre s'ouvre avant la première image, et la lecture attend que
   // l'écran soit redessiné : Chrome refuse de lire une vidéo muette tant
   // qu'elle n'est pas visible (économie d'énergie).
+  stopLooking();
   document.body.classList.add("is-signing");
   requestAnimationFrame(() => requestAnimationFrame(playNextSign));
   return true;
@@ -1204,6 +1210,30 @@ function playNextSign() {
   if (!next) return stopSigning();
   els.signVideo.src = next;
   els.signVideo.play().catch((error) => { console.warn("Signe non lu :", error.name, error.message); stopSigning(); });
+}
+
+// --- Jeanne se tourne vers le plan ---------------------------------------
+// Clip joué dans le cadre du portrait quand Jeanne indique un rayon. Le
+// fichier est facultatif : sans lui, le portrait ne bouge pas.
+const LOOK_CLIP = "assets/jeanne-plan.mp4";
+
+async function lookAtMap() {
+  if (!els.lookVideo || document.body.classList.contains("is-signing")) return;
+  if (!(await hasClip(LOOK_CLIP + VERSION)) || state.screen !== "app") return;
+  document.body.classList.add("is-looking");
+  if (!els.lookVideo.getAttribute("src")) els.lookVideo.src = LOOK_CLIP + VERSION;
+  els.lookVideo.currentTime = 0;
+  els.lookVideo.play().catch(() => stopLooking());
+}
+
+function stopLooking() {
+  document.body.classList.remove("is-looking");
+  if (els.lookVideo) els.lookVideo.pause();
+}
+
+if (els.lookVideo) {
+  els.lookVideo.addEventListener("ended", stopLooking);
+  els.lookVideo.addEventListener("error", stopLooking);
 }
 
 function stopSigning() {
@@ -1274,6 +1304,7 @@ function exitToIdle() {
   hideOtherStore();
   setFloor("0");
   if (state.a11y) toggleA11y(false);
+  stopLooking();
   if (els.idleVideo && els.idleVideo.isConnected && !els.idleVideo.hidden) els.idleVideo.play().catch(() => {});
   startIdleCycle();
   clearTimeout(chatClearTimer);

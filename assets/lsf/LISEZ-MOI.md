@@ -8,12 +8,25 @@ signes**, la seule façon d'avoir des signes justes.
 ## Fichiers attendus
 
 ```
-assets/lsf/fr/bonjour.mp4      « Bonjour »
-assets/lsf/fr/bienvenue.mp4    « Bienvenue »
-assets/lsf/fr/aider.mp4        « Puis-je vous aider ? »
-assets/lsf/fr/merci.mp4        « Merci »
-assets/lsf/fr/abientot.mp4     « À bientôt »
+assets/lsf/fr/bonjour.mp4      « Bonjour »               │ à l'arrivée
+assets/lsf/fr/bienvenue.mp4    « Bienvenue »             │ d'un client
+assets/lsf/fr/aider.mp4        « Puis-je vous aider ? »  │
+assets/lsf/fr/merci.mp4        « Merci »                 │ quand le client
+assets/lsf/fr/abientot.mp4     « À bientôt »             │ remercie
+assets/lsf/fr/assistance.mp4   « Avez-vous besoin d'assistance ? »      │ quand Jeanne
+assets/lsf/fr/accompagner.mp4  « Souhaitez-vous qu'un vendeur           │ oriente vers
+                                 vous accompagne ? »                    │ un vendeur
 ```
+
+Une autre vidéo, à part, complète l'ensemble :
+
+```
+assets/jeanne-plan.mp4         Jeanne se tourne vers le plan et le montre
+```
+
+Elle est jouée dans le cadre du portrait, à la place de la photo, chaque fois
+que Jeanne indique un rayon. Les lèvres n'ont pas besoin de bouger : la vidéo
+dure le temps du geste (2 à 4 secondes), puis le portrait revient.
 
 Le dossier porte le code de la langue : `fr` pour la LSF. Les dossiers `en`
 (ASL) et `es` (LSE) peuvent être ajoutés plus tard ; chaque langue des signes
