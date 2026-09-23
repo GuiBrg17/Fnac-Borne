@@ -65,6 +65,10 @@
  },
  {
   "lang": "fr",
+  "text": "Les téléphones et les montres connectées se retirent ici, à l'étage 0, auprès des vendeurs au milieu du magasin. Les autres commandes se retirent au SAV, au sous-sol."
+ },
+ {
+  "lang": "fr",
   "text": "Désolée, ce magasin ne vend pas ce produit. Vous pouvez le commander sur fnac.com, ou demander conseil à un vendeur."
  },
  {
@@ -174,6 +178,10 @@
  {
   "lang": "fr",
   "text": "Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe dans le magasin, il vous aidera avec plaisir."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur arrive pour prendre votre commande. Livres, BD, CD, DVD… tout ce que nous n'avons pas ici peut être commandé."
  },
  {
   "lang": "fr",
@@ -313,7 +321,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon SAV & retrait des colis est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le SAV et le retrait des colis se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
  },
  {
   "lang": "fr",
@@ -321,7 +329,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Caisses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Les caisses se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan. Pensez à préparer votre carte Fnac pour la remettre en caisse."
  },
  {
   "lang": "fr",
@@ -329,7 +337,15 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Adhésion & financement est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le stand d'impression photo se trouve au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan. Il est juste à côté de l'espace adhésion."
+ },
+ {
+  "lang": "fr",
+  "text": "C'est noté : un vendeur du rayon Impression photo a été prévenu."
+ },
+ {
+  "lang": "fr",
+  "text": "L'espace adhésion et financement se trouve au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
  },
  {
   "lang": "fr",
@@ -398,6 +414,10 @@
  {
   "lang": "en",
   "text": "Yes, there is a lift for anyone who needs it. Tap “Call a staff member” and a member of the team will take you there."
+ },
+ {
+  "lang": "en",
+  "text": "Phones and smartwatches are collected here on floor 0, from the staff in the middle of the store. Other orders are collected at the after-sales desk in the basement."
  },
  {
   "lang": "en",
@@ -510,6 +530,10 @@
  {
   "lang": "en",
   "text": "I couldn't reach a staff member. Please ask any member of the team in the store, they'll be happy to help."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a member of staff is coming to take your order. Books, comics, CDs, DVDs — anything we don't stock here can be ordered."
  },
  {
   "lang": "en",
@@ -649,7 +673,7 @@
  },
  {
   "lang": "en",
-  "text": "After-sales & order pickup is in the basement. Take the stairs down, then follow the map."
+  "text": "After-sales and order pickup are in the basement. Take the stairs down, then follow the map."
  },
  {
   "lang": "en",
@@ -657,7 +681,7 @@
  },
  {
   "lang": "en",
-  "text": "Checkout is in the basement. Take the stairs down, then follow the map."
+  "text": "The checkouts are in the basement. Take the stairs down, then follow the map. Remember to have your Fnac card ready at the till."
  },
  {
   "lang": "en",
@@ -665,7 +689,15 @@
  },
  {
   "lang": "en",
-  "text": "Membership & financing is in the basement. Take the stairs down, then follow the map."
+  "text": "The photo printing stand is in the basement. Take the stairs down, then follow the map. It is right next to the membership desk."
+ },
+ {
+  "lang": "en",
+  "text": "Done: a staff member from Photo printing has been notified."
+ },
+ {
+  "lang": "en",
+  "text": "The membership and financing desk is in the basement. Take the stairs down, then follow the map."
  },
  {
   "lang": "en",
@@ -734,6 +766,10 @@
  {
   "lang": "es",
   "text": "Sí, hay un ascensor para las personas que lo necesiten. Toque «Llamar a un vendedor» y alguien del equipo le acompañará."
+ },
+ {
+  "lang": "es",
+  "text": "Los móviles y los relojes inteligentes se recogen aquí, en la planta 0, con los vendedores del centro de la tienda. Los demás pedidos se recogen en posventa, en el sótano."
  },
  {
   "lang": "es",
@@ -846,6 +882,10 @@
  {
   "lang": "es",
   "text": "No he podido avisar a un vendedor. Diríjase a cualquier miembro del equipo en la tienda, le ayudará con gusto."
+ },
+ {
+  "lang": "es",
+  "text": "Anotado: un vendedor viene a tomar su pedido. Libros, cómics, CD, DVD… todo lo que no tenemos aquí se puede encargar."
  },
  {
   "lang": "es",
@@ -985,7 +1025,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Posventa y recogida está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La posventa y la recogida de pedidos están en el sótano. Baje por la escalera al sótano y siga el plano."
  },
  {
   "lang": "es",
@@ -993,7 +1033,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Caja está en el sótano. Baje por la escalera y siga el plano."
+  "text": "Las cajas están en el sótano. Baje por la escalera al sótano y siga el plano. No olvide preparar su tarjeta Fnac para la caja."
  },
  {
   "lang": "es",
@@ -1001,7 +1041,15 @@
  },
  {
   "lang": "es",
-  "text": "La sección Socios y financiación está en el sótano. Baje por la escalera y siga el plano."
+  "text": "El puesto de impresión de fotos está en el sótano. Baje por la escalera al sótano y siga el plano. Está justo al lado del espacio de socios."
+ },
+ {
+  "lang": "es",
+  "text": "Hecho: se ha avisado a un vendedor de la sección Impresión de fotos."
+ },
+ {
+  "lang": "es",
+  "text": "El espacio de socios y financiación está en el sótano. Baje por la escalera al sótano y siga el plano."
  },
  {
   "lang": "es",

@@ -77,13 +77,17 @@
   "C'est noté : un vendeur du rayon Apple a été prévenu.": "fr/527e226756aa.m4a",
   "Le rayon Jeux de société est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/c10a8b624e53.m4a",
   "C'est noté : un vendeur du rayon Jeux de société a été prévenu.": "fr/ed09d3660efe.m4a",
-  "Le rayon SAV & retrait des colis est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/c489ad67a28b.m4a",
   "C'est noté : un vendeur du rayon SAV & retrait des colis a été prévenu.": "fr/14607adc2c74.m4a",
-  "Le rayon Caisses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/d43dbbbf0b81.m4a",
   "C'est noté : un vendeur du rayon Caisses a été prévenu.": "fr/93a155abbc63.m4a",
-  "Le rayon Adhésion & financement est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/7d52393d1ae2.m4a",
   "C'est noté : un vendeur du rayon Adhésion & financement a été prévenu.": "fr/5a8a8979679c.m4a",
-  "Une protection pour quel appareil ? Un iPhone, un téléphone Android, ou une tablette ?": "fr/850678793762.m4a"
+  "Une protection pour quel appareil ? Un iPhone, un téléphone Android, ou une tablette ?": "fr/850678793762.m4a",
+  "Les téléphones et les montres connectées se retirent ici, à l'étage 0, auprès des vendeurs au milieu du magasin. Les autres commandes se retirent au SAV, au sous-sol.": "fr/44d05ec0dfe6.m4a",
+  "C'est noté : un vendeur arrive pour prendre votre commande. Livres, BD, CD, DVD… tout ce que nous n'avons pas ici peut être commandé.": "fr/67fde192b509.m4a",
+  "Le SAV et le retrait des colis se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/27f34398403c.m4a",
+  "Les caisses se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan. Pensez à préparer votre carte Fnac pour la remettre en caisse.": "fr/27e0a4384091.m4a",
+  "Le stand d'impression photo se trouve au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan. Il est juste à côté de l'espace adhésion.": "fr/460c39726504.m4a",
+  "C'est noté : un vendeur du rayon Impression photo a été prévenu.": "fr/635993f577a6.m4a",
+  "L'espace adhésion et financement se trouve au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/220133055430.m4a"
  },
  "en": {
   "Hello and welcome to Fnac Jeanne d'Arc! Tell me what you're looking for and I'll show you the section on the map.": "en/abc347b17d70.m4a",
@@ -157,11 +161,8 @@
   "Done: a staff member from Apple has been notified.": "en/1174cedaa8ea.m4a",
   "Board games is in the basement. Take the stairs down, then follow the map.": "en/17249186e27c.m4a",
   "Done: a staff member from Board games has been notified.": "en/1f73b0d00789.m4a",
-  "After-sales & order pickup is in the basement. Take the stairs down, then follow the map.": "en/1935d8436570.m4a",
   "Done: a staff member from After-sales & order pickup has been notified.": "en/abd128d8b820.m4a",
-  "Checkout is in the basement. Take the stairs down, then follow the map.": "en/c89e41f99d77.m4a",
   "Done: a staff member from Checkout has been notified.": "en/f6135ae5ac57.m4a",
-  "Membership & financing is in the basement. Take the stairs down, then follow the map.": "en/a961cba1349d.m4a",
   "Done: a staff member from Membership & financing has been notified.": "en/2adcb77eff47.m4a",
   "I couldn't reach a staff member. Please ask any member of the team in the store, they'll be happy to help.": "en/db889d7edc71.m4a",
   "Cables & storage is in the basement. Take the stairs down, then follow the map.": "en/3d053a04c4e1.m4a",
@@ -169,7 +170,14 @@
   "Photo is in the basement. Take the stairs down, then follow the map.": "en/c0f1e04e4455.m4a",
   "Done: a staff member from Photo has been notified.": "en/f62511b06547.m4a",
   "Sound is in the basement. Take the stairs down, then follow the map.": "en/41c51d6beba3.m4a",
-  "Done: a staff member from Sound has been notified.": "en/c122f0d89ed9.m4a"
+  "Done: a staff member from Sound has been notified.": "en/c122f0d89ed9.m4a",
+  "Phones and smartwatches are collected here on floor 0, from the staff in the middle of the store. Other orders are collected at the after-sales desk in the basement.": "en/0dd994c18a36.m4a",
+  "Done: a member of staff is coming to take your order. Books, comics, CDs, DVDs — anything we don't stock here can be ordered.": "en/2ab685d29e60.m4a",
+  "After-sales and order pickup are in the basement. Take the stairs down, then follow the map.": "en/dc3ec0da88f1.m4a",
+  "The checkouts are in the basement. Take the stairs down, then follow the map. Remember to have your Fnac card ready at the till.": "en/dd0f4db13fad.m4a",
+  "The photo printing stand is in the basement. Take the stairs down, then follow the map. It is right next to the membership desk.": "en/3b04feff2586.m4a",
+  "Done: a staff member from Photo printing has been notified.": "en/7a5d64aba6e7.m4a",
+  "The membership and financing desk is in the basement. Take the stairs down, then follow the map.": "en/54111f58685f.m4a"
  },
  "es": {
   "¡Hola y bienvenido a la Fnac Jeanne d'Arc! Dígame qué busca y le muestro la sección en el plano.": "es/71633b60c208.m4a",
@@ -243,11 +251,8 @@
   "Hecho: se ha avisado a un vendedor de la sección Apple.": "es/207384b8436a.m4a",
   "La sección Juegos de mesa está en el sótano. Baje por la escalera y siga el plano.": "es/34d645dec5ea.m4a",
   "Hecho: se ha avisado a un vendedor de la sección Juegos de mesa.": "es/8abd45c3bfde.m4a",
-  "La sección Posventa y recogida está en el sótano. Baje por la escalera y siga el plano.": "es/a38ceb51ba20.m4a",
   "Hecho: se ha avisado a un vendedor de la sección Posventa y recogida.": "es/2d29450e5b46.m4a",
-  "La sección Caja está en el sótano. Baje por la escalera y siga el plano.": "es/21d108c596ed.m4a",
   "Hecho: se ha avisado a un vendedor de la sección Caja.": "es/cd47d0bf93f0.m4a",
-  "La sección Socios y financiación está en el sótano. Baje por la escalera y siga el plano.": "es/5d787fa15532.m4a",
   "Hecho: se ha avisado a un vendedor de la sección Socios y financiación.": "es/feb4c71ba01d.m4a",
   "No he podido avisar a un vendedor. Diríjase a cualquier miembro del equipo en la tienda, le ayudará con gusto.": "es/e114be9bf891.m4a",
   "La sección Conectividad está en el sótano. Baje por la escalera y siga el plano.": "es/4467599008ef.m4a",
@@ -255,6 +260,13 @@
   "La sección Foto está en el sótano. Baje por la escalera y siga el plano.": "es/7e99ff8f49c9.m4a",
   "Hecho: se ha avisado a un vendedor de la sección Foto.": "es/ed8668a58d15.m4a",
   "La sección Sonido está en el sótano. Baje por la escalera y siga el plano.": "es/47a8df31effc.m4a",
-  "Hecho: se ha avisado a un vendedor de la sección Sonido.": "es/28ac2f121a67.m4a"
+  "Hecho: se ha avisado a un vendedor de la sección Sonido.": "es/28ac2f121a67.m4a",
+  "Los móviles y los relojes inteligentes se recogen aquí, en la planta 0, con los vendedores del centro de la tienda. Los demás pedidos se recogen en posventa, en el sótano.": "es/14ff36ec58f3.m4a",
+  "Anotado: un vendedor viene a tomar su pedido. Libros, cómics, CD, DVD… todo lo que no tenemos aquí se puede encargar.": "es/73d15af3b5f0.m4a",
+  "La posventa y la recogida de pedidos están en el sótano. Baje por la escalera al sótano y siga el plano.": "es/8ee78c44d5d5.m4a",
+  "Las cajas están en el sótano. Baje por la escalera al sótano y siga el plano. No olvide preparar su tarjeta Fnac para la caja.": "es/64f4242e367d.m4a",
+  "El puesto de impresión de fotos está en el sótano. Baje por la escalera al sótano y siga el plano. Está justo al lado del espacio de socios.": "es/7eac0bf1f5cc.m4a",
+  "Hecho: se ha avisado a un vendedor de la sección Impresión de fotos.": "es/955c1c2c9490.m4a",
+  "El espacio de socios y financiación está en el sótano. Baje por la escalera al sótano y siga el plano.": "es/c7cd640f9de3.m4a"
  }
 }

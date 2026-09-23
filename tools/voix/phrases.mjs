@@ -15,10 +15,16 @@ for (const lang of Object.keys(UI)) {
   [t.surveyAsk, t.surveyThanksYes, t.surveyThanksNo, t.a11yOn, t.a11yOff].forEach(add);
   add(t.vendorConfirm(null));
   add(t.vendorUnavailable);
+  add(t.orderConfirm);
   for (const [id, zone] of Object.entries(ZONES)) {
     if (zone.external || id === "ascenseur") continue;
     const label = zone.label[lang];
-    if (id !== "escalier" && id !== "entree") add(t.found(label, zone.floors[0]));
+    if (id !== "escalier" && id !== "entree") {
+      // Les lieux qui ne sont pas des rayons (caisses, SAV…) ont leur propre
+      // début de phrase, parfois suivi d'un rappel.
+      const phrase = zone.intro ? t.foundPlace(zone.intro[lang], zone.floors[0]) : t.found(label, zone.floors[0]);
+      add(zone.note ? `${phrase} ${zone.note[lang]}` : phrase);
+    }
     add(t.vendorConfirm(label));
   }
 }
