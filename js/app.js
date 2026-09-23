@@ -292,7 +292,17 @@ let afterSpeaking = null;
 // rouvre tout seul après chaque réponse de Jeanne. Elle s'arrête dès que le client
 // touche l'écran, ou après un silence (micro rouvert sans que personne ne parle).
 let handsFree = false;
-const SILENCE_MS = 8000;
+// Temps laissé au client avant que Jeanne renonce, quand le micro s'ouvre tout
+// seul : il faut le temps de réfléchir, surtout après une question de Jeanne.
+const SILENCE_MS = 12000;
+// Après la dernière parole entendue : court quand la phrase est claire, plus
+// long quand le client vient de commencer (« un casque… ») ou qu'il hésite.
+const SETTLE_MS = 1200;
+const SETTLE_LONG_MS = 2800;
+// Mots de remplissage : « euh, bah, alors… » ne sont pas une demande. Jeanne
+// continue d'écouter au lieu de répondre « je n'ai pas trouvé ».
+const HESITATIONS = /\b(?:euh+|heu+|hum+|hmm+|mmh+|bah|ben|alors|donc|attendez|attends|voil[aà]|um+|uh+|er+|eh+|well|so|este|pues|a ver|bueno)\b/gi;
+const usefulWords = (text) => text.replace(HESITATIONS, " ").replace(/[^\p{L}\p{N}]+/gu, " ").trim().split(/\s+/).filter(Boolean);
 
 function listenWhenDone() {
   if (!handsFree || state.screen !== "app" || !SpeechRecognition) return;
@@ -373,13 +383,26 @@ function toggleMic({ auto = false } = {}) {
       if (result.isFinal) finalText += result[0].transcript;
       else interimText += result[0].transcript;
     }
-    els.input.value = (finalText + " " + interimText).trim();
+    const heard = (finalText + " " + interimText).trim();
+    els.input.value = heard;
     bump();
-    if (finalText.trim() && !interimText.trim()) { finish(finalText.trim()); return; }
-    // Certains navigateurs tardent à valider la phrase : si le texte ne bouge
-    // plus pendant une seconde, le client a fini de parler.
+    // On ne répond jamais sur-le-champ, même quand le navigateur annonce la
+    // phrase comme terminée : le client dit souvent « bah… » puis sa demande.
+    // On attend qu'il se taise vraiment, plus longtemps s'il n'a dit qu'un mot.
+    const mots = usefulWords(heard);
     clearTimeout(settleTimer);
-    settleTimer = setTimeout(() => finish((finalText + " " + interimText).trim()), 1000);
+    settleTimer = setTimeout(() => {
+      // Que des hésitations : on laisse le micro ouvert et on repart à zéro.
+      if (!mots.length) {
+        finalText = "";
+        interimText = "";
+        els.input.value = "";
+        clearTimeout(silenceTimer);
+        silenceTimer = auto ? setTimeout(() => finish(""), SILENCE_MS) : null;
+        return;
+      }
+      finish((finalText + " " + interimText).trim());
+    }, mots.length >= 3 ? SETTLE_MS : SETTLE_LONG_MS);
   };
   rec.onerror = (event) => { error = event.error; };
   rec.onend = () => {
@@ -390,7 +413,8 @@ function toggleMic({ auto = false } = {}) {
     setListening(false);
     const text = (finalText + " " + interimText).trim();
     els.input.value = "";
-    if (text) { ask(text, "voice"); return; }
+    // Micro refermé par le navigateur sur un simple « euh » : on ne répond pas.
+    if (text && usefulWords(text).length) { ask(text, "voice"); return; }
     handsFree = false;
     // Micro ouvert tout seul : en cas de silence ou de micro bloqué, on n'affiche rien.
     if (auto) return;
