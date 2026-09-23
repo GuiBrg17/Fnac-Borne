@@ -61,6 +61,11 @@ const els = {
   storyClose: $("#storyClose"),
   idleCard: $("#idleCard"), idleCardTag: $("#idleCardTag"), idleCardTitle: $("#idleCardTitle"),
   idleCardPrice: $("#idleCardPrice"), idleCardList: $("#idleCardList"), idleCardFoot: $("#idleCardFoot"),
+  idleCardPhoto: $("#idleCardPhoto"), idleCardButton: $("#idleCardButton"),
+  cardDialog: $("#cardDialog"), cardDetailTitle: $("#cardDetailTitle"), cardDetailPrice: $("#cardDetailPrice"),
+  cardDetailSections: $("#cardDetailSections"), cardDetailQr: $("#cardDetailQr"),
+  cardDetailQrImage: $("#cardDetailQrImage"), cardDetailQrLabel: $("#cardDetailQrLabel"),
+  cardDetailClose: $("#cardDetailClose"),
   chat: $("#chatLog"), chips: $("#suggestions"), status: $("#status"), statusText: $("#statusText"),
   mic: $("#micButton"), micLabel: $("#micLabel"), form: $("#askForm"), input: $("#askInput"), send: $("#askSend"),
   vendor: $("#vendorButton"), a11y: $("#a11yButton"), end: $("#endButton"), logo: $("#logoButton"),
@@ -1125,7 +1130,7 @@ function closeStory() {
   if (els.storyDialog.open) els.storyDialog.close();
 }
 
-// Encadré fixe à droite : la carte Fnac+.
+// Encadré fixe à droite : la carte Fnac+, et sa fenêtre de détail.
 function showCard() {
   if (!CARD) { els.idleCard.hidden = true; return; }
   els.idleCardTag.textContent = CARD.tag;
@@ -1138,6 +1143,52 @@ function showCard() {
     li.textContent = point;
     els.idleCardList.append(li);
   }
+  els.idleCardPhoto.hidden = !CARD.image;
+  if (CARD.image) {
+    els.idleCardPhoto.onerror = () => { els.idleCardPhoto.hidden = true; };
+    els.idleCardPhoto.src = CARD.image;
+  }
+  // Le bouton n'apparaît que s'il y a un détail à montrer.
+  const detail = (CARD.sections || []).length > 0;
+  els.idleCardButton.hidden = !detail;
+  if (!detail) return;
+  els.idleCardButton.textContent = CARD.button || "Plus d'informations";
+  els.cardDetailTitle.textContent = CARD.detailTitle || CARD.title;
+  els.cardDetailPrice.textContent = CARD.detailPrice || CARD.price;
+  els.cardDetailSections.textContent = "";
+  for (const section of CARD.sections) {
+    const bloc = document.createElement("section");
+    const titre = document.createElement("h3");
+    titre.textContent = section.title;
+    const liste = document.createElement("ul");
+    for (const point of section.points) {
+      const li = document.createElement("li");
+      li.textContent = point;
+      liste.append(li);
+    }
+    bloc.append(titre, liste);
+    els.cardDetailSections.append(bloc);
+  }
+  els.cardDetailQr.hidden = !CARD.qr;
+  if (CARD.qr) {
+    els.cardDetailQrImage.onerror = () => { els.cardDetailQr.hidden = true; };
+    els.cardDetailQrImage.src = CARD.qr;
+    els.cardDetailQrLabel.textContent = CARD.qrLabel || "";
+  }
+}
+
+// La fenêtre se referme seule, comme celle de l'histoire du magasin.
+let cardTimer = null;
+function openCard() {
+  if (els.cardDialog.open) return;
+  els.cardDialog.showModal();
+  clearTimeout(cardTimer);
+  cardTimer = setTimeout(closeCard, STORY_MS);
+}
+
+function closeCard() {
+  clearTimeout(cardTimer);
+  if (els.cardDialog.open) els.cardDialog.close();
 }
 
 function showNews(item) {
@@ -1269,7 +1320,7 @@ if (els.signVideo) {
 }
 
 function enterApp() {
-  if (state.screen === "app" || els.storyDialog.open) return;
+  if (state.screen === "app" || els.storyDialog.open || els.cardDialog.open) return;
   state.screen = "app";
   clearTimeout(idleCycle);
   recordSession();
@@ -1529,6 +1580,10 @@ function disarmReset() {
 els.idle.tabIndex = 0;
 els.idle.addEventListener("click", enterApp);
 els.storyButton.addEventListener("click", (e) => { e.stopPropagation(); openStory(); });
+els.idleCardButton.addEventListener("click", (e) => { e.stopPropagation(); openCard(); });
+els.cardDetailClose.addEventListener("click", closeCard);
+els.cardDialog.addEventListener("close", () => clearTimeout(cardTimer));
+els.cardDialog.addEventListener("click", (e) => { if (e.target === els.cardDialog) closeCard(); });
 els.storyClose.addEventListener("click", closeStory);
 els.storyDialog.addEventListener("close", () => clearTimeout(storyTimer));
 // Toucher en dehors de la fenêtre la referme, sans ouvrir la page principale.

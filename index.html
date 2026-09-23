@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=60">
+<link rel="stylesheet" href="css/kiosk.css?v=61">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=60"></script>
+<script type="module" src="js/app.js?v=61"></script>
 </head>
 <body class="is-idle">
 
@@ -92,12 +92,14 @@
   </div>
 
   <!-- Colonne de droite : la carte Fnac+ (textes dans js/news.js). -->
-  <aside class="idle-card" id="idleCard" aria-hidden="true">
+  <aside class="idle-card" id="idleCard">
+    <img class="idle-card-photo" id="idleCardPhoto" alt="" hidden>
     <p class="idle-card-tag" id="idleCardTag"></p>
     <h2 class="idle-card-title" id="idleCardTitle"></h2>
     <p class="idle-card-price" id="idleCardPrice"></p>
     <ul class="idle-card-list" id="idleCardList"></ul>
     <p class="idle-card-foot" id="idleCardFoot"></p>
+    <button type="button" class="idle-card-button" id="idleCardButton"></button>
   </aside>
 
   <button type="button" class="idle-story-button" id="idleStoryButton">
@@ -231,6 +233,20 @@
     </footer>
   </section>
 </main>
+
+<!-- Détail de la carte Fnac+ (bouton « Plus d'informations ») -->
+<dialog class="card-detail" id="cardDialog" aria-labelledby="cardDetailTitle">
+  <div class="card-detail-head">
+    <h2 class="card-detail-title" id="cardDetailTitle"></h2>
+    <p class="card-detail-price" id="cardDetailPrice"></p>
+  </div>
+  <div class="card-detail-sections" id="cardDetailSections"></div>
+  <figure class="card-detail-qr" id="cardDetailQr" hidden>
+    <img id="cardDetailQrImage" alt="" width="150" height="150">
+    <figcaption id="cardDetailQrLabel"></figcaption>
+  </figure>
+  <button type="button" class="card-detail-close" id="cardDetailClose">Fermer</button>
+</dialog>
 
 <!-- « Notre histoire » : pourquoi le magasin s'appelle Jeanne d'Arc -->
 <dialog class="story" id="storyDialog" aria-labelledby="storyTitle">
