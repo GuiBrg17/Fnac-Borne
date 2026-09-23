@@ -38,6 +38,7 @@ export const NEWS = [
 // créé le 4 septembre 2000) : à confirmer auprès du magasin.
 // =====================================================================
 export const STORY = {
+  button: "Notre histoire",
   title: "Pourquoi Jeanne d'Arc ?",
   text: "Notre magasin a ouvert en 2000 au 77 rue d'Alsace-Lorraine, sur plus de 1 700 m² consacrés à la technique. " +
         "Il doit son nom à la place Jeanne d'Arc toute proche, et à la statue de Jeanne d'Arc qui s'y dresse — " +

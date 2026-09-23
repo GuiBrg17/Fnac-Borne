@@ -55,8 +55,10 @@ const els = {
   idleNewsDate: $("#idleNewsDate"), idleNewsExample: $("#idleNewsExample"), idleNewsImage: $("#idleNewsImage"),
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
   app: $("#appScreen"), signVideo: $("#signVideo"), lookVideo: $("#lookVideo"),
-  idleStory: $("#idleStory"), idleStoryTitle: $("#idleStoryTitle"), idleStoryText: $("#idleStoryText"),
-  idleStoryFigure: $("#idleStoryFigure"), idleStoryImage: $("#idleStoryImage"), idleStoryCaption: $("#idleStoryCaption"),
+  storyButton: $("#idleStoryButton"), storyButtonLabel: $("#idleStoryButtonLabel"),
+  storyDialog: $("#storyDialog"), storyTitle: $("#storyTitle"), storyText: $("#storyText"),
+  storyFigure: $("#storyFigure"), storyImage: $("#storyImage"), storyCaption: $("#storyCaption"),
+  storyClose: $("#storyClose"),
   idleCard: $("#idleCard"), idleCardTag: $("#idleCardTag"), idleCardTitle: $("#idleCardTitle"),
   idleCardPrice: $("#idleCardPrice"), idleCardList: $("#idleCardList"), idleCardFoot: $("#idleCardFoot"),
   chat: $("#chatLog"), chips: $("#suggestions"), status: $("#status"), statusText: $("#statusText"),
@@ -1087,26 +1089,40 @@ function setIdleLang(lang) {
 
 function showGreeting(lang) {
   els.idleNews.hidden = true;
-  els.idleStory.hidden = true;
   els.idleGreet.hidden = false;
   setIdleLang(lang);
 }
 
-// Encart « notre histoire » : pourquoi le magasin s'appelle Jeanne d'Arc.
-// La photo de la statue est facultative : si le fichier manque, le texte reste.
-function showStory() {
-  setIdleLang("fr");
-  els.idleStoryTitle.textContent = STORY.title;
-  els.idleStoryText.textContent = STORY.text;
-  els.idleStoryCaption.textContent = STORY.caption || "";
-  els.idleStoryFigure.hidden = !STORY.image;
+// « Notre histoire » : bouton en bas à droite de l'écran de veille, qui ouvre
+// une fenêtre avec le texte et la photo de la statue de Jeanne d'Arc.
+// La photo est facultative : si le fichier manque, le texte reste seul.
+// La fenêtre se referme toute seule, pour que la borne revienne à l'accueil.
+const STORY_MS = 30000;
+let storyTimer = null;
+
+function prepareStory() {
+  if (!STORY) { els.storyButton.hidden = true; return; }
+  els.storyButtonLabel.textContent = STORY.button || "Notre histoire";
+  els.storyTitle.textContent = STORY.title;
+  els.storyText.textContent = STORY.text;
+  els.storyCaption.textContent = STORY.caption || "";
+  els.storyFigure.hidden = !STORY.image;
   if (STORY.image) {
-    els.idleStoryImage.onerror = () => { els.idleStoryFigure.hidden = true; };
-    els.idleStoryImage.src = STORY.image;
+    els.storyImage.onerror = () => { els.storyFigure.hidden = true; };
+    els.storyImage.src = STORY.image;
   }
-  els.idleGreet.hidden = true;
-  els.idleNews.hidden = true;
-  els.idleStory.hidden = false;
+}
+
+function openStory() {
+  if (!STORY || els.storyDialog.open) return;
+  els.storyDialog.showModal();
+  clearTimeout(storyTimer);
+  storyTimer = setTimeout(closeStory, STORY_MS);
+}
+
+function closeStory() {
+  clearTimeout(storyTimer);
+  if (els.storyDialog.open) els.storyDialog.close();
 }
 
 // Encadré fixe à droite : la carte Fnac+.
@@ -1145,8 +1161,8 @@ function startIdleCycle() {
   clearTimeout(idleCycle);
   idleStep = 0;
   showGreeting("fr");
-  // Déroulé : accueil FR, EN, ES, une actualité, puis l'histoire du magasin.
-  const cards = [NEWS.length ? "news" : null, STORY ? "story" : null].filter(Boolean);
+  // Déroulé : accueil FR, EN, ES, puis une actualité.
+  const cards = NEWS.length ? ["news"] : [];
   const steps = IDLE_ORDER.length + cards.length;
   const next = () => {
     idleStep = (idleStep + 1) % steps;
@@ -1154,7 +1170,6 @@ function startIdleCycle() {
     setTimeout(() => {
       const card = cards[idleStep - IDLE_ORDER.length];
       if (card === "news") showNews(NEWS[newsIndex++ % NEWS.length]);
-      else if (card === "story") showStory();
       else showGreeting(IDLE_ORDER[idleStep]);
       els.idle.classList.remove("is-swapping");
       idleCycle = setTimeout(next, card ? NEWS_MS : GREETING_MS);
@@ -1252,7 +1267,7 @@ if (els.signVideo) {
 }
 
 function enterApp() {
-  if (state.screen === "app") return;
+  if (state.screen === "app" || els.storyDialog.open) return;
   state.screen = "app";
   clearTimeout(idleCycle);
   recordSession();
@@ -1511,6 +1526,11 @@ function disarmReset() {
 // =====================================================================
 els.idle.tabIndex = 0;
 els.idle.addEventListener("click", enterApp);
+els.storyButton.addEventListener("click", (e) => { e.stopPropagation(); openStory(); });
+els.storyClose.addEventListener("click", closeStory);
+els.storyDialog.addEventListener("close", () => clearTimeout(storyTimer));
+// Toucher en dehors de la fenêtre la referme, sans ouvrir la page principale.
+els.storyDialog.addEventListener("click", (e) => { if (e.target === els.storyDialog) closeStory(); });
 els.idle.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); enterApp(); } });
 
 els.mic.addEventListener("click", () => toggleMic());
@@ -1712,6 +1732,7 @@ setInterval(checkForUpdate, 30 * 60 * 1000);
 // --- Démarrage ---
 buildPlans();
 showCard();
+prepareStory();
 const clipManifestReady = loadClipManifest();
 els.app.inert = true;
 $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); });

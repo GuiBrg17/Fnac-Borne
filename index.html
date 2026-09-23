@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=56">
+<link rel="stylesheet" href="css/kiosk.css?v=57">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=56"></script>
+<script type="module" src="js/app.js?v=57"></script>
 </head>
 <body class="is-idle">
 
@@ -75,14 +75,6 @@
       <h1 class="idle-title" data-i18n="idleTitle">Je suis Jeanne, votre guide à la Fnac Jeanne d'Arc.</h1>
       <p class="idle-sub" data-i18n="idleSub">Dites-moi ce que vous cherchez, je vous montre le rayon.</p>
     </div>
-    <article class="idle-story" id="idleStory" hidden>
-      <h2 class="idle-story-title" id="idleStoryTitle"></h2>
-      <p class="idle-story-text" id="idleStoryText"></p>
-      <figure class="idle-story-figure" id="idleStoryFigure" hidden>
-        <img id="idleStoryImage" alt="" width="420" height="560">
-        <figcaption id="idleStoryCaption"></figcaption>
-      </figure>
-    </article>
     <article class="idle-news" id="idleNews" hidden>
       <img class="idle-news-image" id="idleNewsImage" alt="" hidden>
       <h2 class="idle-news-title" id="idleNewsTitle"></h2>
@@ -107,6 +99,10 @@
     <ul class="idle-card-list" id="idleCardList"></ul>
     <p class="idle-card-foot" id="idleCardFoot"></p>
   </aside>
+
+  <button type="button" class="idle-story-button" id="idleStoryButton">
+    <svg aria-hidden="true"><use href="#i-pin"/></svg><span id="idleStoryButtonLabel">Notre histoire</span>
+  </button>
 
   <div class="idle-cta">
     <span class="ripple" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -235,6 +231,19 @@
     </footer>
   </section>
 </main>
+
+<!-- « Notre histoire » : pourquoi le magasin s'appelle Jeanne d'Arc -->
+<dialog class="story" id="storyDialog" aria-labelledby="storyTitle">
+  <div class="story-body">
+    <h2 class="story-title" id="storyTitle"></h2>
+    <p class="story-text" id="storyText"></p>
+  </div>
+  <figure class="story-figure" id="storyFigure" hidden>
+    <img id="storyImage" alt="" width="420" height="560">
+    <figcaption id="storyCaption"></figcaption>
+  </figure>
+  <button type="button" class="story-close" id="storyClose">Fermer</button>
+</dialog>
 
 <!-- Sondage de fin de visite (bouton « Terminer ») -->
 <dialog class="survey" id="survey" aria-labelledby="surveyTitle">
