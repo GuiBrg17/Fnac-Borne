@@ -55,6 +55,26 @@ VOIX = {"fr": "jessica1", "en": "f1b", "es": "f1b"}
 REGLAGES = dict(exaggeration=0.5, cfg_weight=0.3, temperature=0.8)
 
 
+# Mots que le modèle lit de travers : on lui souffle une graphie qui sonne
+# juste (il lisait « SAV » comme « save », « Apple » comme « aple »). Le texte
+# affiché sur la borne, lui, ne change pas : seule la voix suit cette table.
+# Le contrôle Whisper, lui, compare au texte d'origine : si la prononciation
+# est bonne, la transcription retombe sur le vrai mot.
+PRONONCIATION = {
+    "fr": [(r"\bSAV\b", "èsse-a-vé"), (r"\bApple\b", "Apeul")],
+    "en": [],
+    # Espagnol : laisser « Apple » tel quel. La graphie « Apel » donnait
+    # « a pelo », le modèle lit bien le mot d'origine.
+    "es": [],
+}
+
+
+def a_dire(texte, lang):
+    for motif, remplacement in PRONONCIATION.get(lang, []):
+        texte = re.sub(motif, remplacement, texte)
+    return texte
+
+
 def mots(texte):
     texte = unicodedata.normalize("NFD", texte.lower())
     texte = "".join(c for c in texte if unicodedata.category(c) != "Mn")
@@ -174,7 +194,7 @@ def main():
         valides = 0
         for essai in range(1, TRIES + 1):
             torch.manual_seed(SEMENCE + essai)
-            wav = tts.generate(texte, language_id=lang, audio_prompt_path=REFERENCES[lang], **REGLAGES).cpu()
+            wav = tts.generate(a_dire(texte, lang), language_id=lang, audio_prompt_path=REFERENCES[lang], **REGLAGES).cpu()
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as brut:
                 torchaudio.save(brut.name, wav, tts.sr)
                 segments, _ = oreille.transcribe(brut.name, language=lang, beam_size=1, word_timestamps=True)
