@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=65">
+<link rel="stylesheet" href="css/kiosk.css?v=66">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=65"></script>
+<script type="module" src="js/app.js?v=66"></script>
 </head>
 <body class="is-idle">
 
@@ -290,6 +290,11 @@
     <label>Voix anglaise<select data-voice="en"></select></label>
     <label>Voix espagnole<select data-voice="es"></select></label>
     <label>Retour à l'accueil après (secondes)<input type="number" id="idleSeconds" min="20" max="600" step="10"></label>
+    <label>Temps laissé pour parler<select id="micPatience">
+      <option value="rapide">Rapide — Jeanne répond dès la fin de la phrase</option>
+      <option value="normal">Normal — un petit blanc est permis</option>
+      <option value="pose" selected>Posé — pour prendre son temps, ou hésiter</option>
+    </select></label>
 
     <section class="neural" aria-labelledby="vendorTitle">
       <h3 id="vendorTitle">Appeler un vendeur</h3>
