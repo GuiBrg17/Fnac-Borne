@@ -1432,3 +1432,29 @@ html.a11y *, html.a11y *::before, html.a11y *::after {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Mesure du niveau du micro, dans les réglages du personnel : la barre monte
+   avec le volume, le trait marque le seuil choisi. */
+.mic-level {
+  position: relative;
+  height: 1.1rem;
+  margin: 0.4rem 0 0.8rem;
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.12);
+  overflow: hidden;
+}
+.mic-level i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--ink);
+  transition: width 0.08s linear;
+}
+.mic-level b {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0.18rem;
+  background: #c62828;
+  display: none;
+}
