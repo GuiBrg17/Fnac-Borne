@@ -8,6 +8,10 @@
 //   date  : date ou période, en toutes lettres (ex. « Samedi 18 octobre, 15 h »)
 //   image : chemin d'une image dans assets/news/ (facultatif, sinon null).
 //           Si le fichier est absent, l'actualité s'affiche sans image.
+//           Une photo (.jpg) a ses bords effacés en dégradé pour se fondre
+//           dans le jaune : prévoir une marge autour des personnages et du
+//           logo, sinon ils disparaissent sur les bords.
+//           Un produit détouré (.png) s'affiche tel quel, sans dégradé.
 // Laissez la liste vide ( [] ) pour ne rien afficher.
 // =====================================================================
 export const NEWS = [
