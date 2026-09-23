@@ -67,6 +67,11 @@ export const UI = {
     otherStoreNear: "Près de Jean-Jaurès",
     otherStoreClose: "Retour au plan",
     otherStoreQr: "Itinéraire à pied sur votre téléphone",
+    hoursOpen: (heure) => `Ouvert jusqu'à ${heure}`,
+    hoursClosingSoon: (minutes) => `Fermeture dans ${minutes} min`,
+    hoursClosed: (quand, heure) => `Fermé · ouvre ${quand} à ${heure}`,
+    hoursClosedToday: (heure) => `Fermé · ouvre à ${heure}`,
+    hoursTomorrow: "demain",
     // Ce magasin ne vend pas de livres, mais un vendeur peut les commander.
     orderButton: "Faire commander par un vendeur",
     orderConfirm: "C'est noté : un vendeur arrive pour prendre votre commande. Livres, BD, CD, DVD… tout ce que nous n'avons pas ici peut être commandé.",
@@ -137,6 +142,11 @@ export const UI = {
     otherStoreNear: "Near Jean-Jaurès",
     otherStoreClose: "Back to the map",
     otherStoreQr: "Walking directions on your phone",
+    hoursOpen: (heure) => `Open until ${heure}`,
+    hoursClosingSoon: (minutes) => `Closing in ${minutes} min`,
+    hoursClosed: (quand, heure) => `Closed · opens ${quand} at ${heure}`,
+    hoursClosedToday: (heure) => `Closed · opens at ${heure}`,
+    hoursTomorrow: "tomorrow",
     orderButton: "Ask a staff member to order it",
     orderConfirm: "Done: a member of staff is coming to take your order. Books, comics, CDs, DVDs — anything we don't stock here can be ordered.",
     orderToast: "Staff notified · order",
@@ -206,6 +216,11 @@ export const UI = {
     otherStoreNear: "Cerca de Jean-Jaurès",
     otherStoreClose: "Volver al plano",
     otherStoreQr: "Ruta a pie en su móvil",
+    hoursOpen: (heure) => `Abierto hasta las ${heure}`,
+    hoursClosingSoon: (minutes) => `Cierra en ${minutes} min`,
+    hoursClosed: (quand, heure) => `Cerrado · abre ${quand} a las ${heure}`,
+    hoursClosedToday: (heure) => `Cerrado · abre a las ${heure}`,
+    hoursTomorrow: "mañana",
     orderButton: "Pedir a un vendedor que lo encargue",
     orderConfirm: "Anotado: un vendedor viene a tomar su pedido. Libros, cómics, CD, DVD… todo lo que no tenemos aquí se puede encargar.",
     orderToast: "Vendedor avisado · pedido",
@@ -1051,6 +1066,23 @@ export const ZONES = {
             "pagar a plazos", "pago en 3 plazos"]
     }
   }
+};
+
+// =====================================================================
+// Horaires du magasin, pour la pastille « Ouvert jusqu'à… » de l'écran
+// d'accueil. La phrase lue par Jeanne, elle, est dans INFO.hours.
+//   days   : par jour de la semaine (0 = dimanche), ["ouverture", "fermeture"]
+//            en heures et minutes, ou null quand le magasin est fermé.
+//   closed : journées de fermeture exceptionnelle, au format "AAAA-MM-JJ".
+//   special: horaires particuliers d'une journée (veille de Noël…).
+// =====================================================================
+export const OPENING = {
+  days: [null, ["10:00", "19:30"], ["10:00", "19:30"], ["10:00", "19:30"],
+         ["10:00", "19:30"], ["10:00", "19:30"], ["10:00", "19:30"]],
+  closed: [],
+  special: {},
+  // En dessous de ce nombre de minutes, la borne annonce la fermeture proche.
+  soonMinutes: 45
 };
 
 // Produits éditoriaux : ils ne sont pas vendus ici mais à la Fnac Wilson.

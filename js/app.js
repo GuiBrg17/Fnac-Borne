@@ -4,7 +4,7 @@
 // La version (?v=N de index.html) est reportée sur chaque fichier :
 // une mise en ligne remplace donc bien toutes les copies en cache.
 const VERSION = new URL(import.meta.url).search;
-const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE, INFO } = await import("./data.js" + VERSION);
+const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE, INFO, OPENING } = await import("./data.js" + VERSION);
 const { findZoneDetailed, findIntent, findInfo, findClarify, pickClarifyOption, normalize, displayKeyword } = await import("./search.js" + VERSION);
 const { NEWS, STORY, CARD } = await import("./news.js" + VERSION);
 const { recordSession, recordQuestion, recordFeedback, readStats, readPeriod, resetStats, dayKey } = await import("./stats.js" + VERSION);
@@ -55,7 +55,7 @@ const els = {
   idleNewsDate: $("#idleNewsDate"), idleNewsExample: $("#idleNewsExample"), idleNewsImage: $("#idleNewsImage"),
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
   app: $("#appScreen"), signVideo: $("#signVideo"), lookVideo: $("#lookVideo"),
-  storyButton: $("#idleStoryButton"), storyButtonLabel: $("#idleStoryButtonLabel"),
+  idleHours: $("#idleHours"), storyButton: $("#idleStoryButton"), storyButtonLabel: $("#idleStoryButtonLabel"),
   storyDialog: $("#storyDialog"), storyTitle: $("#storyTitle"), storyText: $("#storyText"),
   storyFigure: $("#storyFigure"), storyImage: $("#storyImage"), storyCaption: $("#storyCaption"),
   storyClose: $("#storyClose"),
@@ -1086,10 +1086,85 @@ let idleStep = 0;
 let newsIndex = 0;
 let idleCycle = null;
 
+let idleLang = "fr";
+
 function setIdleLang(lang) {
+  idleLang = lang;
   const d = UI[lang];
   $$("#idleScreen [data-i18n]").forEach((el) => { el.textContent = d[el.dataset.i18n]; });
   $$(".idle-langs li").forEach((li) => li.classList.toggle("is-on", li.dataset.lang === lang));
+  showOpening(lang);
+}
+
+// =====================================================================
+// Pastille « Ouvert jusqu'à 19 h 30 », qui devient « Fermeture dans 20 min »
+// puis « Fermé · ouvre demain à 10 h ». Horaires dans OPENING (js/data.js).
+// =====================================================================
+const dayKeyFor = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
+// Horaires du jour : fermeture exceptionnelle, horaire particulier, ou semaine.
+function hoursOf(date) {
+  const key = dayKeyFor(date);
+  if (OPENING.closed.includes(key)) return null;
+  return OPENING.special[key] || OPENING.days[date.getDay()] || null;
+}
+
+const minutesOf = (heure) => Number(heure.slice(0, 2)) * 60 + Number(heure.slice(3, 5));
+
+// 19:30 → « 19 h 30 » en français, « 7:30 pm » en anglais, « 19:30 » en espagnol.
+function showHour(heure, lang) {
+  const [h, m] = heure.split(":").map(Number);
+  if (lang === "fr") return m ? `${h} h ${String(m).padStart(2, "0")}` : `${h} h`;
+  if (lang === "en") {
+    const suffixe = h >= 12 ? "pm" : "am";
+    const douze = h % 12 === 0 ? 12 : h % 12;
+    return m ? `${douze}:${String(m).padStart(2, "0")} ${suffixe}` : `${douze} ${suffixe}`;
+  }
+  return heure;
+}
+
+// Prochain jour d'ouverture, dans les huit jours qui viennent.
+function nextOpening(date) {
+  for (let i = 0; i <= 7; i += 1) {
+    const jour = new Date(date);
+    jour.setDate(date.getDate() + i);
+    const horaire = hoursOf(jour);
+    if (!horaire) continue;
+    if (i === 0 && minutesOf(horaire[0]) <= date.getHours() * 60 + date.getMinutes()) continue;
+    return { jour, horaire, aujourdhui: i === 0, demain: i === 1 };
+  }
+  return null;
+}
+
+function showOpening(lang = state.screen === "app" ? state.lang : idleLang, now = new Date()) {
+  const t = UI[lang];
+  const horaire = hoursOf(now);
+  const minute = now.getHours() * 60 + now.getMinutes();
+  const el = els.idleHours;
+  el.classList.remove("is-soon", "is-closed");
+  if (horaire && minute >= minutesOf(horaire[0]) && minute < minutesOf(horaire[1])) {
+    const reste = minutesOf(horaire[1]) - minute;
+    if (reste <= OPENING.soonMinutes) {
+      el.classList.add("is-soon");
+      el.textContent = t.hoursClosingSoon(reste);
+    } else {
+      el.textContent = t.hoursOpen(showHour(horaire[1], lang));
+    }
+  } else {
+    const prochain = nextOpening(now);
+    el.classList.add("is-closed");
+    if (!prochain) { el.hidden = true; return; }
+    const heure = showHour(prochain.horaire[0], lang);
+    if (prochain.aujourdhui) {
+      // Avant l'ouverture : inutile de nommer le jour.
+      el.textContent = t.hoursClosedToday(heure);
+    } else {
+      // « demain », sinon le nom du jour dans la langue affichée.
+      const quand = prochain.demain ? t.hoursTomorrow : prochain.jour.toLocaleDateString(lang, { weekday: "long" });
+      el.textContent = t.hoursClosed(quand, heure);
+    }
+  }
+  el.hidden = false;
 }
 
 function showGreeting(lang) {
@@ -1789,6 +1864,9 @@ setInterval(checkForUpdate, 30 * 60 * 1000);
 // --- Démarrage ---
 buildPlans();
 showCard();
+showOpening("fr");
+// L'heure avance : la pastille se met à jour toutes les minutes.
+setInterval(() => showOpening(), 60000);
 prepareStory();
 const clipManifestReady = loadClipManifest();
 els.app.inert = true;
@@ -1845,5 +1923,14 @@ initVoice();
 // Aide au réglage : ouvrir la borne avec ?debug pour lancer un signe à la main
 // depuis la console du navigateur (jeanne.sign("merci")).
 if (new URLSearchParams(location.search).has("debug")) {
-  window.jeanne = { sign: (name) => signLSF(name || "bonjour") };
+  window.jeanne = {
+    sign: (name) => signLSF(name || "bonjour"),
+    // Essayer la pastille des horaires à une heure donnée : jeanne.heure(19, 15)
+    heure: (h, m = 0, lang = "fr") => {
+      const faux = new Date();
+      faux.setHours(h, m, 0, 0);
+      showOpening(lang, faux);
+      return els.idleHours.textContent;
+    }
+  };
 }
