@@ -15,13 +15,13 @@ export const NEWS = [
     title: "iPhone 18 Pro",
     text: "À partir de 859 € au lieu de 1 479 €, avec jusqu'à 620 € de valeur de rachat de votre ancien iPhone (exemple pour un iPhone 16 Pro 256 Go en état parfait). Rendez-vous au rayon Apple, au sous-sol.",
     date: "Disponible le 18 septembre",
-    image: null
+    image: "assets/news/iphone-18.png"
   },
   {
     title: "Call of Duty : Modern Warfare 4",
     text: "Précommandez le prochain Call of Duty au rayon Jeux vidéo, au sous-sol. Nos vendeurs vous renseignent sur les éditions et les bonus de précommande.",
     date: "Précommande ouverte",
-    image: null
+    image: "assets/news/call-of-duty-mw4.jpg"
   },
   {
     title: "iPhone Duo",
