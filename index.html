@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=66">
+<link rel="stylesheet" href="css/kiosk.css?v=67">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=66"></script>
+<script type="module" src="js/app.js?v=67"></script>
 </head>
 <body class="is-idle">
 
@@ -290,6 +290,19 @@
     <label>Voix anglaise<select data-voice="en"></select></label>
     <label>Voix espagnole<select data-voice="es"></select></label>
     <label>Retour à l'accueil après (secondes)<input type="number" id="idleSeconds" min="20" max="600" step="10"></label>
+    <section class="neural" aria-labelledby="micTitle">
+      <h3 id="micTitle">Micro</h3>
+      <label>Voix prise en compte<select id="micNear">
+        <option value="tout" selected>Toutes les voix entendues</option>
+        <option value="proche">Seulement la voix proche de la borne</option>
+        <option value="tresproche">Seulement une voix très proche</option>
+      </select></label>
+      <p class="neural-status">Le magasin est bruyant : ce réglage fait ignorer les phrases prononcées trop loin. Réglez-le sur place avec la mesure ci-dessous : demandez à quelqu'un de parler devant la borne, puis à deux ou trois mètres, et comparez les niveaux.</p>
+      <p class="neural-status" id="micLevelText" role="status">Mesure arrêtée.</p>
+      <div class="mic-level"><i id="micLevelBar"></i><b id="micLevelMark"></b></div>
+      <button type="button" class="neural-download" id="micLevelTest">Mesurer le niveau du micro</button>
+    </section>
+
     <label>Temps laissé pour parler<select id="micPatience">
       <option value="rapide">Rapide — Jeanne répond dès la fin de la phrase</option>
       <option value="normal">Normal — un petit blanc est permis</option>

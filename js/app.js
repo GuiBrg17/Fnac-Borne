@@ -77,6 +77,8 @@ const els = {
   reportEmail: $("#reportEmail"), reportDay: $("#reportDay"), reportMonthly: $("#reportMonthly"),
   reportStatus: $("#reportStatus"), reportSend: $("#reportSend"), reportDownload: $("#reportDownload"),
   settings: $("#settings"), idleSeconds: $("#idleSeconds"), micPatience: $("#micPatience"), testVoice: $("#testVoice"),
+  micNear: $("#micNear"), micLevelTest: $("#micLevelTest"), micLevelText: $("#micLevelText"),
+  micLevelBar: $("#micLevelBar"), micLevelMark: $("#micLevelMark"),
   vendorTopic: $("#vendorTopic"), vendorEmails: $("#vendorEmails"), vendorStatus: $("#vendorStatus"), vendorTest: $("#vendorTest"),
   neuralToggle: $("#neuralToggle"), voiceStatus: $("#voiceStatus"), voiceDownload: $("#voiceDownload"),
   toast: $("#toast"),
@@ -341,6 +343,53 @@ function setSpeaking(on) {
 }
 
 // =====================================================================
+// Volume du micro : une voix proche est forte, une conversation à trois
+// mètres est faible. La reconnaissance du navigateur, elle, entend tout ;
+// on écoute donc le micro en parallèle pour mesurer le niveau, et on ignore
+// ce qui a été dit trop loin. Réglage dans le panneau du personnel.
+// =====================================================================
+const NEAR_LEVELS = { tout: 0, proche: 0.035, tresproche: 0.07 };
+const nearThreshold = () => NEAR_LEVELS[store.get("micNear", "tout")] ?? 0;
+
+const meter = {
+  stream: null, ctx: null, raf: 0, level: 0, peak: 0, onLevel: null,
+  async start() {
+    if (this.stream || !navigator.mediaDevices) return false;
+    try {
+      this.stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: false }
+      });
+    } catch { this.stream = null; return false; }
+    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const source = this.ctx.createMediaStreamSource(this.stream);
+    const analyser = this.ctx.createAnalyser();
+    analyser.fftSize = 1024;
+    source.connect(analyser);
+    const data = new Float32Array(analyser.fftSize);
+    this.peak = 0;
+    const tick = () => {
+      analyser.getFloatTimeDomainData(data);
+      let somme = 0;
+      for (const v of data) somme += v * v;
+      this.level = Math.sqrt(somme / data.length);
+      this.peak = Math.max(this.peak, this.level);
+      if (this.onLevel) this.onLevel(this.level, this.peak);
+      this.raf = requestAnimationFrame(tick);
+    };
+    tick();
+    return true;
+  },
+  stop() {
+    cancelAnimationFrame(this.raf);
+    if (this.stream) this.stream.getTracks().forEach((t) => t.stop());
+    if (this.ctx) this.ctx.close().catch(() => {});
+    this.stream = null;
+    this.ctx = null;
+    this.level = 0;
+  }
+};
+
+// =====================================================================
 // Micro (reconnaissance vocale du navigateur)
 // =====================================================================
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -371,6 +420,19 @@ function toggleMic({ auto = false } = {}) {
     clearTimeout(settleTimer);
     clearTimeout(silenceTimer);
     if (recognition !== rec) return;
+    // Voix trop faible : c'est le magasin autour, pas le client devant la
+    // borne. On oublie la phrase et on continue d'écouter.
+    const seuil = nearThreshold();
+    if (text && seuil > 0 && meter.stream && meter.peak < seuil) {
+      meter.peak = 0;
+      finalText = "";
+      interimText = "";
+      els.input.value = "";
+      clearTimeout(silenceTimer);
+      silenceTimer = auto ? setTimeout(() => finish(""), patience().silence) : null;
+      return;
+    }
+    meter.stop();
     recognition = null;
     rec.abort();
     setListening(false);
@@ -416,6 +478,9 @@ function toggleMic({ auto = false } = {}) {
     if (recognition !== rec) return;
     recognition = null;
     setListening(false);
+    const loin = nearThreshold() > 0 && meter.stream && meter.peak < nearThreshold();
+    meter.stop();
+    if (loin) { handsFree = false; return; }
     const text = (finalText + " " + interimText).trim();
     els.input.value = "";
     // Micro refermé par le navigateur sur un simple « euh » : on ne répond pas.
@@ -429,6 +494,8 @@ function toggleMic({ auto = false } = {}) {
 
   recognition = rec;
   setListening(true);
+  // Sonomètre ouvert en parallèle, seulement si le filtre est actif.
+  if (nearThreshold() > 0) meter.start();
   try { rec.start(); } catch {
     clearTimeout(silenceTimer);
     recognition = null;
@@ -439,6 +506,7 @@ function toggleMic({ auto = false } = {}) {
 }
 
 function abortMic() {
+  meter.stop();
   if (!recognition) return;
   const rec = recognition;
   recognition = null;
@@ -1683,6 +1751,45 @@ function disarmReset() {
 // =====================================================================
 els.idle.tabIndex = 0;
 els.idle.addEventListener("click", enterApp);
+// --- Réglage du micro : mesure du niveau sur place ----------------------
+// La barre couvre 0 à 0,2 en niveau sonore : au-delà, on sature l'affichage.
+const LEVEL_SCALE = 0.2;
+
+function showThreshold() {
+  const seuil = NEAR_LEVELS[els.micNear.value] ?? 0;
+  els.micLevelMark.style.display = seuil ? "block" : "none";
+  els.micLevelMark.style.left = `${Math.min(100, (seuil / LEVEL_SCALE) * 100)}%`;
+}
+
+let levelTestTimer = null;
+els.micLevelTest.addEventListener("click", async () => {
+  if (meter.stream) {
+    clearTimeout(levelTestTimer);
+    meter.onLevel = null;
+    meter.stop();
+    els.micLevelBar.style.width = "0";
+    els.micLevelText.textContent = "Mesure arrêtée.";
+    els.micLevelTest.textContent = "Mesurer le niveau du micro";
+    return;
+  }
+  els.micLevelText.textContent = "Ouverture du micro…";
+  const ok = await meter.start();
+  if (!ok) { els.micLevelText.textContent = "Micro indisponible : autorisez-le dans le navigateur."; return; }
+  els.micLevelTest.textContent = "Arrêter la mesure";
+  meter.onLevel = (niveau, crete) => {
+    els.micLevelBar.style.width = `${Math.min(100, (niveau / LEVEL_SCALE) * 100)}%`;
+    const seuil = NEAR_LEVELS[els.micNear.value] ?? 0;
+    els.micLevelText.textContent = seuil
+      ? `Niveau ${niveau.toFixed(3)} · plus fort atteint ${crete.toFixed(3)} · seuil ${seuil} : ${crete >= seuil ? "la voix serait prise en compte" : "la voix serait ignorée"}`
+      : `Niveau ${niveau.toFixed(3)} · plus fort atteint ${crete.toFixed(3)}`;
+  };
+  // Trente secondes suffisent pour régler : on n'oublie pas le micro ouvert.
+  levelTestTimer = setTimeout(() => els.micLevelTest.click(), 30000);
+});
+els.settings.addEventListener("close", () => {
+  if (meter.stream && meter.onLevel) els.micLevelTest.click();
+});
+
 els.storyButton.addEventListener("click", (e) => { e.stopPropagation(); openStory(); });
 els.idleCardButton.addEventListener("click", (e) => { e.stopPropagation(); openCard(); });
 els.cardDetailClose.addEventListener("click", closeCard);
@@ -1774,6 +1881,8 @@ els.logo.addEventListener("click", () => {
     updateVoiceStatus();
     els.idleSeconds.value = settings.idleSeconds;
     els.micPatience.value = store.get("micPatience", "pose");
+    els.micNear.value = store.get("micNear", "tout");
+    showThreshold();
     els.settings.showModal();
   }
 });
@@ -1788,6 +1897,7 @@ els.settings.addEventListener("change", (e) => {
     updateVoiceStatus();
   }
   if (e.target === els.micPatience) store.set("micPatience", els.micPatience.value);
+  if (e.target === els.micNear) { store.set("micNear", els.micNear.value); showThreshold(); }
   if (e.target === els.idleSeconds) {
     settings.idleSeconds = Math.min(600, Math.max(20, Number(els.idleSeconds.value) || 60));
     els.idleSeconds.value = settings.idleSeconds;
