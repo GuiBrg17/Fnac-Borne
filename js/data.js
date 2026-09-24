@@ -2384,11 +2384,23 @@ export const RUDE = {
     "are you horny", "shut up", "asshole", "bastard", "cunt", "retard", "nigger",
     // Espagnol
     "puta", "putas", "hijo de puta", "gilipollas", "cabron", "cabrón", "joder", "follar", "folla",
-    "chupame", "chúpame", "pollas", "polla", "coño", "tetas", "culo", "desnuda", "porno", "maricon", "maricón"
+    "chupame", "chúpame", "pollas", "polla", "coño", "tetas", "culo", "desnuda", "porno", "maricon", "maricón",
+    // Arabe, tel que la reconnaissance vocale française l'écrit (à l'oreille)
+    "kahba", "kahbech", "kehba", "charmouta", "sharmouta", "chermouta", "zebi", "zeb", "zebbi",
+    "ayri", "ayri fik", "kess omok", "kes omok", "kess emmek", "nech mok", "taboun", "tabon",
+    "zamel", "zawel", "hmar", "kelb", "ibn el kalb", "ya kelb", "kahlouche", "bledard", "blédard",
+    "niquemok", "nique mok", "sir tnik", "hchouma sur toi",
+    // Verlan
+    "teub", "teubs", "teuch", "teuche", "tepu", "taspé", "taspe", "tass", "tasspé", "quenchie",
+    "ienche", "zguègue", "zguegue", "tarba", "golmon", "mongol", "gogol", "boloss", "bolos", "bolosse",
+    "ta reum", "nique ta reum", "fils de tepu", "culé", "pue du bec"
   ],
   jurons: [
     "putain", "merde", "merdique", "bordel", "chiant", "chier", "con", "cons", "crétin", "idiot",
-    "nul", "nulle", "naze", "ferme la", "shit", "damn", "crap", "stupid", "mierda", "joder", "tonto"
+    "nul", "nulle", "naze", "ferme la", "shit", "damn", "crap", "stupid", "mierda", "joder", "tonto",
+    // Moqueries plus légères : verlan courant et mots de cour d'école
+    "relou", "chelou", "teubé", "teube", "cheum", "narvalo", "mytho", "bouffon", "bouffonne",
+    "blaireau", "tocard", "abruti", "imbécile", "imbecile", "guignol", "clown", "loser", "noob"
   ]
 };
 
