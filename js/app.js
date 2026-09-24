@@ -52,7 +52,7 @@ const els = {
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
   app: $("#appScreen"), signVideo: $("#signVideo"), lookVideo: $("#lookVideo"),
   idleHours: $("#idleHours"), storyButton: $("#idleStoryButton"), storyButtonLabel: $("#idleStoryButtonLabel"),
-  storyDialog: $("#storyDialog"), storyTitle: $("#storyTitle"), storyText: $("#storyText"),
+  storyDialog: $("#storyDialog"), storyTitle: $("#storyTitle"), storyParts: $("#storyParts"),
   storyFigure: $("#storyFigure"), storyImage: $("#storyImage"), storyCaption: $("#storyCaption"),
   storyClose: $("#storyClose"),
   idleCard: $("#idleCard"), idleCardTag: $("#idleCardTag"), idleCardTitle: $("#idleCardTitle"),
@@ -1231,7 +1231,16 @@ function prepareStory() {
   if (!STORY) { els.storyButton.hidden = true; return; }
   els.storyButtonLabel.textContent = STORY.button || "Notre histoire";
   els.storyTitle.textContent = STORY.title;
-  els.storyText.textContent = STORY.text;
+  els.storyParts.textContent = "";
+  for (const volet of STORY.parts || []) {
+    const bloc = document.createElement("section");
+    const titre = document.createElement("h3");
+    titre.textContent = volet.title;
+    const texte = document.createElement("p");
+    texte.textContent = volet.text;
+    bloc.append(titre, texte);
+    els.storyParts.append(bloc);
+  }
   els.storyCaption.textContent = STORY.caption || "";
   els.storyFigure.hidden = !STORY.image;
   if (STORY.image) {

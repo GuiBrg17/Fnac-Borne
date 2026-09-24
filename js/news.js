@@ -36,20 +36,37 @@ export const NEWS = [
 ];
 
 // =====================================================================
-// Encart « notre histoire », affiché sur l'écran de veille entre deux
-// actualités. Mettre image: null tant que la photo n'est pas prise.
-// La date d'ouverture vient de l'annuaire des entreprises (établissement
-// créé le 4 septembre 2000) : à confirmer auprès du magasin.
+// « Notre histoire », derrière le bouton en bas à droite de l'écran d'accueil.
+// Trois volets : le magasin, la place et sa statue, puis ce que la Fnac et
+// Jeanne d'Arc ont en commun. Le rapprochement est présenté pour ce qu'il
+// est — une façon de raconter le magasin, pas un fait historique.
+// Dates vérifiées : magasin créé en 2000 (annuaire des entreprises),
+// Fnac fondée en 1954 par André Essel et Max Théret, laboratoire d'essais
+// ouvert en 1972. La photo est à remplacer par celle du magasin.
 // =====================================================================
-// Photo provisoire : le monument à Jeanne d'Arc, place Jeanne-d'Arc, par
-// Patrice Bon (Wikimedia Commons, CC0 — libre de tout usage, sans crédit
-// obligatoire). À remplacer par la photo du magasin quand elle sera prise.
 export const STORY = {
   button: "Notre histoire",
-  title: "Pourquoi Jeanne d'Arc ?",
-  text: "Notre magasin a ouvert en 2000 au 77 rue d'Alsace-Lorraine, sur plus de 1 700 m² consacrés à la technique. " +
-        "Il doit son nom à la place Jeanne d'Arc toute proche, et à la statue de Jeanne d'Arc qui s'y dresse — " +
-        "celle qui a donné son prénom à votre guide sur cette borne.",
+  title: "Jeanne d'Arc et la Fnac",
+  parts: [
+    {
+      title: "Un magasin du centre-ville",
+      text: "La Fnac Jeanne d'Arc a ouvert en 2000 au 77 rue d'Alsace-Lorraine, sur plus de 1 700 m² " +
+            "entièrement consacrés à la technique : téléphonie, son, image, jeux vidéo, informatique et photo."
+    },
+    {
+      title: "La place et sa statue",
+      text: "Le magasin doit son nom à la place Jeanne d'Arc, à deux pas d'ici, et à la statue équestre " +
+            "d'Antonin Mercié qui s'y dresse depuis 1922. C'est elle qui a donné son prénom à votre guide sur cette borne."
+    },
+    {
+      title: "Deux histoires qui se ressemblent",
+      text: "Jeanne d'Arc avait dix-sept ans, aucun titre, et l'audace de suivre sa propre voix. " +
+            "La Fnac est née en 1954 de la même liberté de ton : André Essel et Max Théret ont créé une " +
+            "coopérative d'achat pour que la culture et la technique coûtent moins cher, et ont ouvert en 1972 " +
+            "un laboratoire d'essais qui notait les produits sans ménager les marques. Défendre ceux qui achètent, " +
+            "dire ce qu'on pense, rendre la culture accessible : c'est encore ce qui se joue dans ce magasin."
+    }
+  ],
   image: "assets/statue-jeanne-darc.jpg",
   caption: "Le monument à Jeanne d'Arc, place Jeanne-d'Arc, à deux pas du magasin"
 };

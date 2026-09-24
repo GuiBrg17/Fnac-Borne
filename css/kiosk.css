@@ -181,27 +181,49 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   to { transform: scale(1.045) translateY(-0.6%); }
 }
 /* La bulle de l'image d'origine est hors cadre : la borne affiche la sienne,
-   qui change de langue. */
-.has-idle-photo .idle-bubble { top: 6%; left: 4%; }
-
+   qui change de langue.
+   Jeanne est posée en bas du cadre et sa taille suit la LARGEUR de la colonne,
+   jamais la hauteur de l'écran : la bulle se cale donc sur le bas du cadre en
+   « vw », sinon elle remontait loin au-dessus du visage sur un écran haut. */
+.has-idle-photo .idle-bubble {
+  top: auto;
+  left: auto;
+  right: 72%;
+  bottom: 30.5vw;
+}
 
 .idle-bubble {
   position: absolute;
   z-index: 6;
   top: 13%;
   left: -6%;
-  max-width: 14ch;
+  /* Sans « max-content », la bulle calée à droite se réduisait à la place
+     restante et le texte tombait en colonne d'un mot. */
+  width: max-content;
+  max-width: 15ch;
   margin: 0;
-  padding: 1.1rem 1.4rem;
-  border-radius: 1.6rem 1.6rem 0.35rem 1.6rem;
+  padding: 1rem 1.3rem;
+  border-radius: 1.5rem 1.5rem 0.4rem 1.5rem;
   background: var(--paper);
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   font-weight: 700;
   font-stretch: 105%;
-  line-height: 1.2;
-  box-shadow: 0 1.2rem 2.6rem -1rem rgba(60, 42, 0, 0.45);
+  line-height: 1.25;
+  /* « drop-shadow » plutôt que « box-shadow » : l'ombre suit la pointe. */
+  filter: drop-shadow(0 0.9rem 1.6rem rgba(60, 42, 0, 0.32));
   transition: opacity 0.42s ease, transform 0.42s var(--ease-out);
   animation: bubble-in 0.9s 0.6s var(--ease-out) both;
+}
+/* La petite pointe, tournée vers le visage de Jeanne. */
+.idle-bubble::after {
+  content: "";
+  position: absolute;
+  right: 1.3rem;
+  bottom: -0.8rem;
+  width: 1.5rem;
+  height: 0.85rem;
+  background: var(--paper);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
 }
 @keyframes bubble-in { from { opacity: 0; transform: translateY(1rem) scale(0.94); } }
 
@@ -280,7 +302,11 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 }
 
 /* « Notre histoire » : bouton discret en bas à droite de l'écran de veille. */
+/* Toujours dans le coin bas droit de l'écran, sur sa propre ligne. */
 .idle-story-button {
+  grid-column: 3;
+  grid-row: 4;
+  justify-self: end;
   align-self: end;
   display: inline-flex;
   align-items: center;
@@ -310,7 +336,9 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
    resterait affichée par-dessus l'écran de veille. */
 .story[open] { display: grid; }
 .story-title { margin: 0 0 0.9rem; font-size: 2.2rem; font-weight: 900; font-stretch: 115%; line-height: 1.05; }
-.story-text { margin: 0; font-size: 1.25rem; font-weight: 500; line-height: 1.45; text-wrap: pretty; }
+.story-parts { display: grid; gap: 1rem; }
+.story-parts h3 { margin: 0 0 0.25rem; font-size: 1.05rem; font-weight: 800; color: #6b6151; }
+.story-parts p { margin: 0; font-size: 1.1rem; font-weight: 500; line-height: 1.4; text-wrap: pretty; }
 .story-figure { margin: 0; text-align: center; }
 .story-figure[hidden] { display: none; }
 .story-figure img { width: 12rem; height: 16rem; object-fit: cover; border-radius: var(--radius-l); }
@@ -333,14 +361,16 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   position: relative;
   z-index: 2;
   grid-column: 3;
-  grid-row: 2 / 5;
+  /* L'encadré s'arrête au-dessus de la dernière ligne, réservée au bouton
+     « Notre histoire » : quelle que soit sa hauteur, il ne le pousse plus. */
+  grid-row: 2 / 4;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
   gap: 1rem;
   min-height: 0;
-  padding-bottom: 2.4vh;
+  padding-bottom: 1.6vh;
 }
 
 .idle-card {
