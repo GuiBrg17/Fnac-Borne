@@ -37,16 +37,18 @@ garde le portrait. Le texte de Jeanne reste affiché dans tous les cas.
 
 ## Ce qui est déjà en place
 
-Trois clips viennent de **Lingua Libre** (Wikimédia France), signés par
-**Laura Jauvert**, sous licence **CC BY** : usage commercial autorisé, à
-condition de citer l'auteure — ce que la borne fait, en petit, pendant le
-geste (texte dans `SIGN_CREDIT`, js/news.js).
+Trois clips montrent **Jeanne** en train de signer. Ils viennent de **Lingua
+Libre** (Wikimédia France), signés par **Laura Jauvert** sous licence **CC
+BY**, puis repris avec **Viggle** pour que le geste soit exécuté par Jeanne —
+avec l'accord de Laura Jauvert, donné le 24/09/2026. La licence demande de
+citer l'auteure et de signaler la modification : la borne l'affiche en petit
+pendant le geste (texte dans `SIGN_CREDIT`, js/news.js).
 
 | Fichier | Signe | Origine |
 |---|---|---|
-| `fr/bonjour.mp4` | Bonjour | Lingua Libre, CC BY |
-| `fr/merci.mp4` | Merci | Lingua Libre, CC BY |
-| `fr/abientot.mp4` | À bientôt | Lingua Libre, CC BY |
+| `fr/bonjour.mp4` | Bonjour | Laura Jauvert (Lingua Libre, CC BY), animé sur Jeanne |
+| `fr/merci.mp4` | Merci | Laura Jauvert (Lingua Libre, CC BY), animé sur Jeanne |
+| `fr/abientot.mp4` | À bientôt | Laura Jauvert (Lingua Libre, CC BY), animé sur Jeanne |
 
 Ces trois-là sont des **formules entières** : un seul signe suffit à les dire,
 il n'y a donc rien à bricoler. Les autres (`bienvenue`, `aider`, `assistance`,
@@ -54,7 +56,8 @@ il n'y a donc rien à bricoler. Les autres (`bienvenue`, `aider`, `assistance`,
 isolés donnerait du français signé approximatif, pas de la LSF. Elles
 attendent un tournage avec une personne qui pratique la langue.
 
-Leur décor a été retiré avec `tools/images/detourer-video.py`, puis le
+Le fond (et le filigrane de l'outil) a été retiré avec
+`tools/images/detourer-video.py`, puis le
 détourage a été **aplati sur le jaune de la borne** et enregistré en MP4
 (960 × 540, ~50 Ko) : Safari ne sait pas afficher la transparence d'un WebM,
 et la borne doit rester lisible partout. L'outil produit toujours un WebM

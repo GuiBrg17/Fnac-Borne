@@ -110,4 +110,4 @@ export const CARD = {
 // par la licence des vidéos (CC BY). À vider si tous les clips sont
 // remplacés par des vidéos tournées au magasin.
 // =====================================================================
-export const SIGN_CREDIT = "Signes : Laura Jauvert · Lingua Libre (CC BY)";
+export const SIGN_CREDIT = "Signes d'après Laura Jauvert · Lingua Libre (CC BY), animés sur Jeanne";
