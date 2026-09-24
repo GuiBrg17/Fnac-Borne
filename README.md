@@ -26,7 +26,7 @@ Conçu pour un **grand écran tactile en paysage** (PC portable Windows) placé 
 | `js/news.js` | **Actualités du magasin** affichées sur l'écran de veille |
 | `js/search.js` | Recherche d'un rayon à partir d'une phrase |
 | `js/stats.js` | Statistiques anonymes enregistrées sur la borne |
-| `js/voice.js` et `js/voice-worker.js` | Voix neuronale Piper (hors ligne) et lecture du son |
+| `js/voice.js` | Lecture des phrases enregistrées (`assets/voix/`) |
 | `tests/search.test.mjs` | Vérifie que des phrases types mènent au bon rayon |
 | `assets/fnac-logo.svg` | Logo Fnac |
 | `assets/jeanne-portrait.jpg` | Portrait de Jeanne affiché dans le panneau |
@@ -121,7 +121,6 @@ Le mode d'emploi du tournage est dans **`assets/lsf/LISEZ-MOI.md`**.
 
 Sur la page principale, **toucher 5 fois de suite le logo Fnac** (en haut à gauche) ouvre les réglages :
 
-- voix neuronale Piper : activation, état et téléchargement ;
 - choix de la voix du navigateur pour chaque langue (utilisée en secours) ;
 - délai avant le retour à l'écran de veille ;
 - **statistiques** : visites, questions par langue et par mode (micro, clavier, boutons, plan), rayons les plus demandés et **questions sans réponse**, à utiliser pour compléter les mots-clés. Un bouton permet de les remettre à zéro, avec confirmation.
@@ -148,7 +147,6 @@ Puis ouvrir http://localhost:8765 dans le navigateur. Le site doit être servi p
 ## Crédits et licences
 
 - Phrases enregistrées (`assets/voix/`) : fabriquées avec [Chatterbox Multilingual](https://github.com/resemble-ai/chatterbox) (MIT). En français, Jeanne imite « Jessica », voix du modèle Piper `fr_FR-upmc-medium`, données [UPMC](https://github.com/marytts/upmc-pierre-data) sous licence **CC-BY-SA 4.0** (voir `tools/voix/reference-jessica.py`).
-- Voix neuronales [Piper](https://github.com/rhasspy/piper) (MIT) via [@diffusionstudio/vits-web](https://www.npmjs.com/package/@diffusionstudio/vits-web) (MIT).
 - Clips en langue des signes : signés par **Laura Jauvert** pour [Lingua Libre](https://lingualibre.org) (Wikimédia France), licence **CC BY**, repris sur le personnage de Jeanne avec son accord — crédit affiché sur la borne pendant le geste.
 - Police [Archivo](https://fonts.google.com/specimen/Archivo) (SIL Open Font License), via Google Fonts.
 - Logo Fnac : marque déposée de la Fnac.
