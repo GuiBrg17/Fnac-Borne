@@ -106,8 +106,11 @@ export const CARD = {
 };
 
 // =====================================================================
-// Clips en langue des signes : crédit affiché pendant le geste, demandé
-// par la licence des vidéos (CC BY). À vider si tous les clips sont
-// remplacés par des vidéos tournées au magasin.
+// Clips en langue des signes : texte affiché en petit pendant le geste.
+// Il servait à créditer l'auteure des signes, comme le demande la licence
+// CC BY ; elle a dispensé le magasin de cet affichage le 24/09/2026, ce que
+// la licence permet quand l'auteure le demande. L'origine reste notée dans
+// le README et dans assets/lsf/LISEZ-MOI.md.
+// Remettre un texte ici pour qu'il réapparaisse sous le clip.
 // =====================================================================
-export const SIGN_CREDIT = "Signes d'après Laura Jauvert · Lingua Libre (CC BY), animés sur Jeanne";
+export const SIGN_CREDIT = "";

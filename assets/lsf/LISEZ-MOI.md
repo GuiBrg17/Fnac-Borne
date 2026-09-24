@@ -40,9 +40,11 @@ garde le portrait. Le texte de Jeanne reste affiché dans tous les cas.
 Trois clips montrent **Jeanne** en train de signer. Ils viennent de **Lingua
 Libre** (Wikimédia France), signés par **Laura Jauvert** sous licence **CC
 BY**, puis repris avec **Viggle** pour que le geste soit exécuté par Jeanne —
-avec l'accord de Laura Jauvert, donné le 24/09/2026. La licence demande de
-citer l'auteure et de signaler la modification : la borne l'affiche en petit
-pendant le geste (texte dans `SIGN_CREDIT`, js/news.js).
+avec l'accord de Laura Jauvert, donné le 24/09/2026. L'auteure a dispensé le magasin d'afficher
+le crédit sur la borne (accord du 24/09/2026), ce que la licence permet quand
+elle le demande : `SIGN_CREDIT` (js/news.js) est donc vide. L'origine reste
+notée ici et dans les crédits du README. Remettre un texte dans `SIGN_CREDIT`
+le fait réapparaître sous le clip.
 
 | Fichier | Signe | Origine |
 |---|---|---|

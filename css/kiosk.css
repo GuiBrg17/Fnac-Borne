@@ -570,7 +570,18 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .is-signing .jeanne-id { opacity: 0; transition: opacity 0.3s ease; }
 .jeanne-id, .chat { transition: opacity 0.4s ease; }
 
-.jeanne { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.1rem; }
+.jeanne {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1.1rem;
+  /* Pendant un signe, ce bloc prend la hauteur du clip : la conversation
+     descend au lieu de passer dessous. */
+  min-height: 0;
+  transition: min-height 0.3s var(--ease-out);
+}
+.is-signing .jeanne { min-height: 19rem; }
 .jeanne-slot {
   position: relative;
   width: 8.6rem;
@@ -625,6 +636,7 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
    « invisible » pour Chrome, qui refuse alors de lancer la lecture. */
 .is-signing .sign-video { opacity: 1; transition: none; }
 /* Crédit de l'auteure des clips, demandé par leur licence (CC BY). */
+.sign-credit:empty { display: none; }
 .sign-credit {
   position: absolute;
   left: 0.5rem;
