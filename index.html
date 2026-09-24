@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=84">
+<link rel="stylesheet" href="css/kiosk.css?v=85">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=84"></script>
+<script type="module" src="js/app.js?v=85"></script>
 </head>
 <body class="is-idle">
 
@@ -359,6 +359,14 @@
         </div>
       </div>
       <button type="button" class="stats-reset" id="statsReset">Remettre les statistiques à zéro</button>
+    </section>
+
+    <!-- Le wifi du magasin peut couper : sw.js garde une copie de tout le site. -->
+    <section class="neural" aria-labelledby="offlineTitle">
+      <h3 id="offlineTitle">Mode hors-ligne</h3>
+      <p class="neural-status">La borne garde une copie de tout le site — plan, voix, images. Si le wifi tombe, elle continue sans rien changer. La copie se fait toute seule au premier démarrage ; vérifiez ici qu'elle est complète avant l'ouverture.</p>
+      <p class="neural-status" id="offlineStatus" role="status">Vérification…</p>
+      <button type="button" class="neural-download" id="offlineCheck">Vérifier la copie</button>
     </section>
 
     <div class="settings-buttons">
