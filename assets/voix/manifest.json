@@ -88,7 +88,7 @@
   "Les caisses se trouvent au sous-sol. Pensez à votre carte Fnac.": "fr/5d05d5e506b7.m4a",
   "Le stand d'impression photo se trouve au sous-sol. Juste à côté de l'espace adhésion.": "fr/be5ba16c8a9f.m4a",
   "L'espace adhésion et financement se trouve au sous-sol.": "fr/3a647ea2ab4d.m4a",
-  "Ces produits sont disponibles à la Fnac Variétés, à l'adresse indiquée à l'écran.": "fr/e1e76c5dd442.m4a"
+  "Ces produits sont disponibles à la Fnac Variétés, à l'adresse indiquée à l'écran. Un vendeur d'ici peut aussi vous les commander.": "fr/6725be7fda5c.m4a"
  },
  "en": {
   "Sure, let's continue in English. What are you looking for?": "en/3539665560fd.m4a",
@@ -179,7 +179,7 @@
   "The checkouts are in the basement. Remember your Fnac card.": "en/8351d48f56bb.m4a",
   "The photo printing stand is in the basement. Right next to the membership desk.": "en/3b6d90b76480.m4a",
   "The membership and financing desk is in the basement.": "en/bdd06d2fe7c1.m4a",
-  "Those are available at Fnac Variétés — the address is on the screen.": "en/cb0654a431a0.m4a"
+  "Those are available at Fnac Variétés — the address is on the screen. A staff member here can also order them for you.": "en/6bb84e6f7da3.m4a"
  },
  "es": {
   "¡Hola y bienvenido a la Fnac Jeanne d'Arc! Dígame qué busca y le muestro la sección en el plano.": "es/71633b60c208.m4a",
@@ -270,6 +270,6 @@
   "Las cajas están en el sótano. No olvide su tarjeta Fnac.": "es/6cfed68d55b7.m4a",
   "El puesto de impresión de fotos está en el sótano. Justo al lado del espacio de socios.": "es/6fb40ea485e0.m4a",
   "El espacio de socios y financiación está en el sótano.": "es/e993cfff5ebf.m4a",
-  "Esos productos están en la Fnac Variétés, en la dirección que ve en pantalla.": "es/f22afbc8f8a9.m4a"
+  "Esos productos están en la Fnac Variétés, en la dirección que ve en pantalla. Un vendedor de aquí también puede encargárselos.": "es/f2e7d76bae8c.m4a"
  }
 }
