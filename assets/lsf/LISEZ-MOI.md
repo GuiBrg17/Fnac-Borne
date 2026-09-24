@@ -53,10 +53,43 @@ le fait réapparaître sous le clip.
 | `fr/abientot.mp4` | À bientôt | Laura Jauvert (Lingua Libre, CC BY), animé sur Jeanne |
 
 Ces trois-là sont des **formules entières** : un seul signe suffit à les dire,
-il n'y a donc rien à bricoler. Les autres (`bienvenue`, `aider`, `assistance`,
-`accompagner`) sont des **phrases** : les mettre bout à bout à partir de mots
-isolés donnerait du français signé approximatif, pas de la LSF. Elles
-attendent un tournage avec une personne qui pratique la langue.
+il n'y a donc rien à bricoler.
+
+## Les quatre qui manquent
+
+`bienvenue`, `aider`, `assistance`, `accompagner` sont écrites comme des
+**phrases** en français. Les signer mot à mot donnerait du français signé, pas
+de la LSF : chaque emplacement doit porter **un seul signe**, choisi par
+quelqu'un qui pratique la langue.
+
+Recherche faite le 24/09/2026 sur les 637 vidéos LSF de Lingua Libre
+(Laura Jauvert 447, Hugo en résidence 85, Taliba31 77, et quatre autres) :
+
+| Emplacement | Signe trouvé | Signeur · licence | Remarque |
+|---|---|---|---|
+| `accompagner` | **Accompagner** | Laura Jauvert · CC BY 3.0 | correspondance exacte |
+| `aider` | Conseiller | Laura Jauvert · CC BY 3.0 | à valider |
+| `assistance` | Proposer | Laura Jauvert · CC BY 3.0 | à valider |
+| `bienvenue` | accueillir | Hugo en résidence · CC0 | autre signeur, à valider |
+
+**Il n'existe aucun signe « aider », « aide », « assistance » ni « bienvenue »**
+sur Lingua Libre : les trois dernières lignes sont des **propositions**, pas
+des équivalents. Trois autres signes ont été préparés en réserve (`demander`,
+`chercher`, `content`), au cas où la personne qui valide préfère tourner la
+phrase autrement — par exemple BONJOUR + CHERCHER + QUOI, plus idiomatique que
+« puis-je vous aider ».
+
+`bienvenue` vient d'un autre signeur que les trois clips en place : le style et
+le cadrage diffèrent, et **son accord reste à demander**, comme celui obtenu
+auprès de Laura Jauvert. La licence CC0 lève le droit d'auteur, pas le droit à
+l'image.
+
+Réserve utile pour plus tard : Hugo en résidence et Taliba31 ont enregistré un
+vocabulaire de bibliothèque, tout en CC0, qui colle au magasin — `accueil`,
+`conseil`, `demander conseil`, `commande`, `commander`, `rayon (lieu)`,
+`ascenseur`, `livre`, `cd`, `dvd`, `bande dessinée`, `manga`, `jeux`,
+`musique`, `film`, `sortie`, `toilettes`, `où`, `pardon`,
+`je ne comprends pas`.
 
 Le fond (et le filigrane de l'outil) a été retiré avec
 `tools/images/detourer-video.py`, puis le
