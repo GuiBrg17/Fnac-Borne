@@ -74,6 +74,7 @@ const els = {
   reportStatus: $("#reportStatus"), reportSend: $("#reportSend"), reportDownload: $("#reportDownload"),
   settings: $("#settings"), idleSeconds: $("#idleSeconds"), micPatience: $("#micPatience"), testVoice: $("#testVoice"),
   micNear: $("#micNear"), micLevelTest: $("#micLevelTest"), micLevelText: $("#micLevelText"),
+  offlineStatus: $("#offlineStatus"), offlineCheck: $("#offlineCheck"),
   micLevelBar: $("#micLevelBar"), micLevelMark: $("#micLevelMark"),
   vendorTopic: $("#vendorTopic"), vendorEmails: $("#vendorEmails"), vendorStatus: $("#vendorStatus"), vendorTest: $("#vendorTest"),
   toast: $("#toast"),
@@ -1873,6 +1874,7 @@ els.logo.addEventListener("click", () => {
     els.micPatience.value = store.get("micPatience", "pose");
     els.micNear.value = store.get("micNear", "tout");
     showThreshold();
+    showOfflineState();
     els.settings.showModal();
   }
 });
@@ -2012,6 +2014,41 @@ if (els.idlePhoto.isConnected) {
   if (els.idlePhoto.complete && els.idlePhoto.naturalWidth > 0) useIdlePhoto();
 }
 
+
+// --- Mode hors-ligne -----------------------------------------------------------
+// Le wifi du magasin peut couper en pleine journée : sw.js garde une copie de tout
+// le site dans le navigateur. Rien à installer, rien à brancher — la copie se fait
+// au premier démarrage, puis se refait à chaque nouvelle version publiée.
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register(`sw.js${VERSION}`).catch(() => {});
+}
+
+// Ce que le réglage affiche : combien de fichiers sont déjà copiés, sur combien.
+async function offlineCount() {
+  if (!("caches" in window)) return null;
+  const cache = await caches.open(`borne-v${VERSION.replace("?v=", "")}`);
+  const copies = (await cache.keys()).length;
+  let attendus = 0;
+  try {
+    const liste = await cache.match(`assets/hors-ligne.json${VERSION}`)
+      || await fetch(`assets/hors-ligne.json${VERSION}`);
+    // Le socle de sw.js s'ajoute à la liste des fichiers d'assets.
+    attendus = (await liste.json()).length + 15;
+  } catch { return { copies, attendus: 0 }; }
+  return { copies, attendus };
+}
+
+async function showOfflineState() {
+  const etat = await offlineCount();
+  if (!etat) { els.offlineStatus.textContent = "Ce navigateur ne sait pas garder de copie."; return; }
+  if (!etat.attendus) { els.offlineStatus.textContent = `${etat.copies} fichiers copiés.`; return; }
+  const pret = etat.copies >= etat.attendus - 5;   // quelques fichiers peuvent manquer sans gêne
+  els.offlineStatus.textContent = pret
+    ? `Copie complète : ${etat.copies} fichiers. La borne marche sans réseau.`
+    : `Copie en cours : ${etat.copies} fichiers sur ${etat.attendus}. Laissez la borne connectée.`;
+}
+
+els.offlineCheck.addEventListener("click", showOfflineState);
 
 // Aide au réglage : ouvrir la borne avec ?debug pour lancer un signe à la main
 // depuis la console du navigateur (jeanne.sign("merci")).

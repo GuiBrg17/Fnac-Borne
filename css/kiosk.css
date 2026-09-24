@@ -58,6 +58,9 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 
 .logo {
   display: inline-block;
+  /* Sans cela, le logo se laissait écraser à zéro par le nom du magasin et la
+     pastille des horaires, qui ne se coupent pas, sur un écran étroit. */
+  flex: 0 0 auto;
   width: 4.2rem;
   aspect-ratio: 499 / 515;
   background: var(--ink);
