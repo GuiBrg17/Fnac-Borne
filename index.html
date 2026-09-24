@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=80">
+<link rel="stylesheet" href="css/kiosk.css?v=81">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=80"></script>
+<script type="module" src="js/app.js?v=81"></script>
 </head>
 <body class="is-idle">
 
@@ -80,9 +80,7 @@
     <p class="idle-bubble" data-i18n="idleBubble">Bienvenue ! En quoi puis-je vous aider ?</p>
   </div>
 
-  <!-- Colonne de droite : la carte Fnac+, puis « Notre histoire »
-       (textes dans js/news.js). Les deux sont empilés : posés sur deux cases
-       voisines de la grille, ils se chevauchaient dès que l'encadré était haut. -->
+  <!-- Colonne de droite : les publicités qui tournent (textes dans js/news.js). -->
   <div class="idle-side">
     <aside class="idle-card" id="idleCard">
       <!-- La carte Fnac+ -->
@@ -103,10 +101,13 @@
         <p class="idle-card-news-date"><svg aria-hidden="true"><use href="#i-calendar"/></svg><span id="idleCardNewsDate"></span></p>
       </article>
     </aside>
-    <button type="button" class="idle-story-button" id="idleStoryButton">
-      <svg aria-hidden="true"><use href="#i-pin"/></svg><span id="idleStoryButtonLabel">Notre histoire</span>
-    </button>
   </div>
+
+  <!-- « Notre histoire » : posé sur la dernière ligne de la grille, il reste
+       dans le coin bas droit quelle que soit la hauteur de l'encadré noir. -->
+  <button type="button" class="idle-story-button" id="idleStoryButton">
+    <svg aria-hidden="true"><use href="#i-pin"/></svg><span id="idleStoryButtonLabel">Notre histoire</span>
+  </button>
 
   <div class="idle-cta">
     <span class="ripple" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -254,7 +255,7 @@
 <dialog class="story" id="storyDialog" aria-labelledby="storyTitle">
   <div class="story-body">
     <h2 class="story-title" id="storyTitle"></h2>
-    <p class="story-text" id="storyText"></p>
+    <div class="story-parts" id="storyParts"></div>
   </div>
   <figure class="story-figure" id="storyFigure" hidden>
     <img id="storyImage" alt="" width="420" height="560">
