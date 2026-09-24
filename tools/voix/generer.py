@@ -73,8 +73,12 @@ PRONONCIATION = {
         (r"\bTV\b", "té-vé"),
         (r"\bUSB\b", "u-èsse-bé"),
         # Marques lues à la française : la borne affiche toujours la vraie graphie.
-        # Philips « Hue » : laissé tel quel, elle le lit « u », comme la plupart
-        # des clients. « Hyou » donnait « aux yeux », « iou » donnait « zou ».
+        # Philips « Hue » : « you », comme le disent les clients en France.
+        # Mesuré le 24/09/2026 sur cinq graphies : « Hue » et « Hugh » se
+        # lisent « u », « hyou » donnait « aux yeux », « iou » donnait « zou »,
+        # « hiou » avalait le mot. « you » est le seul que Whisper réentend
+        # comme un mot à part entière.
+        (r"\bHue\b", "you"),
         (r"\bApple\b", "Apeul"),
         (r"\bAndroid\b", "Androïde"),
         (r"\bDyson\b", "Daïsonne"),
