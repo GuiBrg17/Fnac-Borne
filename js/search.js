@@ -9,7 +9,7 @@
 // 2. Si rien n'est trouvé, recherche tolérante aux fautes :
 //    « aifone », « playstasion », « télévition », « trotinete »…
 // =====================================================================
-const { ZONES, INTENTS, INFO, CLARIFY } = await import("./data.js" + new URL(import.meta.url).search);
+const { ZONES, INTENTS, INFO, CLARIFY, RUDE } = await import("./data.js" + new URL(import.meta.url).search);
 
 const STOPWORDS = new Set([
   // français
@@ -354,6 +354,19 @@ export function findInfo(text) {
   const product = exactMatches(query, null)[0];
   if (product && clean(product.word).length > hits[0].length) return null;
   return hits[0].name;
+}
+
+// Propos déplacés (voir RUDE dans js/data.js). Renvoie « dirigés », « jurons »
+// ou null. Mots entiers seulement, via les mêmes règles que la recherche.
+const RUDE_MATCHERS = Object.fromEntries(
+  Object.entries(RUDE).map(([genre, mots]) => [genre, mots.filter((mot) => clean(mot)).map(phraseRe)]));
+
+export function findRude(text) {
+  const query = clean(text);
+  if (!query) return null;
+  if (RUDE_MATCHERS["dirigés"].some((re) => re.test(query))) return "dirigés";
+  if (RUDE_MATCHERS.jurons.some((re) => re.test(query))) return "jurons";
+  return null;
 }
 
 export function findIntent(text) {
