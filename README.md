@@ -156,7 +156,9 @@ Puis ouvrir http://localhost:8765 dans le navigateur. Le site doit être servi p
 
 ## Crédits et licences
 
-- Phrases enregistrées (`assets/voix/`) : fabriquées avec [Chatterbox Multilingual](https://github.com/resemble-ai/chatterbox) (MIT). En français, Jeanne imite « Jessica », voix du modèle Piper `fr_FR-upmc-medium`, données [UPMC](https://github.com/marytts/upmc-pierre-data) sous licence **CC-BY-SA 4.0** (voir `tools/voix/reference-jessica.py`).
+- Phrases enregistrées (`assets/voix/`) : deux moteurs, un par langue (`MOTEURS` dans `tools/voix/generer.py`).
+  - **Français** : voix neuronale **Microsoft `fr-FR-VivienneMultilingualNeural`**, choisie par le magasin le 24/09/2026. Les moteurs libres (Chatterbox, Kokoro, Piper) sonnaient robotiques à l'écoute. ⚠️ Les fichiers sont fabriqués via `edge-tts`, qui passe par le canal gratuit de la fonction « Lire à voix haute » d'Edge : **ce canal n'est pas prévu pour un usage commercial**. Pour une mise en magasin propre, refabriquer les mêmes voix via **Azure Speech**, dont l'offre gratuite (500 000 caractères par mois) couvre très largement les 267 phrases (~18 000 caractères) et autorise l'usage commercial. Seul le compte change, pas la voix.
+  - **Anglais et espagnol** : [Chatterbox Multilingual](https://github.com/resemble-ai/chatterbox) (MIT), qui imite une voix de démonstration de Resemble AI.
 - Clips en langue des signes : signés par **Laura Jauvert** pour [Lingua Libre](https://lingualibre.org) (Wikimédia France), licence **CC BY**, repris sur le personnage de Jeanne avec son accord — crédit affiché sur la borne pendant le geste.
 - Police [Archivo](https://fonts.google.com/specimen/Archivo) (SIL Open Font License), via Google Fonts.
 - Logo Fnac : marque déposée de la Fnac.
