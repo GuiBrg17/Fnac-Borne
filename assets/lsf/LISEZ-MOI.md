@@ -54,8 +54,13 @@ il n'y a donc rien à bricoler. Les autres (`bienvenue`, `aider`, `assistance`,
 isolés donnerait du français signé approximatif, pas de la LSF. Elles
 attendent un tournage avec une personne qui pratique la langue.
 
+Leur décor a été retiré avec `tools/images/detourer-video.py` : la signante
+se pose sur le jaune de la borne, sans la salle qu'il y avait derrière elle.
+Les fichiers sont des WebM avec transparence (VP9, 960 × 540, ~90 Ko).
+
 Un clip tourné au magasin (`.mp4`) remplace automatiquement celui de Lingua
 Libre (`.webm`) : la borne prend le `.webm` seulement si le `.mp4` manque.
+Un clip tourné sur fond uni peut être détouré de la même façon.
 
 ## Comment tourner les clips
 

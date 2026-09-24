@@ -612,6 +612,8 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   z-index: 2;
   width: 100%;
   height: 19rem;
+  /* Les clips sont détourés : la signante se pose sur le jaune de la borne,
+     sans le décor qu'il y avait derrière elle. */
   object-fit: contain;
   border-radius: var(--radius-l);
   background: var(--yellow);
