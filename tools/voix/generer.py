@@ -79,9 +79,10 @@ PRONONCIATION = {
         (r"\bAndroid\b", "Androïde"),
         (r"\bDyson\b", "Daïsonne"),
         (r"\bSony\b", "Sonni"),
-        (r"\bWilson\b", "Ouilsonne"),
     ],
     "en": [
+        # Nom français dans une phrase anglaise : elle lisait « Fnac Rites ».
+        (r"\bVariétés\b", "Var-ee-ay-tay"),
         (r"\bHDMI\b", "aitch-dee-em-eye"),
         (r"\bUSB\b", "you-ess-bee"),
         (r"\bTV\b", "tee-vee"),
