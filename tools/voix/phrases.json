@@ -25,7 +25,7 @@
  },
  {
   "lang": "fr",
-  "text": "Ces produits sont disponibles à la Fnac Variétés, à l'adresse indiquée à l'écran."
+  "text": "Ces produits sont disponibles à la Fnac Variétés, à l'adresse indiquée à l'écran. Un vendeur d'ici peut aussi vous les commander."
  },
  {
   "lang": "fr",
@@ -381,7 +381,7 @@
  },
  {
   "lang": "en",
-  "text": "Those are available at Fnac Variétés — the address is on the screen."
+  "text": "Those are available at Fnac Variétés — the address is on the screen. A staff member here can also order them for you."
  },
  {
   "lang": "en",
@@ -737,7 +737,7 @@
  },
  {
   "lang": "es",
-  "text": "Esos productos están en la Fnac Variétés, en la dirección que ve en pantalla."
+  "text": "Esos productos están en la Fnac Variétés, en la dirección que ve en pantalla. Un vendedor de aquí también puede encargárselos."
  },
  {
   "lang": "es",
