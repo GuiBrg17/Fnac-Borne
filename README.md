@@ -149,5 +149,6 @@ Puis ouvrir http://localhost:8765 dans le navigateur. Le site doit être servi p
 
 - Phrases enregistrées (`assets/voix/`) : fabriquées avec [Chatterbox Multilingual](https://github.com/resemble-ai/chatterbox) (MIT). En français, Jeanne imite « Jessica », voix du modèle Piper `fr_FR-upmc-medium`, données [UPMC](https://github.com/marytts/upmc-pierre-data) sous licence **CC-BY-SA 4.0** (voir `tools/voix/reference-jessica.py`).
 - Voix neuronales [Piper](https://github.com/rhasspy/piper) (MIT) via [@diffusionstudio/vits-web](https://www.npmjs.com/package/@diffusionstudio/vits-web) (MIT).
+- Clips en langue des signes : [Lingua Libre](https://lingualibre.org) (Wikimédia France), signés par **Laura Jauvert**, licence **CC BY** — crédit affiché sur la borne pendant le geste.
 - Police [Archivo](https://fonts.google.com/specimen/Archivo) (SIL Open Font License), via Google Fonts.
 - Logo Fnac : marque déposée de la Fnac.

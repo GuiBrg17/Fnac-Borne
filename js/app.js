@@ -6,7 +6,7 @@
 const VERSION = new URL(import.meta.url).search;
 const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE, INFO, OPENING } = await import("./data.js" + VERSION);
 const { findZoneDetailed, findRude, findIntent, findInfo, findClarify, pickClarifyOption, normalize, displayKeyword } = await import("./search.js" + VERSION);
-const { NEWS, STORY, CARD } = await import("./news.js" + VERSION);
+const { NEWS, STORY, CARD, SIGN_CREDIT } = await import("./news.js" + VERSION);
 const { recordSession, recordQuestion, recordRude, recordFeedback, readStats, readPeriod, resetStats, dayKey } = await import("./stats.js" + VERSION);
 const { buildReport, monthlyPeriod, downloadReport, emailReport, isEmail } = await import("./report.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
@@ -57,7 +57,7 @@ const els = {
   idleGreet: $("#idleGreet"), idleNews: $("#idleNews"), idleNewsTitle: $("#idleNewsTitle"), idleNewsText: $("#idleNewsText"),
   idleNewsDate: $("#idleNewsDate"), idleNewsExample: $("#idleNewsExample"), idleNewsImage: $("#idleNewsImage"),
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
-  app: $("#appScreen"), signVideo: $("#signVideo"), lookVideo: $("#lookVideo"),
+  app: $("#appScreen"), signVideo: $("#signVideo"), signCredit: $("#signCredit"), lookVideo: $("#lookVideo"),
   idleHours: $("#idleHours"), storyButton: $("#idleStoryButton"), storyButtonLabel: $("#idleStoryButtonLabel"),
   storyDialog: $("#storyDialog"), storyTitle: $("#storyTitle"), storyText: $("#storyText"),
   storyFigure: $("#storyFigure"), storyImage: $("#storyImage"), storyCaption: $("#storyCaption"),
@@ -1447,7 +1447,9 @@ let signQueue = [];
 // vidéo s'affiche une seconde dans le vide quand un signe n'a pas été tourné.
 const signClips = new Map();
 
-const signUrl = (name) => `${SIGN_DIR}${state.lang}/${name}.mp4${VERSION}`;
+// .webm pour les clips venus de Wikimedia Commons, .mp4 pour ceux tournés
+// au magasin : la borne prend le premier des deux qui existe.
+const SIGN_FORMATS = [".webm", ".mp4"];
 
 function hasClip(url) {
   if (!signClips.has(url)) {
@@ -1456,15 +1458,25 @@ function hasClip(url) {
   return signClips.get(url);
 }
 
+async function findClip(name) {
+  for (const format of SIGN_FORMATS) {
+    const url = `${SIGN_DIR}${state.lang}/${name}${format}${VERSION}`;
+    if (await hasClip(url)) return url;
+  }
+  return null;
+}
+
 async function signLSF(names) {
   if (!els.signVideo || state.screen !== "app") return false;
   const wanted = [];
   for (const name of Array.isArray(names) ? names : [names]) {
-    if (await hasClip(signUrl(name))) wanted.push(signUrl(name));
+    const url = await findClip(name);
+    if (url) wanted.push(url);
   }
   // Rien de tourné dans cette langue, ou le client est reparti entre-temps.
   if (!wanted.length || state.screen !== "app") return false;
   signQueue = wanted;
+  if (els.signCredit) els.signCredit.textContent = SIGN_CREDIT || "";
   // Le cadre s'ouvre avant la première image, et la lecture attend que
   // l'écran soit redessiné : Chrome refuse de lire une vidéo muette tant
   // qu'elle n'est pas visible (économie d'énergie).

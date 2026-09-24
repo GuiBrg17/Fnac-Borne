@@ -104,3 +104,10 @@ export const CARD = {
   qr: "assets/qr-carte-fnac.svg",
   qrLabel: "Tous les détails sur votre téléphone"
 };
+
+// =====================================================================
+// Clips en langue des signes : crédit affiché pendant le geste, demandé
+// par la licence des vidéos (CC BY). À vider si tous les clips sont
+// remplacés par des vidéos tournées au magasin.
+// =====================================================================
+export const SIGN_CREDIT = "Signes : Laura Jauvert · Lingua Libre (CC BY)";
