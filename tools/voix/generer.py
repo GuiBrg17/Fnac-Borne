@@ -60,12 +60,50 @@ REGLAGES = dict(exaggeration=0.5, cfg_weight=0.3, temperature=0.8)
 # affiché sur la borne, lui, ne change pas : seule la voix suit cette table.
 # Le contrôle Whisper, lui, compare au texte d'origine : si la prononciation
 # est bonne, la transcription retombe sur le vrai mot.
+# Les sigles sont épelés dans la langue de la phrase : le modèle les lisait
+# comme des mots (« usbe » pour USB, « admi » pour HDMI, « Tyvo » pour TV).
 PRONONCIATION = {
-    "fr": [(r"\bSAV\b", "èsse-a-vé"), (r"\bApple\b", "Apeul")],
-    "en": [],
-    # Espagnol : laisser « Apple » tel quel. La graphie « Apel » donnait
-    # « a pelo », le modèle lit bien le mot d'origine.
-    "es": [],
+    "fr": [
+        (r"\bSAV\b", "èsse-a-vé"),
+        (r"\bBD\b", "bé-dé"),
+        (r"\bCD\b", "cé-dé"),
+        (r"\bDVD\b", "dé-vé-dé"),
+        (r"\bHDMI\b", "ache-dé-èmme-i"),
+        (r"\bPC\b", "pé-cé"),
+        (r"\bTV\b", "té-vé"),
+        (r"\bUSB\b", "u-èsse-bé"),
+        # Marques lues à la française : la borne affiche toujours la vraie graphie.
+        # Philips « Hue » : laissé tel quel, elle le lit « u », comme la plupart
+        # des clients. « Hyou » donnait « aux yeux », « iou » donnait « zou ».
+        (r"\bApple\b", "Apeul"),
+        (r"\bAndroid\b", "Androïde"),
+        (r"\bDyson\b", "Daïsonne"),
+        (r"\bSony\b", "Sonni"),
+        (r"\bWilson\b", "Ouilsonne"),
+    ],
+    "en": [
+        (r"\bHDMI\b", "aitch-dee-em-eye"),
+        (r"\bUSB\b", "you-ess-bee"),
+        (r"\bTV\b", "tee-vee"),
+        (r"\bVR\b", "vee-arr"),
+        (r"\bCDs\b", "see-dees"),
+        (r"\bDVDs\b", "dee-vee-dees"),
+        # « AA batteries » se dit « double-A ».
+        (r"\bAA-type\b", "double-A type"),
+    ],
+    "es": [
+        (r"\bCD\b", "ce-de"),
+        (r"\bDVD\b", "de-uve-de"),
+        (r"\bHDMI\b", "hache-de-eme-i"),
+        (r"\bPC\b", "pe-ce"),
+        (r"\bTV\b", "te-uve"),
+        (r"\bUSB\b", "u-ese-be"),
+        # « Apel » tout court donnait « a pelo » : l'accent tient la première syllabe.
+        (r"\bApple\b", "Ápel"),
+        (r"\bDyson\b", "Dáison"),
+        (r"\bSony\b", "Soni"),
+        (r"\bNespresso\b", "Nes-presso"),
+    ],
 }
 
 
