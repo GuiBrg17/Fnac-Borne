@@ -74,7 +74,7 @@ const els = {
   reportStatus: $("#reportStatus"), reportSend: $("#reportSend"), reportDownload: $("#reportDownload"),
   settings: $("#settings"), idleSeconds: $("#idleSeconds"), micPatience: $("#micPatience"), testVoice: $("#testVoice"),
   micNear: $("#micNear"), micLevelTest: $("#micLevelTest"), micLevelText: $("#micLevelText"),
-  offlineStatus: $("#offlineStatus"), offlineCheck: $("#offlineCheck"),
+  offlineStatus: $("#offlineStatus"), offlineCheck: $("#offlineCheck"), offlineReset: $("#offlineReset"),
   micLevelBar: $("#micLevelBar"), micLevelMark: $("#micLevelMark"),
   vendorTopic: $("#vendorTopic"), vendorEmails: $("#vendorEmails"), vendorStatus: $("#vendorStatus"), vendorTest: $("#vendorTest"),
   toast: $("#toast"),
@@ -142,12 +142,12 @@ async function loadClipManifest() {
     const response = await fetch(`assets/voix/manifest.json${VERSION}`);
     if (response.ok) clipManifest = await response.json();
   } catch { /* pas de phrases enregistrées : voix de synthèse */ }
-  preloadLanguage(state.lang);
+  return preloadLanguage(state.lang);
 }
 
 function preloadLanguage(lang) {
   const files = Object.keys(clipManifest[lang] || {}).map((text) => clipUrl(text, lang));
-  if (files.length) voice.preloadClips(files);
+  return files.length ? voice.preloadClips(files) : Promise.resolve();
 }
 
 // Une phrase est en préparation (fichier qui se charge, voix qui démarre) :
@@ -2021,6 +2021,12 @@ if (els.idlePhoto.isConnected) {
 // au premier démarrage, puis se refait à chaque nouvelle version publiée.
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register(`sw.js${VERSION}`).catch(() => {});
+  // La copie de fond n'attaque qu'une fois les phrases de la langue en cours
+  // chargées : sinon les deux se disputent la connexion du magasin et Jeanne
+  // reste muette le temps que ça se démêle.
+  clipManifestReady.then(() => setTimeout(() => {
+    navigator.serviceWorker.ready.then((reg) => reg.active?.postMessage("remplir"));
+  }, 5000));
 }
 
 // Ce que le réglage affiche : combien de fichiers sont déjà copiés, sur combien.
@@ -2049,6 +2055,17 @@ async function showOfflineState() {
 }
 
 els.offlineCheck.addEventListener("click", showOfflineState);
+
+// Sortie de secours : tout effacer et repartir du site en ligne. À utiliser si
+// la borne se met à se comporter bizarrement sans qu'on sache pourquoi.
+els.offlineReset.addEventListener("click", async () => {
+  els.offlineStatus.textContent = "Effacement…";
+  try {
+    for (const reg of await navigator.serviceWorker.getRegistrations()) await reg.unregister();
+    for (const nom of await caches.keys()) await caches.delete(nom);
+  } catch { /* rien à effacer */ }
+  location.reload();
+});
 
 // Aide au réglage : ouvrir la borne avec ?debug pour lancer un signe à la main
 // depuis la console du navigateur (jeanne.sign("merci")).
