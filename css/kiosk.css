@@ -622,6 +622,23 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 /* Le clip apparaît d'un coup : une opacité qui monte en fondu est encore
    « invisible » pour Chrome, qui refuse alors de lancer la lecture. */
 .is-signing .sign-video { opacity: 1; transition: none; }
+/* Crédit de l'auteure des clips, demandé par leur licence (CC BY). */
+.sign-credit {
+  position: absolute;
+  left: 0.5rem;
+  top: 15.9rem;
+  z-index: 3;
+  margin: 0;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0;
+  color: #5a5348;
+  pointer-events: none;
+}
+.is-signing .sign-credit { opacity: 1; }
 .jeanne-name {
   margin: 0;
   font-size: 2.3rem;

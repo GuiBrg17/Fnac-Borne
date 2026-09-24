@@ -35,6 +35,28 @@ est une langue à part entière, on ne traduit pas la LSF en anglais.
 Un fichier absent n'est pas un problème : la borne saute simplement ce signe et
 garde le portrait. Le texte de Jeanne reste affiché dans tous les cas.
 
+## Ce qui est déjà en place
+
+Trois clips viennent de **Lingua Libre** (Wikimédia France), signés par
+**Laura Jauvert**, sous licence **CC BY** : usage commercial autorisé, à
+condition de citer l'auteure — ce que la borne fait, en petit, pendant le
+geste (texte dans `SIGN_CREDIT`, js/news.js).
+
+| Fichier | Signe | Origine |
+|---|---|---|
+| `fr/bonjour.webm` | Bonjour | Lingua Libre, CC BY |
+| `fr/merci.webm` | Merci | Lingua Libre, CC BY |
+| `fr/abientot.webm` | À bientôt | Lingua Libre, CC BY |
+
+Ces trois-là sont des **formules entières** : un seul signe suffit à les dire,
+il n'y a donc rien à bricoler. Les autres (`bienvenue`, `aider`, `assistance`,
+`accompagner`) sont des **phrases** : les mettre bout à bout à partir de mots
+isolés donnerait du français signé approximatif, pas de la LSF. Elles
+attendent un tournage avec une personne qui pratique la langue.
+
+Un clip tourné au magasin (`.mp4`) remplace automatiquement celui de Lingua
+Libre (`.webm`) : la borne prend le `.webm` seulement si le `.mp4` manque.
+
 ## Comment tourner les clips
 
 - Téléphone à l'horizontale ou à la verticale, posé (pas à la main), à hauteur
