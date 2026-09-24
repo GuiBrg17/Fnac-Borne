@@ -44,9 +44,9 @@ geste (texte dans `SIGN_CREDIT`, js/news.js).
 
 | Fichier | Signe | Origine |
 |---|---|---|
-| `fr/bonjour.webm` | Bonjour | Lingua Libre, CC BY |
-| `fr/merci.webm` | Merci | Lingua Libre, CC BY |
-| `fr/abientot.webm` | À bientôt | Lingua Libre, CC BY |
+| `fr/bonjour.mp4` | Bonjour | Lingua Libre, CC BY |
+| `fr/merci.mp4` | Merci | Lingua Libre, CC BY |
+| `fr/abientot.mp4` | À bientôt | Lingua Libre, CC BY |
 
 Ces trois-là sont des **formules entières** : un seul signe suffit à les dire,
 il n'y a donc rien à bricoler. Les autres (`bienvenue`, `aider`, `assistance`,
@@ -54,13 +54,15 @@ il n'y a donc rien à bricoler. Les autres (`bienvenue`, `aider`, `assistance`,
 isolés donnerait du français signé approximatif, pas de la LSF. Elles
 attendent un tournage avec une personne qui pratique la langue.
 
-Leur décor a été retiré avec `tools/images/detourer-video.py` : la signante
-se pose sur le jaune de la borne, sans la salle qu'il y avait derrière elle.
-Les fichiers sont des WebM avec transparence (VP9, 960 × 540, ~90 Ko).
+Leur décor a été retiré avec `tools/images/detourer-video.py`, puis le
+détourage a été **aplati sur le jaune de la borne** et enregistré en MP4
+(960 × 540, ~50 Ko) : Safari ne sait pas afficher la transparence d'un WebM,
+et la borne doit rester lisible partout. L'outil produit toujours un WebM
+transparent, utile pour le montage.
 
-Un clip tourné au magasin (`.mp4`) remplace automatiquement celui de Lingua
-Libre (`.webm`) : la borne prend le `.webm` seulement si le `.mp4` manque.
-Un clip tourné sur fond uni peut être détouré de la même façon.
+Pour remplacer un signe, déposer un fichier du même nom (`.mp4`, sinon
+`.webm`) : la borne prend le nouveau sans rien changer au code. Un clip
+tourné sur fond uni peut être détouré de la même façon.
 
 ## Comment tourner les clips
 
