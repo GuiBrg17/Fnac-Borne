@@ -1,6 +1,2 @@
-[OK ] fr 0.96 221Hz mélodie 2.1  7.9s essai 1 | Ces produits sont disponibles à la Fnac Variétés, à l'adresse indiquée à l'écran. Un vendeur d'ici peut aussi vous les commander.
-      entendu : Ces produits sont disponibles à la FNAC Varieté, à l'adresse indiquée à l'écran. Un vendeur d'ici peut aussi vous les commander.
-[OK ] en 0.95 219Hz mélodie 3.6  7.0s essai 1 | Those are available at Fnac Variétés — the address is on the screen. A staff member here can also order them for you.
-      entendu : Those are available at FNAC Varietay. The address is on the screen. A staff member here can also order them for you.
-[OK ] es 0.90 205Hz mélodie 3.5  8.1s essai 1 | Esos productos están en la Fnac Variétés, en la dirección que ve en pantalla. Un vendedor de aquí también puede encargárselos.
-      entendu : Esos productos están en la FANAC Barietes, en la dirección que ve en pantalla. Un vendedor de aquí también puede encargárselos.
+[OK ] fr 0.92 226Hz mélodie 4.4  9.5s essai 1 | Quel produit Philips ? Un rasoir, une tondeuse ou une brosse à dents, une machine à café ou un airfryer, une télé, ou des ampoules Hue ?
+      entendu : Quel produit, Philips Un rasoir, une tondeuse ou une brosse à dents, une machine à café ou un air frier, une télé ou des ampoules

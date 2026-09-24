@@ -40,7 +40,8 @@ export const NEWS = [
 // Trois volets : le magasin, la place et sa statue, puis ce que la Fnac et
 // Jeanne d'Arc ont en commun. Le rapprochement est présenté pour ce qu'il
 // est — une façon de raconter le magasin, pas un fait historique.
-// Dates vérifiées : magasin créé en 2000 (annuaire des entreprises),
+// Dates : ouverture en 2001, confirmée par le magasin le 24/09/2026
+// (l'annuaire des entreprises dit 2000, c'est la date de création) ;
 // Fnac fondée en 1954 par André Essel et Max Théret, laboratoire d'essais
 // ouvert en 1972. La photo est à remplacer par celle du magasin.
 // =====================================================================
@@ -50,7 +51,7 @@ export const STORY = {
   parts: [
     {
       title: "Un magasin du centre-ville",
-      text: "La Fnac Jeanne d'Arc a ouvert en 2000 au 77 rue d'Alsace-Lorraine, sur plus de 1 700 m² " +
+      text: "La Fnac Jeanne d'Arc a ouvert en 2001 au 77 rue d'Alsace-Lorraine, sur plus de 1 700 m² " +
             "entièrement consacrés à la technique : téléphonie, son, image, jeux vidéo, informatique et photo."
     },
     {
