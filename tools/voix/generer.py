@@ -12,15 +12,21 @@ Fabrique les voix de Jeanne : un fichier audio par phrase, publié avec le site.
 - Contrôle chaque phrase par transcription (Whisper) : si le texte entendu
   s'éloigne du texte voulu (phrase coupée, mot avalé), on recommence.
 - Coupe le bruit que le modèle ajoute après le dernier mot (nettoyer).
-- Voix féminine uniquement : chaque langue imite une voix de femme de
-  référence, et une phrase trop grave (hauteur médiane < 170 Hz) est refaite.
+- Deux moteurs, un par langue (MOTEURS) :
+  * « edge » — voix neuronales Microsoft, sans modèle à télécharger, demande
+    Internet le temps de la fabrication. Le français l'utilise depuis le
+    24/09/2026 : les autres moteurs libres sonnaient robotiques.
+  * « chatterbox » — imite une voix de référence, tourne en local. Anglais et
+    espagnol. Une phrase trop grave (hauteur médiane < 170 Hz) est refaite.
 """
-import difflib, hashlib, json, os, re, subprocess, sys, tempfile, time, unicodedata
+import asyncio, difflib, hashlib, json, os, re, subprocess, sys, tempfile, time, unicodedata
 from pathlib import Path
 
 import librosa
 import numpy as np
 import torch, torchaudio
+import edge_tts
+import imageio_ffmpeg
 from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 from faster_whisper import WhisperModel
 
@@ -49,7 +55,14 @@ REFERENCES = {lang: os.path.expanduser(f"~/.cache/fnac-borne/voix/references/{la
 REFERENCES["fr"] = os.path.expanduser("~/.cache/fnac-borne/voix/references/fr_jessica.wav")
 # Change le nom des fichiers quand on change de voix, pour tout refabriquer
 # dans cette langue (les autres langues gardent leurs fichiers).
-VOIX = {"fr": "jessica1", "en": "f1b", "es": "f1b"}
+VOIX = {"fr": "vivienne1", "en": "f1b", "es": "f1b"}
+# Quel moteur pour quelle langue. Changer une entrée refait toute la langue.
+MOTEURS = {"fr": "edge", "en": "chatterbox", "es": "chatterbox"}
+# Voix Microsoft, choisie par le magasin le 24/09/2026 parmi trois essais.
+# Le débit d'origine est un peu vif pour une borne : -4 %.
+EDGE_VOIX = {"fr": "fr-FR-VivienneMultilingualNeural"}
+EDGE_DEBIT = "-4%"
+FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 # Réglages du modèle : réglage « B, posé », choisi par le magasin le 17/09/2026
 # parmi 4 essais (débit plus naturel que les valeurs par défaut 0.5 / 0.5 / 0.8).
 REGLAGES = dict(exaggeration=0.5, cfg_weight=0.3, temperature=0.8)
@@ -63,26 +76,14 @@ REGLAGES = dict(exaggeration=0.5, cfg_weight=0.3, temperature=0.8)
 # Les sigles sont épelés dans la langue de la phrase : le modèle les lisait
 # comme des mots (« usbe » pour USB, « admi » pour HDMI, « Tyvo » pour TV).
 PRONONCIATION = {
+    # Vivienne lit d'elle-même les sigles et les marques : HDMI, USB, TV, PC,
+    # SAV, Apple, Sony, Android, Dyson, Samsung, Windows sortent justes sans
+    # rien souffler (vérifié le 24/09/2026). Deux exceptions seulement :
     "fr": [
-        (r"\bSAV\b", "èsse-a-vé"),
-        (r"\bBD\b", "bé-dé"),
-        (r"\bCD\b", "cé-dé"),
-        (r"\bDVD\b", "dé-vé-dé"),
-        (r"\bHDMI\b", "ache-dé-èmme-i"),
-        (r"\bPC\b", "pé-cé"),
-        (r"\bTV\b", "té-vé"),
-        (r"\bUSB\b", "u-èsse-bé"),
-        # Marques lues à la française : la borne affiche toujours la vraie graphie.
-        # Philips « Hue » : « you », comme le disent les clients en France.
-        # Mesuré le 24/09/2026 sur cinq graphies : « Hue » et « Hugh » se
-        # lisent « u », « hyou » donnait « aux yeux », « iou » donnait « zou »,
-        # « hiou » avalait le mot. « you » est le seul que Whisper réentend
-        # comme un mot à part entière.
+        # « ampoules Hue » devenait « ampoulus » : la liaison avalait la marque.
         (r"\bHue\b", "you"),
-        (r"\bApple\b", "Apeul"),
-        (r"\bAndroid\b", "Androïde"),
-        (r"\bDyson\b", "Daïsonne"),
-        (r"\bSony\b", "Sonni"),
+        # Elle mangeait le « Nes » : « à capsules comme espresso ».
+        (r"\bNespresso\b", "Nesspresso"),
     ],
     "en": [
         # Nom français dans une phrase anglaise : elle lisait « Fnac Rites ».
@@ -206,6 +207,15 @@ def nettoyer(wav, sr, fin_mot):
     return torch.from_numpy(y).unsqueeze(0)
 
 
+def dire_edge(texte, lang, chemin_wav):
+    """Voix neuronale Microsoft : mp3 téléchargé, puis converti en wav."""
+    mp3 = chemin_wav[:-4] + ".mp3"
+    asyncio.run(edge_tts.Communicate(texte, EDGE_VOIX[lang], rate=EDGE_DEBIT).save(mp3))
+    subprocess.run([FFMPEG, "-y", "-loglevel", "error", "-i", mp3,
+                    "-ar", "24000", "-ac", "1", chemin_wav], check=True)
+    return torchaudio.load(chemin_wav)
+
+
 def main():
     phrases = json.loads(PHRASES.read_text())
     # LANGUES=fr : ne fabriquer que ces langues (les autres gardent leurs fichiers).
@@ -226,36 +236,50 @@ def main():
     if not a_faire:
         return
 
-    device = "mps" if torch.backends.mps.is_available() else "cpu"
-    tts = ChatterboxMultilingualTTS.from_pretrained(device=device)
+    tts = None
+    if any(MOTEURS.get(p["lang"], "chatterbox") == "chatterbox" for p in a_faire):
+        device = "mps" if torch.backends.mps.is_available() else "cpu"
+        tts = ChatterboxMultilingualTTS.from_pretrained(device=device)
     oreille = WhisperModel("small", device="cpu", compute_type="int8")
     rapport = []
 
     for n, p in enumerate(a_faire, 1):
         lang, texte, fichier = p["lang"], p["text"], nom(p["lang"], p["text"])
+        moteur = MOTEURS.get(lang, "chatterbox")
         meilleur = None
         valides = 0
-        for essai in range(1, TRIES + 1):
-            torch.manual_seed(SEMENCE + essai)
-            wav = tts.generate(a_dire(texte, lang), language_id=lang, audio_prompt_path=REFERENCES[lang], **REGLAGES).cpu()
+        # La voix Microsoft rend toujours la même chose : un essai suffit.
+        for essai in range(1, (1 if moteur == "edge" else TRIES) + 1):
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as brut:
-                torchaudio.save(brut.name, wav, tts.sr)
+                if moteur == "edge":
+                    wav, sr = dire_edge(a_dire(texte, lang), lang, brut.name)
+                else:
+                    torch.manual_seed(SEMENCE + essai)
+                    wav = tts.generate(a_dire(texte, lang), language_id=lang,
+                                       audio_prompt_path=REFERENCES[lang], **REGLAGES).cpu()
+                    sr = tts.sr
+                    torchaudio.save(brut.name, wav, sr)
                 segments, _ = oreille.transcribe(brut.name, language=lang, beam_size=1, word_timestamps=True)
                 segments = list(segments)
             fin_mot, entendu = fin_de_parole(segments, texte)
-            wav = nettoyer(wav, tts.sr, fin_mot)
+            # Chatterbox ajoute un bourdonnement après le dernier mot ; pas Vivienne.
+            if moteur != "edge":
+                wav = nettoyer(wav, sr, fin_mot)
             wav = wav / max(wav.abs().max().item(), 1e-6) * 0.89          # crête à -1 dB
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
-                torchaudio.save(tmp.name, wav, tts.sr)
+                torchaudio.save(tmp.name, wav, sr)
                 score = ressemblance(texte, entendu)
-                duree = wav.shape[-1] / tts.sr
-                hz, intonation = melodie(wav, tts.sr)
+                duree = wav.shape[-1] / sr
+                hz, intonation = melodie(wav, sr)
                 # Garde-fou : une phrase bien plus longue que son texte a déraillé.
                 trop_long = duree > len(texte) * 0.11 + 2.5
-                valide = score >= SEUIL and hz >= HAUTEUR_MIN and not trop_long
+                # La hauteur ne sert qu'au clonage : une voix imitée peut partir
+                # dans les graves, celle de Microsoft est toujours la même.
+                assez_aigu = moteur == "edge" or hz >= HAUTEUR_MIN
+                valide = score >= SEUIL and assez_aigu and not trop_long
                 # le meilleur essai : d'abord un essai valide, puis, à texte fidèle,
                 # la version la plus vivante (intonation la plus variée)
-                cle = (valide, hz >= HAUTEUR_MIN, round(score, 2), intonation)
+                cle = (valide, assez_aigu, round(score, 2), intonation)
                 if meilleur is None or cle > meilleur[0]:
                     meilleur = (cle, tmp.name, entendu, duree, essai, score, hz, intonation)
             if valide:
