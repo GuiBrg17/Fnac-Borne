@@ -2375,16 +2375,25 @@ export const RUDE = {
     "ta gueule", "ferme ta gueule", "tg", "va te faire foutre", "va te faire enculer", "va chier",
     "casse toi", "suce", "sucer", "suce moi", "baise", "baiser", "baise moi", "tu baises", "bite", "bites",
     "couilles", "chatte", "nichons", "seins", "teub", "zizi", "zizis", "penis", "pénis", "vagin", "cul",
-    "fesses", "porno", "porn", "sexe", "sexy", "nue", "nues", "toute nue", "à poil", "a poil", "strip",
+    "fesses", "porno", "porn", "sexe", "sexy", "nue", "nues", "toute nue", "à poil", "a poil",
+    "strip tease", "striptease", "strip for me",
     "viol", "violer", "pedophile", "pédophile", "raciste", "nazi", "hitler", "sale pute", "grosse pute",
     "petasse", "pétasse", "salaud", "ordure", "débile", "idiote", "conne", "crétine", "ta race",
     // Anglais
     "fuck", "fucking", "fuck you", "fuck off", "motherfucker", "bitch", "bitches", "slut", "whore",
     "dick", "cock", "pussy", "boobs", "tits", "suck my", "blowjob", "porn", "naked", "nude", "sex",
     "are you horny", "shut up", "asshole", "bastard", "cunt", "retard", "nigger",
+    "wtf", "stfu", "fck", "fuk", "fuc", "son of a bitch", "dickhead", "dumbass", "jackass", "wanker",
+    "twat", "prick", "arsehole", "arse", "bollocks", "bugger", "screw you", "piss off", "pissed off",
+    "suck it", "blow me", "eat shit", "horny", "boner", "nudes", "send nudes", "get naked", "strip for me",
+    "fag", "faggot", "bimbo", "milf", "hooker", "rape", "kill yourself", "kys", "shut the hell up",
     // Espagnol
-    "puta", "putas", "hijo de puta", "gilipollas", "cabron", "cabrón", "joder", "follar", "folla",
-    "chupame", "chúpame", "pollas", "polla", "coño", "tetas", "culo", "desnuda", "porno", "maricon", "maricón",
+    "puta", "putas", "puta madre", "hijo de puta", "hijo de la gran puta", "gilipollas", "cabron", "cabrón",
+    "cabrona", "follar", "folla", "follame", "chupame", "chúpame", "chupapollas", "pollas", "polla",
+    "tetas", "teta", "culo", "culona", "culero", "desnuda", "desnudo", "porno", "sexo", "maricon", "maricón",
+    "maricona", "puto", "zorra", "perra", "pendejo", "pendeja", "chinga", "chingar", "chinga tu madre",
+    "verga", "mamon", "mamón", "mamada", "capullo", "subnormal", "imbecil", "imbécil", "idiota",
+    "vete a la mierda", "que te den",
     // Arabe, tel que la reconnaissance vocale française l'écrit (à l'oreille)
     "kahba", "kahbech", "kehba", "charmouta", "sharmouta", "chermouta", "zebi", "zeb", "zebbi",
     "ayri", "ayri fik", "kess omok", "kes omok", "kess emmek", "nech mok", "taboun", "tabon",
@@ -2397,7 +2406,9 @@ export const RUDE = {
   ],
   jurons: [
     "putain", "merde", "merdique", "bordel", "chiant", "chier", "con", "cons", "crétin", "idiot",
-    "nul", "nulle", "naze", "ferme la", "shit", "damn", "crap", "stupid", "mierda", "joder", "tonto",
+    "nul", "nulle", "naze", "ferme la", "shit", "damn", "damn it", "goddamn", "crap", "stupid", "moron",
+    "jerk", "bullshit", "bloody hell", "for fuck sake", "mierda", "joder", "coño", "hostia", "ostia",
+    "carajo", "puñeta", "leches", "tonto", "tonta", "burro",
     // Moqueries plus légères : verlan courant et mots de cour d'école
     "relou", "chelou", "teubé", "teube", "cheum", "narvalo", "mytho", "bouffon", "bouffonne",
     "blaireau", "tocard", "abruti", "imbécile", "imbecile", "guignol", "clown", "loser", "noob"
