@@ -5,14 +5,17 @@
  * Ce fichier garde une copie de tout le site dans le navigateur : si le réseau
  * tombe, la borne continue exactement pareil — plan, voix, images, clips.
  *
- * Trois règles, dans l'ordre :
- *   1. index.html est demandé au réseau d'abord (2 s max), pour attraper une
- *      nouvelle version publiée ; la copie sert de secours.
- *   2. tout le reste sort de la copie si elle existe, sinon du réseau — et ce
+ * Les règles, dans l'ordre :
+ *   1. la vérification de version (index.html?check=…) passe toujours par le
+ *      réseau : c'est elle qui apporte les nouvelles publications.
+ *   2. index.html est demandé au réseau d'abord (2 s max) ; la copie sert de
+ *      secours.
+ *   3. tout le reste sort de la copie si elle existe, sinon du réseau — et ce
  *      qui passe par le réseau est copié au passage.
- *   3. après l'installation, le reste du site est téléchargé tranquillement en
- *      arrière-plan (les 267 phrases de Jeanne, surtout), d'après
- *      assets/hors-ligne.json.
+ *   4. le reste du site (les 267 phrases de Jeanne, surtout) est téléchargé en
+ *      arrière-plan, mais seulement quand la page dit qu'elle a fini de charger
+ *      ce dont elle a besoin : sinon les deux se disputent la connexion et
+ *      Jeanne reste muette le temps que ça se démêle.
  *
  * La copie porte le numéro de version du site (sw.js?v=N) : publier une
  * nouvelle version crée une copie neuve et efface l'ancienne. Rien à purger
@@ -57,42 +60,63 @@ self.addEventListener("activate", (e) => {
       if (nom.startsWith("borne-v") && nom !== CACHE) await caches.delete(nom);
     }
     await self.clients.claim();
-    remplirEnFond();
+    // Si aucune page ne donne le signal (vieille version en place), on remplit
+    // quand même, mais bien plus tard.
+    setTimeout(remplirEnFond, 120000);
   })());
 });
 
+// La page prévient quand elle a fini de charger ses propres fichiers.
+self.addEventListener("message", (e) => {
+  if (e.data === "remplir") remplirEnFond();
+});
+
 /** Le reste du site, sans presser : voix, images, clips, plan. */
-async function remplirEnFond() {
-  const cache = await caches.open(CACHE);
-  let liste = [];
-  try {
-    const r = await fetch(`assets/hors-ligne.json?v=${VERSION}`, { cache: "no-store" });
-    if (r.ok) liste = await r.json();
-  } catch { return; }
-  for (const url of liste) {
-    if (await cache.match(url)) continue;
+let remplissage = null;
+function remplirEnFond() {
+  if (remplissage) return remplissage;
+  remplissage = (async () => {
+    const cache = await caches.open(CACHE);
+    let liste = [];
     try {
-      const r = await fetch(url);
-      if (r.ok) await cache.put(url, r.clone());
-    } catch { /* le réseau est tombé : on reprendra au prochain démarrage */ }
-  }
+      const r = await fetch(`assets/hors-ligne.json?v=${VERSION}`, { cache: "no-store" });
+      if (r.ok) liste = await r.json();
+    } catch { remplissage = null; return; }
+    for (const url of liste) {
+      // « ignoreSearch » : la page demande les voix avec ?v=N, la liste les
+      // donne sans. Sans cela, chaque fichier était téléchargé deux fois.
+      if (await cache.match(url, { ignoreSearch: true })) continue;
+      try {
+        const r = await fetch(url);
+        if (r.ok) await cache.put(url, r.clone());
+      } catch { /* le réseau est tombé : on reprendra au prochain démarrage */ }
+    }
+  })();
+  return remplissage;
 }
+
+const copieDe = async (req) => (await caches.open(CACHE)).match(req, { ignoreSearch: true });
 
 self.addEventListener("fetch", (e) => {
   const req = e.request;
+  const url = new URL(req.url);
+
+  // La vérification de version doit voir le vrai réseau, sinon la borne ne
+  // saurait jamais qu'une nouvelle version est publiée.
+  if (url.searchParams.has("check")) return;
+
   // Les clips en langue des signes sont cherchés en HEAD : sans ce cas, la
   // borne les croirait absents dès que le réseau tombe.
   if (req.method === "HEAD") {
-    if (new URL(req.url).origin !== self.location.origin) return;
+    if (url.origin !== self.location.origin) return;
     e.respondWith((async () => {
-      const copie = await caches.match(req, { ignoreMethod: true });
-      if (copie) return new Response(null, { status: 200 });
+      if (await copieDe(req)) return new Response(null, { status: 200 });
       try { return await fetch(req); } catch { return new Response(null, { status: 404 }); }
     })());
     return;
   }
   if (req.method !== "GET") return;
-  const url = new URL(req.url);
+
   const nôtre = url.origin === self.location.origin;
   const police = url.hostname.endsWith("fonts.googleapis.com") || url.hostname.endsWith("fonts.gstatic.com");
   if (!nôtre && !police) return;
@@ -111,9 +135,17 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
+  // Une vidéo demande des morceaux de fichier (« Range ») : lui renvoyer le
+  // fichier entier la fait échouer. On découpe le morceau demandé.
+  const morceau = req.headers.get("range");
+  if (morceau) {
+    e.respondWith(servirMorceau(req, morceau));
+    return;
+  }
+
   // Le reste : la copie d'abord, c'est instantané.
   e.respondWith((async () => {
-    const copie = await caches.match(req, { ignoreSearch: false });
+    const copie = await copieDe(req);
     if (copie) return copie;
     try {
       const r = await fetch(req);
@@ -125,6 +157,29 @@ self.addEventListener("fetch", (e) => {
     }
   })());
 });
+
+async function servirMorceau(req, morceau) {
+  const copie = await copieDe(req);
+  if (!copie) {
+    try { return await fetch(req); } catch { return Response.error(); }
+  }
+  const entier = await copie.arrayBuffer();
+  const bornes = /bytes=(\d*)-(\d*)/.exec(morceau);
+  const debut = bornes && bornes[1] ? Number(bornes[1]) : 0;
+  const fin = bornes && bornes[2] ? Number(bornes[2]) : entier.byteLength - 1;
+  if (debut >= entier.byteLength) {
+    return new Response(null, { status: 416, headers: { "Content-Range": `bytes */${entier.byteLength}` } });
+  }
+  return new Response(entier.slice(debut, fin + 1), {
+    status: 206,
+    headers: {
+      "Content-Type": copie.headers.get("Content-Type") || "application/octet-stream",
+      "Content-Range": `bytes ${debut}-${fin}/${entier.byteLength}`,
+      "Content-Length": String(fin - debut + 1),
+      "Accept-Ranges": "bytes",
+    },
+  });
+}
 
 function depuisLeReseau(req, delai) {
   return new Promise((ok, non) => {

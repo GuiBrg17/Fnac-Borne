@@ -36,9 +36,11 @@ function loadClip(url) {
   return clips.get(url);
 }
 
-// Prépare les phrases d'une langue en arrière-plan : la première lecture est alors instantanée.
+// Prépare les phrases d'une langue en arrière-plan : la première lecture est
+// alors instantanée. Renvoie une promesse tenue quand tout est chargé, pour
+// que le reste du site n'occupe la connexion qu'après.
 export function preloadClips(urls) {
-  for (const url of urls) loadClip(url).catch(() => {});
+  return Promise.all(urls.map((url) => loadClip(url).catch(() => {})));
 }
 
 // Lit une phrase enregistrée. Renvoie false si c'est impossible (fichier
