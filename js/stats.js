@@ -14,7 +14,7 @@ const MAX_MISSES_PER_DAY = 30;
 const KEEP_DAYS = 70;
 
 const counters = () => ({ sessions: 0, questions: 0, byLang: {}, byZone: {}, bySource: {}, misses: {},
-  feedback: { yes: 0, no: 0 }, unhappy: {} });
+  feedback: { yes: 0, no: 0 }, unhappy: {}, rude: 0 });
 const empty = () => ({ since: new Date().toISOString(), ...counters(), days: {} });
 
 // Date locale de la borne, « 2026-09-17 ».
@@ -65,6 +65,11 @@ export function recordSession() {
 }
 
 // source : "voice" (micro), "text" (clavier), "chip" (recherche fréquente), "map" (case du plan)
+// Propos déplacés : on compte, on ne garde pas la phrase.
+export function recordRude() {
+  record((c) => { c.rude = (c.rude || 0) + 1; });
+}
+
 export function recordQuestion({ text, zone, lang, source }) {
   const phrase = text ? text.trim().toLowerCase().slice(0, 80) : "";
   record((c, max) => {

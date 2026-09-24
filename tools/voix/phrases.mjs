@@ -16,6 +16,7 @@ for (const lang of Object.keys(UI)) {
   add(t.vendorConfirm(null));
   add(t.vendorUnavailable);
   add(t.orderConfirm);
+  add(t.rude);
   for (const [id, zone] of Object.entries(ZONES)) {
     if (zone.external || id === "ascenseur") continue;
     const label = zone.label[lang];

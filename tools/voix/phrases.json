@@ -185,6 +185,10 @@
  },
  {
   "lang": "fr",
+  "text": "Je ne peux pas répondre à ça. Dites-moi plutôt quel produit vous cherchez, et je vous montre le rayon."
+ },
+ {
+  "lang": "fr",
   "text": "Le rayon Téléphonie Android est ici, à l'étage 0. Je vous l'indique sur le plan."
  },
  {
@@ -537,6 +541,10 @@
  },
  {
   "lang": "en",
+  "text": "I can't answer that. Tell me which product you are looking for and I'll show you where it is."
+ },
+ {
+  "lang": "en",
   "text": "Android phones is right here on floor 0. I'm showing it on the map."
  },
  {
@@ -886,6 +894,10 @@
  {
   "lang": "es",
   "text": "Anotado: un vendedor viene a tomar su pedido. Libros, cómics, CD, DVD… todo lo que no tenemos aquí se puede encargar."
+ },
+ {
+  "lang": "es",
+  "text": "No puedo responder a eso. Dígame qué producto busca y le indico la sección."
  },
  {
   "lang": "es",

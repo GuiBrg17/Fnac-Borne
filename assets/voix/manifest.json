@@ -87,7 +87,8 @@
   "Le rayon Apple est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/32df006f4831.m4a",
   "C'est noté : un vendeur du rayon Apple a été prévenu.": "fr/527e226756aa.m4a",
   "Le SAV et le retrait des colis se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.": "fr/27f34398403c.m4a",
-  "C'est noté : un vendeur du rayon SAV & retrait des colis a été prévenu.": "fr/14607adc2c74.m4a"
+  "C'est noté : un vendeur du rayon SAV & retrait des colis a été prévenu.": "fr/14607adc2c74.m4a",
+  "Je ne peux pas répondre à ça. Dites-moi plutôt quel produit vous cherchez, et je vous montre le rayon.": "fr/c122e58f9073.m4a"
  },
  "en": {
   "Hello and welcome to Fnac Jeanne d'Arc! Tell me what you're looking for and I'll show you the section on the map.": "en/abc347b17d70.m4a",
@@ -177,7 +178,8 @@
   "The checkouts are in the basement. Take the stairs down, then follow the map. Remember to have your Fnac card ready at the till.": "en/dd0f4db13fad.m4a",
   "The photo printing stand is in the basement. Take the stairs down, then follow the map. It is right next to the membership desk.": "en/3b04feff2586.m4a",
   "Done: a staff member from Photo printing has been notified.": "en/7a5d64aba6e7.m4a",
-  "The membership and financing desk is in the basement. Take the stairs down, then follow the map.": "en/54111f58685f.m4a"
+  "The membership and financing desk is in the basement. Take the stairs down, then follow the map.": "en/54111f58685f.m4a",
+  "I can't answer that. Tell me which product you are looking for and I'll show you where it is.": "en/1efeecbbfd14.m4a"
  },
  "es": {
   "¡Hola y bienvenido a la Fnac Jeanne d'Arc! Dígame qué busca y le muestro la sección en el plano.": "es/71633b60c208.m4a",
@@ -267,6 +269,7 @@
   "¿Un cargador para qué aparato? ¿Un móvil Android, un iPhone o producto Apple, un portátil o un patinete?": "es/25004dcab2dc.m4a",
   "¿Qué reloj? ¿Un Apple Watch u otro reloj inteligente como Samsung o Garmin?": "es/6a1830f1e410.m4a",
   "La sección Apple está en el sótano. Baje por la escalera y siga el plano.": "es/fc2bb28bee87.m4a",
-  "Hecho: se ha avisado a un vendedor de la sección Apple.": "es/207384b8436a.m4a"
+  "Hecho: se ha avisado a un vendedor de la sección Apple.": "es/207384b8436a.m4a",
+  "No puedo responder a eso. Dígame qué producto busca y le indico la sección.": "es/50b39e369aef.m4a"
  }
 }

@@ -1,8 +1,6 @@
-[OK ] es 0.86 203Hz mélodie 3.9  7.6s essai 1 | ¿Un cargador para qué aparato? ¿Un móvil Android, un iPhone o producto Apple, un portátil o un patinete?
-      entendu : un cargador para que aparece, un móvil Android, un iPhone o productoable, un portátil o un patinete
-[OK ] es 0.81 215Hz mélodie 3.1  5.1s essai 1 | ¿Qué reloj? ¿Un Apple Watch u otro reloj inteligente como Samsung o Garmin?
-      entendu : ¿Qué el elog? ¿Un Apple Watch u otro elog inteligente como Samsung o Garmin?
-[OK ] es 0.93 188Hz mélodie 4.1  5.4s essai 2 | La sección Apple está en el sótano. Baje por la escalera y siga el plano.
-      entendu : La sección Aple está en el sótano. Baje por la escalera y siga el plano.
-[OK ] es 1.00 189Hz mélodie 2.9  3.2s essai 1 | Hecho: se ha avisado a un vendedor de la sección Apple.
-      entendu : hecho se ha avisado a un vendedor de la sección Apple.
+[OK ] fr 1.00 229Hz mélodie 2.2  6.0s essai 1 | Je ne peux pas répondre à ça. Dites-moi plutôt quel produit vous cherchez, et je vous montre le rayon.
+      entendu : Je ne peux pas répondre à ça. Dites-moi plutôt quel produit vous cherchez et je vous montre le rayon.
+[OK ] en 1.00 226Hz mélodie 2.2  5.2s essai 1 | I can't answer that. Tell me which product you are looking for and I'll show you where it is.
+      entendu : I can't answer that. Tell me which product you are looking for and I'll show you where it is.
+[OK ] es 1.00 189Hz mélodie 3.5  4.9s essai 1 | No puedo responder a eso. Dígame qué producto busca y le indico la sección.
+      entendu : No puedo responder a eso. Dígame qué producto busca y le indico la sección.

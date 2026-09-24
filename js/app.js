@@ -5,9 +5,9 @@
 // une mise en ligne remplace donc bien toutes les copies en cache.
 const VERSION = new URL(import.meta.url).search;
 const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE, INFO, OPENING } = await import("./data.js" + VERSION);
-const { findZoneDetailed, findIntent, findInfo, findClarify, pickClarifyOption, normalize, displayKeyword } = await import("./search.js" + VERSION);
+const { findZoneDetailed, findRude, findIntent, findInfo, findClarify, pickClarifyOption, normalize, displayKeyword } = await import("./search.js" + VERSION);
 const { NEWS, STORY, CARD } = await import("./news.js" + VERSION);
-const { recordSession, recordQuestion, recordFeedback, readStats, readPeriod, resetStats, dayKey } = await import("./stats.js" + VERSION);
+const { recordSession, recordQuestion, recordRude, recordFeedback, readStats, readPeriod, resetStats, dayKey } = await import("./stats.js" + VERSION);
 const { buildReport, monthlyPeriod, downloadReport, emailReport, isEmail } = await import("./report.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
 const { sendVendorAlert, sendVendorEmail, emailList, isTopic } = await import("./alert.js" + VERSION);
@@ -597,8 +597,11 @@ function reply(text, prefix = "") {
   listenWhenDone();
 }
 
+let rudeTimer = null;
+
 function ask(text, source = "text") {
   afterSpeaking = null;
+  clearTimeout(rudeTimer);
   stopSigning();
   abortMic();
   // Question posée au micro : Jeanne réécoutera après sa réponse.
@@ -625,6 +628,25 @@ function ask(text, source = "text") {
     const option = pickClarifyOption(text, entry);
     if (option) { chooseOption(option, pending); return; }
   }
+  // Propos déplacés : Jeanne répond une fois, calmement, et la phrase n'est
+  // pas gardée dans les statistiques. Au troisième d'affilée, la visite se
+  // termine : la borne redevient un écran d'accueil, ce qui coupe le jeu.
+  const rude = findRude(text);
+  if (rude === "dirigés") {
+    recordRude();
+    state.visit.rude = (state.visit.rude || 0) + 1;
+    clearZone();
+    reply(t().rude);
+    if (state.visit.rude >= 3) {
+      handsFree = false;
+      // Fin de la visite : le compte à rebours part maintenant, sans attendre
+      // que Jeanne ait fini de parler — la voix ne démarre pas toujours.
+      // Une vraie question posée entre-temps l'annule (début de ask).
+      clearTimeout(rudeTimer);
+      rudeTimer = setTimeout(exitToIdle, 9000);
+    }
+    return;
+  }
   // Les questions pratiques passent avant les rayons : « les horaires » ou
   // « les toilettes » ne sont pas des produits.
   const info = findInfo(text);
@@ -647,8 +669,11 @@ function ask(text, source = "text") {
   const intent = zone ? null : findIntent(text);
   // « bonjour » et « merci » ne sont pas des demandes : ils ne comptent pas pour le sondage.
   if (!intent) noteVisit(text);
-  // Les « bonjour » / « merci » comptent comme questions, pas comme questions sans réponse.
-  recordQuestion({ text: intent ? null : text, zone, lang: state.lang, source });
+  // Les « bonjour » / « merci » comptent comme questions, pas comme questions
+  // sans réponse. Un juron sans demande n'est pas gardé non plus : inutile de
+  // le retrouver dans la liste des recherches à améliorer.
+  const garder = !intent && !(rude === "jurons" && !zone);
+  recordQuestion({ text: garder ? text : null, zone, lang: state.lang, source });
   if (zone) { answerZone(zone, match.fuzzy ? t().didYouMean(displayKeyword(match.keyword)) : "", match.place); return; }
   if (intent) {
     reply(t()[intent]);
@@ -663,6 +688,7 @@ function ask(text, source = "text") {
     return;
   }
   clearZone();
+  if (rude === "jurons") { recordRude(); reply(t().rude); return; }
   reply(t().notFound);
   signLSF(["assistance", "accompagner"]);
 }
@@ -1504,7 +1530,7 @@ function enterApp() {
   els.app.inert = false;
   if (els.idleVideo && els.idleVideo.isConnected && !els.idleVideo.hidden) els.idleVideo.pause();
   state.lang = "fr";
-  state.visit = { count: 0, last: null, surveyed: false, surveyOffered: false };
+  state.visit = { count: 0, last: null, surveyed: false, surveyOffered: false, rude: 0 };
   // Retour rapide après un « Terminer » : le nettoyage prévu ne doit pas effacer le nouveau bonjour.
   clearTimeout(chatClearTimer);
   applyLang();
@@ -1526,6 +1552,7 @@ function enterApp() {
 
 let chatClearTimer = null;
 function exitToIdle() {
+  clearTimeout(rudeTimer);
   afterSpeaking = null;
   handsFree = false;
   stopSigning();
@@ -1631,7 +1658,9 @@ function renderStats() {
   els.statsSummary.textContent =
     `Depuis le ${since} : ${s.sessions} visite${s.sessions > 1 ? "s" : ""}, ${s.questions} question${s.questions > 1 ? "s" : ""}. ` +
     `Langues : FR ${n(s.byLang, "fr")} · EN ${n(s.byLang, "en")} · ES ${n(s.byLang, "es")}. ` +
-    `Par : micro ${n(s.bySource, "voice")} · clavier ${n(s.bySource, "text")} · recherches fréquentes ${n(s.bySource, "chip")} · plan ${n(s.bySource, "map")}.`;
+    `Par : micro ${n(s.bySource, "voice")} · clavier ${n(s.bySource, "text")} · recherches fréquentes ${n(s.bySource, "chip")} · plan ${n(s.bySource, "map")}.` +
+    // Propos déplacés : seul le nombre est gardé, jamais les phrases.
+    (s.rude ? ` Propos déplacés écartés : ${s.rude}.` : "");
   const zones = Object.entries(s.byZone).sort((a, b) => b[1] - a[1]).slice(0, 10)
     .map(([id, count]) => [ZONES[id] ? ZONES[id].label.fr : id, count]);
   const misses = Object.entries(s.misses).sort((a, b) => b[1] - a[1]).slice(0, 15);

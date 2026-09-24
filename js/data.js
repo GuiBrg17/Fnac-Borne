@@ -76,6 +76,9 @@ export const UI = {
     orderButton: "Faire commander par un vendeur",
     orderConfirm: "C'est noté : un vendeur arrive pour prendre votre commande. Livres, BD, CD, DVD… tout ce que nous n'avons pas ici peut être commandé.",
     orderToast: "Vendeur prévenu · commande",
+    // Propos déplacés : une réponse calme, la même à chaque fois. Une réponse
+    // amusante donnerait envie de recommencer.
+    rude: "Je ne peux pas répondre à ça. Dites-moi plutôt quel produit vous cherchez, et je vous montre le rayon.",
     didYouMean: (word) => `Vous voulez dire « ${word} » ? `,
     vendorConfirm: (zone) => zone
       ? `C'est noté : un vendeur du rayon ${zone} a été prévenu.`
@@ -150,6 +153,7 @@ export const UI = {
     orderButton: "Ask a staff member to order it",
     orderConfirm: "Done: a member of staff is coming to take your order. Books, comics, CDs, DVDs — anything we don't stock here can be ordered.",
     orderToast: "Staff notified · order",
+    rude: "I can't answer that. Tell me which product you are looking for and I'll show you where it is.",
     didYouMean: (word) => `Did you mean “${word}”? `,
     vendorConfirm: (zone) => zone
       ? `Done: a staff member from ${zone} has been notified.`
@@ -224,6 +228,7 @@ export const UI = {
     orderButton: "Pedir a un vendedor que lo encargue",
     orderConfirm: "Anotado: un vendedor viene a tomar su pedido. Libros, cómics, CD, DVD… todo lo que no tenemos aquí se puede encargar.",
     orderToast: "Vendedor avisado · pedido",
+    rude: "No puedo responder a eso. Dígame qué producto busca y le indico la sección.",
     didYouMean: (word) => `¿Quiere decir «${word}»? `,
     vendorConfirm: (zone) => zone
       ? `Hecho: se ha avisado a un vendedor de la sección ${zone}.`
@@ -2346,6 +2351,47 @@ export const INFO = {
 };
 
 // Petites intentions de conversation (quand aucun rayon ne correspond).
+// =====================================================================
+// Propos déplacés : une borne en libre accès en reçoit, surtout de groupes
+// d'enfants qui testent la machine. Jeanne répond une fois, calmement, sans
+// plaisanter — une réponse drôle donnerait envie de recommencer — et ne
+// garde pas la phrase dans les statistiques, seulement son nombre.
+//
+//   dirigés : insultes et propos sexuels, quoi qu'il y ait autour de la
+//             phrase (« Jeanne, tu es bonne ? » n'est pas une demande) ;
+//   jurons  : « putain », « merde »… interceptés seulement si la phrase ne
+//             contient aucune vraie demande, car « putain, où sont les
+//             casques ? » reste une question de client.
+//
+// Mots entiers uniquement : « console » contient « con », « culture »
+// contient « cul », « arbitre » contient « bite ».
+// =====================================================================
+export const RUDE = {
+  dirigés: [
+    // Français
+    "encule", "enculé", "enculée", "enculer", "enculés", "nique", "niquer", "niquez", "nique ta mère",
+    "ntm", "fdp", "fils de pute", "pute", "putes", "putain de ta mère", "salope", "salopes", "connard",
+    "connards", "connasse", "conasse", "batard", "bâtard", "bâtards", "pd", "pédé", "tapette", "tarlouze",
+    "ta gueule", "ferme ta gueule", "tg", "va te faire foutre", "va te faire enculer", "va chier",
+    "casse toi", "suce", "sucer", "suce moi", "baise", "baiser", "baise moi", "tu baises", "bite", "bites",
+    "couilles", "chatte", "nichons", "seins", "teub", "zizi", "zizis", "penis", "pénis", "vagin", "cul",
+    "fesses", "porno", "porn", "sexe", "sexy", "nue", "nues", "toute nue", "à poil", "a poil", "strip",
+    "viol", "violer", "pedophile", "pédophile", "raciste", "nazi", "hitler", "sale pute", "grosse pute",
+    "petasse", "pétasse", "salaud", "ordure", "débile", "idiote", "conne", "crétine", "ta race",
+    // Anglais
+    "fuck", "fucking", "fuck you", "fuck off", "motherfucker", "bitch", "bitches", "slut", "whore",
+    "dick", "cock", "pussy", "boobs", "tits", "suck my", "blowjob", "porn", "naked", "nude", "sex",
+    "are you horny", "shut up", "asshole", "bastard", "cunt", "retard", "nigger",
+    // Espagnol
+    "puta", "putas", "hijo de puta", "gilipollas", "cabron", "cabrón", "joder", "follar", "folla",
+    "chupame", "chúpame", "pollas", "polla", "coño", "tetas", "culo", "desnuda", "porno", "maricon", "maricón"
+  ],
+  jurons: [
+    "putain", "merde", "merdique", "bordel", "chiant", "chier", "con", "cons", "crétin", "idiot",
+    "nul", "nulle", "naze", "ferme la", "shit", "damn", "crap", "stupid", "mierda", "joder", "tonto"
+  ]
+};
+
 export const INTENTS = {
   hello: ["bonjour", "salut", "bonsoir", "hello", "hi", "hey", "good morning", "hola", "buenos dias", "buenas tardes"],
   thanks: ["merci", "merci beaucoup", "thank you", "thanks", "gracias", "muchas gracias"],
