@@ -1,6 +1,2 @@
-[OK ] fr 1.00 229Hz mélodie 2.2  6.0s essai 1 | Je ne peux pas répondre à ça. Dites-moi plutôt quel produit vous cherchez, et je vous montre le rayon.
-      entendu : Je ne peux pas répondre à ça. Dites-moi plutôt quel produit vous cherchez et je vous montre le rayon.
-[OK ] en 1.00 226Hz mélodie 2.2  5.2s essai 1 | I can't answer that. Tell me which product you are looking for and I'll show you where it is.
-      entendu : I can't answer that. Tell me which product you are looking for and I'll show you where it is.
-[OK ] es 1.00 189Hz mélodie 3.5  4.9s essai 1 | No puedo responder a eso. Dígame qué producto busca y le indico la sección.
-      entendu : No puedo responder a eso. Dígame qué producto busca y le indico la sección.
+[OK ] fr 0.84 232Hz mélodie 2.3  9.2s essai 1 | Quel produit Philips ? Un rasoir, une tondeuse ou une brosse à dents, une machine à café ou un airfryer, une télé, ou des ampoules Hue ?
+      entendu : Quel produit, Philippe Un rasoir Une tondeuse ou une brosse à dent Une machine à café ou un air frier Une télé ou des ampoules
