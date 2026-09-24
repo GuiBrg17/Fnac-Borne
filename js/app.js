@@ -33,7 +33,6 @@ const store = {
 const settings = {
   voices: store.get("voices", {}),
   idleSeconds: store.get("idleSeconds", 60),
-  neuralVoice: store.get("neuralVoice", true)
 };
 
 const state = { screen: "idle", lang: "fr", floor: "0", zone: null, place: null, a11y: false, listening: false, speaking: false,
@@ -76,7 +75,6 @@ const els = {
   micNear: $("#micNear"), micLevelTest: $("#micLevelTest"), micLevelText: $("#micLevelText"),
   micLevelBar: $("#micLevelBar"), micLevelMark: $("#micLevelMark"),
   vendorTopic: $("#vendorTopic"), vendorEmails: $("#vendorEmails"), vendorStatus: $("#vendorStatus"), vendorTest: $("#vendorTest"),
-  neuralToggle: $("#neuralToggle"), voiceStatus: $("#voiceStatus"), voiceDownload: $("#voiceDownload"),
   toast: $("#toast"),
   otherStore: $("#otherStore"), otherStoreClose: $("#otherStoreClose"), otherStoreAddress: $("#otherStoreAddress"),
   otherStoreOrder: $("#otherStoreOrder"),
@@ -132,7 +130,6 @@ function pickVoice(lang) {
 }
 
 // Voix neuronale Piper si elle est prête, sinon voix du navigateur.
-let lastEngine = "aucune lecture pour l'instant";
 
 // Phrases enregistrées d'avance : texte → fichier, par langue (assets/voix/manifest.json).
 let clipManifest = {};
@@ -160,30 +157,7 @@ function speak(text, lang = state.lang) {
   speechPending = true;
   const url = clipUrl(text, lang);
   if (url) {
-    lastEngine = `phrase enregistrée (${lang})`;
-    updateVoiceStatus();
     voice.playClip(url, {
-      onStart: () => { speechPending = false; setSpeaking(true); },
-      onEnd: () => setSpeaking(false)
-    }).then((handled) => {
-      if (!handled) speakSynthesized(text, lang);
-    });
-    return;
-  }
-  speakSynthesized(text, lang);
-}
-
-// Voix de synthèse, pour une phrase qui n'a pas été enregistrée.
-// La voix de femme de l'appareil passe en premier : elle démarre tout de suite.
-// Piper, plus naturelle mais qui calcule toute la phrase avant de parler
-// (1 à 3 s d'attente), ne sert que si l'appareil n'a aucune voix de femme.
-function speakSynthesized(text, lang = state.lang) {
-  const browserVoice = "speechSynthesis" in window && pickVoice(lang);
-  if (!browserVoice && settings.neuralVoice && voice.isReady(lang)) {
-    lastEngine = `voix neuronale Piper (${lang})`;
-    updateVoiceStatus();
-    voice.speak(text, lang, {
-      rate: state.a11y ? 0.88 : 1,
       onStart: () => { speechPending = false; setSpeaking(true); },
       onEnd: () => setSpeaking(false)
     }).then((handled) => {
@@ -203,8 +177,6 @@ function speakWithBrowser(text, lang = state.lang) {
   clearTimeout(speechWatchdog);
   if (!("speechSynthesis" in window)) {
     speechPending = false;
-    lastEngine = "aucune voix disponible sur cet appareil";
-    updateVoiceStatus();
     return;
   }
   window.speechSynthesis.cancel();
@@ -214,13 +186,9 @@ function speakWithBrowser(text, lang = state.lang) {
   if (!chosen) {
     speechPending = false;
     // Aucune voix de femme sur cet appareil : la réponse reste affichée, sans voix d'homme.
-    lastEngine = `aucune voix féminine disponible sur cet appareil (${lang}) — réponse affichée seulement`;
-    updateVoiceStatus();
     return;
   }
   utterance.voice = chosen;
-  lastEngine = `voix du navigateur : ${chosen.name} (${lang})`;
-  updateVoiceStatus();
   utterance.rate = state.a11y ? 0.86 : 1;
   utterance.pitch = 1.05;
   const done = () => { clearTimeout(speechWatchdog); speechPending = false; if (currentUtterance === utterance) setSpeaking(false); };
@@ -243,44 +211,6 @@ function stopSpeaking() {
   setSpeaking(false);
 }
 
-// --- Voix neuronale : téléchargement et état ------------------------------
-const VOICE_LANG_NAMES = { fr: "Français", en: "Anglais", es: "Espagnol" };
-
-function updateVoiceStatus() {
-  if (!els.voiceStatus) return;
-  const lines = ["fr", "en", "es"].map((lang) => {
-    const name = VOICE_LANG_NAMES[lang];
-    if (!voice.supports(lang)) return `${name} : voix du navigateur (pas de voix Piper féminine disponible)`;
-    if (voice.isReady(lang)) return `${name} : voix neuronale prête`;
-    if (voice.isDownloading(lang)) return `${name} : téléchargement en cours…`;
-    return `${name} : voix neuronale non téléchargée`;
-  });
-  els.voiceStatus.textContent = lines.join(" · ") + ` — Dernière lecture : ${lastEngine}.`;
-  els.voiceDownload.disabled = ["fr", "en"].every((lang) => voice.isReady(lang) || voice.isDownloading(lang));
-}
-
-async function downloadVoices(langs = ["fr", "en"]) {
-  for (const lang of langs) {
-    if (!settings.neuralVoice || !voice.supports(lang) || voice.isReady(lang)) continue;
-    updateVoiceStatus();
-    await voice.ensure(lang, () => updateVoiceStatus());
-    updateVoiceStatus();
-  }
-}
-
-async function initVoice() {
-  try {
-    await voice.init();
-    updateVoiceStatus();
-    // La voix Piper (≈ 70 Mo) ne sert plus que de secours : on ne la télécharge
-    // d'office que si le site n'a pas de phrases enregistrées.
-    await clipManifestReady;
-    if (settings.neuralVoice && !Object.keys(clipManifest).length) await downloadVoices(["fr"]);
-  } catch (error) {
-    console.info("Voix neuronale indisponible :", error && error.message ? error.message : error);
-    updateVoiceStatus();
-  }
-}
 
 // À faire quand Jeanne a fini de parler (ex. ouvrir le micro après le bonjour).
 // Annulé dès que le client touche l'écran : il a pris la main.
@@ -1141,7 +1071,6 @@ function setLang(lang) {
   closeChoices();
   applyLang();
   preloadLanguage(lang);
-  if (settings.neuralVoice && !clipManifest[lang] && voice.supports(lang) && !voice.isReady(lang)) downloadVoices([lang]);
   reply(t().switched);
 }
 
@@ -1912,8 +1841,6 @@ els.logo.addEventListener("click", () => {
     els.vendorTopic.value = store.get("vendorTopic", "");
     els.vendorEmails.value = store.get("vendorEmails", "");
     els.vendorStatus.textContent = els.vendorTopic.value || els.vendorEmails.value ? "" : "Ni canal ni e-mail réglé : les alertes ne partent pas.";
-    els.neuralToggle.checked = settings.neuralVoice;
-    updateVoiceStatus();
     els.idleSeconds.value = settings.idleSeconds;
     els.micPatience.value = store.get("micPatience", "pose");
     els.micNear.value = store.get("micNear", "tout");
@@ -1925,11 +1852,6 @@ els.settings.addEventListener("change", (e) => {
   if (e.target.matches("select[data-voice]")) {
     settings.voices[e.target.dataset.voice] = e.target.value || undefined;
     store.set("voices", settings.voices);
-  }
-  if (e.target === els.neuralToggle) {
-    settings.neuralVoice = els.neuralToggle.checked;
-    store.set("neuralVoice", settings.neuralVoice);
-    updateVoiceStatus();
   }
   if (e.target === els.micPatience) store.set("micPatience", els.micPatience.value);
   if (e.target === els.micNear) { store.set("micNear", els.micNear.value); showThreshold(); }
@@ -2006,7 +1928,6 @@ els.reportDownload.addEventListener("click", () => {
 });
 setInterval(checkMonthlyReport, 30 * 60 * 1000);
 setTimeout(checkMonthlyReport, 60 * 1000);
-els.voiceDownload.addEventListener("click", () => downloadVoices());
 
 let resizeTimer = null;
 window.addEventListener("resize", () => {
@@ -2062,7 +1983,6 @@ if (els.idlePhoto.isConnected) {
   if (els.idlePhoto.complete && els.idlePhoto.naturalWidth > 0) useIdlePhoto();
 }
 
-initVoice();
 
 // Aide au réglage : ouvrir la borne avec ?debug pour lancer un signe à la main
 // depuis la console du navigateur (jeanne.sign("merci")).

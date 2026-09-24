@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=78">
+<link rel="stylesheet" href="css/kiosk.css?v=79">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=78"></script>
+<script type="module" src="js/app.js?v=79"></script>
 </head>
 <body class="is-idle">
 
@@ -311,13 +311,6 @@
       <p class="neural-status">E-mail : la première fois, un message « Activate form » de FormSubmit arrive sur la première adresse ; cliquez sur le lien, puis refaites le test. L'e-mail peut mettre une minute à arriver et peut être classé en indésirable : vérifiez au premier essai.</p>
       <p class="neural-status" id="vendorStatus" role="status"></p>
       <button type="button" class="neural-download" id="vendorTest">Envoyer une alerte de test</button>
-    </section>
-
-    <section class="neural" aria-labelledby="neuralTitle">
-      <h3 id="neuralTitle">Voix de Jeanne</h3>
-      <label class="check"><input type="checkbox" id="neuralToggle"><span>Utiliser la voix neuronale Piper : plus naturelle, fonctionne hors ligne une fois téléchargée</span></label>
-      <p class="neural-status" id="voiceStatus"></p>
-      <button type="button" class="neural-download" id="voiceDownload">Télécharger les voix (≈ 140 Mo)</button>
     </section>
 
     <section class="stats" aria-labelledby="statsTitle">
