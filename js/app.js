@@ -1447,9 +1447,10 @@ let signQueue = [];
 // vidéo s'affiche une seconde dans le vide quand un signe n'a pas été tourné.
 const signClips = new Map();
 
-// .webm pour les clips venus de Wikimedia Commons, .mp4 pour ceux tournés
-// au magasin : la borne prend le premier des deux qui existe.
-const SIGN_FORMATS = [".webm", ".mp4"];
+// Les clips sont des .mp4 : lus par tous les navigateurs, Safari compris,
+// qui ne sait pas afficher la transparence d'un .webm. Le .webm reste accepté
+// pour un clip fourni dans ce format.
+const SIGN_FORMATS = [".mp4", ".webm"];
 
 function hasClip(url) {
   if (!signClips.has(url)) {
