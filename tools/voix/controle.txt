@@ -1,2 +1,2 @@
-[OK ] fr 0.84 232Hz mélodie 2.3  9.2s essai 1 | Quel produit Philips ? Un rasoir, une tondeuse ou une brosse à dents, une machine à café ou un airfryer, une télé, ou des ampoules Hue ?
-      entendu : Quel produit, Philippe Un rasoir Une tondeuse ou une brosse à dent Une machine à café ou un air frier Une télé ou des ampoules
+[OK ] en 0.88 210Hz mélodie 3.0  4.9s essai 1 | Those are available at Fnac Variétés — the address is on the screen.
+      entendu : Those are available at Fnac Varier Tay. The address is on the screen.

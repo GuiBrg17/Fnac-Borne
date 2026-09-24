@@ -28,7 +28,7 @@ export const UI = {
     // partait seul à la ligne.
     idleBubble: "Bienvenue ! En quoi puis‑je vous aider ?",
     idleCta: "Touchez l'écran pour commencer",
-    greeting: "Bonjour et bienvenue à la Fnac Jeanne d'Arc ! Dites-moi ce que vous cherchez, je vous montre le rayon sur le plan.",
+    greeting: "Bonjour et bienvenue à la Fnac Jeanne d'Arc ! Que cherchez-vous ?",
     switched: "Très bien, je continue en français. Que cherchez-vous ?",
     statusReady: "Posez votre question",
     statusListening: "Je vous écoute…",
@@ -48,23 +48,25 @@ export const UI = {
     stepEntrance: "Entrée",
     stepStairs: "Escalier",
     routeHint: "Touchez un rayon du plan pour savoir ce qu'on y trouve.",
+    // Phrases courtes : le plan montre déjà le chemin et l'escalier, la voix
+    // n'a qu'à donner l'étage.
     found: (zone, floor) => floor === "-1"
-      ? `Le rayon ${zone} est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.`
-      : `Le rayon ${zone} est ici, à l'étage 0. Je vous l'indique sur le plan.`,
+      ? `Le rayon ${zone} est au sous-sol.`
+      : `Le rayon ${zone} est ici, à l'étage 0.`,
     // Caisses, SAV, adhésion : ce ne sont pas des rayons. Le sujet et le verbe
     // viennent de la zone (propriété « intro »).
     foundPlace: (sujet, floor) => floor === "-1"
-      ? `${sujet} au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan.`
-      : `${sujet} ici, à l'étage 0. Je vous l'indique sur le plan.`,
-    foundStairs: "Les LEGO, figurines POP et cartes Pokémon sont dans l'escalier qui relie l'étage 0 au sous-sol.",
+      ? `${sujet} au sous-sol.`
+      : `${sujet} ici, à l'étage 0.`,
+    foundStairs: "Les LEGO, figurines POP et cartes Pokémon sont dans l'escalier.",
     foundEntrance: "L'entrée et la sortie sont à l'étage 0, en bas du plan.",
-    notFound: "Je n'ai pas trouvé ce produit. Essayez avec un autre mot, ou appelez un vendeur : il viendra vous aider.",
+    notFound: "Je n'ai pas trouvé. Essayez un autre mot, ou appelez un vendeur.",
     hello: "Bonjour ! Quel produit cherchez-vous ?",
     thanks: "Avec plaisir ! Bonne visite à la Fnac.",
-    human: "Bien sûr. Touchez « Appeler un vendeur » et un membre de l'équipe viendra vous aider.",
-    otherStore: "Les livres, BD, manuels scolaires, la papeterie, les CD, vinyles et DVD se trouvent à la Fnac Wilson, 16 allées Franklin-Roosevelt, près de Jean-Jaurès. Ici, à la Fnac Jeanne d'Arc, nous sommes spécialisés dans la technique.",
+    human: "Bien sûr. Touchez « Appeler un vendeur ».",
+    otherStore: "Ces produits sont disponibles à la Fnac Variétés, à l'adresse indiquée à l'écran.",
     otherStoreWhat: "Livres, BD, manuels scolaires, papeterie, CD, vinyles, DVD",
-    otherStoreNear: "Près de Jean-Jaurès",
+    otherStoreNear: "À deux pas d'ici · métro Jean‑Jaurès",
     otherStoreClose: "Retour au plan",
     otherStoreQr: "Itinéraire à pied sur votre téléphone",
     hoursOpen: (heure) => `Ouvert jusqu'à ${heure}`,
@@ -74,16 +76,16 @@ export const UI = {
     hoursTomorrow: "demain",
     // Ce magasin ne vend pas de livres, mais un vendeur peut les commander.
     orderButton: "Faire commander par un vendeur",
-    orderConfirm: "C'est noté : un vendeur arrive pour prendre votre commande. Livres, BD, CD, DVD… tout ce que nous n'avons pas ici peut être commandé.",
+    orderConfirm: "C'est noté, un vendeur arrive pour prendre votre commande.",
     orderToast: "Vendeur prévenu · commande",
     // Propos déplacés : une réponse calme, la même à chaque fois. Une réponse
     // amusante donnerait envie de recommencer.
-    rude: "Je ne peux pas répondre à ça. Dites-moi plutôt quel produit vous cherchez, et je vous montre le rayon.",
+    rude: "Je ne peux pas répondre à ça. Dites-moi plutôt ce que vous cherchez.",
     didYouMean: (word) => `Vous voulez dire « ${word} » ? `,
     vendorConfirm: (zone) => zone
       ? `C'est noté : un vendeur du rayon ${zone} a été prévenu.`
       : "C'est noté : un vendeur a été prévenu et arrive.",
-    vendorUnavailable: "Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe dans le magasin, il vous aidera avec plaisir.",
+    vendorUnavailable: "Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe.",
     vendorToast: (zone) => zone ? `Vendeur prévenu · rayon ${zone}` : "Vendeur prévenu",
     micUnsupported: "Le micro n'est pas disponible sur cet appareil. Vous pouvez écrire votre question.",
     micError: "Je n'ai pas bien entendu. Réessayez, ou écrivez votre question.",
@@ -97,8 +99,8 @@ export const UI = {
     surveyNo: "Non",
     surveySkip: "Passer",
     surveyThanksYes: "Merci ! Bonne visite à la Fnac.",
-    surveyThanksNo: "Merci de nous l'avoir dit. Un vendeur peut vous aider : touchez « Appeler un vendeur ».",
-    a11yOn: "Mode accessibilité : le texte est agrandi et le contraste renforcé. Si vous ne pouvez pas prendre l'escalier, il y a un ascenseur : touchez « Appeler un vendeur », on vous y accompagne.",
+    surveyThanksNo: "Merci de nous l'avoir dit. Un vendeur peut vous aider.",
+    a11yOn: "Mode accessibilité : texte agrandi, contraste renforcé. Pour l'ascenseur, touchez « Appeler un vendeur ».",
     a11yOff: "Affichage normal.",
     floorName: (f) => FLOOR_NAMES.fr[f]
   },
@@ -108,7 +110,7 @@ export const UI = {
     idleSub: "Tell me what you're looking for and I'll show you where it is.",
     idleBubble: "Welcome! How can I help you?",
     idleCta: "Touch the screen to start",
-    greeting: "Hello and welcome to Fnac Jeanne d'Arc! Tell me what you're looking for and I'll show you the section on the map.",
+    greeting: "Hello and welcome to Fnac Jeanne d'Arc! What are you looking for?",
     switched: "Sure, let's continue in English. What are you looking for?",
     statusReady: "Ask me anything",
     statusListening: "Listening…",
@@ -129,20 +131,20 @@ export const UI = {
     stepStairs: "Stairs",
     routeHint: "Tap a section on the map to see what's there.",
     found: (zone, floor) => floor === "-1"
-      ? `${zone} is in the basement. Take the stairs down, then follow the map.`
-      : `${zone} is right here on floor 0. I'm showing it on the map.`,
+      ? `${zone} is in the basement.`
+      : `${zone} is right here on floor 0.`,
     foundPlace: (sujet, floor) => floor === "-1"
-      ? `${sujet} in the basement. Take the stairs down, then follow the map.`
-      : `${sujet} here on floor 0. I'll show you on the map.`,
-    foundStairs: "LEGO, POP figures and Pokémon cards are in the staircase between floor 0 and the basement.",
+      ? `${sujet} in the basement.`
+      : `${sujet} here on floor 0.`,
+    foundStairs: "LEGO, POP figures and Pokémon cards are in the staircase.",
     foundEntrance: "The entrance and exit are on floor 0, at the bottom of the map.",
-    notFound: "I couldn't find that product. Try another word, or call a staff member who will come and help you.",
+    notFound: "I couldn't find that. Try another word, or call a staff member.",
     hello: "Hello! What product are you looking for?",
     thanks: "You're welcome! Enjoy your visit to Fnac.",
-    human: "Of course. Tap “Call a staff member” and someone from the team will come to help you.",
-    otherStore: "Books, comics, school books, stationery, CDs, vinyl records and DVDs are at Fnac Wilson, 16 allées Franklin-Roosevelt, near Jean-Jaurès. Here at Fnac Jeanne d'Arc, we specialise in technology.",
+    human: "Of course. Tap “Call a staff member”.",
+    otherStore: "Those are available at Fnac Variétés — the address is on the screen.",
     otherStoreWhat: "Books, comics, school books, stationery, CDs, vinyl, DVDs",
-    otherStoreNear: "Near Jean-Jaurès",
+    otherStoreNear: "A minute away · Jean‑Jaurès metro",
     otherStoreClose: "Back to the map",
     otherStoreQr: "Walking directions on your phone",
     hoursOpen: (heure) => `Open until ${heure}`,
@@ -151,14 +153,14 @@ export const UI = {
     hoursClosedToday: (heure) => `Closed · opens at ${heure}`,
     hoursTomorrow: "tomorrow",
     orderButton: "Ask a staff member to order it",
-    orderConfirm: "Done: a member of staff is coming to take your order. Books, comics, CDs, DVDs — anything we don't stock here can be ordered.",
+    orderConfirm: "Done, a member of staff is coming to take your order.",
     orderToast: "Staff notified · order",
-    rude: "I can't answer that. Tell me which product you are looking for and I'll show you where it is.",
+    rude: "I can't answer that. Tell me what you are looking for instead.",
     didYouMean: (word) => `Did you mean “${word}”? `,
     vendorConfirm: (zone) => zone
       ? `Done: a staff member from ${zone} has been notified.`
       : "Done: a staff member has been notified and is on their way.",
-    vendorUnavailable: "I couldn't reach a staff member. Please ask any member of the team in the store, they'll be happy to help.",
+    vendorUnavailable: "I couldn't reach a staff member. Please ask anyone from the team.",
     vendorToast: (zone) => zone ? `Staff notified · ${zone}` : "Staff notified",
     micUnsupported: "The microphone isn't available on this device. You can type your question.",
     micError: "I didn't quite catch that. Try again, or type your question.",
@@ -172,7 +174,7 @@ export const UI = {
     surveyNo: "No",
     surveySkip: "Skip",
     surveyThanksYes: "Thank you! Enjoy your visit.",
-    surveyThanksNo: "Thank you for telling us. A member of staff can help: tap “Call a staff member”.",
+    surveyThanksNo: "Thank you for telling us. A member of staff can help you.",
     a11yOn: "Accessibility mode: larger text and stronger contrast. If you can't use the stairs, there is a lift: tap “Call a staff member” and we'll take you there.",
     a11yOff: "Standard display.",
     floorName: (f) => FLOOR_NAMES.en[f]
@@ -204,20 +206,20 @@ export const UI = {
     stepStairs: "Escalera",
     routeHint: "Toque una sección del plano para ver qué hay.",
     found: (zone, floor) => floor === "-1"
-      ? `La sección ${zone} está en el sótano. Baje por la escalera y siga el plano.`
-      : `La sección ${zone} está aquí, en la planta 0. Se la indico en el plano.`,
+      ? `La sección ${zone} está en el sótano.`
+      : `La sección ${zone} está aquí, en la planta 0.`,
     foundPlace: (sujet, floor) => floor === "-1"
-      ? `${sujet} en el sótano. Baje por la escalera al sótano y siga el plano.`
-      : `${sujet} aquí, en la planta 0. Se lo indico en el plano.`,
-    foundStairs: "Los LEGO, las figuras POP y las cartas Pokémon están en la escalera que une la planta 0 con el sótano.",
+      ? `${sujet} en el sótano.`
+      : `${sujet} aquí, en la planta 0.`,
+    foundStairs: "Los LEGO, las figuras POP y las cartas Pokémon están en la escalera.",
     foundEntrance: "La entrada y la salida están en la planta 0, abajo en el plano.",
-    notFound: "No he encontrado ese producto. Pruebe con otra palabra, o llame a un vendedor: vendrá a ayudarle.",
+    notFound: "No lo he encontrado. Pruebe con otra palabra, o llame a un vendedor.",
     hello: "¡Hola! ¿Qué producto busca?",
     thanks: "¡Con mucho gusto! Disfrute de su visita a la Fnac.",
-    human: "Por supuesto. Toque «Llamar a un vendedor» y alguien del equipo vendrá a ayudarle.",
-    otherStore: "Los libros, cómics, libros de texto, la papelería, los CD, vinilos y DVD están en la Fnac Wilson, 16 allées Franklin-Roosevelt, cerca de Jean-Jaurès. Aquí, en la Fnac Jeanne d'Arc, estamos especializados en tecnología.",
+    human: "Por supuesto. Toque «Llamar a un vendedor».",
+    otherStore: "Esos productos están en la Fnac Variétés, en la dirección que ve en pantalla.",
     otherStoreWhat: "Libros, cómics, libros de texto, papelería, CD, vinilos, DVD",
-    otherStoreNear: "Cerca de Jean-Jaurès",
+    otherStoreNear: "A dos pasos · metro Jean‑Jaurès",
     otherStoreClose: "Volver al plano",
     otherStoreQr: "Ruta a pie en su móvil",
     hoursOpen: (heure) => `Abierto hasta las ${heure}`,
@@ -226,14 +228,14 @@ export const UI = {
     hoursClosedToday: (heure) => `Cerrado · abre a las ${heure}`,
     hoursTomorrow: "mañana",
     orderButton: "Pedir a un vendedor que lo encargue",
-    orderConfirm: "Anotado: un vendedor viene a tomar su pedido. Libros, cómics, CD, DVD… todo lo que no tenemos aquí se puede encargar.",
+    orderConfirm: "Anotado, un vendedor viene a tomar su pedido.",
     orderToast: "Vendedor avisado · pedido",
     rude: "No puedo responder a eso. Dígame qué producto busca y le indico la sección.",
     didYouMean: (word) => `¿Quiere decir «${word}»? `,
     vendorConfirm: (zone) => zone
       ? `Hecho: se ha avisado a un vendedor de la sección ${zone}.`
       : "Hecho: se ha avisado a un vendedor y ya viene.",
-    vendorUnavailable: "No he podido avisar a un vendedor. Diríjase a cualquier miembro del equipo en la tienda, le ayudará con gusto.",
+    vendorUnavailable: "No he podido avisar a un vendedor. Diríjase a alguien del equipo.",
     vendorToast: (zone) => zone ? `Vendedor avisado · ${zone}` : "Vendedor avisado",
     micUnsupported: "El micrófono no está disponible en este dispositivo. Puede escribir su pregunta.",
     micError: "No le he entendido bien. Inténtelo de nuevo o escriba su pregunta.",
@@ -247,8 +249,8 @@ export const UI = {
     surveyNo: "No",
     surveySkip: "Omitir",
     surveyThanksYes: "¡Gracias! Disfrute de su visita.",
-    surveyThanksNo: "Gracias por decírnoslo. Un vendedor puede ayudarle: toque «Llamar a un vendedor».",
-    a11yOn: "Modo accesibilidad: texto más grande y más contraste. Si no puede usar la escalera, hay un ascensor: toque «Llamar a un vendedor» y le acompañaremos.",
+    surveyThanksNo: "Gracias por decírnoslo. Un vendedor puede ayudarle.",
+    a11yOn: "Modo accesibilidad: texto más grande y más contraste. Para el ascensor, toque «Llamar a un vendedor».",
     a11yOff: "Vista normal.",
     floorName: (f) => FLOOR_NAMES.es[f]
   }
@@ -990,9 +992,9 @@ export const ZONES = {
     // « intro » : les caisses ne sont pas un rayon, Jeanne ne dit donc pas
     // « le rayon Caisses ». « note » s'ajoute à la réponse.
     intro: { fr: "Les caisses se trouvent", en: "The checkouts are", es: "Las cajas están" },
-    note: { fr: "Pensez à préparer votre carte Fnac pour la remettre en caisse.",
-            en: "Remember to have your Fnac card ready at the till.",
-            es: "No olvide preparar su tarjeta Fnac para la caja." },
+    note: { fr: "Pensez à votre carte Fnac.",
+            en: "Remember your Fnac card.",
+            es: "No olvide su tarjeta Fnac." },
     detail: { fr: "Paiement, billetterie, piles, adaptateurs de voyage, cartes cadeaux",
               en: "Payment, event tickets, batteries, travel adapters, gift cards",
               es: "Pago, entradas, pilas, adaptadores de viaje, tarjetas regalo" },
@@ -1027,8 +1029,8 @@ export const ZONES = {
     label: { fr: "Impression photo", en: "Photo printing", es: "Impresión de fotos" },
     intro: { fr: "Le stand d'impression photo se trouve", en: "The photo printing stand is",
              es: "El puesto de impresión de fotos está" },
-    note: { fr: "Il est juste à côté de l'espace adhésion.", en: "It is right next to the membership desk.",
-            es: "Está justo al lado del espacio de socios." },
+    note: { fr: "Juste à côté de l'espace adhésion.", en: "Right next to the membership desk.",
+            es: "Justo al lado del espacio de socios." },
     detail: { fr: "Tirages et photos d'identité, à côté de l'adhésion",
               en: "Photo prints, next to the membership desk",
               es: "Copias de fotos, junto al espacio de socios" },
@@ -1090,16 +1092,20 @@ export const OPENING = {
   soonMinutes: 45
 };
 
-// Produits éditoriaux : ils ne sont pas vendus ici mais à la Fnac Wilson.
+// Produits éditoriaux : ils ne sont pas vendus ici mais à la Fnac Variétés
+// (l'ancienne Fnac Wilson, qui a déménagé de l'autre côté du métro
+// Jean-Jaurès). La borne ne cite aucun commerce voisin : elle donne l'adresse.
 // Jeanne indique l'adresse au lieu de montrer un rayon (external: true).
 export const OTHER_STORE = {
-  name: "Fnac Wilson",
-  address: ["16, allées Franklin-Roosevelt", "31000 Toulouse"]
+  name: "Fnac Variétés",
+  // Trait d'union insécable : la fiche est étroite, « Président-Roosevelt »
+  // se coupait en deux lignes.
+  address: ["9, allées du Président‑Roosevelt", "31000 Toulouse"]
 };
 
 ZONES.editorial = {
   external: true, floors: [], icon: "book",
-  label: { fr: "Livres, papeterie, CD, vinyles, DVD (Fnac Wilson)", en: "Books, stationery, CDs, vinyl, DVDs (Fnac Wilson)", es: "Libros, papelería, CD, vinilos, DVD (Fnac Wilson)" },
+  label: { fr: "Livres, papeterie, CD, vinyles, DVD (Fnac Variétés)", en: "Books, stationery, CDs, vinyl, DVDs (Fnac Variétés)", es: "Libros, papelería, CD, vinilos, DVD (Fnac Variétés)" },
   detail: { fr: "", en: "", es: "" },
   keywords: {
     fr: ["livre", "livres", "roman", "romans", "poche", "livre de poche", "polar", "thriller", "science-fiction",
@@ -1840,7 +1846,10 @@ const SPOKEN = {
          "crédito al consumo", "cetelem", "descuento estudiante"]
   },
   editorial: {
-    fr: ["autre fnac", "l'autre fnac", "fnac wilson", "adresse fnac wilson", "l'adresse de la fnac wilson", "autre magasin fnac", "l'autre magasin", "fnac de wilson", "fnac place wilson", "fnac jean jaurès", "astérix", "asterix", "tintin", "gaston lagaffe", "lucky luke", "les schtroumpfs", "spirou",
+    // « Wilson » reste : le magasin vient d'être renommé « Variétés » et les
+    // clients l'appelleront encore longtemps par son ancien nom.
+    fr: ["autre fnac", "l'autre fnac", "fnac wilson", "adresse fnac wilson", "l'adresse de la fnac wilson", "autre magasin fnac", "l'autre magasin", "fnac de wilson", "fnac place wilson", "fnac jean jaurès",
+         "fnac variétés", "fnac varietes", "les variétés", "adresse fnac variétés", "l'adresse de la fnac variétés", "fnac roosevelt", "astérix", "asterix", "tintin", "gaston lagaffe", "lucky luke", "les schtroumpfs", "spirou",
          "blake et mortimer", "largo winch", "thorgal", "xiii", "les sisters", "mortelle adèle", "l'arabe du futur",
          "dragon ball", "demon slayer", "jujutsu kaisen", "my hero academia", "l'attaque des titans",
          "attaque des titans", "chainsaw man", "blue lock", "spy x family", "harry potter", "le seigneur des anneaux",
@@ -2231,9 +2240,9 @@ export const INFO = {
            "están abiertos", "abierto el domingo", "abierto el sábado"]
     },
     answer: {
-      fr: "Le magasin est ouvert du lundi au samedi, de 10 heures à 19 heures 30. Nous sommes fermés le dimanche.",
-      en: "The store is open Monday to Saturday, from 10 am to 7.30 pm. We are closed on Sundays.",
-      es: "La tienda abre de lunes a sábado, de 10 a 19:30. Los domingos está cerrada."
+      fr: "Ouvert du lundi au samedi, de 10 heures à 19 heures 30. Fermé le dimanche.",
+      en: "Open Monday to Saturday, 10 am to 7.30 pm. Closed on Sundays.",
+      es: "Abrimos de lunes a sábado, de 10 a 19:30. Domingos cerrado."
     }
   },
   toilets: {
@@ -2243,7 +2252,7 @@ export const INFO = {
       es: ["baño", "baños", "aseo", "aseos", "servicios", "wc"]
     },
     answer: {
-      fr: "Je suis désolée, il n'y a pas de toilettes dans ce magasin.",
+      fr: "Il n'y a pas de toilettes dans ce magasin.",
       en: "I'm sorry, there are no toilets in this store.",
       es: "Lo siento, esta tienda no tiene baños."
     }
@@ -2260,9 +2269,9 @@ export const INFO = {
            "horno empotrable", "placa de cocina", "campana extractora", "vinoteca"]
     },
     answer: {
-      fr: "Nous ne vendons pas de gros électroménager ici. Au rayon petit électroménager, le plus grand appareil est l'aspirateur balai.",
-      en: "We don't sell large appliances here. In the small appliances aisle, the largest item is the cordless stick vacuum.",
-      es: "Aquí no vendemos grandes electrodomésticos. En pequeños electrodomésticos, lo más grande es el aspirador escoba."
+      fr: "Nous ne vendons pas de gros électroménager. Le plus grand appareil ici, c'est l'aspirateur balai.",
+      en: "We don't sell large appliances. The biggest thing here is the cordless stick vacuum.",
+      es: "Aquí no vendemos grandes electrodomésticos. Lo más grande es el aspirador escoba."
     }
   },
   // Un ascenseur existe, réservé aux personnes qui en ont besoin (réponse du
@@ -2282,9 +2291,9 @@ export const INFO = {
            "carrito de bebé", "carrito", "muletas", "no puedo subir escaleras", "sin escaleras", "acceso para discapacitados"]
     },
     answer: {
-      fr: "Oui, il y a un ascenseur pour les personnes qui en ont besoin. Touchez « Appeler un vendeur » : un membre de l'équipe vous y accompagne.",
-      en: "Yes, there is a lift for anyone who needs it. Tap “Call a staff member” and a member of the team will take you there.",
-      es: "Sí, hay un ascensor para las personas que lo necesiten. Toque «Llamar a un vendedor» y alguien del equipo le acompañará."
+      fr: "Oui. Touchez « Appeler un vendeur », on vous y accompagne.",
+      en: "Yes. Tap “Call a staff member” and someone will take you there.",
+      es: "Sí. Toque «Llamar a un vendedor» y le acompañarán."
     }
   },
   // Retrait des commandes : les colis se retirent au SAV, au sous-sol, mais
@@ -2313,9 +2322,9 @@ export const INFO = {
            "mi móvil ha llegado", "recogida de móvil"]
     },
     answer: {
-      fr: "Les téléphones et les montres connectées se retirent ici, à l'étage 0, auprès des vendeurs au milieu du magasin. Les autres commandes se retirent au SAV, au sous-sol.",
-      en: "Phones and smartwatches are collected here on floor 0, from the staff in the middle of the store. Other orders are collected at the after-sales desk in the basement.",
-      es: "Los móviles y los relojes inteligentes se recogen aquí, en la planta 0, con los vendedores del centro de la tienda. Los demás pedidos se recogen en posventa, en el sótano."
+      fr: "Téléphones et montres connectées : ici, à l'étage 0, auprès des vendeurs. Les autres commandes, au SAV.",
+      en: "Phones and smartwatches: here on floor 0, from the staff. Other orders at the after-sales desk.",
+      es: "Móviles y relojes inteligentes: aquí, en la planta 0, con los vendedores. Los demás pedidos, en posventa."
     }
   },
   // Produits que ce magasin ne vend pas (confirmé par le magasin) : Jeanne le dit
@@ -2330,7 +2339,7 @@ export const INFO = {
       es: ["soporte móvil", "soporte para móvil", "soporte de coche", "soporte de bici para móvil", "soporte iphone"]
     },
     answer: {
-      fr: "Désolée, ce magasin ne vend pas ce produit. Vous pouvez le commander sur fnac.com, ou demander conseil à un vendeur.",
+      fr: "Ce magasin ne vend pas ce produit. Vous pouvez le commander sur fnac.com.",
       en: "Sorry, this store doesn't sell that product. You can order it on fnac.com, or ask a member of staff for advice.",
       es: "Lo siento, esta tienda no vende ese producto. Puede pedirlo en fnac.com o pedir consejo a un vendedor."
     }
@@ -2343,7 +2352,7 @@ export const INFO = {
       es: ["parking", "aparcamiento", "aparcar", "dónde aparcar", "aparcar el coche", "coche"]
     },
     answer: {
-      fr: "Le magasin n'a pas de parking. Il faut vous garer dans le quartier.",
+      fr: "Pas de parking : il faut vous garer dans le quartier.",
       en: "The store has no car park. You'll need to park in the neighbourhood.",
       es: "La tienda no tiene aparcamiento. Hay que aparcar por el barrio."
     }

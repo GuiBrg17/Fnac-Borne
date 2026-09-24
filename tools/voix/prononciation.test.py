@@ -19,11 +19,11 @@ from faster_whisper import WhisperModel
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "assets/voix"
 MAN = json.loads((OUT / "manifest.json").read_text())
-MOTS = r"\b(BD|CDs?|DVDs?|HDMI|PC|TV|USB|VR|AA|LEGO|Apple|Android|Dyson|Sony|Hue|Nespresso|Wilson|Samsung|Garmin|Philips|Windows|Watch)\b"
+MOTS = r"\b(BD|CDs?|DVDs?|HDMI|PC|TV|USB|VR|AA|LEGO|Apple|Android|Dyson|Sony|Hue|Nespresso|Samsung|Garmin|Philips|Windows|Watch)\b"
 AMORCE = {
-    "fr": "Sony, Philips Hue, Nespresso, Dyson, Apple Watch, Android, Samsung, Garmin, Fnac Wilson.",
-    "en": "Sony, Philips Hue, Nespresso, Dyson, Apple Watch, Android, Samsung, Garmin, Fnac Wilson.",
-    "es": "Sony, Philips Hue, Nespresso, Dyson, Apple Watch, Android, Samsung, Garmin, Fnac Wilson.",
+    "fr": "Sony, Philips Hue, Nespresso, Dyson, Apple Watch, Android, Samsung, Garmin.",
+    "en": "Sony, Philips Hue, Nespresso, Dyson, Apple Watch, Android, Samsung, Garmin.",
+    "es": "Sony, Philips Hue, Nespresso, Dyson, Apple Watch, Android, Samsung, Garmin.",
 }
 
 def cle(t):

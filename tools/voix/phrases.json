@@ -1,7 +1,7 @@
 [
  {
   "lang": "fr",
-  "text": "Bonjour et bienvenue à la Fnac Jeanne d'Arc ! Dites-moi ce que vous cherchez, je vous montre le rayon sur le plan."
+  "text": "Bonjour et bienvenue à la Fnac Jeanne d'Arc ! Que cherchez-vous ?"
  },
  {
   "lang": "fr",
@@ -17,19 +17,19 @@
  },
  {
   "lang": "fr",
-  "text": "Bien sûr. Touchez « Appeler un vendeur » et un membre de l'équipe viendra vous aider."
+  "text": "Bien sûr. Touchez « Appeler un vendeur »."
  },
  {
   "lang": "fr",
-  "text": "Je n'ai pas trouvé ce produit. Essayez avec un autre mot, ou appelez un vendeur : il viendra vous aider."
+  "text": "Je n'ai pas trouvé. Essayez un autre mot, ou appelez un vendeur."
  },
  {
   "lang": "fr",
-  "text": "Les livres, BD, manuels scolaires, la papeterie, les CD, vinyles et DVD se trouvent à la Fnac Wilson, 16 allées Franklin-Roosevelt, près de Jean-Jaurès. Ici, à la Fnac Jeanne d'Arc, nous sommes spécialisés dans la technique."
+  "text": "Ces produits sont disponibles à la Fnac Variétés, à l'adresse indiquée à l'écran."
  },
  {
   "lang": "fr",
-  "text": "Les LEGO, figurines POP et cartes Pokémon sont dans l'escalier qui relie l'étage 0 au sous-sol."
+  "text": "Les LEGO, figurines POP et cartes Pokémon sont dans l'escalier."
  },
  {
   "lang": "fr",
@@ -49,31 +49,31 @@
  },
  {
   "lang": "fr",
-  "text": "Le magasin est ouvert du lundi au samedi, de 10 heures à 19 heures 30. Nous sommes fermés le dimanche."
+  "text": "Ouvert du lundi au samedi, de 10 heures à 19 heures 30. Fermé le dimanche."
  },
  {
   "lang": "fr",
-  "text": "Je suis désolée, il n'y a pas de toilettes dans ce magasin."
+  "text": "Il n'y a pas de toilettes dans ce magasin."
  },
  {
   "lang": "fr",
-  "text": "Nous ne vendons pas de gros électroménager ici. Au rayon petit électroménager, le plus grand appareil est l'aspirateur balai."
+  "text": "Nous ne vendons pas de gros électroménager. Le plus grand appareil ici, c'est l'aspirateur balai."
  },
  {
   "lang": "fr",
-  "text": "Oui, il y a un ascenseur pour les personnes qui en ont besoin. Touchez « Appeler un vendeur » : un membre de l'équipe vous y accompagne."
+  "text": "Oui. Touchez « Appeler un vendeur », on vous y accompagne."
  },
  {
   "lang": "fr",
-  "text": "Les téléphones et les montres connectées se retirent ici, à l'étage 0, auprès des vendeurs au milieu du magasin. Les autres commandes se retirent au SAV, au sous-sol."
+  "text": "Téléphones et montres connectées : ici, à l'étage 0, auprès des vendeurs. Les autres commandes, au SAV."
  },
  {
   "lang": "fr",
-  "text": "Désolée, ce magasin ne vend pas ce produit. Vous pouvez le commander sur fnac.com, ou demander conseil à un vendeur."
+  "text": "Ce magasin ne vend pas ce produit. Vous pouvez le commander sur fnac.com."
  },
  {
   "lang": "fr",
-  "text": "Le magasin n'a pas de parking. Il faut vous garer dans le quartier."
+  "text": "Pas de parking : il faut vous garer dans le quartier."
  },
  {
   "lang": "fr",
@@ -161,11 +161,11 @@
  },
  {
   "lang": "fr",
-  "text": "Merci de nous l'avoir dit. Un vendeur peut vous aider : touchez « Appeler un vendeur »."
+  "text": "Merci de nous l'avoir dit. Un vendeur peut vous aider."
  },
  {
   "lang": "fr",
-  "text": "Mode accessibilité : le texte est agrandi et le contraste renforcé. Si vous ne pouvez pas prendre l'escalier, il y a un ascenseur : touchez « Appeler un vendeur », on vous y accompagne."
+  "text": "Mode accessibilité : texte agrandi, contraste renforcé. Pour l'ascenseur, touchez « Appeler un vendeur »."
  },
  {
   "lang": "fr",
@@ -177,19 +177,19 @@
  },
  {
   "lang": "fr",
-  "text": "Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe dans le magasin, il vous aidera avec plaisir."
+  "text": "Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe."
  },
  {
   "lang": "fr",
-  "text": "C'est noté : un vendeur arrive pour prendre votre commande. Livres, BD, CD, DVD… tout ce que nous n'avons pas ici peut être commandé."
+  "text": "C'est noté, un vendeur arrive pour prendre votre commande."
  },
  {
   "lang": "fr",
-  "text": "Je ne peux pas répondre à ça. Dites-moi plutôt quel produit vous cherchez, et je vous montre le rayon."
+  "text": "Je ne peux pas répondre à ça. Dites-moi plutôt ce que vous cherchez."
  },
  {
   "lang": "fr",
-  "text": "Le rayon Téléphonie Android est ici, à l'étage 0. Je vous l'indique sur le plan."
+  "text": "Le rayon Téléphonie Android est ici, à l'étage 0."
  },
  {
   "lang": "fr",
@@ -197,7 +197,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Objets connectés est ici, à l'étage 0. Je vous l'indique sur le plan."
+  "text": "Le rayon Objets connectés est ici, à l'étage 0."
  },
  {
   "lang": "fr",
@@ -213,7 +213,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Jeux vidéo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Jeux vidéo est au sous-sol."
  },
  {
   "lang": "fr",
@@ -221,7 +221,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon PC gamer & accessoires est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon PC gamer & accessoires est au sous-sol."
  },
  {
   "lang": "fr",
@@ -229,7 +229,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Cartouches d'encre est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Cartouches d'encre est au sous-sol."
  },
  {
   "lang": "fr",
@@ -237,7 +237,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Petit électroménager est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Petit électroménager est au sous-sol."
  },
  {
   "lang": "fr",
@@ -245,7 +245,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Connectique est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Connectique est au sous-sol."
  },
  {
   "lang": "fr",
@@ -253,7 +253,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Tablettes Android est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Tablettes Android est au sous-sol."
  },
  {
   "lang": "fr",
@@ -261,7 +261,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Liseuses est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Liseuses est au sous-sol."
  },
  {
   "lang": "fr",
@@ -269,7 +269,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon PC Windows est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon PC Windows est au sous-sol."
  },
  {
   "lang": "fr",
@@ -277,7 +277,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Mobilité urbaine est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Mobilité urbaine est au sous-sol."
  },
  {
   "lang": "fr",
@@ -285,7 +285,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Photo est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Photo est au sous-sol."
  },
  {
   "lang": "fr",
@@ -293,7 +293,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon TV est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon TV est au sous-sol."
  },
  {
   "lang": "fr",
@@ -301,7 +301,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Son est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Son est au sous-sol."
  },
  {
   "lang": "fr",
@@ -309,7 +309,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Apple est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Apple est au sous-sol."
  },
  {
   "lang": "fr",
@@ -317,7 +317,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le rayon Jeux de société est au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le rayon Jeux de société est au sous-sol."
  },
  {
   "lang": "fr",
@@ -325,7 +325,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le SAV et le retrait des colis se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "Le SAV et le retrait des colis se trouvent au sous-sol."
  },
  {
   "lang": "fr",
@@ -333,7 +333,7 @@
  },
  {
   "lang": "fr",
-  "text": "Les caisses se trouvent au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan. Pensez à préparer votre carte Fnac pour la remettre en caisse."
+  "text": "Les caisses se trouvent au sous-sol. Pensez à votre carte Fnac."
  },
  {
   "lang": "fr",
@@ -341,7 +341,7 @@
  },
  {
   "lang": "fr",
-  "text": "Le stand d'impression photo se trouve au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan. Il est juste à côté de l'espace adhésion."
+  "text": "Le stand d'impression photo se trouve au sous-sol. Juste à côté de l'espace adhésion."
  },
  {
   "lang": "fr",
@@ -349,7 +349,7 @@
  },
  {
   "lang": "fr",
-  "text": "L'espace adhésion et financement se trouve au sous-sol. Prenez l'escalier vers le sous-sol, puis suivez le plan."
+  "text": "L'espace adhésion et financement se trouve au sous-sol."
  },
  {
   "lang": "fr",
@@ -357,7 +357,7 @@
  },
  {
   "lang": "en",
-  "text": "Hello and welcome to Fnac Jeanne d'Arc! Tell me what you're looking for and I'll show you the section on the map."
+  "text": "Hello and welcome to Fnac Jeanne d'Arc! What are you looking for?"
  },
  {
   "lang": "en",
@@ -373,19 +373,19 @@
  },
  {
   "lang": "en",
-  "text": "Of course. Tap “Call a staff member” and someone from the team will come to help you."
+  "text": "Of course. Tap “Call a staff member”."
  },
  {
   "lang": "en",
-  "text": "I couldn't find that product. Try another word, or call a staff member who will come and help you."
+  "text": "I couldn't find that. Try another word, or call a staff member."
  },
  {
   "lang": "en",
-  "text": "Books, comics, school books, stationery, CDs, vinyl records and DVDs are at Fnac Wilson, 16 allées Franklin-Roosevelt, near Jean-Jaurès. Here at Fnac Jeanne d'Arc, we specialise in technology."
+  "text": "Those are available at Fnac Variétés — the address is on the screen."
  },
  {
   "lang": "en",
-  "text": "LEGO, POP figures and Pokémon cards are in the staircase between floor 0 and the basement."
+  "text": "LEGO, POP figures and Pokémon cards are in the staircase."
  },
  {
   "lang": "en",
@@ -405,7 +405,7 @@
  },
  {
   "lang": "en",
-  "text": "The store is open Monday to Saturday, from 10 am to 7.30 pm. We are closed on Sundays."
+  "text": "Open Monday to Saturday, 10 am to 7.30 pm. Closed on Sundays."
  },
  {
   "lang": "en",
@@ -413,15 +413,15 @@
  },
  {
   "lang": "en",
-  "text": "We don't sell large appliances here. In the small appliances aisle, the largest item is the cordless stick vacuum."
+  "text": "We don't sell large appliances. The biggest thing here is the cordless stick vacuum."
  },
  {
   "lang": "en",
-  "text": "Yes, there is a lift for anyone who needs it. Tap “Call a staff member” and a member of the team will take you there."
+  "text": "Yes. Tap “Call a staff member” and someone will take you there."
  },
  {
   "lang": "en",
-  "text": "Phones and smartwatches are collected here on floor 0, from the staff in the middle of the store. Other orders are collected at the after-sales desk in the basement."
+  "text": "Phones and smartwatches: here on floor 0, from the staff. Other orders at the after-sales desk."
  },
  {
   "lang": "en",
@@ -517,7 +517,7 @@
  },
  {
   "lang": "en",
-  "text": "Thank you for telling us. A member of staff can help: tap “Call a staff member”."
+  "text": "Thank you for telling us. A member of staff can help you."
  },
  {
   "lang": "en",
@@ -533,19 +533,19 @@
  },
  {
   "lang": "en",
-  "text": "I couldn't reach a staff member. Please ask any member of the team in the store, they'll be happy to help."
+  "text": "I couldn't reach a staff member. Please ask anyone from the team."
  },
  {
   "lang": "en",
-  "text": "Done: a member of staff is coming to take your order. Books, comics, CDs, DVDs — anything we don't stock here can be ordered."
+  "text": "Done, a member of staff is coming to take your order."
  },
  {
   "lang": "en",
-  "text": "I can't answer that. Tell me which product you are looking for and I'll show you where it is."
+  "text": "I can't answer that. Tell me what you are looking for instead."
  },
  {
   "lang": "en",
-  "text": "Android phones is right here on floor 0. I'm showing it on the map."
+  "text": "Android phones is right here on floor 0."
  },
  {
   "lang": "en",
@@ -553,7 +553,7 @@
  },
  {
   "lang": "en",
-  "text": "Connected devices is right here on floor 0. I'm showing it on the map."
+  "text": "Connected devices is right here on floor 0."
  },
  {
   "lang": "en",
@@ -569,7 +569,7 @@
  },
  {
   "lang": "en",
-  "text": "Video games is in the basement. Take the stairs down, then follow the map."
+  "text": "Video games is in the basement."
  },
  {
   "lang": "en",
@@ -577,7 +577,7 @@
  },
  {
   "lang": "en",
-  "text": "Gaming PCs & accessories is in the basement. Take the stairs down, then follow the map."
+  "text": "Gaming PCs & accessories is in the basement."
  },
  {
   "lang": "en",
@@ -585,7 +585,7 @@
  },
  {
   "lang": "en",
-  "text": "Ink cartridges is in the basement. Take the stairs down, then follow the map."
+  "text": "Ink cartridges is in the basement."
  },
  {
   "lang": "en",
@@ -593,7 +593,7 @@
  },
  {
   "lang": "en",
-  "text": "Home appliances is in the basement. Take the stairs down, then follow the map."
+  "text": "Home appliances is in the basement."
  },
  {
   "lang": "en",
@@ -601,7 +601,7 @@
  },
  {
   "lang": "en",
-  "text": "Cables & storage is in the basement. Take the stairs down, then follow the map."
+  "text": "Cables & storage is in the basement."
  },
  {
   "lang": "en",
@@ -609,7 +609,7 @@
  },
  {
   "lang": "en",
-  "text": "Android tablets is in the basement. Take the stairs down, then follow the map."
+  "text": "Android tablets is in the basement."
  },
  {
   "lang": "en",
@@ -617,7 +617,7 @@
  },
  {
   "lang": "en",
-  "text": "E-readers is in the basement. Take the stairs down, then follow the map."
+  "text": "E-readers is in the basement."
  },
  {
   "lang": "en",
@@ -625,7 +625,7 @@
  },
  {
   "lang": "en",
-  "text": "Windows PCs is in the basement. Take the stairs down, then follow the map."
+  "text": "Windows PCs is in the basement."
  },
  {
   "lang": "en",
@@ -633,7 +633,7 @@
  },
  {
   "lang": "en",
-  "text": "Urban mobility is in the basement. Take the stairs down, then follow the map."
+  "text": "Urban mobility is in the basement."
  },
  {
   "lang": "en",
@@ -641,7 +641,7 @@
  },
  {
   "lang": "en",
-  "text": "Photo is in the basement. Take the stairs down, then follow the map."
+  "text": "Photo is in the basement."
  },
  {
   "lang": "en",
@@ -649,7 +649,7 @@
  },
  {
   "lang": "en",
-  "text": "TV is in the basement. Take the stairs down, then follow the map."
+  "text": "TV is in the basement."
  },
  {
   "lang": "en",
@@ -657,7 +657,7 @@
  },
  {
   "lang": "en",
-  "text": "Sound is in the basement. Take the stairs down, then follow the map."
+  "text": "Sound is in the basement."
  },
  {
   "lang": "en",
@@ -665,7 +665,7 @@
  },
  {
   "lang": "en",
-  "text": "Apple is in the basement. Take the stairs down, then follow the map."
+  "text": "Apple is in the basement."
  },
  {
   "lang": "en",
@@ -673,7 +673,7 @@
  },
  {
   "lang": "en",
-  "text": "Board games is in the basement. Take the stairs down, then follow the map."
+  "text": "Board games is in the basement."
  },
  {
   "lang": "en",
@@ -681,7 +681,7 @@
  },
  {
   "lang": "en",
-  "text": "After-sales and order pickup are in the basement. Take the stairs down, then follow the map."
+  "text": "After-sales and order pickup are in the basement."
  },
  {
   "lang": "en",
@@ -689,7 +689,7 @@
  },
  {
   "lang": "en",
-  "text": "The checkouts are in the basement. Take the stairs down, then follow the map. Remember to have your Fnac card ready at the till."
+  "text": "The checkouts are in the basement. Remember your Fnac card."
  },
  {
   "lang": "en",
@@ -697,7 +697,7 @@
  },
  {
   "lang": "en",
-  "text": "The photo printing stand is in the basement. Take the stairs down, then follow the map. It is right next to the membership desk."
+  "text": "The photo printing stand is in the basement. Right next to the membership desk."
  },
  {
   "lang": "en",
@@ -705,7 +705,7 @@
  },
  {
   "lang": "en",
-  "text": "The membership and financing desk is in the basement. Take the stairs down, then follow the map."
+  "text": "The membership and financing desk is in the basement."
  },
  {
   "lang": "en",
@@ -729,19 +729,19 @@
  },
  {
   "lang": "es",
-  "text": "Por supuesto. Toque «Llamar a un vendedor» y alguien del equipo vendrá a ayudarle."
+  "text": "Por supuesto. Toque «Llamar a un vendedor»."
  },
  {
   "lang": "es",
-  "text": "No he encontrado ese producto. Pruebe con otra palabra, o llame a un vendedor: vendrá a ayudarle."
+  "text": "No lo he encontrado. Pruebe con otra palabra, o llame a un vendedor."
  },
  {
   "lang": "es",
-  "text": "Los libros, cómics, libros de texto, la papelería, los CD, vinilos y DVD están en la Fnac Wilson, 16 allées Franklin-Roosevelt, cerca de Jean-Jaurès. Aquí, en la Fnac Jeanne d'Arc, estamos especializados en tecnología."
+  "text": "Esos productos están en la Fnac Variétés, en la dirección que ve en pantalla."
  },
  {
   "lang": "es",
-  "text": "Los LEGO, las figuras POP y las cartas Pokémon están en la escalera que une la planta 0 con el sótano."
+  "text": "Los LEGO, las figuras POP y las cartas Pokémon están en la escalera."
  },
  {
   "lang": "es",
@@ -761,7 +761,7 @@
  },
  {
   "lang": "es",
-  "text": "La tienda abre de lunes a sábado, de 10 a 19:30. Los domingos está cerrada."
+  "text": "Abrimos de lunes a sábado, de 10 a 19:30. Domingos cerrado."
  },
  {
   "lang": "es",
@@ -769,15 +769,15 @@
  },
  {
   "lang": "es",
-  "text": "Aquí no vendemos grandes electrodomésticos. En pequeños electrodomésticos, lo más grande es el aspirador escoba."
+  "text": "Aquí no vendemos grandes electrodomésticos. Lo más grande es el aspirador escoba."
  },
  {
   "lang": "es",
-  "text": "Sí, hay un ascensor para las personas que lo necesiten. Toque «Llamar a un vendedor» y alguien del equipo le acompañará."
+  "text": "Sí. Toque «Llamar a un vendedor» y le acompañarán."
  },
  {
   "lang": "es",
-  "text": "Los móviles y los relojes inteligentes se recogen aquí, en la planta 0, con los vendedores del centro de la tienda. Los demás pedidos se recogen en posventa, en el sótano."
+  "text": "Móviles y relojes inteligentes: aquí, en la planta 0, con los vendedores. Los demás pedidos, en posventa."
  },
  {
   "lang": "es",
@@ -873,11 +873,11 @@
  },
  {
   "lang": "es",
-  "text": "Gracias por decírnoslo. Un vendedor puede ayudarle: toque «Llamar a un vendedor»."
+  "text": "Gracias por decírnoslo. Un vendedor puede ayudarle."
  },
  {
   "lang": "es",
-  "text": "Modo accesibilidad: texto más grande y más contraste. Si no puede usar la escalera, hay un ascensor: toque «Llamar a un vendedor» y le acompañaremos."
+  "text": "Modo accesibilidad: texto más grande y más contraste. Para el ascensor, toque «Llamar a un vendedor»."
  },
  {
   "lang": "es",
@@ -889,11 +889,11 @@
  },
  {
   "lang": "es",
-  "text": "No he podido avisar a un vendedor. Diríjase a cualquier miembro del equipo en la tienda, le ayudará con gusto."
+  "text": "No he podido avisar a un vendedor. Diríjase a alguien del equipo."
  },
  {
   "lang": "es",
-  "text": "Anotado: un vendedor viene a tomar su pedido. Libros, cómics, CD, DVD… todo lo que no tenemos aquí se puede encargar."
+  "text": "Anotado, un vendedor viene a tomar su pedido."
  },
  {
   "lang": "es",
@@ -901,7 +901,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Telefonía Android está aquí, en la planta 0. Se la indico en el plano."
+  "text": "La sección Telefonía Android está aquí, en la planta 0."
  },
  {
   "lang": "es",
@@ -909,7 +909,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Objetos conectados está aquí, en la planta 0. Se la indico en el plano."
+  "text": "La sección Objetos conectados está aquí, en la planta 0."
  },
  {
   "lang": "es",
@@ -925,7 +925,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Videojuegos está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Videojuegos está en el sótano."
  },
  {
   "lang": "es",
@@ -933,7 +933,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección PC gaming y accesorios está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección PC gaming y accesorios está en el sótano."
  },
  {
   "lang": "es",
@@ -941,7 +941,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Cartuchos de tinta está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Cartuchos de tinta está en el sótano."
  },
  {
   "lang": "es",
@@ -949,7 +949,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Pequeños electrodomésticos está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Pequeños electrodomésticos está en el sótano."
  },
  {
   "lang": "es",
@@ -957,7 +957,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Conectividad está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Conectividad está en el sótano."
  },
  {
   "lang": "es",
@@ -965,7 +965,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Tabletas Android está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Tabletas Android está en el sótano."
  },
  {
   "lang": "es",
@@ -973,7 +973,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Lectores de libros está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Lectores de libros está en el sótano."
  },
  {
   "lang": "es",
@@ -981,7 +981,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección PC Windows está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección PC Windows está en el sótano."
  },
  {
   "lang": "es",
@@ -989,7 +989,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Movilidad urbana está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Movilidad urbana está en el sótano."
  },
  {
   "lang": "es",
@@ -997,7 +997,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Foto está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Foto está en el sótano."
  },
  {
   "lang": "es",
@@ -1005,7 +1005,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección TV está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección TV está en el sótano."
  },
  {
   "lang": "es",
@@ -1013,7 +1013,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Sonido está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Sonido está en el sótano."
  },
  {
   "lang": "es",
@@ -1021,7 +1021,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Apple está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Apple está en el sótano."
  },
  {
   "lang": "es",
@@ -1029,7 +1029,7 @@
  },
  {
   "lang": "es",
-  "text": "La sección Juegos de mesa está en el sótano. Baje por la escalera y siga el plano."
+  "text": "La sección Juegos de mesa está en el sótano."
  },
  {
   "lang": "es",
@@ -1037,7 +1037,7 @@
  },
  {
   "lang": "es",
-  "text": "La posventa y la recogida de pedidos están en el sótano. Baje por la escalera al sótano y siga el plano."
+  "text": "La posventa y la recogida de pedidos están en el sótano."
  },
  {
   "lang": "es",
@@ -1045,7 +1045,7 @@
  },
  {
   "lang": "es",
-  "text": "Las cajas están en el sótano. Baje por la escalera al sótano y siga el plano. No olvide preparar su tarjeta Fnac para la caja."
+  "text": "Las cajas están en el sótano. No olvide su tarjeta Fnac."
  },
  {
   "lang": "es",
@@ -1053,7 +1053,7 @@
  },
  {
   "lang": "es",
-  "text": "El puesto de impresión de fotos está en el sótano. Baje por la escalera al sótano y siga el plano. Está justo al lado del espacio de socios."
+  "text": "El puesto de impresión de fotos está en el sótano. Justo al lado del espacio de socios."
  },
  {
   "lang": "es",
@@ -1061,7 +1061,7 @@
  },
  {
   "lang": "es",
-  "text": "El espacio de socios y financiación está en el sótano. Baje por la escalera al sótano y siga el plano."
+  "text": "El espacio de socios y financiación está en el sótano."
  },
  {
   "lang": "es",
