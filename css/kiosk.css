@@ -379,6 +379,42 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   cursor: pointer;
 }
 .idle-card-button[hidden] { display: none; }
+.idle-card-offer[hidden], .idle-card-news[hidden] { display: none; }
+/* Fondu quand l'encadré passe d'une publicité à la suivante. */
+.idle-card { transition: opacity 0.42s ease; }
+.idle-card.is-swapping { opacity: 0; }
+
+/* Une actualité dans l'encadré : image, titre, texte, date. */
+.idle-card-news { display: grid; gap: 0.55rem; }
+.idle-card-news-image {
+  width: 100%;
+  max-height: 11rem;
+  object-fit: contain;
+  border-radius: var(--radius-l);
+}
+.idle-card-news-image[hidden] { display: none; }
+/* Produit détouré : posé sur un fond clair, sinon un iPhone noir
+   disparaîtrait dans le noir de l'encadré. */
+.idle-card-news-image.is-cutout { background: var(--yellow); padding: 0.4rem; }
+.idle-card-news-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 2vw, 2.1rem);
+  font-weight: 900;
+  font-stretch: 118%;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.idle-card-news-text { margin: 0; font-size: 0.95rem; font-weight: 500; line-height: 1.35; }
+.idle-card-news-date {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 750;
+  color: var(--yellow);
+}
+.idle-card-news-date svg { width: 1.1rem; height: 1.1rem; }
 
 /* Écran peu haut (portable posé à l'entrée) : la photo de campagne s'efface
    et les textes se resserrent, sinon « Notre histoire » sortait de l'écran. */

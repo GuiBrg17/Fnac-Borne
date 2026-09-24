@@ -46,8 +46,9 @@ const t = () => UI[state.lang];
 
 const els = {
   idle: $("#idleScreen"), idleCopy: $("#idleCopy"), bubble: $(".idle-bubble"),
-  idleGreet: $("#idleGreet"), idleNews: $("#idleNews"), idleNewsTitle: $("#idleNewsTitle"), idleNewsText: $("#idleNewsText"),
-  idleNewsDate: $("#idleNewsDate"), idleNewsExample: $("#idleNewsExample"), idleNewsImage: $("#idleNewsImage"),
+  idleGreet: $("#idleGreet"),
+  idleCardOffer: $("#idleCardOffer"), idleCardNews: $("#idleCardNews"), idleCardNewsImage: $("#idleCardNewsImage"),
+  idleCardNewsTitle: $("#idleCardNewsTitle"), idleCardNewsText: $("#idleCardNewsText"), idleCardNewsDate: $("#idleCardNewsDate"),
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
   app: $("#appScreen"), signVideo: $("#signVideo"), lookVideo: $("#lookVideo"),
   idleHours: $("#idleHours"), storyButton: $("#idleStoryButton"), storyButtonLabel: $("#idleStoryButtonLabel"),
@@ -1131,7 +1132,6 @@ const IDLE_ORDER = ["fr", "en", "es"];
 const GREETING_MS = 5200;
 const NEWS_MS = 8500;
 let idleStep = 0;
-let newsIndex = 0;
 let idleCycle = null;
 
 let idleLang = "fr";
@@ -1216,7 +1216,6 @@ function showOpening(lang = state.screen === "app" ? state.lang : idleLang, now 
 }
 
 function showGreeting(lang) {
-  els.idleNews.hidden = true;
   els.idleGreet.hidden = false;
   setIdleLang(lang);
 }
@@ -1314,41 +1313,61 @@ function closeCard() {
   if (els.cardDialog.open) els.cardDialog.close();
 }
 
-function showNews(item) {
-  setIdleLang("fr");
-  els.idleNewsTitle.textContent = item.title;
-  els.idleNewsText.textContent = item.text;
-  els.idleNewsDate.textContent = item.date;
-  els.idleNewsExample.hidden = !item.example;
-  els.idleNewsImage.hidden = !item.image;
-  // Une image .png est un produit détouré : pas de carte blanche derrière lui.
-  els.idleNewsImage.classList.toggle("is-cutout", Boolean(item.image) && item.image.endsWith(".png"));
+// Une actualité dans l'encadré de droite, à la place de la carte Fnac+.
+function showSideNews(item) {
+  els.idleCardNewsTitle.textContent = item.title;
+  els.idleCardNewsText.textContent = item.text;
+  els.idleCardNewsDate.textContent = item.date;
+  els.idleCardNewsImage.hidden = !item.image;
+  // Produit détouré (.png) : il lui faut un fond clair pour ressortir sur le noir.
+  els.idleCardNewsImage.classList.toggle("is-cutout", Boolean(item.image) && item.image.endsWith(".png"));
   if (item.image) {
-    els.idleNewsImage.onerror = () => { els.idleNewsImage.hidden = true; };
-    els.idleNewsImage.src = item.image;
+    els.idleCardNewsImage.onerror = () => { els.idleCardNewsImage.hidden = true; };
+    els.idleCardNewsImage.src = item.image;
   } else {
-    els.idleNewsImage.removeAttribute("src");
+    els.idleCardNewsImage.removeAttribute("src");
   }
-  els.idleGreet.hidden = true;
-  els.idleNews.hidden = false;
+  els.idleCardOffer.hidden = true;
+  els.idleCardNews.hidden = false;
 }
 
+// La carte Fnac+ reprend sa place dans l'encadré.
+function showSideCard() {
+  els.idleCardNews.hidden = true;
+  els.idleCardOffer.hidden = false;
+}
+
+// L'encadré de droite tourne tout seul : carte Fnac+, puis les actualités.
+let sideCycle = null;
+let sideStep = 0;
+
+function startSideCycle() {
+  clearTimeout(sideCycle);
+  const pubs = [showSideCard, ...NEWS.map((item) => () => showSideNews(item))];
+  if (pubs.length < 2) return;
+  const next = () => {
+    sideStep = (sideStep + 1) % pubs.length;
+    els.idleCard.classList.add("is-swapping");
+    setTimeout(() => {
+      pubs[sideStep]();
+      els.idleCard.classList.remove("is-swapping");
+      sideCycle = setTimeout(next, NEWS_MS);
+    }, 420);
+  };
+  sideCycle = setTimeout(next, NEWS_MS);
+}
+// Colonne de gauche : l'accueil, en français, anglais puis espagnol.
 function startIdleCycle() {
   clearTimeout(idleCycle);
   idleStep = 0;
   showGreeting("fr");
-  // Déroulé : accueil FR, EN, ES, puis une actualité.
-  const cards = NEWS.length ? ["news"] : [];
-  const steps = IDLE_ORDER.length + cards.length;
   const next = () => {
-    idleStep = (idleStep + 1) % steps;
+    idleStep = (idleStep + 1) % IDLE_ORDER.length;
     els.idle.classList.add("is-swapping");
     setTimeout(() => {
-      const card = cards[idleStep - IDLE_ORDER.length];
-      if (card === "news") showNews(NEWS[newsIndex++ % NEWS.length]);
-      else showGreeting(IDLE_ORDER[idleStep]);
+      showGreeting(IDLE_ORDER[idleStep]);
       els.idle.classList.remove("is-swapping");
-      idleCycle = setTimeout(next, card ? NEWS_MS : GREETING_MS);
+      idleCycle = setTimeout(next, GREETING_MS);
     }, 420);
   };
   idleCycle = setTimeout(next, GREETING_MS);
@@ -1961,6 +1980,7 @@ setInterval(checkForUpdate, 30 * 60 * 1000);
 // --- Démarrage ---
 buildPlans();
 showCard();
+startSideCycle();
 showOpening("fr");
 // L'heure avance : la pastille se met à jour toutes les minutes.
 setInterval(() => showOpening(), 60000);

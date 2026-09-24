@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=79">
+<link rel="stylesheet" href="css/kiosk.css?v=80">
 <script type="importmap">
 {
   "imports": {
@@ -20,7 +20,7 @@
 </script>
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=79"></script>
+<script type="module" src="js/app.js?v=80"></script>
 </head>
 <body class="is-idle">
 
@@ -72,12 +72,6 @@
       <h1 class="idle-title" data-i18n="idleTitle">Je suis Jeanne, votre guide à la Fnac Jeanne d'Arc.</h1>
       <p class="idle-sub" data-i18n="idleSub">Dites-moi ce que vous cherchez, je vous montre le rayon.</p>
     </div>
-    <article class="idle-news" id="idleNews" hidden>
-      <img class="idle-news-image" id="idleNewsImage" alt="" hidden>
-      <h2 class="idle-news-title" id="idleNewsTitle"></h2>
-      <p class="idle-news-text" id="idleNewsText"></p>
-      <p class="idle-news-date"><svg aria-hidden="true"><use href="#i-calendar"/></svg><span id="idleNewsDate"></span><span class="idle-news-example" id="idleNewsExample" hidden>Exemple à remplacer</span></p>
-    </article>
   </div>
 
   <div class="idle-avatar-slot" id="idleAvatarSlot">
@@ -91,13 +85,23 @@
        voisines de la grille, ils se chevauchaient dès que l'encadré était haut. -->
   <div class="idle-side">
     <aside class="idle-card" id="idleCard">
-      <img class="idle-card-photo" id="idleCardPhoto" alt="" hidden>
-      <p class="idle-card-tag" id="idleCardTag"></p>
-      <h2 class="idle-card-title" id="idleCardTitle"></h2>
-      <p class="idle-card-price" id="idleCardPrice"></p>
-      <ul class="idle-card-list" id="idleCardList"></ul>
-      <p class="idle-card-foot" id="idleCardFoot"></p>
-      <button type="button" class="idle-card-button" id="idleCardButton"></button>
+      <!-- La carte Fnac+ -->
+      <div class="idle-card-offer" id="idleCardOffer">
+        <img class="idle-card-photo" id="idleCardPhoto" alt="" hidden>
+        <p class="idle-card-tag" id="idleCardTag"></p>
+        <h2 class="idle-card-title" id="idleCardTitle"></h2>
+        <p class="idle-card-price" id="idleCardPrice"></p>
+        <ul class="idle-card-list" id="idleCardList"></ul>
+        <p class="idle-card-foot" id="idleCardFoot"></p>
+        <button type="button" class="idle-card-button" id="idleCardButton"></button>
+      </div>
+      <!-- Les actualités du magasin (js/news.js), à la suite -->
+      <article class="idle-card-news" id="idleCardNews" hidden>
+        <img class="idle-card-news-image" id="idleCardNewsImage" alt="" hidden>
+        <h2 class="idle-card-news-title" id="idleCardNewsTitle"></h2>
+        <p class="idle-card-news-text" id="idleCardNewsText"></p>
+        <p class="idle-card-news-date"><svg aria-hidden="true"><use href="#i-calendar"/></svg><span id="idleCardNewsDate"></span></p>
+      </article>
     </aside>
     <button type="button" class="idle-story-button" id="idleStoryButton">
       <svg aria-hidden="true"><use href="#i-pin"/></svg><span id="idleStoryButtonLabel">Notre histoire</span>
