@@ -163,41 +163,7 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   position: relative;
   margin: -4.5vh 0;
 }
-/* Vidéo de Jeanne en boucle sur l'écran de veille.
-   Le fond de la vidéo est le jaune de la page : Jeanne semble posée
-   directement dessus, sans cadre visible. L'élément est dimensionné à la
-   vidéo elle-même (et non à toute la colonne) pour que l'estompage des
-   bords ci-dessous tombe au bon endroit. */
-.idle-video {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  /* Jeanne tient dans sa colonne : sinon elle passait par-dessus le texte
-     d'accueil à gauche et la carte Fnac+ à droite. */
-  height: 100%;
-  width: 100%;
-  /* « cover » : la vidéo remplit sa colonne jusqu'en bas. En « contain », une
-     bande vide apparaissait sous Jeanne, avec un bord net visible. */
-  object-fit: cover;
-  object-position: 50% 100%;
-  /* Jeanne est au milieu de l'écran : ses quatre bords sont en pleine page,
-     donc estompés. Même si le jaune de la vidéo sort décalé d'un point selon
-     le navigateur, aucun trait ne se voit. */
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 5%);
-  mask-composite: intersect;
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 5%);
-  -webkit-mask-composite: source-in;
-}
-.idle-video[hidden] { display: none; }
-/* Quand la vidéo est là, la photo s'efface. */
-.has-idle-video .idle-photo { display: none; }
-
-/* Photo de Jeanne sur l'écran de veille, si la vidéo manque. */
+/* Photo de Jeanne sur l'écran de veille. */
 .idle-photo {
   position: absolute;
   inset: 0;
@@ -217,16 +183,7 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 /* La bulle de l'image d'origine est hors cadre : la borne affiche la sienne,
    qui change de langue. */
 .has-idle-photo .idle-bubble { top: 6%; left: 4%; }
-/* Avec la vidéo, Jeanne est dans un panneau sombre à droite : la bulle se
-   pose dessus, à gauche de son visage, et reste assez large pour ne pas
-   couper les mots. */
-.has-idle-video .idle-bubble {
-  top: 8%;
-  left: auto;
-  right: 68%;
-  max-width: 19ch;
-  text-wrap: balance;
-}
+
 
 .idle-bubble {
   position: absolute;
@@ -636,23 +593,6 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
    « invisible » pour Chrome, qui refuse alors de lancer la lecture. */
 .is-signing .sign-video { opacity: 1; transition: none; }
 /* Crédit de l'auteure des clips, demandé par leur licence (CC BY). */
-.sign-credit:empty { display: none; }
-.sign-credit {
-  position: absolute;
-  left: 0.5rem;
-  top: 15.9rem;
-  z-index: 3;
-  margin: 0;
-  padding: 0.15rem 0.5rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.82);
-  font-size: 0.75rem;
-  font-weight: 600;
-  opacity: 0;
-  color: #5a5348;
-  pointer-events: none;
-}
-.is-signing .sign-credit { opacity: 1; }
 .jeanne-name {
   margin: 0;
   font-size: 2.3rem;
@@ -975,8 +915,6 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 }
 .plan-0 .tile-icon { width: 1.5rem; height: 1.5rem; }
 
-.tile-ghost { pointer-events: none; }
-.tile-stairs, .tile-entrance { background: var(--yellow-light); }
 
 /* Rayon trouvé */
 .has-focus .tile:not(.is-hit):not(.is-route) { opacity: 0.4; }
@@ -985,7 +923,6 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   background: var(--paper);
   animation: hit 1.8s ease-out infinite;
 }
-.tile-ghost.is-hit { animation: none; z-index: 1; }
 @keyframes hit {
   0% { box-shadow: 0 0 0 0.28rem var(--yellow), 0 0 0 0.28rem rgba(235, 179, 0, 0.7), 0 1rem 2rem -0.5rem rgba(0, 0, 0, 0.6); }
   100% { box-shadow: 0 0 0 0.28rem var(--yellow), 0 0 0 1.7rem rgba(235, 179, 0, 0), 0 1rem 2rem -0.5rem rgba(0, 0, 0, 0.6); }
@@ -1086,38 +1023,6 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 html.a11y .has-focus .bm-shape:not(.is-hit):not(.is-zone) { opacity: 0.12; }
 @media (prefers-reduced-motion: reduce) { .bm-shape.is-hit, .bm-here-pulse { animation: none; } }
 
-/* Vous êtes ici */
-.here {
-  position: absolute;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-right: 0.8rem;
-  padding: 0.4rem 0.9rem 0.4rem 0.4rem;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
-  font-size: 0.95rem;
-  font-weight: 750;
-  pointer-events: none;
-}
-.here svg {
-  width: 2rem;
-  height: 2rem;
-  padding: 0.35rem;
-  border-radius: 50%;
-  background: var(--yellow);
-  color: var(--ink);
-  animation: here 2.2s ease-out infinite;
-}
-@keyframes here {
-  0% { box-shadow: 0 0 0 0 rgba(235, 179, 0, 0.75); }
-  100% { box-shadow: 0 0 0 0.9rem rgba(235, 179, 0, 0); }
-}
 
 /* Produits éditoriaux : carte « Fnac Wilson » par-dessus le plan */
 .other-store {

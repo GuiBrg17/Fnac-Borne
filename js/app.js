@@ -6,7 +6,7 @@
 const VERSION = new URL(import.meta.url).search;
 const { LANGS, UI, ZONES, SUGGESTIONS, OTHER_STORE, INFO, OPENING } = await import("./data.js" + VERSION);
 const { findZoneDetailed, findRude, findIntent, findInfo, findClarify, pickClarifyOption, normalize, displayKeyword } = await import("./search.js" + VERSION);
-const { NEWS, STORY, CARD, SIGN_CREDIT } = await import("./news.js" + VERSION);
+const { NEWS, STORY, CARD } = await import("./news.js" + VERSION);
 const { recordSession, recordQuestion, recordRude, recordFeedback, readStats, readPeriod, resetStats, dayKey } = await import("./stats.js" + VERSION);
 const { buildReport, monthlyPeriod, downloadReport, emailReport, isEmail } = await import("./report.js" + VERSION);
 const voice = await import("./voice.js" + VERSION);
@@ -17,13 +17,6 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
 const WARNING_SECONDS = 15;
-// Visuel de l'écran de veille :
-//   "photo" → assets/jeanne-accueil.png (Jeanne détourée, posée sur le jaune)
-//   "video" → assets/jeanne-accueil.mp4, avec la photo en secours
-// Depuis le 24/09/2026 : la photo, qui porte le badge « Jeanne ». L'ancienne
-// vidéo montre une autre Jeanne ; elle reste dans le dépôt en attendant
-// qu'une vidéo soit refaite avec cette apparence.
-const IDLE_VISUAL = "photo";
 
 // --- Réglages enregistrés sur la borne ---------------------------------
 const store = {
@@ -57,7 +50,7 @@ const els = {
   idleGreet: $("#idleGreet"), idleNews: $("#idleNews"), idleNewsTitle: $("#idleNewsTitle"), idleNewsText: $("#idleNewsText"),
   idleNewsDate: $("#idleNewsDate"), idleNewsExample: $("#idleNewsExample"), idleNewsImage: $("#idleNewsImage"),
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
-  app: $("#appScreen"), signVideo: $("#signVideo"), signCredit: $("#signCredit"), lookVideo: $("#lookVideo"),
+  app: $("#appScreen"), signVideo: $("#signVideo"), lookVideo: $("#lookVideo"),
   idleHours: $("#idleHours"), storyButton: $("#idleStoryButton"), storyButtonLabel: $("#idleStoryButtonLabel"),
   storyDialog: $("#storyDialog"), storyTitle: $("#storyTitle"), storyText: $("#storyText"),
   storyFigure: $("#storyFigure"), storyImage: $("#storyImage"), storyCaption: $("#storyCaption"),
@@ -87,7 +80,7 @@ const els = {
   toast: $("#toast"),
   otherStore: $("#otherStore"), otherStoreClose: $("#otherStoreClose"), otherStoreAddress: $("#otherStoreAddress"),
   otherStoreOrder: $("#otherStoreOrder"),
-  idlePhoto: $("#idlePhoto"), idleVideo: $("#idleVideo")
+  idlePhoto: $("#idlePhoto")
 };
 
 // =====================================================================
@@ -1477,7 +1470,6 @@ async function signLSF(names) {
   // Rien de tourné dans cette langue, ou le client est reparti entre-temps.
   if (!wanted.length || state.screen !== "app") return false;
   signQueue = wanted;
-  if (els.signCredit) els.signCredit.textContent = SIGN_CREDIT || "";
   // Le cadre s'ouvre avant la première image, et la lecture attend que
   // l'écran soit redessiné : Chrome refuse de lire une vidéo muette tant
   // qu'elle n'est pas visible (économie d'énergie).
@@ -1541,7 +1533,6 @@ function enterApp() {
   document.body.classList.replace("is-idle", "is-app");
   els.idle.inert = true;
   els.app.inert = false;
-  if (els.idleVideo && els.idleVideo.isConnected && !els.idleVideo.hidden) els.idleVideo.pause();
   state.lang = "fr";
   state.visit = { count: 0, last: null, surveyed: false, surveyOffered: false, rude: 0 };
   // Retour rapide après un « Terminer » : le nettoyage prévu ne doit pas effacer le nouveau bonjour.
@@ -1588,7 +1579,6 @@ function exitToIdle() {
   setFloor("0");
   if (state.a11y) toggleA11y(false);
   stopLooking();
-  if (els.idleVideo && els.idleVideo.isConnected && !els.idleVideo.hidden) els.idleVideo.play().catch(() => {});
   startIdleCycle();
   clearTimeout(chatClearTimer);
   chatClearTimer = setTimeout(() => { els.chat.textContent = ""; }, 600);
@@ -2059,40 +2049,8 @@ els.app.inert = true;
 $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); });
 applyLang();
 startIdleCycle();
-// Vidéo de Jeanne en boucle : utilisée si le fichier existe, sinon la photo.
-if (IDLE_VISUAL !== "video") els.idleVideo.remove();
-
-// En mode vidéo, la photo ne sert que de secours : on ne l'affiche pas tout
-// de suite, sinon elle apparaît une seconde puis saute quand la vidéo démarre.
-// Son image d'attente (poster) couvre déjà le temps de chargement.
-let photoIsBackup = IDLE_VISUAL === "video" && els.idleVideo.isConnected;
-let photoReady = false;
-
-function useIdleVideo() {
-  els.idleVideo.hidden = false;
-  document.body.classList.add("has-idle-video");
-  photoIsBackup = false;
-  els.idleVideo.play().catch(() => { /* lecture refusée : l'image d'attente reste */ });
-}
-function fallbackToPhoto() {
-  els.idleVideo.remove();
-  document.body.classList.remove("has-idle-video");
-  photoIsBackup = false;
-  if (photoReady) useIdlePhoto();
-}
-if (els.idleVideo.isConnected) {
-  els.idleVideo.addEventListener("canplay", useIdleVideo, { once: true });
-  els.idleVideo.addEventListener("error", fallbackToPhoto);
-  // Si la vidéo n'est toujours pas prête (fichier absent, connexion très
-  // lente), la photo reprend la main. Délai large : le fichier fait 6 Mo.
-  setTimeout(() => { if (photoIsBackup) fallbackToPhoto(); }, 15000);
-  els.idleVideo.src = els.idleVideo.dataset.src;
-}
-
-// Photo de Jeanne sur l'écran de veille : utilisée seulement si le fichier existe.
+// Photo de Jeanne sur l'écran de veille : affichée une fois chargée.
 function useIdlePhoto() {
-  photoReady = true;
-  if (photoIsBackup) return;
   els.idlePhoto.hidden = false;
   document.body.classList.add("has-idle-photo");
 }
@@ -2100,7 +2058,7 @@ if (els.idlePhoto.isConnected) {
   els.idlePhoto.addEventListener("load", useIdlePhoto);
   els.idlePhoto.addEventListener("error", () => { els.idlePhoto.remove(); });
   els.idlePhoto.src = els.idlePhoto.dataset.src;
-  // L'image peut déjà être en cache : dans ce cas "load" ne se déclenche pas.
+  // L'image peut déjà être en cache : dans ce cas « load » ne se déclenche pas.
   if (els.idlePhoto.complete && els.idlePhoto.naturalWidth > 0) useIdlePhoto();
 }
 

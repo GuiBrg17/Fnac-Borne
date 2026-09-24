@@ -345,4 +345,3 @@ export function routeGround(zoneId, floors) {
   const way = floors.includes("0") && GROUND.routes[zoneId] ? GROUND.routes[zoneId] : GROUND.routes.stairs;
   return [GROUND.here, ...way];
 }
-export const groundShape = (id) => groundById.get(id);
