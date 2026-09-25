@@ -58,9 +58,9 @@ export const UI = {
     foundPlace: (sujet, floor) => floor === "-1"
       ? `${sujet} au sous-sol.`
       : `${sujet} ici, à l'étage 0.`,
-    foundStairs: "Les LEGO, figurines POP et cartes Pokémon sont dans l'escalier.",
+    foundStairs: "Les LEGO, figurines POP, cartes Pokémon et produits reconditionnés sont dans l'escalier.",
     foundEntrance: "L'entrée et la sortie sont à l'étage 0, en bas du plan.",
-    notFound: "Je n'ai pas trouvé. Essayez un autre mot, ou appelez un vendeur.",
+    notFound: "Je n'ai pas trouvé. Essayez un autre mot, ou appelez un vendeur : il peut commander ce que nous n'avons pas ici.",
     hello: "Bonjour ! Quel produit cherchez-vous ?",
     thanks: "Avec plaisir ! Bonne visite à la Fnac.",
     human: "Bien sûr. Touchez « Appeler un vendeur ».",
@@ -136,9 +136,9 @@ export const UI = {
     foundPlace: (sujet, floor) => floor === "-1"
       ? `${sujet} in the basement.`
       : `${sujet} here on floor 0.`,
-    foundStairs: "LEGO, POP figures and Pokémon cards are in the staircase.",
+    foundStairs: "LEGO, POP figures, Pokémon cards and refurbished products are in the staircase.",
     foundEntrance: "The entrance and exit are on floor 0, at the bottom of the map.",
-    notFound: "I couldn't find that. Try another word, or call a staff member.",
+    notFound: "I couldn't find that. Try another word, or call a staff member: they can order what we don't stock here.",
     hello: "Hello! What product are you looking for?",
     thanks: "You're welcome! Enjoy your visit to Fnac.",
     human: "Of course. Tap “Call a staff member”.",
@@ -211,9 +211,9 @@ export const UI = {
     foundPlace: (sujet, floor) => floor === "-1"
       ? `${sujet} en el sótano.`
       : `${sujet} aquí, en la planta 0.`,
-    foundStairs: "Los LEGO, las figuras POP y las cartas Pokémon están en la escalera.",
+    foundStairs: "Los LEGO, las figuras POP, las cartas Pokémon y los productos reacondicionados están en la escalera.",
     foundEntrance: "La entrada y la salida están en la planta 0, abajo en el plano.",
-    notFound: "No lo he encontrado. Pruebe con otra palabra, o llame a un vendedor.",
+    notFound: "No lo he encontrado. Pruebe con otra palabra, o llame a un vendedor: puede encargar lo que no tenemos aquí.",
     hello: "¡Hola! ¿Qué producto busca?",
     thanks: "¡Con mucho gusto! Disfrute de su visita a la Fnac.",
     human: "Por supuesto. Toque «Llamar a un vendedor».",
@@ -275,8 +275,8 @@ export const ZONES = {
            "téléphone samsung", "samsung", "galaxy", "samsung galaxy", "galaxy s24", "galaxy s25", "galaxy a16",
            "galaxy a56", "galaxy z flip", "galaxy z fold", "xiaomi", "redmi", "poco", "google pixel", "pixel", "oppo",
            "honor", "motorola", "nokia", "oneplus", "realme", "wiko", "crosscall", "alcatel", "fairphone",
-           "sony xperia", "xperia", "téléphone pas cher", "téléphone reconditionné", "smartphone reconditionné",
-           "reconditionné", "téléphone senior", "téléphone à clapet", "téléphone fixe", "chargeur",
+           "sony xperia", "xperia", "téléphone pas cher",
+           "téléphone senior", "téléphone à clapet", "chargeur",
            "chargeur téléphone", "chargeur secteur", "chargeur rapide", "chargeur sans fil", "chargeur à induction",
            "chargeur voiture", "bloc secteur", "adaptateur secteur", "câble de charge", "câble usb c", "usb c",
            "câble micro usb", "micro usb", "batterie externe", "batterie de secours", "powerbank", "power bank",
@@ -356,7 +356,7 @@ export const ZONES = {
   },
   escalier: {
     floors: ["0","-1"], icon: "stairs",
-    label: { fr: "Escalier · LEGO, POP & Pokémon", en: "Stairs · LEGO, POP & Pokémon", es: "Escalera · LEGO, POP y Pokémon" },
+    label: { fr: "Escalier · LEGO, POP, Pokémon & reconditionné", en: "Stairs · LEGO, POP, Pokémon & refurbished", es: "Escalera · LEGO, POP, Pokémon y reacondicionado" },
     short: { fr: "Escalier", en: "Stairs", es: "Escalera" },
     detail: { fr: "", en: "", es: "" },
     spots: ["L1"],
@@ -367,7 +367,17 @@ export const ZONES = {
            "carte pokemon", "cartes pokemon", "booster", "booster pokemon", "display pokemon", "coffret pokemon",
            "elite trainer box", "carte à collectionner", "cartes à collectionner", "cartes magic",
            "magic the gathering", "yu-gi-oh", "one piece card game", "classeur à cartes", "protège cartes",
-           "escalier", "escaliers", "sous-sol", "descendre", "en bas", "étage du dessous"],
+           "escalier", "escaliers", "sous-sol", "descendre", "en bas", "étage du dessous",
+           // Le rayon des produits reconditionnés est dans l'escalier.
+           "reconditionné", "reconditionnés", "reconditionne", "produit reconditionné",
+           "produits reconditionnés", "rayon reconditionné", "seconde main", "remis à neuf",
+           // « occasion » tout court reste aux jeux vidéo : c'est là que les
+           // clients cherchent leurs jeux d'occasion.
+           "téléphone reconditionné", "smartphone reconditionné",
+           // « iphone reconditionné » part au rayon Apple, qui a la priorité sur
+           // tout ce qui cite un produit Apple : à trancher avec le magasin.
+           "ordinateur reconditionné", "pc reconditionné",
+           "tablette reconditionnée", "console reconditionnée"],
       en: ["lego", "lego technic", "lego star wars", "lego city", "lego friends", "lego harry potter", "lego icons",
            "lego bricks", "building set", "figure", "figurine", "pop figure", "pop figures", "funko", "funko pop",
            "bobblehead", "collectible", "collectibles", "anime figure", "manga figure", "pokemon", "pokemon card",
@@ -656,12 +666,17 @@ export const ZONES = {
     keywords: {
       fr: ["imprimante", "imprimante jet d'encre", "imprimante laser", "imprimante multifonction", "multifonction",
            "imprimante wifi", "scanner", "photocopie", "papier", "ramette de papier", "clé usb", "disque dur",
+           // Au pluriel, « disques durs » partait vers les vinyles de la Fnac Variétés.
+           "disques durs", "disque durs", "disc dur", "hdd", "disque dur interne",
            "disque dur externe", "ssd", "ssd externe", "nvme", "stockage", "carte micro sd", "lecteur de carte",
            "graveur", "lecteur dvd externe", "câble", "câble hdmi", "hdmi", "displayport", "vga", "câble vga", "rj45",
            "ethernet", "câble ethernet", "câble usb", "rallonge usb", "hub usb", "station d'accueil", "dock usb c",
            "adaptateur", "adaptateur hdmi", "adaptateur usb c", "multiprise", "rallonge électrique", "parasurtenseur",
            "onduleur", "répéteur wifi", "routeur", "box wifi", "cpl", "clé wifi", "antenne wifi", "nettoyant écran",
-           "bombe à air sec"],
+           "bombe à air sec",
+           // Les téléphones de maison sont ici, pas au rayon Téléphonie.
+           "téléphone fixe", "téléphones fixes", "téléphone de maison", "téléphone sans fil",
+           "combiné", "combiné téléphonique", "dect", "téléphone filaire", "poste fixe"],
       en: ["printer", "inkjet printer", "laser printer", "all in one printer", "wifi printer", "scanner", "paper",
            "printer paper", "usb stick", "usb key", "flash drive", "hard drive", "hard disk", "external drive", "ssd",
            "external ssd", "nvme", "storage", "micro sd card", "card reader", "external dvd drive", "cable", "hdmi",
@@ -875,7 +890,7 @@ export const ZONES = {
     spots: ["33","34"],
     keywords: {
       fr: ["apple", "apple store", "iphone", "i phone", "iphone 15", "iphone 16", "iphone 17", "iphone 18",
-           "iphone pro", "iphone pro max", "iphone plus", "iphone reconditionné", "ipad", "i pad", "ipad air",
+           "iphone pro", "iphone pro max", "iphone plus", "ipad", "i pad", "ipad air",
            "ipad pro", "ipad mini", "ipod", "airpods", "air pods", "airpods pro", "airpods max", "mac", "macbook",
            "mac book", "macbook air", "macbook pro", "imac", "mac mini", "mac studio", "apple watch",
            "apple watch ultra", "apple watch se", "montre apple", "apple pencil", "magic keyboard", "magic mouse",
@@ -1322,7 +1337,7 @@ const SPOKEN = {
          "streaming", "twitch", "mando para pc", "reposamuñecas", "rgb", "tarjeta de sonido externa"]
   },
   cartouches: {
-    fr: ["encre pour imprimante", "de l'encre", "recharge d'encre", "bouteille d'encre", "flacon d'encre",
+    fr: ["encreur", "encreurs", "un encreur", "encre pour imprimante", "de l'encre", "recharge d'encre", "bouteille d'encre", "flacon d'encre",
          "ecotank", "encre ecotank", "cartouche noire", "cartouche noir", "cartouche couleur", "cartouches couleur",
          "cartouche xl", "cartouche compatible", "cartouche hp 305", "hp 305", "hp 304", "hp 303", "hp 302",
          "hp 912", "hp 963", "hp 953", "hp 62", "hp 301", "cartouche 305", "canon pg 545", "pg 545", "pg 560",
@@ -2339,9 +2354,9 @@ export const INFO = {
       es: ["soporte móvil", "soporte para móvil", "soporte de coche", "soporte de bici para móvil", "soporte iphone"]
     },
     answer: {
-      fr: "Ce magasin ne vend pas ce produit. Vous pouvez le commander sur fnac.com.",
-      en: "Sorry, this store doesn't sell that product. You can order it on fnac.com, or ask a member of staff for advice.",
-      es: "Lo siento, esta tienda no vende ese producto. Puede pedirlo en fnac.com o pedir consejo a un vendedor."
+      fr: "Ce magasin ne vend pas ce produit. Un vendeur peut vous le commander, ou vous le trouverez sur fnac.com.",
+      en: "This store doesn't sell that product. A member of staff can order it for you, or you'll find it on fnac.com.",
+      es: "Esta tienda no vende ese producto. Un vendedor puede encargárselo, o lo encontrará en fnac.com."
     }
   },
   parking: {

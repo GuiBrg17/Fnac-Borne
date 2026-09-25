@@ -84,6 +84,13 @@ PRONONCIATION = {
         (r"\bHue\b", "you"),
         # Elle mangeait le « Nes » : « à capsules comme espresso ».
         (r"\bNespresso\b", "Nesspresso"),
+        # Les libellés de rayon (« Escalier · LEGO, POP & Pokémon ») se lisent
+        # comme une liste de sigles : « POP » y était épelé « pé-o-pé »
+        # (0,13 s par lettre, autant que USB). La ponctuation d'affichage est
+        # remplacée par sa version parlée.
+        (r"\s·\s", ", "),
+        (r"\s&\s", " et "),
+        (r"\bPOP\b", "Pop"),
     ],
     "en": [
         # Nom français dans une phrase anglaise : elle lisait « Fnac Rites ».
