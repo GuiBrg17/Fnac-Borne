@@ -23,7 +23,7 @@ for (const lang of Object.keys(UI)) {
     if (id !== "escalier" && id !== "entree") {
       // Les lieux qui ne sont pas des rayons (caisses, SAV…) ont leur propre
       // début de phrase, parfois suivi d'un rappel.
-      const phrase = zone.intro ? t.foundPlace(zone.intro[lang], zone.floors[0]) : t.found(zone.produits[lang], label, zone.floors[0]);
+      const phrase = zone.intro ? t.foundPlace(zone.intro[lang], zone.floors[0]) : t.found(label, zone.floors[0]);
       add(zone.note ? `${phrase} ${zone.note[lang]}` : phrase);
     }
     add(t.vendorConfirm(label));

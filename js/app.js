@@ -722,7 +722,7 @@ function answerZone(id, prefix = "", place = null) {
     const floor = zone.floors[0];
     const phrase = zone.intro
       ? t().foundPlace(zone.intro[state.lang], floor)
-      : t().found(zone.produits[state.lang], zoneLabel(id), floor);
+      : t().found(zoneLabel(id), floor);
     reply(zone.note ? `${phrase} ${zone.note[state.lang]}` : phrase, prefix);
   }
 }

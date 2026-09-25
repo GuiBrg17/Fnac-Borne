@@ -50,9 +50,9 @@ export const UI = {
     routeHint: "Touchez un rayon du plan pour savoir ce qu'on y trouve.",
     // Phrases courtes : le plan montre déjà le chemin et l'escalier, la voix
     // n'a qu'à donner l'étage.
-    found: (produits, zone, floor) => floor === "-1"
-      ? `${produits} sont disponibles au rayon ${zone}, au sous-sol.`
-      : `${produits} sont disponibles au rayon ${zone}, ici à l'étage 0.`,
+    found: (zone, floor) => floor === "-1"
+      ? `Ce produit est disponible au rayon ${zone}, au sous-sol.`
+      : `Ce produit est disponible au rayon ${zone}, ici à l'étage 0.`,
     // Caisses, SAV, adhésion : ce ne sont pas des rayons. Le sujet et le verbe
     // viennent de la zone (propriété « intro »).
     foundPlace: (sujet, floor) => floor === "-1"
@@ -130,9 +130,9 @@ export const UI = {
     stepEntrance: "Entrance",
     stepStairs: "Stairs",
     routeHint: "Tap a section on the map to see what's there.",
-    found: (produits, zone, floor) => floor === "-1"
-      ? `${produits} are in the ${zone} section, in the basement.`
-      : `${produits} are in the ${zone} section, right here on floor 0.`,
+    found: (zone, floor) => floor === "-1"
+      ? `This product is in the ${zone} section, in the basement.`
+      : `This product is in the ${zone} section, right here on floor 0.`,
     foundPlace: (sujet, floor) => floor === "-1"
       ? `${sujet} in the basement.`
       : `${sujet} here on floor 0.`,
@@ -205,9 +205,9 @@ export const UI = {
     stepEntrance: "Entrada",
     stepStairs: "Escalera",
     routeHint: "Toque una sección del plano para ver qué hay.",
-    found: (produits, zone, floor) => floor === "-1"
-      ? `${produits} están en la sección ${zone}, en el sótano.`
-      : `${produits} están en la sección ${zone}, aquí en la planta 0.`,
+    found: (zone, floor) => floor === "-1"
+      ? `Este producto está en la sección ${zone}, en el sótano.`
+      : `Este producto está en la sección ${zone}, aquí en la planta 0.`,
     foundPlace: (sujet, floor) => floor === "-1"
       ? `${sujet} en el sótano.`
       : `${sujet} aquí, en la planta 0.`,
@@ -1164,32 +1164,6 @@ ZONES.editorial = {
             "papelería", "cuaderno", "cuadernos", "libreta", "agenda", "bloc de notas", "bolígrafo", "bolígrafos", "pluma", "lápiz", "lápices", "rotulador", "marcador", "goma de borrar", "regla", "carpeta", "archivador", "estuche", "calendario", "postal", "postales", "sobre de carta", "sobres de carta", "papel de carta"]
   }
 };
-
-// =====================================================================
-// Ce que Jeanne nomme quand elle annonce un rayon. Demandé par le magasin le
-// 25/09/2026 : au lieu de « Le rayon Son est au sous-sol », elle dit ce qu'on
-// y trouve, pour que le client reconnaisse sa demande dans la réponse.
-// Toujours au pluriel : la phrase enchaîne sur « sont disponibles ».
-// =====================================================================
-const PRODUITS = {
-  telephonie:       { fr: "Les smartphones et leurs accessoires", en: "Smartphones and their accessories", es: "Los smartphones y sus accesorios" },
-  objets:           { fr: "Les montres connectées et la maison connectée", en: "Smartwatches and smart home devices", es: "Los relojes inteligentes y la casa conectada" },
-  gaming:           { fr: "Les consoles, les jeux et les manettes", en: "Consoles, games and controllers", es: "Las consolas, los juegos y los mandos" },
-  accessoiresGaming:{ fr: "Les composants, écrans, souris et claviers", en: "Components, monitors, mice and keyboards", es: "Los componentes, pantallas, ratones y teclados" },
-  cartouches:       { fr: "Les encres et les toners", en: "Ink and toner", es: "Las tintas y los tóneres" },
-  electromenager:   { fr: "Les aspirateurs et les appareils de cuisine et de soin", en: "Vacuums, kitchen and personal care appliances", es: "Las aspiradoras y los aparatos de cocina y cuidado" },
-  informatique:     { fr: "Les câbles, clés USB et disques durs", en: "Cables, USB sticks and hard drives", es: "Los cables, memorias USB y discos duros" },
-  tablettes:        { fr: "Les tablettes", en: "Tablets", es: "Las tabletas" },
-  liseuses:         { fr: "Les liseuses Kobo", en: "Kobo e-readers", es: "Los lectores Kobo" },
-  pcwindows:        { fr: "Les ordinateurs portables et fixes", en: "Laptops and desktop computers", es: "Los ordenadores portátiles y de sobremesa" },
-  trottinettes:     { fr: "Les trottinettes et les casques", en: "Scooters and helmets", es: "Los patinetes y los cascos" },
-  photo:            { fr: "Les appareils photo, drones et micros", en: "Cameras, drones and microphones", es: "Las cámaras, drones y micrófonos" },
-  tv:               { fr: "Les téléviseurs", en: "Televisions", es: "Los televisores" },
-  audio:            { fr: "Les casques, enceintes et platines", en: "Headphones, speakers and turntables", es: "Los auriculares, altavoces y tocadiscos" },
-  apple:            { fr: "Les produits Apple, iPhone, iPad et Mac", en: "Apple products, iPhone, iPad and Mac", es: "Los productos Apple, iPhone, iPad y Mac" },
-  jeuxSociete:      { fr: "Les puzzles et les jeux de plateau", en: "Puzzles and board games", es: "Los puzles y los juegos de mesa" }
-};
-for (const [id, p] of Object.entries(PRODUITS)) ZONES[id].produits = p;
 
 // =====================================================================
 // Vocabulaire parlé : ce que les clients disent vraiment à la borne.
