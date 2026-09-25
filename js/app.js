@@ -722,7 +722,7 @@ function answerZone(id, prefix = "", place = null) {
     const floor = zone.floors[0];
     const phrase = zone.intro
       ? t().foundPlace(zone.intro[state.lang], floor)
-      : t().found(zoneLabel(id), floor);
+      : t().found(zone.produits[state.lang], zoneLabel(id), floor);
     reply(zone.note ? `${phrase} ${zone.note[state.lang]}` : phrase, prefix);
   }
 }
@@ -1972,8 +1972,10 @@ if ("speechSynthesis" in window) {
 
 // --- Mise à jour automatique ---------------------------------------------------
 // La borne reste ouverte des jours entiers : sans cela, une nouvelle version publiée
-// n'arriverait qu'au prochain rechargement manuel. Toutes les 30 minutes, à l'écran
-// d'accueil seulement, on regarde si index.html annonce un autre ?v=N. On ne recharge
+// n'arriverait qu'au prochain rechargement manuel. Toutes les 5 minutes, à l'écran
+// d'accueil seulement, on regarde si index.html annonce un autre ?v=N. (C'était
+// 30 minutes : le magasin voyait encore l'ancienne version longtemps après une
+// publication, et signalait des défauts déjà corrigés.) On ne recharge
 // que si la nouvelle version se télécharge bien (pas de page d'erreur si le wifi coupe).
 async function checkForUpdate() {
   if (state.screen !== "idle" || els.settings.open) return;
@@ -1987,7 +1989,7 @@ async function checkForUpdate() {
     location.reload();
   } catch { /* hors ligne : on garde la version en cours */ }
 }
-setInterval(checkForUpdate, 30 * 60 * 1000);
+setInterval(checkForUpdate, 5 * 60 * 1000);
 
 // --- Démarrage ---
 buildPlans();
