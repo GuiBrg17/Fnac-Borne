@@ -1,8 +1,22 @@
-[OK ] es 1.00 189Hz mélodie 2.8  3.7s essai 1 | Los televisores están en la sección TV, en el sótano.
-      entendu : Los televisores están en la sección TV, en el sótano.
-[OK ] es 1.00 185Hz mélodie 3.8  5.6s essai 1 | Los auriculares, altavoces y tocadiscos están en la sección Sonido, en el sótano.
-      entendu : Los auriculares, altavoces y tocadiscos están en la sección sonido, en el sótano.
-[OK ] es 1.00 195Hz mélodie 3.1  6.2s essai 1 | Los productos Apple, iPhone, iPad y Mac están en la sección Apple, en el sótano.
-      entendu : Los productos Apple, iPhone, iPad y Mac están en la sección Apple en el sótano.
-[OK ] es 0.94 184Hz mélodie 2.8  5.0s essai 2 | Los puzles y los juegos de mesa están en la sección Juegos de mesa, en el sótano.
-      entendu : Los puzzles y los juegos de mesa están en la sección juegos de mesa en el sótano.
+[OK ] es 1.00 185Hz mélodie 3.0  4.5s essai 1 | Este producto está en la sección Pequeños electrodomésticos, en el sótano.
+      entendu : Este producto está en la sección Pequeños electrodomésticos en el sótano.
+[OK ] es 1.00 199Hz mélodie 2.9  3.5s essai 1 | Este producto está en la sección Conectividad, en el sótano.
+      entendu : Este producto está en la sección conectividad, en el sótano.
+[OK ] es 1.00 190Hz mélodie 3.2  3.9s essai 1 | Este producto está en la sección Tabletas Android, en el sótano.
+      entendu : Este producto está en la sección Tabletas Android, en el sótano.
+[OK ] es 1.00 188Hz mélodie 2.4  3.8s essai 1 | Este producto está en la sección Lectores de libros, en el sótano.
+      entendu : Este producto está en la sección Lectores de Libros, en el sótano.
+[OK ] es 0.91 191Hz mélodie 2.4  3.8s essai 1 | Este producto está en la sección PC Windows, en el sótano.
+      entendu : Este producto está en la sección PS Windows, en el sótano.
+[OK ] es 1.00 203Hz mélodie 3.6  4.2s essai 1 | Este producto está en la sección Movilidad urbana, en el sótano.
+      entendu : Este producto está en la sección movilidad urbana, en el sótano.
+[OK ] es 1.00 192Hz mélodie 2.7  3.0s essai 1 | Este producto está en la sección Foto, en el sótano.
+      entendu : Este producto está en la sección foto en el sótano.
+[OK ] es 1.00 199Hz mélodie 2.6  3.2s essai 1 | Este producto está en la sección TV, en el sótano.
+      entendu : Este producto está en la sección Tv, en el sótano.
+[OK ] es 1.00 198Hz mélodie 2.8  3.2s essai 1 | Este producto está en la sección Sonido, en el sótano.
+      entendu : Este producto está en la sección sonido, en el sótano,
+[OK ] es 1.00 199Hz mélodie 2.8  3.4s essai 1 | Este producto está en la sección Apple, en el sótano.
+      entendu : Este producto está en la sección Apple, en el sótano.
+[OK ] es 1.00 183Hz mélodie 2.5  3.9s essai 1 | Este producto está en la sección Juegos de mesa, en el sótano.
+      entendu : Este producto está en la sección juegos de mesa en el sótano.
