@@ -50,9 +50,9 @@ export const UI = {
     routeHint: "Touchez un rayon du plan pour savoir ce qu'on y trouve.",
     // Phrases courtes : le plan montre déjà le chemin et l'escalier, la voix
     // n'a qu'à donner l'étage.
-    found: (zone, floor) => floor === "-1"
-      ? `Le rayon ${zone} est au sous-sol.`
-      : `Le rayon ${zone} est ici, à l'étage 0.`,
+    found: (produits, zone, floor) => floor === "-1"
+      ? `${produits} sont disponibles au rayon ${zone}, au sous-sol.`
+      : `${produits} sont disponibles au rayon ${zone}, ici à l'étage 0.`,
     // Caisses, SAV, adhésion : ce ne sont pas des rayons. Le sujet et le verbe
     // viennent de la zone (propriété « intro »).
     foundPlace: (sujet, floor) => floor === "-1"
@@ -130,9 +130,9 @@ export const UI = {
     stepEntrance: "Entrance",
     stepStairs: "Stairs",
     routeHint: "Tap a section on the map to see what's there.",
-    found: (zone, floor) => floor === "-1"
-      ? `${zone} is in the basement.`
-      : `${zone} is right here on floor 0.`,
+    found: (produits, zone, floor) => floor === "-1"
+      ? `${produits} are in the ${zone} section, in the basement.`
+      : `${produits} are in the ${zone} section, right here on floor 0.`,
     foundPlace: (sujet, floor) => floor === "-1"
       ? `${sujet} in the basement.`
       : `${sujet} here on floor 0.`,
@@ -205,9 +205,9 @@ export const UI = {
     stepEntrance: "Entrada",
     stepStairs: "Escalera",
     routeHint: "Toque una sección del plano para ver qué hay.",
-    found: (zone, floor) => floor === "-1"
-      ? `La sección ${zone} está en el sótano.`
-      : `La sección ${zone} está aquí, en la planta 0.`,
+    found: (produits, zone, floor) => floor === "-1"
+      ? `${produits} están en la sección ${zone}, en el sótano.`
+      : `${produits} están en la sección ${zone}, aquí en la planta 0.`,
     foundPlace: (sujet, floor) => floor === "-1"
       ? `${sujet} en el sótano.`
       : `${sujet} aquí, en la planta 0.`,
@@ -290,8 +290,8 @@ export const ZONES = {
       en: ["phone", "mobile phone", "mobile", "cell phone", "cellphone", "smartphone", "android", "android phone",
            "samsung", "samsung phone", "galaxy", "samsung galaxy", "galaxy s24", "galaxy s25", "galaxy z flip",
            "galaxy z fold", "xiaomi", "redmi", "poco", "google pixel", "pixel", "oppo", "honor", "motorola", "nokia",
-           "oneplus", "realme", "fairphone", "sony xperia", "xperia", "cheap phone", "refurbished phone",
-           "refurbished", "basic phone", "flip phone", "landline", "charger", "phone charger", "wall charger",
+           "oneplus", "realme", "fairphone", "sony xperia", "xperia", "cheap phone",
+           "basic phone", "flip phone", "charger", "phone charger", "wall charger",
            "fast charger", "wireless charger", "car charger", "power adapter", "charging cable", "usb c cable",
            "usb c", "micro usb cable", "micro usb", "power bank", "portable battery", "battery pack",
            "wired earphone", "wired earphones", "jack earphones", "hands free kit", "earpiece", "bluetooth earpiece",
@@ -301,8 +301,8 @@ export const ZONES = {
       es: ["teléfono", "teléfono móvil", "móvil", "celular", "smartphone", "android", "teléfono android", "samsung",
            "teléfono samsung", "galaxy", "samsung galaxy", "galaxy s24", "galaxy s25", "xiaomi", "redmi", "poco",
            "google pixel", "pixel", "oppo", "honor", "motorola", "nokia", "oneplus", "realme", "fairphone",
-           "sony xperia", "xperia", "móvil barato", "móvil reacondicionado", "reacondicionado",
-           "teléfono para mayores", "teléfono fijo", "cargador", "cargador de móvil", "cargador de red",
+           "sony xperia", "xperia", "móvil barato",
+           "teléfono para mayores", "cargador", "cargador de móvil", "cargador de red",
            "cargador rápido", "cargador inalámbrico", "cargador de coche", "adaptador de corriente", "cable de carga",
            "cable usb c", "usb c", "cable micro usb", "micro usb", "batería externa", "power bank", "powerbank",
            "auricular con cable", "auriculares con cable", "auriculares jack", "manos libres", "auricular bluetooth",
@@ -360,6 +360,14 @@ export const ZONES = {
     short: { fr: "Escalier", en: "Stairs", es: "Escalera" },
     detail: { fr: "", en: "", es: "" },
     spots: ["L1"],
+    // Le reconditionné passe avant le rayon Apple : un « iphone reconditionné »
+    // est dans l'escalier, pas au rayon Apple (confirmé par le magasin).
+    strong: ["reconditionné", "reconditionnés", "reconditionne", "produit reconditionné",
+             "produits reconditionnés", "rayon reconditionné", "seconde main", "remis à neuf",
+             "téléphone reconditionné", "smartphone reconditionné", "iphone reconditionné",
+             "ipad reconditionné", "mac reconditionné", "ordinateur reconditionné",
+             "pc reconditionné", "tablette reconditionnée", "console reconditionnée",
+             "refurbished", "refurbished iphone", "reacondicionado", "iphone reacondicionado"],
     keywords: {
       fr: ["lego", "lego technic", "lego star wars", "lego city", "lego friends", "lego harry potter", "lego icons",
            "briques lego", "jeu de construction", "figurine", "figurines", "figurine pop", "figurines pop", "funko",
@@ -374,8 +382,7 @@ export const ZONES = {
            // « occasion » tout court reste aux jeux vidéo : c'est là que les
            // clients cherchent leurs jeux d'occasion.
            "téléphone reconditionné", "smartphone reconditionné",
-           // « iphone reconditionné » part au rayon Apple, qui a la priorité sur
-           // tout ce qui cite un produit Apple : à trancher avec le magasin.
+           "iphone reconditionné", "ipad reconditionné", "mac reconditionné",
            "ordinateur reconditionné", "pc reconditionné",
            "tablette reconditionnée", "console reconditionnée"],
       en: ["lego", "lego technic", "lego star wars", "lego city", "lego friends", "lego harry potter", "lego icons",
@@ -383,7 +390,10 @@ export const ZONES = {
            "bobblehead", "collectible", "collectibles", "anime figure", "manga figure", "pokemon", "pokemon card",
            "pokemon cards", "booster", "pokemon booster", "pokemon box", "elite trainer box", "trading card",
            "trading cards", "magic cards", "magic the gathering", "yu-gi-oh", "one piece card game", "card binder",
-           "card sleeves", "stairs", "staircase", "downstairs", "basement", "lower floor"],
+           "card sleeves", "stairs", "staircase", "downstairs", "basement", "lower floor",
+           // The refurbished products corner is in the staircase.
+           "refurbished", "refurbished products", "refurbished phone", "refurbished iphone",
+           "refurbished ipad", "refurbished laptop", "second hand", "pre-owned", "as new"],
       es: ["lego", "lego technic", "lego star wars", "lego city", "lego friends", "lego harry potter", "lego icons",
            "piezas lego", "juego de construcción", "figura", "figuras", "figura pop", "figuras pop", "funko",
            "funko pop", "cabezón", "artículo de colección", "figura manga", "figura anime", "pokemon",
@@ -683,7 +693,9 @@ export const ZONES = {
            "hdmi cable", "displayport", "vga", "vga cable", "rj45", "ethernet", "ethernet cable", "usb cable",
            "usb extension", "usb hub", "docking station", "usb c dock", "adapter", "hdmi adapter", "usb c adapter",
            "power strip", "extension cord", "surge protector", "ups", "wifi extender", "router", "wifi box",
-           "powerline", "wifi dongle", "screen cleaner", "compressed air"],
+           "powerline", "wifi dongle", "screen cleaner", "compressed air",
+           // Landline phones live here, not in the phones section.
+           "landline", "landline phone", "home phone", "cordless phone", "dect phone", "handset"],
       es: ["impresora", "impresora de tinta", "impresora láser", "impresora multifunción", "multifunción",
            "impresora wifi", "escáner", "papel", "papel de impresora", "memoria usb", "pendrive", "disco duro",
            "disco duro externo", "ssd", "ssd externo", "nvme", "almacenamiento", "tarjeta micro sd",
@@ -691,7 +703,9 @@ export const ZONES = {
            "cable vga", "rj45", "ethernet", "cable ethernet", "cable usb", "alargador usb", "hub usb",
            "estación de acoplamiento", "dock usb c", "adaptador", "adaptador hdmi", "adaptador usb c", "regleta",
            "alargador", "protector de sobretensión", "sai onduleur", "repetidor wifi", "router", "powerline", "adaptador wifi",
-           "limpiador de pantallas", "aire comprimido"]
+           "limpiador de pantallas", "aire comprimido",
+           // Los teléfonos fijos están aquí, no en telefonía.
+           "teléfono fijo", "teléfonos fijos", "teléfono de casa", "teléfono inalámbrico", "supletorio"]
     }
   },
   tablettes: {
@@ -900,7 +914,7 @@ export const ZONES = {
            "écouteurs apple", "carte cadeau apple", "applecare", "icloud", "app store", "itunes",
            "airpods de remplacement", "embouts airpods", "bracelet apple watch", "dock apple"],
       en: ["apple", "apple store", "iphone", "i phone", "iphone 15", "iphone 16", "iphone 17", "iphone 18",
-           "iphone pro", "iphone pro max", "refurbished iphone", "ipad", "i pad", "ipad air", "ipad pro", "ipad mini",
+           "iphone pro", "iphone pro max", "ipad", "i pad", "ipad air", "ipad pro", "ipad mini",
            "ipod", "airpods", "air pods", "airpods pro", "airpods max", "mac", "macbook", "mac book", "macbook air",
            "macbook pro", "imac", "mac mini", "mac studio", "apple watch", "apple watch ultra", "apple pencil",
            "magic keyboard", "magic mouse", "magsafe", "lightning", "airtag", "apple tv", "homepod", "iphone case",
@@ -909,7 +923,7 @@ export const ZONES = {
            "apple earphones", "apple gift card", "applecare", "icloud", "app store", "itunes", "airpods tips",
            "apple watch band"],
       es: ["apple", "apple store", "iphone", "i phone", "iphone 15", "iphone 16", "iphone 17", "iphone 18",
-           "iphone pro", "iphone pro max", "iphone reacondicionado", "ipad", "i pad", "ipad air", "ipad pro",
+           "iphone pro", "iphone pro max", "ipad", "i pad", "ipad air", "ipad pro",
            "ipad mini", "ipod", "airpods", "air pods", "airpods pro", "airpods max", "mac", "macbook", "mac book",
            "macbook air", "macbook pro", "imac", "mac mini", "mac studio", "apple watch", "apple watch ultra",
            "apple pencil", "magic keyboard", "magic mouse", "magsafe", "lightning", "airtag", "apple tv", "homepod",
@@ -1152,6 +1166,32 @@ ZONES.editorial = {
 };
 
 // =====================================================================
+// Ce que Jeanne nomme quand elle annonce un rayon. Demandé par le magasin le
+// 25/09/2026 : au lieu de « Le rayon Son est au sous-sol », elle dit ce qu'on
+// y trouve, pour que le client reconnaisse sa demande dans la réponse.
+// Toujours au pluriel : la phrase enchaîne sur « sont disponibles ».
+// =====================================================================
+const PRODUITS = {
+  telephonie:       { fr: "Les smartphones et leurs accessoires", en: "Smartphones and their accessories", es: "Los smartphones y sus accesorios" },
+  objets:           { fr: "Les montres connectées et la maison connectée", en: "Smartwatches and smart home devices", es: "Los relojes inteligentes y la casa conectada" },
+  gaming:           { fr: "Les consoles, les jeux et les manettes", en: "Consoles, games and controllers", es: "Las consolas, los juegos y los mandos" },
+  accessoiresGaming:{ fr: "Les composants, écrans, souris et claviers", en: "Components, monitors, mice and keyboards", es: "Los componentes, pantallas, ratones y teclados" },
+  cartouches:       { fr: "Les encres et les toners", en: "Ink and toner", es: "Las tintas y los tóneres" },
+  electromenager:   { fr: "Les aspirateurs et les appareils de cuisine et de soin", en: "Vacuums, kitchen and personal care appliances", es: "Las aspiradoras y los aparatos de cocina y cuidado" },
+  informatique:     { fr: "Les câbles, clés USB et disques durs", en: "Cables, USB sticks and hard drives", es: "Los cables, memorias USB y discos duros" },
+  tablettes:        { fr: "Les tablettes", en: "Tablets", es: "Las tabletas" },
+  liseuses:         { fr: "Les liseuses Kobo", en: "Kobo e-readers", es: "Los lectores Kobo" },
+  pcwindows:        { fr: "Les ordinateurs portables et fixes", en: "Laptops and desktop computers", es: "Los ordenadores portátiles y de sobremesa" },
+  trottinettes:     { fr: "Les trottinettes et les casques", en: "Scooters and helmets", es: "Los patinetes y los cascos" },
+  photo:            { fr: "Les appareils photo, drones et micros", en: "Cameras, drones and microphones", es: "Las cámaras, drones y micrófonos" },
+  tv:               { fr: "Les téléviseurs", en: "Televisions", es: "Los televisores" },
+  audio:            { fr: "Les casques, enceintes et platines", en: "Headphones, speakers and turntables", es: "Los auriculares, altavoces y tocadiscos" },
+  apple:            { fr: "Les produits Apple, iPhone, iPad et Mac", en: "Apple products, iPhone, iPad and Mac", es: "Los productos Apple, iPhone, iPad y Mac" },
+  jeuxSociete:      { fr: "Les puzzles et les jeux de plateau", en: "Puzzles and board games", es: "Los puzles y los juegos de mesa" }
+};
+for (const [id, p] of Object.entries(PRODUITS)) ZONES[id].produits = p;
+
+// =====================================================================
 // Vocabulaire parlé : ce que les clients disent vraiment à la borne.
 // Modèles récents, surnoms (« la play », « l'ordi »), usages (« pour écouter
 // de la musique »), noms de jeux et de marques. Ajouté aux listes ci-dessus
@@ -1232,7 +1272,10 @@ const SPOKEN = {
          "deck box", "playmat"],
     es: ["lego ninjago", "lego marvel", "lego creator", "lego duplo", "duplo", "lego minecraft", "flores lego",
          "ramo lego", "funko marvel", "figura one piece", "figura dragon ball", "lorcana", "cartas lorcana",
-         "yugioh", "magic", "cartas one piece", "lata pokemon", "fundas de cartas", "archivador pokemon", "deck box"]
+         "yugioh", "magic", "cartas one piece", "lata pokemon", "fundas de cartas", "archivador pokemon", "deck box",
+         // El rincón de productos reacondicionados está en la escalera.
+         "reacondicionado", "reacondicionados", "productos reacondicionados",
+         "móvil reacondicionado", "iphone reacondicionado", "segunda mano", "como nuevo"]
   },
   entree: {
     fr: ["sort du magasin", "on sort", "comment on sort", "sortir d'ici", "sors", "je sors", "sortir", "m'en aller", "quitter le magasin", "je cherche la sortie", "sortir du magasin", "la porte de sortie", "retourner dehors", "remonter à la sortie"],

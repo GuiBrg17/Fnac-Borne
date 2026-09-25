@@ -1,32 +1,8 @@
-[OK ] fr 1.00 174Hz mélodie 3.0  6.2s essai 1 | Je n'ai pas trouvé. Essayez un autre mot, ou appelez un vendeur : il peut commander ce que nous n'avons pas ici.
-      entendu : Je n'ai pas trouvé. Essayez un autre mot ou appelez un vendeur. Il peut commander ce que nous n'avons pas ici.
-[OK ] fr 0.81 181Hz mélodie 2.7  5.3s essai 1 | Les LEGO, figurines POP, cartes Pokémon et produits reconditionnés sont dans l'escalier.
-      entendu : Les Legos, figure in pop, cartes Pokémon et produits reconditionnés sont dans l'escalier.
-[OK ] fr 1.00 181Hz mélodie 2.4  5.9s essai 1 | Ce magasin ne vend pas ce produit. Un vendeur peut vous le commander, ou vous le trouverez sur fnac.com.
-      entendu : Ce magasin ne vend pas ce produit. Un vendeur peut vous le commander ou vous le trouverez sur Fnac.com
-[OK ] fr 0.81 179Hz mélodie 2.6  6.5s essai 1 | C'est noté : un vendeur du rayon Escalier · LEGO, POP, Pokémon & reconditionné a été prévenu.
-      entendu : C'est noté. Un vendeur du rayon escalier, l'égout, pop, pokémon et reconditionnés a été prévenu.
-[OK ] fr 0.84 178Hz mélodie 2.8  3.0s essai 1 | Le rayon PC gamer & accessoires est au sous-sol.
-      entendu : Le rayon PC gamer et accessoire est au sous-sol.
-[OK ] fr 0.89 184Hz mélodie 2.4  4.4s essai 1 | C'est noté : un vendeur du rayon PC gamer & accessoires a été prévenu.
-      entendu : C'est noté. Un vendeur du rayon PC Gamer et Accessoir a été prévenu.
-[OK ] fr 0.97 177Hz mélodie 2.4  4.5s essai 1 | C'est noté : un vendeur du rayon SAV & retrait des colis a été prévenu.
-      entendu : C'est noté. Un vendeur du rayon SAV et retrait des colis a été prévenu.
-[OK ] fr 0.96 181Hz mélodie 2.5  4.2s essai 1 | C'est noté : un vendeur du rayon Adhésion & financement a été prévenu.
-      entendu : C'est noté, un vendeur du rayon adhésion et financement a été prévenu.
-[OK ] en 1.00 222Hz mélodie 3.9  5.6s essai 1 | I couldn't find that. Try another word, or call a staff member: they can order what we don't stock here.
-      entendu : I couldn't find that. Try another word or call a staff member. They can order what we don't stock here.
-[OK ] en 1.00 220Hz mélodie 2.2  4.6s essai 1 | LEGO, POP figures, Pokémon cards and refurbished products are in the staircase.
-      entendu : Lego, Pop figures, Pokemon cards, and refurbished products are in the staircase.
-[OK ] en 1.00 215Hz mélodie 2.4  5.9s essai 1 | This store doesn't sell that product. A member of staff can order it for you, or you'll find it on fnac.com.
-      entendu : This store doesn't sell that product. A member of staff can order it for you, or you'll find it on Fnac.com.
-[OK ] en 0.96 206Hz mélodie 2.0  5.9s essai 1 | Done: a staff member from Stairs · LEGO, POP, Pokémon & refurbished has been notified.
-      entendu : Done, a staff member from stairs, LEGO, POP, Pokemon, and refurbished has been notified.
-[OK ] es 0.95 197Hz mélodie 2.9  6.8s essai 1 | No lo he encontrado. Pruebe con otra palabra, o llame a un vendedor: puede encargar lo que no tenemos aquí.
-      entendu : No lo he encontrado. Plueve con otra palabra o llame a un vendedor. Puede encargar lo que no tenemos aquí.
-[OK ] es 0.94 192Hz mélodie 3.0  7.2s essai 1 | Los LEGO, las figuras POP, las cartas Pokémon y los productos reacondicionados están en la escalera.
-      entendu : Los LEGO, las figuras POP, las cartas Pokémon y los productos recondicionados están en la escalera.
-[OK ] es 0.93 204Hz mélodie 3.8  5.8s essai 1 | Esta tienda no vende ese producto. Un vendedor puede encargárselo, o lo encontrará en fnac.com.
-      entendu : Esta tienda no vende ese producto. Un vendedor puede encargárselo o lo encontrará en
-[OK ] es 0.93 204Hz mélodie 3.1  5.0s essai 1 | Hecho: se ha avisado a un vendedor de la sección Escalera · LEGO, POP, Pokémon y reacondicionado.
-      entendu : hecho se ha avisado a un vendedor de la sección escalera, LEGO Pop Pokémon,
+[OK ] es 1.00 189Hz mélodie 2.8  3.7s essai 1 | Los televisores están en la sección TV, en el sótano.
+      entendu : Los televisores están en la sección TV, en el sótano.
+[OK ] es 1.00 185Hz mélodie 3.8  5.6s essai 1 | Los auriculares, altavoces y tocadiscos están en la sección Sonido, en el sótano.
+      entendu : Los auriculares, altavoces y tocadiscos están en la sección sonido, en el sótano.
+[OK ] es 1.00 195Hz mélodie 3.1  6.2s essai 1 | Los productos Apple, iPhone, iPad y Mac están en la sección Apple, en el sótano.
+      entendu : Los productos Apple, iPhone, iPad y Mac están en la sección Apple en el sótano.
+[OK ] es 0.94 184Hz mélodie 2.8  5.0s essai 2 | Los puzles y los juegos de mesa están en la sección Juegos de mesa, en el sótano.
+      entendu : Los puzzles y los juegos de mesa están en la sección juegos de mesa en el sótano.

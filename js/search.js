@@ -155,12 +155,15 @@ const phonetic = (word) => word
 // dans le rayon (« aspirateur balai » → rayon électroménager, gondole E2).
 // Un mot-clé fait uniquement de petits mots ignorés (« dèl » → « del ») serait vide
 // et correspondrait à n'importe quelle phrase : on l'écarte.
+// « strong » : mots-clés prioritaires d'un rayon. Ils pèsent assez lourd pour
+// battre le bonus d'un autre rayon — « iphone reconditionné » doit gagner
+// contre « iphone » du rayon Apple, qui a pourtant un bonus de 20.
 const matchersFor = (id, zone, place, keywords) =>
   Object.entries(keywords).flatMap(([lang, words]) =>
     words.filter((word) => clean(word)).map((word) => ({
       id, place, lang, word,
       re: phraseRe(word),
-      weight: clean(word).length + (zone.boost || 0),
+      weight: clean(word).length + (zone.boost || 0) + ((zone.strong || []).includes(word) ? 30 : 0),
       sound: phonetic(clean(word).replace(/ /g, ""))
     })));
 

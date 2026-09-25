@@ -33,7 +33,7 @@ apple|le câble USB-C Lightning
 apple|un adaptateur USB-C pour MacBook
 apple|un AirTag pour mes clés
 apple|l'iPhone le moins cher
-apple|un iPhone reconditionné
+escalier|un iPhone reconditionné
 objets|une montre Garmin pour courir
 objets|une Galaxy Watch
 objets|une montre connectée pour enfant
