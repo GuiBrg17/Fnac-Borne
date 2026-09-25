@@ -1072,3 +1072,9 @@ adhesion|ladhesion
 electromenager|lelectromenager
 pcwindows|lordinateur
 audio|lenceinte bluetooth
+# Pluriel au milieu de l'expression (corrigé le 26/09/2026)
+informatique|où sont les téléphones de maison
+informatique|les téléphones sans fil
+informatique|des disques durs externes
+cartouches|les cartouches d'encre
+audio|les casques audio

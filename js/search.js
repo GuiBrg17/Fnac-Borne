@@ -138,7 +138,11 @@ function variants(query) {
   return [...forms];
 }
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const phraseRe = (phrase) => new RegExp(`(?:^| )${clean(phrase).split(" ").map(escapeRe).join(" ")}(?:s|x|es)?(?= |$)`);
+// Le pluriel est accepté sur chaque mot, pas seulement le dernier : « téléphones
+// de maison » ne trouvait rien là où « téléphone de maison » marchait, et le
+// client tombait au rayon Téléphonie (signalé par le magasin le 26/09/2026).
+const phraseRe = (phrase) =>
+  new RegExp(`(?:^| )${clean(phrase).split(" ").map((w) => escapeRe(w) + "(?:s|x|es)?").join(" ")}(?= |$)`);
 
 // Écriture « à l'oreille » : rapproche les fautes courantes de la bonne orthographe.
 const phonetic = (word) => word
