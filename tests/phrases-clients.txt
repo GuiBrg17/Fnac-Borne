@@ -1065,3 +1065,10 @@ apple|un iPhone et une coque
 savRetrait|pas de son sur ma télé
 savRetrait|ma télé n'a pas d'image
 savRetrait|aucun son dans mon casque
+# Tapé sans apostrophe, comme sur un clavier tactile (corrigé le 26/09/2026)
+entree|ou est lentree
+escalier|lescalier
+adhesion|ladhesion
+electromenager|lelectromenager
+pcwindows|lordinateur
+audio|lenceinte bluetooth

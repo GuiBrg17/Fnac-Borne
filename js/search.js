@@ -316,6 +316,16 @@ export function findProblem(text) {
 // « pas un iPhone, un Samsung » : le produit refusé ne doit pas l'emporter.
 const NEGATED = /\b(?:pas|plutot que|au lieu d|au lieu de|not|instead of) (?:un |une |des |de |d |le |la |les |l |a |an )?[a-z0-9]+(?: [0-9]+)?/g;
 
+// Écrit sans apostrophe : sur un clavier tactile, « l'entrée » devient souvent
+// « lentree », et plus rien ne correspondait. On décolle l'article élidé —
+// mais seulement en dernier recours, après avoir cherché la phrase telle
+// qu'elle est écrite : sinon « lego » deviendrait « l ego ».
+const ELISION = /\b([ldjnmtsc]|qu)([aeiouy][a-z]{2,})\b/g;
+const deElide = (text) => {
+  const ouvert = normalize(text).replace(ELISION, "$1 $2");
+  return clean(ouvert) && clean(ouvert) !== clean(text) ? ouvert : null;
+};
+
 export function findZoneDetailed(text, lang) {
   if (!clean(text)) return null;
   const problem = findProblem(text);
@@ -325,6 +335,12 @@ export function findZoneDetailed(text, lang) {
   const query = clean(text);
   const exact = bestMatch(text, query, lang) || bestMatch(text, query, null);
   if (exact) return { id: exact.id, place: exact.place, keyword: exact.word, fuzzy: false, vague: Boolean(exact.vague) };
+  const ouvert = deElide(text);
+  if (ouvert) {
+    const q2 = clean(ouvert);
+    const exact2 = bestMatch(ouvert, q2, lang) || bestMatch(ouvert, q2, null);
+    if (exact2) return { id: exact2.id, place: exact2.place, keyword: exact2.word, fuzzy: false, vague: Boolean(exact2.vague) };
+  }
   const fuzzy = fuzzyMatch(query, lang) || fuzzyMatch(query, null);
   return fuzzy ? { id: fuzzy.id, place: fuzzy.place, keyword: fuzzy.word, fuzzy: true } : null;
 }
@@ -344,7 +360,15 @@ const REPAIR = /\b(?:reparation|reparations|reparer|repare|reparee|sav|garantie|
 export function findInfo(text) {
   const query = clean(text);
   if (!query) return null;
-  const hits = INFO_MATCHERS.filter((m) => m.re.test(query)).sort((a, b) => b.length - a.length);
+  let hits = INFO_MATCHERS.filter((m) => m.re.test(query)).sort((a, b) => b.length - a.length);
+  // « lascenseur » écrit sans apostrophe : on réessaie en décollant l'article.
+  if (!hits.length) {
+    const ouvert = deElide(text);
+    if (ouvert) {
+      const q2 = clean(ouvert);
+      hits = INFO_MATCHERS.filter((m) => m.re.test(q2)).sort((a, b) => b.length - a.length);
+    }
+  }
   // « mon colis est ouvert » ou « l'appli s'est fermée » : c'est un souci, pas
   // les horaires. Sauf le retrait d'un téléphone, qui est bien une question
   // pratique même si la phrase parle d'une commande — mais « je viens chercher
