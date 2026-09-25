@@ -66,31 +66,38 @@ self.addEventListener("activate", (e) => {
   })());
 });
 
-// La page prévient quand elle a fini de charger ses propres fichiers.
+// La page prévient quand elle a fini de charger ses propres fichiers, puis
+// redemande tant que la copie n'est pas complète.
+// « waitUntil » est indispensable : sans lui le navigateur éteint le service
+// worker au bout de quelques secondes d'inactivité et la copie s'arrêtait en
+// plein milieu — mesuré le 26/09/2026, elle restait bloquée à 242 fichiers
+// sur 295.
 self.addEventListener("message", (e) => {
-  if (e.data === "remplir") remplirEnFond();
+  if (e.data === "remplir") e.waitUntil(remplirEnFond());
 });
 
 /** Le reste du site, sans presser : voix, images, clips, plan. */
 let remplissage = null;
 function remplirEnFond() {
+  // Une seule copie à la fois, mais on repart à zéro quand elle est finie :
+  // si le réseau a coupé en route, la demande suivante reprend le reste.
   if (remplissage) return remplissage;
   remplissage = (async () => {
-    const cache = await caches.open(CACHE);
-    let liste = [];
     try {
+      const cache = await caches.open(CACHE);
       const r = await fetch(`assets/hors-ligne.json?v=${VERSION}`, { cache: "no-store" });
-      if (r.ok) liste = await r.json();
-    } catch { remplissage = null; return; }
-    for (const url of liste) {
-      // « ignoreSearch » : la page demande les voix avec ?v=N, la liste les
-      // donne sans. Sans cela, chaque fichier était téléchargé deux fois.
-      if (await cache.match(url, { ignoreSearch: true })) continue;
-      try {
-        const r = await fetch(url);
-        if (r.ok) await cache.put(url, r.clone());
-      } catch { /* le réseau est tombé : on reprendra au prochain démarrage */ }
-    }
+      if (!r.ok) return;
+      for (const url of await r.json()) {
+        // « ignoreSearch » : la page demande les voix avec ?v=N, la liste les
+        // donne sans. Sans cela, chaque fichier était téléchargé deux fois.
+        if (await cache.match(url, { ignoreSearch: true })) continue;
+        try {
+          const f = await fetch(url);
+          if (f.ok) await cache.put(url, f.clone());
+        } catch { /* réseau tombé : la prochaine demande reprendra ici */ }
+      }
+    } catch { /* liste illisible : on réessaiera */ }
+    finally { remplissage = null; }
   })();
   return remplissage;
 }

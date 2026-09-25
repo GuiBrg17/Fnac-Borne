@@ -2026,35 +2026,45 @@ if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register(`sw.js${VERSION}`).catch(() => {});
   // La copie de fond n'attaque qu'une fois les phrases de la langue en cours
   // chargées : sinon les deux se disputent la connexion du magasin et Jeanne
-  // reste muette le temps que ça se démêle.
-  clipManifestReady.then(() => setTimeout(() => {
-    navigator.serviceWorker.ready.then((reg) => reg.active?.postMessage("remplir"));
-  }, 5000));
+  // reste muette le temps que ça se démêle. Puis on redemande tant qu'elle
+  // n'est pas complète : le navigateur éteint le service worker dès qu'il
+  // s'ennuie, et la copie s'arrêtait en plein milieu.
+  clipManifestReady.then(() => setTimeout(relancerCopie, 5000));
 }
 
-// Ce que le réglage affiche : combien de fichiers sont déjà copiés, sur combien.
+async function relancerCopie(essai = 0) {
+  if (!("serviceWorker" in navigator) || essai > 40) return;
+  const reg = await navigator.serviceWorker.ready.catch(() => null);
+  reg?.active?.postMessage("remplir");
+  const etat = await offlineCount().catch(() => null);
+  if (etat && etat.manquants === 0) return;
+  setTimeout(() => relancerCopie(essai + 1), 30000);
+}
+
+// Ce que le réglage affiche. On compare la copie à la liste elle-même, fichier
+// par fichier : compter les entrées ne marchait pas, le socle de sw.js et la
+// liste se recouvrent en partie et le compte n'atteignait jamais son seuil.
 async function offlineCount() {
   if (!("caches" in window)) return null;
   const cache = await caches.open(`borne-v${VERSION.replace("?v=", "")}`);
-  const copies = (await cache.keys()).length;
-  let attendus = 0;
+  const cles = new Set((await cache.keys()).map((r) => new URL(r.url).pathname));
   try {
-    const liste = await cache.match(`assets/hors-ligne.json${VERSION}`)
+    const source = await cache.match(`assets/hors-ligne.json${VERSION}`, { ignoreSearch: true })
       || await fetch(`assets/hors-ligne.json${VERSION}`);
-    // Le socle de sw.js s'ajoute à la liste des fichiers d'assets.
-    attendus = (await liste.json()).length + 15;
-  } catch { return { copies, attendus: 0 }; }
-  return { copies, attendus };
+    const liste = await source.json();
+    const base = new URL("./", location.href).pathname;
+    const manquants = liste.filter((f) => !cles.has(base + f)).length;
+    return { copies: cles.size, attendus: liste.length, manquants };
+  } catch { return { copies: cles.size, attendus: 0, manquants: null }; }
 }
 
 async function showOfflineState() {
   const etat = await offlineCount();
   if (!etat) { els.offlineStatus.textContent = "Ce navigateur ne sait pas garder de copie."; return; }
-  if (!etat.attendus) { els.offlineStatus.textContent = `${etat.copies} fichiers copiés.`; return; }
-  const pret = etat.copies >= etat.attendus - 5;   // quelques fichiers peuvent manquer sans gêne
-  els.offlineStatus.textContent = pret
+  if (etat.manquants === null) { els.offlineStatus.textContent = `${etat.copies} fichiers copiés.`; return; }
+  els.offlineStatus.textContent = etat.manquants === 0
     ? `Copie complète : ${etat.copies} fichiers. La borne marche sans réseau.`
-    : `Copie en cours : ${etat.copies} fichiers sur ${etat.attendus}. Laissez la borne connectée.`;
+    : `Copie en cours : il reste ${etat.manquants} fichiers sur ${etat.attendus}. Laissez la borne connectée.`;
 }
 
 els.offlineCheck.addEventListener("click", showOfflineState);
