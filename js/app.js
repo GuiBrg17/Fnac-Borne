@@ -218,9 +218,8 @@ function stopSpeaking() {
 // Annulé dès que le client touche l'écran : il a pris la main.
 let afterSpeaking = null;
 
-// Conversation « mains libres » : tant que le client parle au micro, le micro se
-// rouvre tout seul après chaque réponse de Jeanne. Elle s'arrête dès que le client
-// touche l'écran, ou après un silence (micro rouvert sans que personne ne parle).
+// Le micro s'ouvre tout seul une fois, à l'arrivée du client, pour qu'il puisse
+// parler sans rien toucher. Il ne se rouvre plus après les réponses suivantes.
 let handsFree = false;
 // Patience du micro, réglable dans le panneau du personnel :
 //   settle  : silence à attendre après une phrase claire ;
@@ -519,7 +518,9 @@ function reply(text, prefix = "") {
   stopSigning();
   addMessage("jeanne", prefix + text);
   speak(text);
-  listenWhenDone();
+  // Le micro ne se rouvre plus tout seul après chaque réponse (demandé le
+  // 25/09/2026) : en magasin, il repartait sur les conversations d'à côté.
+  // Le client touche « Appuyez pour parler » quand il veut reparler.
 }
 
 let rudeTimer = null;
