@@ -2024,6 +2024,17 @@ if (els.idlePhoto.isConnected) {
 // au premier démarrage, puis se refait à chaque nouvelle version publiée.
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register(`sw.js${VERSION}`).catch(() => {});
+  // Le service worker prévient quand il a remplacé une version : la page
+  // tourne alors peut-être encore sur les anciens fichiers. On recharge, mais
+  // seulement à l'écran d'accueil — jamais devant un client.
+  navigator.serviceWorker.addEventListener("message", (e) => {
+    if (e.data !== "recharge") return;
+    const quandLibre = () => {
+      if (state.screen === "idle" && !els.settings.open) location.reload();
+      else setTimeout(quandLibre, 20000);
+    };
+    setTimeout(quandLibre, 2000);
+  });
   // La copie de fond n'attaque qu'une fois les phrases de la langue en cours
   // chargées : sinon les deux se disputent la connexion du magasin et Jeanne
   // reste muette le temps que ça se démêle. Puis on redemande tant qu'elle

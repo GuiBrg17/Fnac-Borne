@@ -56,10 +56,15 @@ self.addEventListener("install", (e) => {
 
 self.addEventListener("activate", (e) => {
   e.waitUntil((async () => {
+    let remplace = false;
     for (const nom of await caches.keys()) {
-      if (nom.startsWith("borne-v") && nom !== CACHE) await caches.delete(nom);
+      if (nom.startsWith("borne-v") && nom !== CACHE) { await caches.delete(nom); remplace = true; }
     }
     await self.clients.claim();
+    // Une page ouverte tourne peut-être encore sur les fichiers de l'ancienne
+    // version : on lui demande de se recharger, elle le fera à l'écran
+    // d'accueil. Sans cela la borne pouvait rester des jours sur du vieux code.
+    if (remplace) for (const c of await self.clients.matchAll()) c.postMessage("recharge");
     // Si aucune page ne donne le signal (vieille version en place), on remplit
     // quand même, mais bien plus tard.
     setTimeout(remplirEnFond, 120000);
@@ -102,7 +107,15 @@ function remplirEnFond() {
   return remplissage;
 }
 
-const copieDe = async (req) => (await caches.open(CACHE)).match(req, { ignoreSearch: true });
+// On ignore le « ?v=N » pour les fichiers d'assets — la liste hors-ligne les
+// désigne sans, la page les demande avec — mais JAMAIS pour la page, les
+// styles et les modules : là, le numéro de version EST le fichier. Sans cette
+// distinction, l'ancien service worker répondait à une demande de
+// « js/search.js?v=93 » avec le contenu de la v=92, et la borne ne pouvait
+// plus jamais se mettre à jour (constaté en magasin le 26/09/2026).
+const versionneParLeNom = (url) => /\/(js|css)\/[^/]+$/.test(url.pathname) || url.pathname.endsWith(".html");
+const copieDe = async (req) =>
+  (await caches.open(CACHE)).match(req, { ignoreSearch: !versionneParLeNom(new URL(req.url)) });
 
 self.addEventListener("fetch", (e) => {
   const req = e.request;
@@ -132,7 +145,11 @@ self.addEventListener("fetch", (e) => {
   if (req.mode === "navigate") {
     e.respondWith((async () => {
       try {
-        const r = await depuisLeReseau(req, 2000);
+        // « no-store » : sans lui, le cache du navigateur resservait la page
+        // d'il y a dix minutes (GitHub Pages demande de la garder), et la
+        // borne rechargeait sans fin la même vieille version.
+        const r = await depuisLeReseau(new Request(req.url, { cache: "no-store" }), 2000);
+        if (!r.ok) throw new Error(String(r.status));
         (await caches.open(CACHE)).put("./", r.clone());
         return r;
       } catch {
