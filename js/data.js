@@ -284,7 +284,7 @@ export const ZONES = {
            "oreillette bluetooth", "coque", "coque téléphone", "coque samsung", "coque xiaomi", "étui téléphone",
            "housse téléphone", "verre trempé", "protection écran", "protège écran", "film protecteur", "carte sim",
            "sim", "carte prépayée", "forfait", "forfait mobile", "abonnement mobile", "recharge téléphonique", "sfr",
-           "orange", "bouygues", "free mobile", "porte téléphone",
+           "orange", "bouygues", "free mobile",
            "perche à selfie", "anneau téléphone", "popsocket", "reprise téléphone", "rachat téléphone",
            "téléphone enfant"],
       en: ["phone", "mobile phone", "mobile", "cell phone", "cellphone", "smartphone", "android", "android phone",
@@ -296,7 +296,7 @@ export const ZONES = {
            "usb c", "micro usb cable", "micro usb", "power bank", "portable battery", "battery pack",
            "wired earphone", "wired earphones", "jack earphones", "hands free kit", "earpiece", "bluetooth earpiece",
            "phone case", "case", "samsung case", "phone cover", "phone pouch", "tempered glass", "screen protector",
-           "screen film", "sim card", "sim", "prepaid card", "mobile plan", "phone plan", "top up", "phone holder",
+           "screen film", "sim card", "sim", "prepaid card", "mobile plan", "phone plan", "top up",
            "selfie stick", "phone ring", "popsocket", "phone trade in", "kids phone"],
       es: ["teléfono", "teléfono móvil", "móvil", "celular", "smartphone", "android", "teléfono android", "samsung",
            "teléfono samsung", "galaxy", "samsung galaxy", "galaxy s24", "galaxy s25", "xiaomi", "redmi", "poco",
@@ -307,7 +307,7 @@ export const ZONES = {
            "cable usb c", "usb c", "cable micro usb", "micro usb", "batería externa", "power bank", "powerbank",
            "auricular con cable", "auriculares con cable", "auriculares jack", "manos libres", "auricular bluetooth",
            "funda", "funda móvil", "funda samsung", "carcasa", "cristal templado", "protector de pantalla",
-           "lámina protectora", "tarjeta sim", "sim", "tarjeta prepago", "tarifa móvil", "recarga", "soporte móvil",
+           "lámina protectora", "tarjeta sim", "sim", "tarjeta prepago", "tarifa móvil", "recarga",
            "palo selfie", "anillo para móvil", "popsocket", "móvil para niños"]
     }
   },
@@ -998,7 +998,7 @@ export const ZONES = {
            "water damage", "phone repair", "computer repair", "screen replacement", "battery replacement", "return",
            "return a product", "refund", "exchange", "faulty product", "complaint", "invoice copy", "pickup",
            "order pickup", "pick up my order", "collect my order", "click and collect", "order", "online order",
-           "collection point", "order tracking", "parcel", "package", "tech support", "support", "data transfer",
+           "order tracking", "parcel", "package", "tech support", "support", "data transfer",
            "backup", "software update", "slow computer", "very slow", "freezes", "crashes", "bug", "virus",
            "blue screen", "won't charge", "doesn't charge", "overheating", "problem", "issue", "stopped working",
            "out of order", "lost data", "recover my data", "computer is slow", "phone is slow", "laptop is slow",
@@ -1009,7 +1009,7 @@ export const ZONES = {
            "reparación de móvil", "reparación de ordenador", "cambiar la pantalla", "cambiar la batería",
            "devolución", "devolver un producto", "reembolso", "cambio", "producto defectuoso", "reclamación",
            "copia de factura", "recogida", "recoger pedido", "recoger mi pedido", "click and collect", "pedido",
-           "pedido online", "punto de recogida", "seguimiento del pedido", "paquete", "soporte técnico", "asistencia",
+           "pedido online", "seguimiento del pedido", "paquete", "soporte técnico", "asistencia",
            "transferencia de datos", "copia de seguridad", "actualización", "va lento", "se cuelga", "se bloquea",
            "virus", "pantalla azul", "no carga", "se calienta", "problema", "dejó de funcionar", "fuera de servicio",
            "recuperar mis datos", "datos perdidos", "el ordenador va lento", "el móvil va lento",
@@ -1189,8 +1189,7 @@ const SPOKEN = {
          "chargeur solaire", "station de charge", "coque de portable", "coque de téléphone", "coque antichoc",
          "coque transparente", "coque rabat", "étui portefeuille", "protection de téléphone", "vitre de protection",
          "verre de protection", "protection d'écran", "film écran", "film de protection", "cordon téléphone",
-         "dragonne", "tour de cou téléphone", "bandoulière téléphone", "support vélo téléphone",
-         "support grille aération",
+         "dragonne", "tour de cou téléphone", "bandoulière téléphone",
          "écouteurs usb c", "écouteurs type c", "kit piéton", "écouteurs avec fil", "casque avec fil téléphone",
          "trépied téléphone", "stabilisateur de téléphone", "objectif pour téléphone", "reprise de mon téléphone",
          "revendre mon téléphone", "portable pour enfant", "premier téléphone"],
@@ -1585,7 +1584,7 @@ const SPOKEN = {
          "bitdefender", "bolsa para portátil", "cargador universal portátil"]
   },
   trottinettes: {
-    fr: ["rayon mobilité", "mobilité", "nine bot", "over board", "hover board", "ségouai", "pure electric", "trottinette pure", "dualtron", "kaabo", "inokim", "wispeed", "urbanglide", "beeper", "e twow", "kugoo", "navee", "se déplacer", "transport électrique", "moyen de transport", "aller au travail", "aller au lycée", "aller à la fac", "trajet domicile travail", "déplacements urbains", "vélotaf", "mobilité électrique", "trotinnette", "trotinet", "trotinette électrique", "ninebot max g3", "xiaomi scooter 5", "segway gt3", "trott", "trottinette xiaomi", "xiaomi electric scooter", "trottinette ninebot", "ninebot max",
+    fr: ["rayon mobilité", "mobilité", "nine bot", "over board", "hover board", "ségouai", "pure electric", "trottinette pure", "dualtron", "kaabo", "inokim", "wispeed", "urbanglide", "beeper", "e twow", "kugoo", "navee", "se déplacer", "transport électrique", "moyen de transport", "aller au travail", "aller au lycée", "aller à la fac", "trajet domicile travail", "déplacements urbains", "mobilité électrique", "trotinnette", "trotinet", "trotinette électrique", "ninebot max g3", "xiaomi scooter 5", "segway gt3", "trott", "trottinette xiaomi", "xiaomi electric scooter", "trottinette ninebot", "ninebot max",
          "segway ninebot", "ninebot g30", "ninebot f2", "ninebot e2", "trottinette pliable", "trottinette adulte",
          "trottinette pour ado", "trottinette électrique enfant", "trottinette tout terrain", "trottinette puissante",
          "trottinette légère", "trottinette pas chère", "draisienne électrique", "gyropode", "skate électrique",
@@ -1834,14 +1833,13 @@ const SPOKEN = {
          "manufacturer warranty", "under warranty", "out of warranty", "phone insurance", "customer support",
          "returns", "gift receipt", "exchange a gift", "return label", "online order pickup", "store pickup",
          "click and collect order", "delivery", "collect in store", "order number", "pickup code", "setup",
-         "set up my phone", "install windows", "data recovery", "transfer my data", "unlock my phone", "recycling",
+         "set up my phone", "install windows", "data recovery", "transfer my data", "unlock my phone",
          "recycle old device", "trade in"],
     es: ["servicio de reparación", "reparación de pantalla", "cambio de batería", "piezas de repuesto",
          "estado de la reparación", "garantía del fabricante", "en garantía", "fuera de garantía", "seguro de móvil",
          "devoluciones", "ticket regalo", "cambiar un regalo", "etiqueta de devolución", "recogida en tienda",
          "número de pedido", "código de recogida", "entrega", "configurar", "configurar mi móvil",
-         "instalar windows", "recuperación de datos", "transferir mis datos", "desbloquear mi móvil", "reciclaje",
-         "reciclar"]
+         "instalar windows", "recuperación de datos", "transferir mis datos", "desbloquear mi móvil"]
   },
   caisse: {
     fr: ["carte bleue", "payer par carte bleue", "carte visa", "mastercard", "american express", "amex", "paypal", "lydia", "passer en caisse", "passer à la caisse", "où je paye", "où je paie", "où est-ce qu'on paye",
@@ -2378,7 +2376,7 @@ export const INFO = {
            // et éclairages, eux, restent au rayon Mobilité urbaine.
            "vélo", "vélos", "un vélo", "vélo électrique", "vélo à assistance électrique", "vae",
            "vélo pliant", "vélo électrique pliant", "vélo de ville", "vélo enfant", "vélo cargo",
-           "vtt", "vtc", "bicyclette", "vélotaf", "vélo d'appartement", "draisienne",
+           "vtt", "vtc", "bicyclette", "vélo d'appartement", "draisienne",
            "poêle", "poêles", "poêle à frire", "casserole", "casseroles", "poêles et casseroles",
            // « autocuiseur » et « cocotte-minute » restent au petit électroménager :
            // un Cookeo porte ces noms-là, et mieux vaut envoyer au bon rayon que
@@ -2388,7 +2386,7 @@ export const INFO = {
            "gps", "car gps", "sat nav", "satnav", "tomtom",
            "bike", "bikes", "bicycle", "electric bike", "e-bike", "folding bike", "city bike", "mountain bike",
            "kids bike", "balance bike",
-           "frying pan", "saucepan", "pots and pans", "cookware", "casserole dish", "wok", "pressure cooker"],
+           "frying pan", "saucepan", "pots and pans", "cookware", "casserole dish", "wok"],
       es: ["soporte móvil", "soporte para móvil", "soporte de coche", "soporte de bici para móvil", "soporte iphone",
            "gps", "gps de coche", "navegador gps", "tomtom",
            "bici", "bicis", "bicicleta", "bicicleta eléctrica", "bicicleta plegable", "bicicleta de ciudad",
