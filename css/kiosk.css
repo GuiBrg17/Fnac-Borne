@@ -623,21 +623,7 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   object-fit: cover;
   transition: opacity 0.35s ease;
 }
-.is-signing .jeanne-photo, .is-looking .jeanne-photo { opacity: 0; }
-/* Jeanne qui se tourne vers le plan : même cadre que le portrait, elle le
-   remplace le temps de l'indication. */
-.look-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
-}
-.is-looking .look-video { opacity: 1; transition: none; }
-.is-signing .look-video { opacity: 0; }
+.is-signing .jeanne-photo { opacity: 0; }
 /* Clip de langue des signes : il remplace le portrait et déborde sur la zone
    de la conversation (effacée le temps du geste), sinon les mains seraient
    trop petites pour être lues. Le clip est affiché en entier (contain) :

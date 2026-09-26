@@ -88,7 +88,8 @@
   "Ce produit est disponible au rayon TV, au sous-sol.": "fr/b9db810f173a.m4a",
   "Ce produit est disponible au rayon Son, au sous-sol.": "fr/d671e3515532.m4a",
   "Ce produit est disponible au rayon Apple, au sous-sol.": "fr/8709a5132c22.m4a",
-  "Ce produit est disponible au rayon Jeux de société, au sous-sol.": "fr/fb1dd8d0ab8a.m4a"
+  "Ce produit est disponible au rayon Jeux de société, au sous-sol.": "fr/fb1dd8d0ab8a.m4a",
+  "Je ne sais pas où se déposent les vieux appareils et les piles usagées. Demandez à un vendeur, il vous renseignera.": "fr/69ccfbb9bc84.m4a"
  },
  "en": {
   "Sure, let's continue in English. What are you looking for?": "en/3539665560fd.m4a",
@@ -179,7 +180,8 @@
   "This product is in the TV section, in the basement.": "en/41dce406569d.m4a",
   "This product is in the Sound section, in the basement.": "en/e4bc8a377b86.m4a",
   "This product is in the Apple section, in the basement.": "en/bcec7b1aa9b0.m4a",
-  "This product is in the Board games section, in the basement.": "en/3a4427a11a9d.m4a"
+  "This product is in the Board games section, in the basement.": "en/3a4427a11a9d.m4a",
+  "I don't know where old devices and used batteries are collected. Please ask a member of staff.": "en/3c8b3efa8c94.m4a"
  },
  "es": {
   "¡Hola y bienvenido a la Fnac Jeanne d'Arc! Dígame qué busca y le muestro la sección en el plano.": "es/71633b60c208.m4a",
@@ -270,6 +272,7 @@
   "Este producto está en la sección TV, en el sótano.": "es/4ac63d0359f5.m4a",
   "Este producto está en la sección Sonido, en el sótano.": "es/1d14723f251c.m4a",
   "Este producto está en la sección Apple, en el sótano.": "es/d6e917be4675.m4a",
-  "Este producto está en la sección Juegos de mesa, en el sótano.": "es/f35170cdc0cd.m4a"
+  "Este producto está en la sección Juegos de mesa, en el sótano.": "es/f35170cdc0cd.m4a",
+  "No sé dónde se dejan los aparatos viejos y las pilas usadas. Pregunte a un vendedor.": "es/cff9b3f1e0e4.m4a"
  }
 }

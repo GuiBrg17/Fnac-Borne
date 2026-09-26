@@ -1826,8 +1826,10 @@ const SPOKEN = {
          "réparation écouteurs", "réparation aspirateur", "installation", "configuration", "configurer",
          "paramétrer", "mettre en service", "installer windows", "réinstaller windows", "formater",
          "récupération de données", "transférer mes données", "transférer mes photos", "changer de téléphone données",
-         "déverrouiller", "désimlocker", "débloquer mon téléphone", "reprise", "recyclage", "recycler",
-         "rapporter un vieil appareil", "déposer un vieil appareil", "reprise ancien appareil", "reprise ancien téléphone"],
+         "déverrouiller", "désimlocker", "débloquer mon téléphone", "reprise",
+         // Le recyclage et le dépôt d'un vieil appareil partent en question
+         // pratique : le magasin lui-même ne sait pas où ça se dépose.
+         "reprise ancien appareil", "reprise ancien téléphone"],
     en: ["repair service", "screen repair", "battery replacement", "spare parts", "repair status",
          "manufacturer warranty", "under warranty", "out of warranty", "phone insurance", "customer support",
          "returns", "gift receipt", "exchange a gift", "return label", "online order pickup", "store pickup",
@@ -2397,6 +2399,30 @@ export const INFO = {
       fr: "Ce magasin ne vend pas ce produit. Un vendeur peut vous le commander, ou vous le trouverez sur fnac.com.",
       en: "This store doesn't sell that product. A member of staff can order it for you, or you'll find it on fnac.com.",
       es: "Esta tienda no vende ese producto. Un vendedor puede encargárselo, o lo encontrará en fnac.com."
+    }
+  },
+  // Personne au magasin n'a su dire où se déposent les vieux appareils et les
+  // piles usagées (reposé le 26/09/2026). Jeanne le dit plutôt que d'inventer
+  // ou d'envoyer au hasard : elle répondait « SAV » pour les uns, « caisses »
+  // pour les autres. Le jour où l'info arrive, il suffit de changer la réponse.
+  recycling: {
+    keywords: {
+      fr: ["recyclage", "recycler", "où recycler", "déposer mes piles", "piles usagées", "pile usagée",
+           "bac à piles", "borne de recyclage", "point de collecte", "collecte", "déchets électroniques",
+           "vieil appareil", "vieux appareil", "vieux appareils", "ancien appareil", "où jeter",
+           "jeter un appareil", "me débarrasser", "rapporter un vieil appareil", "déposer un vieil appareil",
+           "déposer un appareil", "vieille télé", "vieil ordinateur", "ampoules usagées", "cartouches usagées"],
+      en: ["recycling", "recycle", "where to recycle", "used batteries", "battery recycling", "battery bin",
+           "collection point", "electronic waste", "e-waste", "old device", "old appliance", "throw away",
+           "dispose of", "drop off my old", "old tv", "old computer"],
+      es: ["reciclaje", "reciclar", "dónde reciclar", "pilas usadas", "pila usada", "contenedor de pilas",
+           "punto de recogida", "residuos electrónicos", "aparato viejo", "aparatos viejos", "dónde tirar",
+           "deshacerme", "televisor viejo", "ordenador viejo"]
+    },
+    answer: {
+      fr: "Je ne sais pas où se déposent les vieux appareils et les piles usagées. Demandez à un vendeur, il vous renseignera.",
+      en: "I don't know where old devices and used batteries are collected. Please ask a member of staff.",
+      es: "No sé dónde se dejan los aparatos viejos y las pilas usadas. Pregunte a un vendedor."
     }
   },
   parking: {
