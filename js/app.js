@@ -602,9 +602,6 @@ function ask(text, source = "text") {
   if (zone) { answerZone(zone, match.fuzzy ? t().didYouMean(displayKeyword(match.keyword)) : "", match.place); return; }
   if (intent) {
     reply(t()[intent]);
-    // « Avez-vous besoin d'assistance ? Souhaitez-vous qu'un vendeur vous
-    // accompagne ? » quand Jeanne oriente vers un vendeur.
-    if (intent === "human") signLSF(["assistance", "accompagner"]);
     if (intent === "thanks") {
       signLSF(["merci", "abientot"]);
       // « Merci » arrive souvent en fin de visite : c'est le moment du sondage.
@@ -615,7 +612,6 @@ function ask(text, source = "text") {
   clearZone();
   if (rude === "jurons") { recordRude(); reply(t().rude); return; }
   reply(t().notFound);
-  signLSF(["assistance", "accompagner"]);
 }
 
 const zoneLabel = (id) => ZONES[id].label[state.lang];
@@ -1481,8 +1477,10 @@ function enterApp() {
     // de toucher « Appuyez pour parler ».
     addMessage("jeanne", t().greeting);
     speak(t().hello);
-    // Accueil en langue des signes : « bonjour », « bienvenue », « puis-je vous aider ? ».
-    signLSF(["bonjour", "bienvenue", "aider"]);
+    // Accueil en langue des signes. Seuls trois signes existent — « bonjour »,
+    // « merci », « à bientôt » — et le magasin s'en tient là : les autres
+    // demanderaient un tournage avec une personne qui pratique la LSF.
+    signLSF(["bonjour"]);
     if (state.screen !== "app") return;
     handsFree = true;
     listenWhenDone();

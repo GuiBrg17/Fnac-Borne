@@ -5,28 +5,13 @@ salue ou remercie un client. Les gestes ne sont pas fabriqués par ordinateur :
 ce sont des **vidéos tournées avec une personne qui pratique la langue des
 signes**, la seule façon d'avoir des signes justes.
 
-## Fichiers attendus
+## Les trois signes en place
 
 ```
-assets/lsf/fr/bonjour.mp4      « Bonjour »               │ à l'arrivée
-assets/lsf/fr/bienvenue.mp4    « Bienvenue »             │ d'un client
-assets/lsf/fr/aider.mp4        « Puis-je vous aider ? »  │
-assets/lsf/fr/merci.mp4        « Merci »                 │ quand le client
-assets/lsf/fr/abientot.mp4     « À bientôt »             │ remercie
-assets/lsf/fr/assistance.mp4   « Avez-vous besoin d'assistance ? »      │ quand Jeanne
-assets/lsf/fr/accompagner.mp4  « Souhaitez-vous qu'un vendeur           │ oriente vers
-                                 vous accompagne ? »                    │ un vendeur
+assets/lsf/fr/bonjour.mp4      « Bonjour »    │ à l'arrivée d'un client
+assets/lsf/fr/merci.mp4        « Merci »      │ quand le client remercie
+assets/lsf/fr/abientot.mp4     « À bientôt »  │ juste après
 ```
-
-Une autre vidéo, à part, complète l'ensemble :
-
-```
-assets/jeanne-plan.mp4         Jeanne se tourne vers le plan et le montre
-```
-
-Elle est jouée dans le cadre du portrait, à la place de la photo, chaque fois
-que Jeanne indique un rayon. Les lèvres n'ont pas besoin de bouger : la vidéo
-dure le temps du geste (2 à 4 secondes), puis le portrait revient.
 
 Le dossier porte le code de la langue : `fr` pour la LSF. Les dossiers `en`
 (ASL) et `es` (LSE) peuvent être ajoutés plus tard ; chaque langue des signes
@@ -55,41 +40,17 @@ le fait réapparaître sous le clip.
 Ces trois-là sont des **formules entières** : un seul signe suffit à les dire,
 il n'y a donc rien à bricoler.
 
-## Les quatre qui manquent
+## Pourquoi on s'arrête là
 
-`bienvenue`, `aider`, `assistance`, `accompagner` sont écrites comme des
-**phrases** en français. Les signer mot à mot donnerait du français signé, pas
-de la LSF : chaque emplacement doit porter **un seul signe**, choisi par
-quelqu'un qui pratique la langue.
+Le magasin a décidé le 26/09/2026 de s'en tenir à ces trois formules. Les
+autres (« bienvenue », « puis-je vous aider ? », « avez-vous besoin
+d'assistance ? ») sont des **phrases** : les signer mot à mot donnerait du
+français signé, pas de la LSF, et il n'existe ni « aider » ni « bienvenue »
+dans les 637 vidéos LSF de Lingua Libre — vérifié ce jour-là chez les sept
+signeurs. Il faudrait un tournage avec une personne qui pratique la langue.
 
-Recherche faite le 24/09/2026 sur les 637 vidéos LSF de Lingua Libre
-(Laura Jauvert 447, Hugo en résidence 85, Taliba31 77, et quatre autres) :
-
-| Emplacement | Signe trouvé | Signeur · licence | Remarque |
-|---|---|---|---|
-| `accompagner` | **Accompagner** | Laura Jauvert · CC BY 3.0 | correspondance exacte |
-| `aider` | Conseiller | Laura Jauvert · CC BY 3.0 | à valider |
-| `assistance` | Proposer | Laura Jauvert · CC BY 3.0 | à valider |
-| `bienvenue` | accueillir | Hugo en résidence · CC0 | autre signeur, à valider |
-
-**Il n'existe aucun signe « aider », « aide », « assistance » ni « bienvenue »**
-sur Lingua Libre : les trois dernières lignes sont des **propositions**, pas
-des équivalents. Trois autres signes ont été préparés en réserve (`demander`,
-`chercher`, `content`), au cas où la personne qui valide préfère tourner la
-phrase autrement — par exemple BONJOUR + CHERCHER + QUOI, plus idiomatique que
-« puis-je vous aider ».
-
-`bienvenue` vient d'un autre signeur que les trois clips en place : le style et
-le cadrage diffèrent, et **son accord reste à demander**, comme celui obtenu
-auprès de Laura Jauvert. La licence CC0 lève le droit d'auteur, pas le droit à
-l'image.
-
-Réserve utile pour plus tard : Hugo en résidence et Taliba31 ont enregistré un
-vocabulaire de bibliothèque, tout en CC0, qui colle au magasin — `accueil`,
-`conseil`, `demander conseil`, `commande`, `commander`, `rayon (lieu)`,
-`ascenseur`, `livre`, `cd`, `dvd`, `bande dessinée`, `manga`, `jeux`,
-`musique`, `film`, `sortie`, `toilettes`, `où`, `pardon`,
-`je ne comprends pas`.
+Les appels correspondants ont été retirés du code : la borne ne demande plus
+que les trois fichiers ci-dessus, et la console reste propre.
 
 Le fond (et le filigrane de l'outil) a été retiré avec
 `tools/images/detourer-video.py`, puis le
