@@ -1098,3 +1098,6 @@ recycling|où recycler mon vieux téléphone
 recycling|je veux jeter ma vieille télé
 savRetrait|déposer mon téléphone en réparation
 savRetrait|reprendre mon ancien téléphone
+recycling|recycle my old phone|en
+recycling|reciclar mi móvil viejo|es
+telephonie|un téléphone android
