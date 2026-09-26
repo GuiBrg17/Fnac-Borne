@@ -766,16 +766,17 @@ export const ZONES = {
     keywords: {
       fr: ["trottinette", "trottinettes", "trotinette", "trottinette électrique", "trottinette enfant", "ninebot",
            "segway", "xiaomi trottinette", "hoverboard", "gyroroue", "monoroue", "skateboard électrique",
-           "vélo électrique", "vélo pliant", "casque trottinette", "casque de trottinette", "casque vélo",
+           // Les vélos ne sont pas vendus ici : seuls les accessoires restent.
+           "casque trottinette", "casque de trottinette", "casque vélo",
            "protections", "genouillères", "coudières", "antivol", "cadenas vélo", "gonfleur", "pompe à vélo",
            "batterie trottinette", "chargeur trottinette", "mobilité urbaine", "mobilité douce",
            "engin de déplacement", "pièces trottinette", "pneu trottinette"],
       en: ["scooter", "scooters", "electric scooter", "kids scooter", "ninebot", "segway", "xiaomi scooter",
-           "hoverboard", "unicycle", "electric unicycle", "electric skateboard", "electric bike", "e-bike",
-           "folding bike", "scooter helmet", "bike helmet", "helmet", "knee pads", "elbow pads", "bike lock", "lock",
+           "hoverboard", "unicycle", "electric unicycle", "electric skateboard",
+           "scooter helmet", "bike helmet", "helmet", "knee pads", "elbow pads", "bike lock", "lock",
            "pump", "scooter battery", "scooter charger", "urban mobility", "scooter parts", "scooter tyre"],
       es: ["patinete", "patinetes", "patinete eléctrico", "patinete infantil", "ninebot", "segway", "patinete xiaomi",
-           "hoverboard", "monociclo eléctrico", "monopatín eléctrico", "bicicleta eléctrica", "bicicleta plegable",
+           "hoverboard", "monociclo eléctrico", "monopatín eléctrico",
            "casco patinete", "casco de patinete", "casco de bici", "rodilleras", "coderas", "candado",
            "candado de bici", "bomba de aire", "batería patinete", "cargador patinete", "movilidad urbana",
            "piezas patinete", "rueda patinete"]
@@ -1587,8 +1588,7 @@ const SPOKEN = {
     fr: ["rayon mobilité", "mobilité", "nine bot", "over board", "hover board", "ségouai", "pure electric", "trottinette pure", "dualtron", "kaabo", "inokim", "wispeed", "urbanglide", "beeper", "e twow", "kugoo", "navee", "se déplacer", "transport électrique", "moyen de transport", "aller au travail", "aller au lycée", "aller à la fac", "trajet domicile travail", "déplacements urbains", "vélotaf", "mobilité électrique", "trotinnette", "trotinet", "trotinette électrique", "ninebot max g3", "xiaomi scooter 5", "segway gt3", "trott", "trottinette xiaomi", "xiaomi electric scooter", "trottinette ninebot", "ninebot max",
          "segway ninebot", "ninebot g30", "ninebot f2", "ninebot e2", "trottinette pliable", "trottinette adulte",
          "trottinette pour ado", "trottinette électrique enfant", "trottinette tout terrain", "trottinette puissante",
-         "trottinette légère", "trottinette pas chère", "vélo", "vélo à assistance électrique", "vae",
-         "vélo électrique pliant", "vélo de ville", "draisienne électrique", "gyropode", "skate électrique",
+         "trottinette légère", "trottinette pas chère", "draisienne électrique", "gyropode", "skate électrique",
          "overboard", "gyroskate", "hoverboard enfant", "kart hoverboard", "casque vélo électrique", "casque urbain",
          "casque connecté", "casque avec clignotants", "livall", "gilet réfléchissant", "gilet jaune",
          "éclairage vélo", "lumière vélo", "lampe vélo", "feu arrière", "clignotants trottinette",
@@ -1597,12 +1597,12 @@ const SPOKEN = {
          "antivol en u", "u antivol", "compresseur portable", "gonfleur électrique", "pompe électrique",
          "se déplacer en ville", "aller au travail en trottinette"],
     en: ["pure electric", "dualtron", "kaabo", "inokim", "navee", "xiaomi electric scooter", "ninebot max", "segway ninebot", "folding scooter", "adult scooter",
-         "off road scooter", "bike", "bicycle", "city bike", "electric skateboard", "hoverboard kart", "smart helmet",
+         "off road scooter", "electric skateboard", "hoverboard kart", "smart helmet",
          "livall", "hi vis vest", "reflective vest", "bike light", "bike lights", "rear light", "scooter bag",
          "inner tube", "solid tyre", "mudguard", "scooter mirror", "d lock", "chain lock", "electric pump",
          "portable compressor", "commute"],
     es: ["patinete xiaomi", "ninebot max", "segway ninebot", "patinete plegable", "patinete para adultos",
-         "patinete todoterreno", "bici", "bicicleta", "bici eléctrica", "bicicleta de ciudad", "kart hoverboard",
+         "patinete todoterreno", "kart hoverboard",
          "casco inteligente", "livall", "chaleco reflectante", "luz de bici", "luces de bici", "bolsa patinete",
          "cámara de aire", "neumático macizo", "guardabarros", "retrovisor patinete", "candado en u",
          "cadena antirrobo", "bomba eléctrica", "compresor portátil"]
@@ -2371,6 +2371,12 @@ export const INFO = {
            // répondait sur le parking, à cause du mot « voiture ».
            "gps", "un gps", "gps voiture", "gps de voiture", "gps auto", "navigation gps", "boîtier gps",
            "tomtom", "garmin gps", "coyote", "avertisseur de radar",
+           // Le magasin ne vend pas de vélos : seulement des trottinettes et
+           // leurs accessoires (confirmé le 26/09/2026). Les casques, antivols
+           // et éclairages, eux, restent au rayon Mobilité urbaine.
+           "vélo", "vélos", "un vélo", "vélo électrique", "vélo à assistance électrique", "vae",
+           "vélo pliant", "vélo électrique pliant", "vélo de ville", "vélo enfant", "vélo cargo",
+           "vtt", "vtc", "bicyclette", "vélotaf", "vélo d'appartement", "draisienne",
            "poêle", "poêles", "poêle à frire", "casserole", "casseroles", "poêles et casseroles",
            // « autocuiseur » et « cocotte-minute » restent au petit électroménager :
            // un Cookeo porte ces noms-là, et mieux vaut envoyer au bon rayon que
@@ -2378,9 +2384,13 @@ export const INFO = {
            "batterie de cuisine", "faitout", "cocotte", "sauteuse", "wok"],
       en: ["phone holder", "phone mount", "car mount", "car phone holder", "bike phone mount", "iphone stand", "iphone car mount",
            "gps", "car gps", "sat nav", "satnav", "tomtom",
+           "bike", "bikes", "bicycle", "electric bike", "e-bike", "folding bike", "city bike", "mountain bike",
+           "kids bike", "balance bike",
            "frying pan", "saucepan", "pots and pans", "cookware", "casserole dish", "wok", "pressure cooker"],
       es: ["soporte móvil", "soporte para móvil", "soporte de coche", "soporte de bici para móvil", "soporte iphone",
            "gps", "gps de coche", "navegador gps", "tomtom",
+           "bici", "bicis", "bicicleta", "bicicleta eléctrica", "bicicleta plegable", "bicicleta de ciudad",
+           "bicicleta de montaña", "bicicleta infantil",
            "sartén", "sartenes", "cacerola", "cacerolas", "batería de cocina", "olla", "olla a presión", "wok"]
     },
     answer: {

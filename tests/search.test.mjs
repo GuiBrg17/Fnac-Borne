@@ -262,7 +262,8 @@ const cases = [
   ["fr", "de l'encre pour mon imprimante", "cartouches"],
   ["fr", "une cartouche HP 305", "cartouches"],
   ["fr", "une trottinette Xiaomi", "trottinettes"],
-  ["fr", "un vélo électrique", "trottinettes"],
+  // Le magasin ne vend pas de vélos, électriques compris (26/09/2026).
+  ["fr", "un vélo électrique", null],
   ["fr", "payer en 4 fois sans frais", "adhesion"],
   ["fr", "la carte Fnac+", "adhesion"],
   ["fr", "payer en espèces", "caisse"],
