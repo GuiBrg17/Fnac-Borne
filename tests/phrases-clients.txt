@@ -902,7 +902,7 @@ electromenager|une brosse à dents oral bé
 electromenager|un fer rovanta
 electromenager|une cafetière de longhi
 electromenager|un robot moulinexe
-electromenager|une poêle téfal
+notSold|une poêle téfal
 electromenager|une cafetière crups
 electromenager|un rasoir brown
 photo|une go pro
@@ -1078,3 +1078,9 @@ informatique|les téléphones sans fil
 informatique|des disques durs externes
 cartouches|les cartouches d'encre
 audio|les casques audio
+# Produits que ce magasin ne vend pas (confirmé par le magasin le 26/09/2026)
+notSold|un gps pour la voiture
+notSold|je cherche un tomtom
+notSold|une poêle
+notSold|des casseroles
+notSold|une batterie de cuisine

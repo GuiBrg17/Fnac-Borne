@@ -2366,9 +2366,22 @@ export const INFO = {
       fr: ["support téléphone", "support de téléphone", "support pour téléphone", "support smartphone", "support voiture",
            "support téléphone voiture", "support voiture magnétique", "support grille aération", "support vélo téléphone",
            "support téléphone vélo", "support moto", "support iphone", "support de portable", "porte téléphone",
-           "porte-téléphone", "support magsafe voiture", "support pare-brise", "support tableau de bord"],
-      en: ["phone holder", "phone mount", "car mount", "car phone holder", "bike phone mount", "iphone stand", "iphone car mount"],
-      es: ["soporte móvil", "soporte para móvil", "soporte de coche", "soporte de bici para móvil", "soporte iphone"]
+           "porte-téléphone", "support magsafe voiture", "support pare-brise", "support tableau de bord",
+           // Le magasin n'en vend pas (confirmé le 26/09/2026). « gps voiture »
+           // répondait sur le parking, à cause du mot « voiture ».
+           "gps", "un gps", "gps voiture", "gps de voiture", "gps auto", "navigation gps", "boîtier gps",
+           "tomtom", "garmin gps", "coyote", "avertisseur de radar",
+           "poêle", "poêles", "poêle à frire", "casserole", "casseroles", "poêles et casseroles",
+           // « autocuiseur » et « cocotte-minute » restent au petit électroménager :
+           // un Cookeo porte ces noms-là, et mieux vaut envoyer au bon rayon que
+           // de dire à tort qu'on ne le vend pas.
+           "batterie de cuisine", "faitout", "cocotte", "sauteuse", "wok"],
+      en: ["phone holder", "phone mount", "car mount", "car phone holder", "bike phone mount", "iphone stand", "iphone car mount",
+           "gps", "car gps", "sat nav", "satnav", "tomtom",
+           "frying pan", "saucepan", "pots and pans", "cookware", "casserole dish", "wok", "pressure cooker"],
+      es: ["soporte móvil", "soporte para móvil", "soporte de coche", "soporte de bici para móvil", "soporte iphone",
+           "gps", "gps de coche", "navegador gps", "tomtom",
+           "sartén", "sartenes", "cacerola", "cacerolas", "batería de cocina", "olla", "olla a presión", "wok"]
     },
     answer: {
       fr: "Ce magasin ne vend pas ce produit. Un vendeur peut vous le commander, ou vous le trouverez sur fnac.com.",
