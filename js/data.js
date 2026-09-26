@@ -2411,13 +2411,20 @@ export const INFO = {
            "bac à piles", "borne de recyclage", "point de collecte", "collecte", "déchets électroniques",
            "vieil appareil", "vieux appareil", "vieux appareils", "ancien appareil", "où jeter",
            "jeter un appareil", "me débarrasser", "rapporter un vieil appareil", "déposer un vieil appareil",
-           "déposer un appareil", "vieille télé", "vieil ordinateur", "ampoules usagées", "cartouches usagées"],
+           "déposer un appareil", "vieille télé", "vieil ordinateur", "ampoules usagées", "cartouches usagées",
+           // Assez longs pour l'emporter sur le nom du produit : « recycler mon
+           // vieux téléphone » partait sinon au rayon Téléphonie.
+           "recycler mon téléphone", "recycler un téléphone", "recycler mon vieux téléphone",
+           "recycler mon ordinateur", "recycler ma télé", "recycler mes cartouches",
+           "vieux téléphone", "vieux portable", "vieux ordinateur", "vieille imprimante"],
       en: ["recycling", "recycle", "where to recycle", "used batteries", "battery recycling", "battery bin",
            "collection point", "electronic waste", "e-waste", "old device", "old appliance", "throw away",
-           "dispose of", "drop off my old", "old tv", "old computer"],
+           "dispose of", "drop off my old", "old tv", "old computer", "old phone",
+           "recycle my phone", "recycle my computer", "recycle my old phone"],
       es: ["reciclaje", "reciclar", "dónde reciclar", "pilas usadas", "pila usada", "contenedor de pilas",
            "punto de recogida", "residuos electrónicos", "aparato viejo", "aparatos viejos", "dónde tirar",
-           "deshacerme", "televisor viejo", "ordenador viejo"]
+           "deshacerme", "televisor viejo", "ordenador viejo", "móvil viejo",
+           "reciclar mi móvil", "reciclar mi ordenador", "reciclar mi móvil viejo"]
     },
     answer: {
       fr: "Je ne sais pas où se déposent les vieux appareils et les piles usagées. Demandez à un vendeur, il vous renseignera.",
