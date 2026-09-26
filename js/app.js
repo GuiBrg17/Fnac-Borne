@@ -50,7 +50,7 @@ const els = {
   idleCardOffer: $("#idleCardOffer"), idleCardNews: $("#idleCardNews"), idleCardNewsImage: $("#idleCardNewsImage"),
   idleCardNewsTitle: $("#idleCardNewsTitle"), idleCardNewsText: $("#idleCardNewsText"), idleCardNewsDate: $("#idleCardNewsDate"),
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
-  app: $("#appScreen"), signVideo: $("#signVideo"), lookVideo: $("#lookVideo"),
+  app: $("#appScreen"), signVideo: $("#signVideo"),
   idleHours: $("#idleHours"), storyButton: $("#idleStoryButton"), storyButtonLabel: $("#idleStoryButtonLabel"),
   storyDialog: $("#storyDialog"), storyTitle: $("#storyTitle"), storyParts: $("#storyParts"),
   storyFigure: $("#storyFigure"), storyImage: $("#storyImage"), storyCaption: $("#storyCaption"),
@@ -991,7 +991,6 @@ function showZone(id, place = null) {
   $$("#groundPlan .bm-stairs").forEach((el) => el.classList.toggle("is-route", basementOnly));
   $$('.plan-0 .tile[data-zone="escalier"]').forEach((tile) => tile.classList.toggle("is-route", basementOnly));
   els.mapStage.classList.add("has-focus");
-  lookAtMap();
   renderRoute();
   scheduleRouteDraw(true);
 
@@ -1431,7 +1430,6 @@ async function signLSF(names) {
   // Le cadre s'ouvre avant la première image, et la lecture attend que
   // l'écran soit redessiné : Chrome refuse de lire une vidéo muette tant
   // qu'elle n'est pas visible (économie d'énergie).
-  stopLooking();
   document.body.classList.add("is-signing");
   requestAnimationFrame(() => requestAnimationFrame(playNextSign));
   return true;
@@ -1447,26 +1445,6 @@ function playNextSign() {
 // --- Jeanne se tourne vers le plan ---------------------------------------
 // Clip joué dans le cadre du portrait quand Jeanne indique un rayon. Le
 // fichier est facultatif : sans lui, le portrait ne bouge pas.
-const LOOK_CLIP = "assets/jeanne-plan.mp4";
-
-async function lookAtMap() {
-  if (!els.lookVideo || document.body.classList.contains("is-signing")) return;
-  if (!(await hasClip(LOOK_CLIP + VERSION)) || state.screen !== "app") return;
-  document.body.classList.add("is-looking");
-  if (!els.lookVideo.getAttribute("src")) els.lookVideo.src = LOOK_CLIP + VERSION;
-  els.lookVideo.currentTime = 0;
-  els.lookVideo.play().catch(() => stopLooking());
-}
-
-function stopLooking() {
-  document.body.classList.remove("is-looking");
-  if (els.lookVideo) els.lookVideo.pause();
-}
-
-if (els.lookVideo) {
-  els.lookVideo.addEventListener("ended", stopLooking);
-  els.lookVideo.addEventListener("error", stopLooking);
-}
 
 function stopSigning() {
   signQueue = [];
@@ -1536,7 +1514,6 @@ function exitToIdle() {
   hideOtherStore();
   setFloor("0");
   if (state.a11y) toggleA11y(false);
-  stopLooking();
   startIdleCycle();
   clearTimeout(chatClearTimer);
   chatClearTimer = setTimeout(() => { els.chat.textContent = ""; }, 600);
@@ -2016,21 +1993,14 @@ if (els.idlePhoto.isConnected) {
 }
 
 
-// --- Effacement du mode hors-ligne ---------------------------------------------
+// --- Filet de sécurité ---------------------------------------------------------
 // La borne a gardé un temps une copie de tout le site pour survivre à une
 // coupure de wifi. Abandonné le 26/09/2026 : elle est toujours connectée, et
 // cette copie lui resservait du vieux code au lieu des versions publiées.
-// On nettoie ce que les bornes ont déjà enregistré ; sw.js fait le même
-// ménage de son côté, pour celles dont le code serait resté bloqué.
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.addEventListener("message", (e) => {
-    if (e.data === "sw-retire") rechargerQuandLibre();
-  });
-}
-// Le cache est effacé même s'il ne reste plus de service worker inscrit : les
-// deux ménages se font en parallèle et celui de sw.js n'a pas toujours le
-// temps de finir avant d'être désinscrit. Douze mégaoctets restaient sinon
-// sur le disque de la borne.
+// Il ne reste que ceci : si une borne restée de côté rallume avec une vieille
+// copie, on l'efface et on recharge une fois, à l'écran d'accueil. Sans ça,
+// elle pourrait tourner indéfiniment sur du code figé. À retirer quand toutes
+// les bornes auront redémarré au moins une fois.
 (async () => {
   let menage = false;
   try {
@@ -2040,20 +2010,15 @@ if ("serviceWorker" in navigator) {
   try {
     for (const nom of await caches.keys()) { await caches.delete(nom); menage = true; }
   } catch { /* rien à effacer */ }
-  if (menage) rechargerQuandLibre();
-})();
-
-// Un rechargement, mais jamais devant un client : on attend l'écran d'accueil.
-function rechargerQuandLibre() {
-  if (sessionStorage.getItem("recharge-faite")) return;
-  const essayer = () => {
+  if (!menage || sessionStorage.getItem("recharge-faite")) return;
+  const quandLibre = () => {
     if (state.screen === "idle" && !els.settings.open) {
       sessionStorage.setItem("recharge-faite", "1");
       location.reload();
-    } else setTimeout(essayer, 20000);
+    } else setTimeout(quandLibre, 20000);
   };
-  setTimeout(essayer, 2000);
-}
+  setTimeout(quandLibre, 2000);
+})();
 
 // Aide au réglage : ouvrir la borne avec ?debug pour lancer un signe à la main
 // depuis la console du navigateur (jeanne.sign("merci")).

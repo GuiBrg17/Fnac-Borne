@@ -378,7 +378,11 @@ export function findInfo(text) {
   // pratique même si la phrase parle d'une commande — mais « je viens chercher
   // mon téléphone en réparation », lui, reste une affaire de SAV.
   const pickup = hits[0] && hits[0].name === "phonePickup" && !REPAIR.test(query);
-  if (findProblem(text) && !pickup) return null;
+  // « déposer mes piles usagées » ressemble à un retour au SAV (« déposer »),
+  // mais c'est une question de recyclage : le magasin ne sait pas où ça se
+  // dépose, et mieux vaut le dire que d'envoyer au SAV pour rien.
+  const recyclage = hits[0] && hits[0].name === "recycling";
+  if (findProblem(text) && !pickup && !recyclage) return null;
   if (!hits.length) return null;
   // Un produit plus précis dans la même phrase l'emporte : « un support pour la
   // voiture » n'est pas une question de parking, « un casque ouvert » pas d'horaires.

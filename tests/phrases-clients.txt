@@ -1092,3 +1092,9 @@ trottinettes|un antivol de vélo
 notSold|a bike|en
 trottinettes|a bike helmet|en
 notSold|una bicicleta|es
+# Recyclage : le magasin ne sait pas, Jeanne le dit (26/09/2026)
+recycling|où déposer mes piles usagées
+recycling|où recycler mon vieux téléphone
+recycling|je veux jeter ma vieille télé
+savRetrait|déposer mon téléphone en réparation
+savRetrait|reprendre mon ancien téléphone
