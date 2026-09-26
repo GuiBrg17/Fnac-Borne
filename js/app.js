@@ -74,7 +74,6 @@ const els = {
   reportStatus: $("#reportStatus"), reportSend: $("#reportSend"), reportDownload: $("#reportDownload"),
   settings: $("#settings"), idleSeconds: $("#idleSeconds"), micPatience: $("#micPatience"), testVoice: $("#testVoice"),
   micNear: $("#micNear"), micLevelTest: $("#micLevelTest"), micLevelText: $("#micLevelText"),
-  offlineStatus: $("#offlineStatus"), offlineCheck: $("#offlineCheck"), offlineReset: $("#offlineReset"),
   micLevelBar: $("#micLevelBar"), micLevelMark: $("#micLevelMark"),
   vendorTopic: $("#vendorTopic"), vendorEmails: $("#vendorEmails"), vendorStatus: $("#vendorStatus"), vendorTest: $("#vendorTest"),
   toast: $("#toast"),
@@ -1875,7 +1874,6 @@ els.logo.addEventListener("click", () => {
     els.micPatience.value = store.get("micPatience", "pose");
     els.micNear.value = store.get("micNear", "tout");
     showThreshold();
-    showOfflineState();
     els.settings.showModal();
   }
 });
@@ -2018,78 +2016,44 @@ if (els.idlePhoto.isConnected) {
 }
 
 
-// --- Mode hors-ligne -----------------------------------------------------------
-// Le wifi du magasin peut couper en pleine journée : sw.js garde une copie de tout
-// le site dans le navigateur. Rien à installer, rien à brancher — la copie se fait
-// au premier démarrage, puis se refait à chaque nouvelle version publiée.
+// --- Effacement du mode hors-ligne ---------------------------------------------
+// La borne a gardé un temps une copie de tout le site pour survivre à une
+// coupure de wifi. Abandonné le 26/09/2026 : elle est toujours connectée, et
+// cette copie lui resservait du vieux code au lieu des versions publiées.
+// On nettoie ce que les bornes ont déjà enregistré ; sw.js fait le même
+// ménage de son côté, pour celles dont le code serait resté bloqué.
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register(`sw.js${VERSION}`).catch(() => {});
-  // Le service worker prévient quand il a remplacé une version : la page
-  // tourne alors peut-être encore sur les anciens fichiers. On recharge, mais
-  // seulement à l'écran d'accueil — jamais devant un client.
   navigator.serviceWorker.addEventListener("message", (e) => {
-    if (e.data !== "recharge") return;
-    const quandLibre = () => {
-      if (state.screen === "idle" && !els.settings.open) location.reload();
-      else setTimeout(quandLibre, 20000);
-    };
-    setTimeout(quandLibre, 2000);
+    if (e.data === "sw-retire") rechargerQuandLibre();
   });
-  // La copie de fond n'attaque qu'une fois les phrases de la langue en cours
-  // chargées : sinon les deux se disputent la connexion du magasin et Jeanne
-  // reste muette le temps que ça se démêle. Puis on redemande tant qu'elle
-  // n'est pas complète : le navigateur éteint le service worker dès qu'il
-  // s'ennuie, et la copie s'arrêtait en plein milieu.
-  clipManifestReady.then(() => setTimeout(relancerCopie, 5000));
 }
-
-async function relancerCopie(essai = 0) {
-  if (!("serviceWorker" in navigator) || essai > 40) return;
-  const reg = await navigator.serviceWorker.ready.catch(() => null);
-  reg?.active?.postMessage("remplir");
-  const etat = await offlineCount().catch(() => null);
-  if (etat && etat.manquants === 0) return;
-  setTimeout(() => relancerCopie(essai + 1), 30000);
-}
-
-// Ce que le réglage affiche. On compare la copie à la liste elle-même, fichier
-// par fichier : compter les entrées ne marchait pas, le socle de sw.js et la
-// liste se recouvrent en partie et le compte n'atteignait jamais son seuil.
-async function offlineCount() {
-  if (!("caches" in window)) return null;
-  const cache = await caches.open(`borne-v${VERSION.replace("?v=", "")}`);
-  const cles = new Set((await cache.keys()).map((r) => new URL(r.url).pathname));
+// Le cache est effacé même s'il ne reste plus de service worker inscrit : les
+// deux ménages se font en parallèle et celui de sw.js n'a pas toujours le
+// temps de finir avant d'être désinscrit. Douze mégaoctets restaient sinon
+// sur le disque de la borne.
+(async () => {
+  let menage = false;
   try {
-    const source = await cache.match(`assets/hors-ligne.json${VERSION}`, { ignoreSearch: true })
-      || await fetch(`assets/hors-ligne.json${VERSION}`);
-    const liste = await source.json();
-    const base = new URL("./", location.href).pathname;
-    const manquants = liste.filter((f) => !cles.has(base + f)).length;
-    return { copies: cles.size, attendus: liste.length, manquants };
-  } catch { return { copies: cles.size, attendus: 0, manquants: null }; }
-}
-
-async function showOfflineState() {
-  const etat = await offlineCount();
-  if (!etat) { els.offlineStatus.textContent = "Ce navigateur ne sait pas garder de copie."; return; }
-  if (etat.manquants === null) { els.offlineStatus.textContent = `${etat.copies} fichiers copiés.`; return; }
-  els.offlineStatus.textContent = etat.manquants === 0
-    ? `Copie complète : ${etat.copies} fichiers. La borne marche sans réseau.`
-    : `Copie en cours : il reste ${etat.manquants} fichiers sur ${etat.attendus}. Laissez la borne connectée.`;
-}
-
-els.offlineCheck.addEventListener("click", showOfflineState);
-
-// Sortie de secours : tout effacer et repartir du site en ligne. À utiliser si
-// la borne se met à se comporter bizarrement sans qu'on sache pourquoi.
-els.offlineReset.addEventListener("click", async () => {
-  els.offlineStatus.textContent = "Effacement…";
+    const regs = await navigator.serviceWorker?.getRegistrations() || [];
+    if (regs.length) { await Promise.all(regs.map((r) => r.unregister().catch(() => false))); menage = true; }
+  } catch { /* pas de service worker sur cet appareil */ }
   try {
-    for (const reg of await navigator.serviceWorker.getRegistrations()) await reg.unregister();
-    for (const nom of await caches.keys()) await caches.delete(nom);
+    for (const nom of await caches.keys()) { await caches.delete(nom); menage = true; }
   } catch { /* rien à effacer */ }
-  location.reload();
-});
+  if (menage) rechargerQuandLibre();
+})();
+
+// Un rechargement, mais jamais devant un client : on attend l'écran d'accueil.
+function rechargerQuandLibre() {
+  if (sessionStorage.getItem("recharge-faite")) return;
+  const essayer = () => {
+    if (state.screen === "idle" && !els.settings.open) {
+      sessionStorage.setItem("recharge-faite", "1");
+      location.reload();
+    } else setTimeout(essayer, 20000);
+  };
+  setTimeout(essayer, 2000);
+}
 
 // Aide au réglage : ouvrir la borne avec ?debug pour lancer un signe à la main
 // depuis la console du navigateur (jeanne.sign("merci")).

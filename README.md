@@ -63,16 +63,6 @@ Pour déplacer un rayon, il suffit de changer ses pourcentages dans `index.html`
 
 `index.html` charge la feuille de style et le script avec `?v=N`. Cette version est reportée automatiquement sur tous les fichiers du dossier `js/`. **À chaque mise en ligne, incrémentez ce numéro** (`css/kiosk.css?v=4`, `js/app.js?v=4`) : les bornes rechargeront les fichiers au lieu de garder leur copie en cache.
 
-Avant de publier, relancez aussi `node tools/hors-ligne.mjs` : il met à jour la liste des fichiers que la borne garde pour fonctionner sans réseau.
-
-## Mode hors-ligne
-
-Le wifi du magasin peut couper en pleine journée. `sw.js` garde une copie de tout le site dans le navigateur de la borne : plan, voix, images, clips. Si le réseau tombe, la borne continue sans rien changer ; quand il revient, elle récupère la version publiée.
-
-- La copie se fait toute seule au premier démarrage (une trentaine de secondes) et se refait à chaque nouveau `?v=N`.
-- Pour vérifier avant l'ouverture : cinq touches sur le logo, section **Mode hors-ligne** des réglages. Elle doit annoncer « Copie complète ».
-- La liste de ce qui est copié est `assets/hors-ligne.json`, produit par `tools/hors-ligne.mjs`. Un fichier oublié dans la liste est quand même gardé dès qu'il s'affiche une fois.
-
 ## Produits vendus à la Fnac Variétés
 
 La Fnac Jeanne d'Arc est spécialisée dans la technique. Quand un client demande un produit éditorial (livres, BD, mangas, manuels scolaires, CD, vinyles, DVD…), Jeanne ne montre pas de rayon : elle renvoie vers la **Fnac Variétés** (9, allées du Président-Roosevelt, 31000 Toulouse), l'ancienne Fnac Wilson, et affiche une carte avec l'adresse et un QR d'itinéraire.
