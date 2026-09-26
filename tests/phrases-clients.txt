@@ -142,7 +142,6 @@ pcwindows|un chargeur de PC portable
 trottinettes|une trottinette électrique Xiaomi
 trottinettes|une trottinette Segway Ninebot
 trottinettes|un hoverboard
-trottinettes|un vélo électrique
 trottinettes|un casque de vélo
 trottinettes|un antivol
 trottinettes|une chambre à air de trottinette
@@ -1084,3 +1083,12 @@ notSold|je cherche un tomtom
 notSold|une poêle
 notSold|des casseroles
 notSold|une batterie de cuisine
+# Pas de vélos ici, mais les accessoires oui (confirmé le 26/09/2026)
+notSold|où sont les vélos
+notSold|un vélo électrique
+notSold|un vtt
+trottinettes|un casque pour le vélo
+trottinettes|un antivol de vélo
+notSold|a bike|en
+trottinettes|a bike helmet|en
+notSold|una bicicleta|es
