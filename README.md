@@ -20,6 +20,7 @@ Conçu pour un **grand écran tactile en paysage** (PC portable Windows) placé 
 | Fichier | Rôle |
 |---|---|
 | `index.html` | Structure des deux écrans, icônes, plan du magasin |
+| `LICENSE.md` | À qui appartient le code, et ce que chaque élément tiers autorise |
 | `css/kiosk.css` | Mise en page et animations |
 | `js/app.js` | Logique : recherche, voix, micro, plan, veille |
 | `js/data.js` | **Contenus modifiables** : textes FR/EN/ES, rayons, mots-clés, recherches fréquentes |
@@ -152,6 +153,12 @@ python3 -m http.server 8765
 ```
 
 Puis ouvrir http://localhost:8765 dans le navigateur. Le site doit être servi par un serveur : l'ouverture directe du fichier `index.html` ne fonctionne pas, à cause des modules JavaScript.
+
+## Droits
+
+Tous droits réservés. Le code appartient à la Fnac ; Guillaume Branger en est
+l'auteur. Le dépôt est public pour que GitHub Pages puisse publier le site,
+ce qui n'autorise pas sa réutilisation. Voir **[LICENSE.md](LICENSE.md)**.
 
 ## Crédits et licences
 
