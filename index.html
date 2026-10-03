@@ -8,19 +8,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=101">
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/",
-    "@pixiv/three-vrm": "https://cdn.jsdelivr.net/npm/@pixiv/three-vrm@3.5.5/lib/three-vrm.module.min.js"
-  }
-}
-</script>
+<link rel="stylesheet" href="css/kiosk.css?v=102">
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=101"></script>
+<script type="module" src="js/app.js?v=102"></script>
 </head>
 <body class="is-idle">
 
@@ -66,7 +57,7 @@
     <span class="idle-hours" id="idleHours" hidden></span>
   </header>
 
-  <div class="idle-copy" id="idleCopy">
+  <div class="idle-copy">
     <div class="idle-greet" id="idleGreet">
       <p class="idle-hello" data-i18n="idleHello">Bonjour !</p>
       <h1 class="idle-title" data-i18n="idleTitle">Je suis Jeanne, votre guide à la Fnac Jeanne d'Arc.</h1>
@@ -74,7 +65,7 @@
     </div>
   </div>
 
-  <div class="idle-avatar-slot" id="idleAvatarSlot">
+  <div class="idle-avatar-slot">
     <!-- Jeanne sur l'écran de veille -->
     <img class="idle-photo" id="idlePhoto" data-src="assets/jeanne-accueil.png" alt="Jeanne, votre guide à la Fnac Jeanne d'Arc" hidden>
     <p class="idle-bubble" data-i18n="idleBubble">Bienvenue ! En quoi puis-je vous aider ?</p>
@@ -136,10 +127,10 @@
     </div>
 
     <div class="jeanne">
-      <div class="jeanne-slot" id="dockAvatarSlot">
+      <div class="jeanne-slot">
         <!-- Portrait de Jeanne. Le temps d'un signe en langue des signes, un
              clip vidéo (assets/lsf/…) prend sa place. -->
-        <img class="jeanne-photo" id="dockPhoto" src="assets/jeanne-portrait.jpg" alt="" width="560" height="560">
+        <img class="jeanne-photo" src="assets/jeanne-portrait.jpg" alt="" width="560" height="560">
       </div>
       <video class="sign-video" id="signVideo" muted playsinline aria-hidden="true"></video>
       <div class="jeanne-id">
@@ -185,13 +176,11 @@
     </header>
 
     <div class="map-stage" id="mapStage">
-      <!-- Plans redessinés d'après les plans d'architecte du magasin.
-           Positions en % : voir les valeurs left/top/width/height de chaque case. -->
-
+      <!-- Les deux plans sont dessinés en SVG par js/app.js, d'après les
+           relevés de js/plan.js. Rien n'est positionné ici. -->
       <!-- Étage 0 : téléphonie, objets connectés, escalier vers le sous-sol, entrée -->
       <div class="floor floor-0 is-active" data-floor="0" role="tabpanel">
         <div class="plan plan-0">
-          <!-- Plan du rez-de-chaussée dessiné à partir de js/plan.js (vraies gondoles). -->
           <svg class="plan-svg" id="groundPlan" viewBox="14 30 344 426" role="img" aria-label="Plan du rez-de-chaussée"></svg>
         </div>
       </div>
@@ -199,7 +188,6 @@
       <!-- Niveau -1 -->
       <div class="floor floor-m1" data-floor="-1" role="tabpanel">
         <div class="plan plan-m1">
-          <!-- Plan du sous-sol dessiné à partir de js/plan.js (vraies gondoles). -->
           <svg class="plan-svg" id="basementPlan" viewBox="0 0 822 434" role="img" aria-label="Plan du sous-sol"></svg>
         </div>
       </div>
@@ -208,7 +196,7 @@
       <div class="other-store" id="otherStore" role="status" hidden>
         <div class="other-store-info">
           <svg class="other-store-icon" aria-hidden="true"><use href="#i-book"/></svg>
-          <h3 class="other-store-title" id="otherStoreName">Fnac Variétés</h3>
+          <h3 class="other-store-title">Fnac Variétés</h3>
           <p class="other-store-what" data-i18n="otherStoreWhat">Livres, BD, manuels scolaires, CD, vinyles, DVD</p>
           <p class="other-store-address" id="otherStoreAddress"></p>
           <p class="other-store-near"><svg aria-hidden="true"><use href="#i-pin"/></svg><span data-i18n="otherStoreNear">À deux pas d'ici · métro Jean‑Jaurès</span></p>
@@ -223,7 +211,7 @@
       </div>
     </div>
 
-    <footer class="map-foot" id="mapFoot">
+    <footer class="map-foot">
       <p class="route-hint" id="routeHint" data-i18n="routeHint">Touchez un rayon du plan pour savoir ce qu'on y trouve.</p>
       <ol class="route" id="route" hidden>
         <li class="route-step"><svg><use href="#i-pin"/></svg><span data-i18n="stepEntrance">Entrée</span></li>

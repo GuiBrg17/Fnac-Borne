@@ -12,12 +12,6 @@ export const LANGS = {
   es: { speech: "es-ES", name: "Español" }
 };
 
-const FLOOR_NAMES = {
-  fr: { "0": "l'étage 0", "-1": "le sous-sol" },
-  en: { "0": "floor 0", "-1": "the basement" },
-  es: { "0": "la planta 0", "-1": "el sótano" }
-};
-
 export const UI = {
   fr: {
     idleHello: "Bonjour !",
@@ -101,8 +95,7 @@ export const UI = {
     surveyThanksYes: "Merci ! Bonne visite à la Fnac.",
     surveyThanksNo: "Merci de nous l'avoir dit. Un vendeur peut vous aider.",
     a11yOn: "Mode accessibilité : texte agrandi, contraste renforcé. Pour l'ascenseur, touchez « Appeler un vendeur ».",
-    a11yOff: "Affichage normal.",
-    floorName: (f) => FLOOR_NAMES.fr[f]
+    a11yOff: "Affichage normal."
   },
   en: {
     idleHello: "Hello!",
@@ -176,8 +169,7 @@ export const UI = {
     surveyThanksYes: "Thank you! Enjoy your visit.",
     surveyThanksNo: "Thank you for telling us. A member of staff can help you.",
     a11yOn: "Accessibility mode: larger text and stronger contrast. If you can't use the stairs, there is a lift: tap “Call a staff member” and we'll take you there.",
-    a11yOff: "Standard display.",
-    floorName: (f) => FLOOR_NAMES.en[f]
+    a11yOff: "Standard display."
   },
   es: {
     idleHello: "¡Hola!",
@@ -251,8 +243,7 @@ export const UI = {
     surveyThanksYes: "¡Gracias! Disfrute de su visita.",
     surveyThanksNo: "Gracias por decírnoslo. Un vendedor puede ayudarle.",
     a11yOn: "Modo accesibilidad: texto más grande y más contraste. Para el ascensor, toque «Llamar a un vendedor».",
-    a11yOff: "Vista normal.",
-    floorName: (f) => FLOOR_NAMES.es[f]
+    a11yOff: "Vista normal."
   }
 };
 

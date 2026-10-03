@@ -336,8 +336,6 @@ export const GROUND = {
   }
 };
 
-const groundById = new Map(GROUND.shapes.map((shape) => [shape.id, shape]));
-
 // Trajet au rez-de-chaussée : de la borne au rayon, ou jusqu'en haut de
 // l'escalier pour un rayon du sous-sol.
 export function routeGround(zoneId, floors) {

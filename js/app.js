@@ -45,7 +45,7 @@ const motionReduced = () => prefersReduced || state.a11y;
 const t = () => UI[state.lang];
 
 const els = {
-  idle: $("#idleScreen"), idleCopy: $("#idleCopy"), bubble: $(".idle-bubble"),
+  idle: $("#idleScreen"),
   idleGreet: $("#idleGreet"),
   idleCardOffer: $("#idleCardOffer"), idleCardNews: $("#idleCardNews"), idleCardNewsImage: $("#idleCardNewsImage"),
   idleCardNewsTitle: $("#idleCardNewsTitle"), idleCardNewsText: $("#idleCardNewsText"), idleCardNewsDate: $("#idleCardNewsDate"),
@@ -1972,7 +1972,7 @@ showOpening("fr");
 // L'heure avance : la pastille se met à jour toutes les minutes.
 setInterval(() => showOpening(), 60000);
 prepareStory();
-const clipManifestReady = loadClipManifest();
+loadClipManifest();
 els.app.inert = true;
 $$(".floor").forEach((el) => { el.inert = !el.classList.contains("is-active"); });
 applyLang();
