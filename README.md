@@ -6,7 +6,7 @@ Conçu pour un **grand écran tactile en paysage** (PC portable Windows) placé 
 
 ## Parcours
 
-1. **Écran de veille** : Jeanne, filmée, accueille les clients en grand (vidéo en boucle). Le texte d'accueil alterne entre français, anglais et espagnol, puis une actualité du magasin s'affiche.
+1. **Écran de veille** : Jeanne accueille les clients en grand (photo). Le texte d'accueil alterne entre français, anglais et espagnol, et une actualité du magasin tourne dans la colonne de droite.
 2. **Au toucher**, Jeanne se range dans la colonne de gauche et la page principale s'ouvre :
    - discussion à la voix (bouton micro) ou par écrit, en FR / EN / ES ;
    - plan du magasin redessiné d'après les plans d'architecte (Étage 0 et Sous-sol), avec le rayon demandé mis en évidence ;
@@ -25,10 +25,16 @@ Conçu pour un **grand écran tactile en paysage** (PC portable Windows) placé 
 | `js/data.js` | **Contenus modifiables** : textes FR/EN/ES, rayons, mots-clés, recherches fréquentes |
 | `js/news.js` | **Actualités du magasin** affichées sur l'écran de veille |
 | `js/search.js` | Recherche d'un rayon à partir d'une phrase |
+| `js/plan.js` | Relevés des deux plans : murs, gondoles, escaliers, trajets |
 | `js/stats.js` | Statistiques anonymes enregistrées sur la borne |
 | `js/voice.js` | Lecture des phrases enregistrées (`assets/voix/`) |
-| `tests/search.test.mjs` | Vérifie que des phrases types mènent au bon rayon |
+| `js/alert.js` | « Appeler un vendeur » : envoi de l'alerte |
+| `js/report.js` | Envoi des statistiques par e-mail |
+| `tests/` | Quatre vérifications, à lancer après toute modification |
+| `tools/voix/` | Fabrication des phrases enregistrées |
+| `tools/images/`, `tools/qr/` | Détourage des photos, QR codes |
 | `assets/fnac-logo.svg` | Logo Fnac |
+| `assets/jeanne-accueil.png` | Jeanne sur l'écran de veille |
 | `assets/jeanne-portrait.jpg` | Portrait de Jeanne affiché dans le panneau |
 | `assets/lsf/` | Clips en langue des signes (voir `assets/lsf/LISEZ-MOI.md`) |
 
@@ -43,21 +49,24 @@ Tout se trouve dans `js/data.js`, section `ZONES`. Chaque rayon a un nom, un dé
 - Un rayon peut avoir un bonus `boost`. C'est le cas d'Apple : tout ce qui cite un produit Apple (iPhone, iPad, AirPods…) va au rayon Apple.
 - **Fautes tolérées** : si rien n'est trouvé, Jeanne cherche un mot proche (« aifone », « playstasion », « télévition ») et répond « Vous voulez dire « iPhone » ? ». Une lettre de différence n'est acceptée que sur les mots d'au moins 6 lettres, pour éviter les confusions.
 
-Après une modification, lancer les tests (Node.js requis) :
+Après une modification, lancer les quatre vérifications (Node.js requis) :
 
 ```
-node tests/search.test.mjs
+node tests/search.test.mjs      # phrases types → bon rayon
+node tests/phrases.test.mjs     # 1 081 phrases de clients (tests/phrases-clients.txt)
+node tests/plan.test.mjs        # chaque rayon a une place sur le plan, les trajets ne traversent rien
+node tests/keywords.audit.mjs   # chaque mot-clé mène bien à son rayon, aucun capté par un autre
 ```
 
 ## Plan du magasin
 
-Les deux niveaux sont redessinés d'après les plans d'architecte du magasin. Chaque case est positionnée **en pourcentage** dans `index.html` (`left`, `top`, `width`, `height`), à l'intérieur d'un plan qui garde les proportions du plan d'origine (`.plan-0` et `.plan-m1` dans `css/kiosk.css`).
+Les deux niveaux sont redessinés d'après les plans d'architecte. Tous les relevés sont dans **`js/plan.js`** : contour des murs, meubles (numérotés comme sur le plan annoté par le magasin : `M1…M8` les murales, `7…42` les meubles au sol, `E1…E7` les gondoles du petit électroménager), escaliers et trajets. `js/app.js` les dessine en SVG ; `index.html` ne contient que les deux cadres.
 
 | Étage 0 | Sous-sol |
 |---|---|
 | Téléphonie Android, Objets connectés, Escalier (LEGO, figurines POP, cartes Pokémon), Entrée / Sortie | Jeux vidéo, Accessoires gaming & cartouches (avec PC gamer), Petit électroménager, PC Windows & accessoires (tablettes, écrans, imprimantes, câbles, stockage), Mobilité urbaine, Photo & micros, TV, Audio, Apple, Jeux de société, SAV & retrait des colis, Caisses, Adhésion |
 
-Pour déplacer un rayon, il suffit de changer ses pourcentages dans `index.html`.
+Un rayon n'occupe pas une case à lui : il déclare les meubles qu'il occupe dans sa propriété `spots` (`js/data.js`), par leur numéro de plan. Pour déplacer un rayon, changer ses `spots` ; pour déplacer un meuble, changer ses coordonnées dans `js/plan.js`, puis lancer `node tests/plan.test.mjs`.
 
 ## Mises à jour et cache
 
@@ -78,10 +87,9 @@ Modifier `js/news.js`. Chaque actualité comporte un titre, un texte court, une 
 
 ## Avatar de Jeanne
 
-Jeanne est **filmée, pas modélisée** :
+Jeanne est **photographiée, pas modélisée** :
 
-- écran de veille : `assets/jeanne-accueil.mp4`, en boucle (la photo
-  `assets/jeanne-accueil.png` prend le relais si la vidéo manque) ;
+- écran de veille : `assets/jeanne-accueil.png`, en grand ;
 - page principale : le portrait `assets/jeanne-portrait.jpg`, fixe.
 
 Sa bouche ne bouge pas quand elle parle : le magasin a choisi un portrait
@@ -96,14 +104,15 @@ Le mode d'emploi du tournage est dans **`assets/lsf/LISEZ-MOI.md`**.
 
 | Signes enchaînés | Quand |
 |---|---|
-| `bonjour`, `bienvenue`, `aider` | à l'arrivée d'un client sur la page principale |
+| `bonjour` | à l'arrivée d'un client sur la page principale |
 | `merci`, `abientot` | quand un client remercie Jeanne (FR, EN ou ES) |
+
+Ce sont les trois seuls clips tournés, et la borne ne demande rien d'autre :
+`assets/lsf/LISEZ-MOI.md` explique pourquoi on s'arrête là.
 
 - Le clip remplace le portrait et occupe la largeur du panneau ; la
   conversation reste lisible en dessous. Une réponse de Jeanne, ou un toucher
   du client, interrompt le signe.
-- Tant qu'un clip n'existe pas, la borne ne montre rien de plus : le texte
-  reste affiché, ce qui est déjà l'essentiel pour un client sourd.
 - Mise au point : ouvrir la borne avec `?debug`, puis dans la console
   `jeanne.sign("bonjour")` ou `jeanne.sign(["merci", "abientot"])`.
 
@@ -134,7 +143,7 @@ Les réglages et les statistiques sont enregistrés uniquement sur la borne : ri
 | « Appeler un vendeur » prévient par ntfy et par e-mail (réglages sur la borne) | Canal Teams (Workflows), en attente de l'accès demandé au magasin |
 | Compréhension par mots-clés | Possible évolution vers une IA (nécessite un serveur) |
 | Micro du navigateur | Service de reconnaissance vocale dédié |
-| Langue des signes : aucun clip tourné pour l'instant | Filmer les 5 signes avec une personne qui pratique la LSF (`assets/lsf/LISEZ-MOI.md`) |
+| Langue des signes : trois signes (bonjour, merci, à bientôt) | En tourner d'autres si le magasin le souhaite (`assets/lsf/LISEZ-MOI.md`) |
 
 ## Tester en local
 
@@ -147,7 +156,7 @@ Puis ouvrir http://localhost:8765 dans le navigateur. Le site doit être servi p
 ## Crédits et licences
 
 - Phrases enregistrées (`assets/voix/`) : deux moteurs, un par langue (`MOTEURS` dans `tools/voix/generer.py`).
-  - **Français** : voix neuronale **Microsoft `fr-FR-VivienneMultilingualNeural`**, choisie par le magasin le 24/09/2026. Les moteurs libres (Chatterbox, Kokoro, Piper) sonnaient robotiques à l'écoute. ⚠️ Les fichiers sont fabriqués via `edge-tts`, qui passe par le canal gratuit de la fonction « Lire à voix haute » d'Edge : **ce canal n'est pas prévu pour un usage commercial**. Pour une mise en magasin propre, refabriquer les mêmes voix via **Azure Speech**, dont l'offre gratuite (500 000 caractères par mois) couvre très largement les 267 phrases (~18 000 caractères) et autorise l'usage commercial. Seul le compte change, pas la voix.
+  - **Français** : voix neuronale **Microsoft `fr-FR-VivienneMultilingualNeural`**, choisie par le magasin le 24/09/2026. Les moteurs libres (Chatterbox, Kokoro, Piper) sonnaient robotiques à l'écoute. ⚠️ Les fichiers sont fabriqués via `edge-tts`, qui passe par le canal gratuit de la fonction « Lire à voix haute » d'Edge : **ce canal n'est pas prévu pour un usage commercial**. Pour une mise en magasin propre, refabriquer les mêmes voix via **Azure Speech**, dont l'offre gratuite (500 000 caractères par mois) couvre très largement les 90 phrases françaises (6 600 caractères) et autorise l'usage commercial. Seul le compte change, pas la voix.
   - **Anglais et espagnol** : [Chatterbox Multilingual](https://github.com/resemble-ai/chatterbox) (MIT), qui imite une voix de démonstration de Resemble AI.
 - Clips en langue des signes : signés par **Laura Jauvert** pour [Lingua Libre](https://lingualibre.org) (Wikimédia France), licence **CC BY**, repris sur le personnage de Jeanne avec son accord — crédit affiché sur la borne pendant le geste.
 - Police [Archivo](https://fonts.google.com/specimen/Archivo) (SIL Open Font License), via Google Fonts.
