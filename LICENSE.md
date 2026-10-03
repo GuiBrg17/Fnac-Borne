@@ -31,13 +31,14 @@ nécessite l'accord écrit du titulaire des droits.
 ## Éléments appartenant à des tiers
 
 Ce projet intègre des éléments qui ne sont pas couverts par ce qui précède et
-gardent leur propre licence. Ils sont listés dans la section **« Crédits et
-licences »** du [README](README.md) :
+gardent leur propre licence :
 
 - le **logo Fnac**, marque déposée ;
 - les **clips en langue des signes**, signés par Laura Jauvert pour Lingua
-  Libre (Wikimédia France), sous licence **CC BY** — le crédit s'affiche sur la
-  borne pendant chaque geste ;
+  Libre (Wikimédia France), sous licence **CC BY**, repris sur le personnage de
+  Jeanne avec son accord du 24/09/2026. L'auteure a dispensé le magasin
+  d'afficher le crédit sur la borne, ce que la licence permet lorsqu'elle le
+  demande ; l'origine est notée dans `assets/lsf/LISEZ-MOI.md` ;
 - la police **Archivo**, sous SIL Open Font License ;
 - les **voix anglaise et espagnole**, fabriquées avec Chatterbox Multilingual
   (licence MIT) ;

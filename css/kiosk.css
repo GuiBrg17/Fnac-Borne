@@ -574,7 +574,6 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 /* Le clip apparaît d'un coup : une opacité qui monte en fondu est encore
    « invisible » pour Chrome, qui refuse alors de lancer la lecture. */
 .is-signing .sign-video { opacity: 1; transition: none; }
-/* Crédit de l'auteure des clips, demandé par leur licence (CC BY). */
 .jeanne-name {
   margin: 0;
   font-size: 2.3rem;
