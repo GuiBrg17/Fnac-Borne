@@ -27,8 +27,9 @@ Libre** (Wikimédia France), signés par **Laura Jauvert** sous licence **CC
 BY**, puis repris avec **Viggle** pour que le geste soit exécuté par Jeanne —
 avec l'accord de Laura Jauvert, donné le 24/09/2026. L'auteure a dispensé le
 magasin d'afficher le crédit sur la borne, ce que la licence permet lorsqu'elle
-le demande : rien ne s'affiche donc sous le clip. L'origine est notée ici et
-dans `LICENSE.md`.
+le demande : rien ne s'affiche donc sous le clip. L'origine des trois clips est
+notée dans le tableau ci-dessous, et nulle part ailleurs : c'est la seule trace
+de leur licence.
 
 | Fichier | Signe | Origine |
 |---|---|---|
