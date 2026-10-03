@@ -1,6 +1,0 @@
-[OK ] fr 1.00 179Hz mélodie 2.6  5.9s essai 1 | Je ne sais pas où se déposent les vieux appareils et les piles usagées. Demandez à un vendeur, il vous renseignera.
-      entendu : Je ne sais pas où se déposent les vieux appareils et les piles usagées. Demandez à un vendeur, il vous renseignera.
-[OK ] en 1.00 205Hz mélodie 2.1  5.0s essai 1 | I don't know where old devices and used batteries are collected. Please ask a member of staff.
-      entendu : I don't know where old devices and used batteries are collected. Please ask a member of staff.
-[OK ] es 1.00 200Hz mélodie 3.9  6.3s essai 1 | No sé dónde se dejan los aparatos viejos y las pilas usadas. Pregunte a un vendedor.
-      entendu : No sé dónde se dejan los aparatos viejos y las pilas usadas. Pregunte a un vendedor.

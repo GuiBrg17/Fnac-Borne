@@ -20,7 +20,8 @@ echo "2/4 Python 3.11 isolé…"
 echo "3/4 Chatterbox et PyTorch…"
 # setuptools : le filigrane audio (resemble-perth) importe encore pkg_resources.
 # faster-whisper : transcription de contrôle des phrases fabriquées.
-"$UV" pip install --python "$DIR/venv/bin/python" chatterbox-tts "setuptools<81" faster-whisper
+# edge-tts : voix française. imageio-ffmpeg : conversion des fichiers audio.
+"$UV" pip install --python "$DIR/venv/bin/python" chatterbox-tts "setuptools<81" faster-whisper edge-tts imageio-ffmpeg
 
 echo "4/4 Téléchargement du modèle multilingue…"
 "$DIR/venv/bin/python" - <<'PY'
@@ -28,9 +29,9 @@ from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 ChatterboxMultilingualTTS.from_pretrained(device="cpu")
 print("modèle prêt")
 PY
-echo "Voix de femme de référence (démonstration Resemble AI)…"
+echo "Voix de femme de référence, pour l'anglais et l'espagnol (démonstration Resemble AI)…"
 mkdir -p "$DIR/references"
-for lang in fr en es; do
+for lang in en es; do
   curl -sfL -o "$DIR/references/${lang}_f1.flac" \
     "https://storage.googleapis.com/chatterbox-demo-samples/mtl_prompts/${lang}_f1.flac"
 done

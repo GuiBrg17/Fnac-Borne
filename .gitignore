@@ -1,6 +1,10 @@
-# Configuration locale de Claude Code (serveur de test)
-.claude/
 .DS_Store
-assets/avatar/dev/
-# Rushes vidéo : jamais publiés sur le site
+
+# Rushes vidéo et photos d'origine : jamais publiés sur le site.
 assets/source/
+
+# Rapport de la dernière fabrication des voix : regénéré à chaque passage.
+tools/voix/controle.txt
+
+# Cache Python, recréé automatiquement.
+__pycache__/
