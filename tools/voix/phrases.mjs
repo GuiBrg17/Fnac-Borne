@@ -30,5 +30,5 @@ for (const lang of Object.keys(UI)) {
   }
 }
 const unique = [...new Map(phrases.map((p) => [`${p.lang}|${p.text}`, p])).values()];
-writeFileSync(new URL("./phrases.json", import.meta.url), JSON.stringify(unique, null, 1));
+writeFileSync(new URL("./phrases.json", import.meta.url), JSON.stringify(unique, null, 1) + "\n");
 console.log(`${unique.length} phrases (${Object.keys(UI).map((l) => `${l} ${unique.filter((p) => p.lang === l).length}`).join(", ")})`);

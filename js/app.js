@@ -18,7 +18,7 @@ const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
 const WARNING_SECONDS = 15;
 
-// --- Réglages enregistrés sur la borne ---------------------------------
+// --- Réglages enregistrés sur la borne -----------------------------------
 const store = {
   get(key, fallback) {
     try {
@@ -728,7 +728,7 @@ function answerZone(id, prefix = "", place = null) {
 const SVG_NS = "http://www.w3.org/2000/svg";
 let floorTimer = null;
 
-// --- Plan du sous-sol : les vraies gondoles (js/plan.js) -------------------
+// --- Plan du sous-sol : les vraies gondoles (js/plan.js) -----------------
 // Chaque meuble appartient à un rayon, et parfois à un emplacement précis
 // du rayon ; le plus précis (le moins de meubles) l'emporte.
 const SPOT_OWNER = new Map();
@@ -866,7 +866,7 @@ function setFloor(floor) {
   if (state.zone) scheduleRouteDraw(true);
 }
 
-// --- Tracé animé : Vous êtes ici → escalier → rayon ---------------------
+// --- Tracé animé : Vous êtes ici → escalier → rayon ----------------------
 let routeDrawTimer = null;
 let routeAnimation = null;
 
@@ -1382,8 +1382,8 @@ function startIdleCycle() {
 // Langue des signes (LSF)
 //
 // Jeanne signe en vidéo : un clip par signe, tourné avec une personne qui
-// signe, dans assets/lsf/<langue>/<signe>.mp4 (bonjour, bienvenue, aider,
-// merci, abientot). Le clip remplace le portrait le temps du geste.
+// signe, dans assets/lsf/<langue>/<signe>.mp4 (bonjour, merci, abientot).
+// Le clip remplace le portrait le temps du geste.
 // Tant qu'un clip n'existe pas, la borne n'affiche rien de plus : le texte
 // de Jeanne reste à l'écran, comme pour un client qui n'entend pas.
 // =====================================================================
@@ -1438,10 +1438,6 @@ function playNextSign() {
   els.signVideo.play().catch((error) => { console.warn("Signe non lu :", error.name, error.message); stopSigning(); });
 }
 
-// --- Jeanne se tourne vers le plan ---------------------------------------
-// Clip joué dans le cadre du portrait quand Jeanne indique un rayon. Le
-// fichier est facultatif : sans lui, le portrait ne bouge pas.
-
 function stopSigning() {
   signQueue = [];
   document.body.classList.remove("is-signing");
@@ -1457,6 +1453,7 @@ if (els.signVideo) {
   els.signVideo.addEventListener("error", () => { if (els.signVideo.getAttribute("src")) stopSigning(); });
 }
 
+// --- Entrée et sortie d'une visite ---------------------------------------
 function enterApp() {
   if (state.screen === "app" || els.storyDialog.open || els.cardDialog.open) return;
   state.screen = "app";
@@ -1564,7 +1561,7 @@ function fillVoiceSettings() {
   });
 }
 
-// --- Statistiques (réglages du personnel) ---------------------------------
+// --- Statistiques (réglages du personnel) --------------------------------
 let resetArmed = null;
 
 function fillStatsList(list, rows, emptyText) {
@@ -1613,7 +1610,7 @@ function renderStats() {
   fillStatsList(els.statsUnhappy, unhappy, "Aucun client mécontent pour l'instant");
 }
 
-// --- Envoi mensuel des statistiques par e-mail (js/report.js) --------------
+// --- Envoi mensuel des statistiques par e-mail (js/report.js) ------------
 // Réglages enregistrés sur la borne : adresse, jour du mois, envoi activé,
 // et le dernier mois envoyé (« 2026-10 ») pour ne jamais envoyer deux fois.
 const report = {
@@ -1719,7 +1716,7 @@ function disarmReset() {
 // =====================================================================
 els.idle.tabIndex = 0;
 els.idle.addEventListener("click", enterApp);
-// --- Réglage du micro : mesure du niveau sur place ----------------------
+// --- Réglage du micro : mesure du niveau sur place -----------------------
 // La barre couvre 0 à 0,2 en niveau sonore : au-delà, on sature l'affichage.
 const LEVEL_SCALE = 0.2;
 
@@ -1943,7 +1940,7 @@ if ("speechSynthesis" in window) {
   window.speechSynthesis.addEventListener("voiceschanged", refreshVoices);
 }
 
-// --- Mise à jour automatique ---------------------------------------------------
+// --- Mise à jour automatique ---------------------------------------------
 // La borne reste ouverte des jours entiers : sans cela, une nouvelle version publiée
 // n'arriverait qu'au prochain rechargement manuel. Toutes les 5 minutes, à l'écran
 // d'accueil seulement, on regarde si index.html annonce un autre ?v=N. (C'était
@@ -1964,7 +1961,7 @@ async function checkForUpdate() {
 }
 setInterval(checkForUpdate, 5 * 60 * 1000);
 
-// --- Démarrage ---
+// --- Démarrage -----------------------------------------------------------
 buildPlans();
 showCard();
 startSideCycle();
@@ -1991,7 +1988,7 @@ if (els.idlePhoto.isConnected) {
 }
 
 
-// --- Filet de sécurité ---------------------------------------------------------
+// --- Filet de sécurité ---------------------------------------------------
 // La borne a gardé un temps une copie de tout le site pour survivre à une
 // coupure de wifi. Abandonné le 26/09/2026 : elle est toujours connectée, et
 // cette copie lui resservait du vieux code au lieu des versions publiées.
