@@ -1139,4 +1139,20 @@ hours|cuándo abren|es
 audio|je cherche un casque audio|en
 apple|busco un iPhone
 audio|where are the headphones
+# Le wifi du magasin : la question va à la réponse pratique, le matériel
+# wifi reste au rayon informatique.
+wifi|vous avez le wifi
+wifi|il y a du wifi
+wifi|le code wifi
+wifi|wifi gratuit
+wifi|je veux me connecter au wifi
+informatique|un répéteur wifi
+informatique|une box wifi
+informatique|une imprimante wifi
+wifi|do you have wifi|en
+wifi|free wifi|en
+informatique|a wifi extender|en
+wifi|hay wifi|es
+wifi|wifi gratis|es
+informatique|un repetidor wifi|es
 telephonie|un téléphone android

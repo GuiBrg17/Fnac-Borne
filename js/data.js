@@ -2443,9 +2443,26 @@ export const INFO = {
            "cartuchos vacíos", "bombillas viejas"]
     },
     answer: {
-      fr: "Je ne sais pas où se déposent les vieux appareils et les piles usagées. Demandez à un vendeur, il vous renseignera.",
-      en: "I don't know where old devices and used batteries are collected. Please ask a member of staff.",
-      es: "No sé dónde se dejan los aparatos viejos y las pilas usadas. Pregunte a un vendedor."
+      fr: "Je ne peux pas répondre à cette question. Demandez à un vendeur, il vous renseignera.",
+      en: "I can't answer that question. Please ask a member of staff.",
+      es: "No puedo responder a esta pregunta. Pregunte a un vendedor."
+    }
+  },
+  wifi: {
+    keywords: {
+      fr: ["vous avez le wifi", "avez-vous du wifi", "il y a du wifi", "y a-t-il du wifi", "wifi gratuit",
+           "wifi client", "accès wifi", "acces wifi", "connexion wifi", "réseau wifi", "code wifi",
+           "mot de passe wifi", "me connecter au wifi", "se connecter au wifi", "internet gratuit",
+           "connexion internet", "accès à internet"],
+      en: ["do you have wifi", "is there wifi", "free wifi", "guest wifi", "wifi password", "wifi code",
+           "wifi access", "connect to the wifi", "internet access", "free internet"],
+      es: ["hay wifi", "tienen wifi", "wifi gratis", "wifi gratuito", "contraseña del wifi", "clave del wifi",
+           "acceso wifi", "red wifi", "conectarme al wifi", "internet gratis"]
+    },
+    answer: {
+      fr: "Oui, le magasin propose un wifi gratuit.",
+      en: "Yes, the store has free wifi.",
+      es: "Sí, la tienda tiene wifi gratuito."
     }
   },
   parking: {

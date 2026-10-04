@@ -73,7 +73,11 @@
  },
  {
   "lang": "fr",
-  "text": "Je ne sais pas où se déposent les vieux appareils et les piles usagées. Demandez à un vendeur, il vous renseignera."
+  "text": "Je ne peux pas répondre à cette question. Demandez à un vendeur, il vous renseignera."
+ },
+ {
+  "lang": "fr",
+  "text": "Oui, le magasin propose un wifi gratuit."
  },
  {
   "lang": "fr",
@@ -433,7 +437,11 @@
  },
  {
   "lang": "en",
-  "text": "I don't know where old devices and used batteries are collected. Please ask a member of staff."
+  "text": "I can't answer that question. Please ask a member of staff."
+ },
+ {
+  "lang": "en",
+  "text": "Yes, the store has free wifi."
  },
  {
   "lang": "en",
@@ -793,7 +801,11 @@
  },
  {
   "lang": "es",
-  "text": "No sé dónde se dejan los aparatos viejos y las pilas usadas. Pregunte a un vendedor."
+  "text": "No puedo responder a esta pregunta. Pregunte a un vendedor."
+ },
+ {
+  "lang": "es",
+  "text": "Sí, la tienda tiene wifi gratuito."
  },
  {
   "lang": "es",
