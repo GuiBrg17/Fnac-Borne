@@ -933,7 +933,7 @@ export const ZONES = {
     spots: ["37","38"],
     keywords: {
       fr: ["jeu de société", "jeux de société", "jeu de plateau", "jeux de plateau", "puzzle", "puzzles",
-           "puzzle 1000 pièces", "puzzle 3d", "jeu de cartes", "jeux de cartes", "cartes à jouer", "uno", "monopoly",
+           "puzzle 1000 pièces", "puzzle 3d", "jeu de cartes", "jeux de cartes", "cartes à jouer", "uno", "jeu uno", "monopoly",
            "cluedo", "risk", "trivial pursuit", "scrabble", "times up", "loup-garou", "dixit", "catan",
            "colons de catane", "7 wonders", "azul", "carcassonne", "dobble", "jungle speed", "mille bornes",
            "petits chevaux", "escape game", "jeu de rôle", "donjons et dragons", "dés", "dé", "jeu de dés", "échecs",
@@ -941,13 +941,13 @@ export const ZONES = {
            "jeu coopératif", "jeu familial", "jeu pour enfant", "jeu éducatif", "jeu d'apéro", "rubik's cube",
            "maquette", "jeu en bois", "jouet"],
       en: ["board game", "board games", "tabletop game", "puzzle", "puzzles", "1000 piece puzzle", "3d puzzle",
-           "card game", "card games", "playing cards", "uno", "monopoly", "cluedo", "risk", "trivial pursuit",
+           "card game", "card games", "playing cards", "uno", "uno card game", "monopoly", "cluedo", "risk", "trivial pursuit",
            "scrabble", "times up", "werewolf", "dixit", "catan", "settlers of catan", "7 wonders", "azul",
            "carcassonne", "dobble", "escape game", "role playing game", "dungeons and dragons", "dice", "chess",
            "chess set", "draughts", "backgammon", "party game", "family game", "cooperative game", "kids game",
            "educational game", "brain teaser", "rubiks cube", "model kit", "wooden game", "toy"],
       es: ["juego de mesa", "juegos de mesa", "juego de tablero", "puzle", "puzles", "rompecabezas",
-           "puzle 1000 piezas", "puzle 3d", "juego de cartas", "juegos de cartas", "baraja", "uno", "monopoly",
+           "puzle 1000 piezas", "puzle 3d", "juego de cartas", "juegos de cartas", "baraja", "juego uno", "cartas uno", "monopoly",
            "cluedo", "risk", "trivial", "scrabble", "time's up", "hombre lobo", "dixit", "catan", "colonos de catán",
            "7 wonders", "azul", "carcassonne", "dobble", "escape room", "juego de rol", "dungeons and dragons",
            "dados", "ajedrez", "damas", "backgammon", "juego de fiesta", "juego familiar", "juego cooperativo",
@@ -1031,7 +1031,7 @@ export const ZONES = {
            "places de spectacle", "billet de concert", "billets de concert", "réserver une place", "réserver des places",
            "acheter des billets", "prendre des places", "spectacle", "concert", "festival", "parc d'attractions",
            "billet de train", "place de match", "retirer mes billets", "retrait des billets", "e-billet"],
-      en: ["checkout", "cashier", "till", "cash register", "pay", "where to pay", "payment", "card payment",
+      en: ["checkout", "cashier", "cash register", "pay", "where to pay", "payment", "card payment",
            "credit card", "cash", "contactless", "receipt", "invoice", "tax free", "gift card", "gift voucher",
            "voucher", "credit note", "gift wrapping", "queue", "self checkout", "batteries", "battery",
            "aa batteries", "rechargeable batteries", "travel adapter", "plug adapter", "uk plug adapter",
@@ -1765,7 +1765,7 @@ const SPOKEN = {
   jeuxSociete: {
     fr: ["apprendre à compter", "jeu pour apprendre", "apprendre à lire", "jeu d'apprentissage", "jeu montessori", "montessori", "goliath", "iello", "repos production", "days of wonder", "bombyx", "lansay", "dujardin", "jeu goliath", "casse-tête", "casse tête", "jeu casse-tête", "skyjo", "6 qui prend", "six qui prend", "bonanza",
          "codenames", "code names", "splendor", "les aventuriers du rail", "aventuriers du rail", "ticket to ride",
-         "exploding kittens", "unlock", "escape game en boîte", "the mind", "just one", "love letter", "pandemic",
+         "exploding kittens", "unlock", "escape game en boîte", "jeu the mind", "just one", "love letter", "pandemic",
          "wingspan", "king of tokyo", "bang", "perudo", "yams", "yahtzee", "qwirkle", "rummikub", "pictionary",
          "taboo", "jenga", "puissance 4", "bataille navale", "docteur maboul", "jeu qui est-ce", "mastermind", "hanabi",
          "mysterium", "blanc manger coco", "limite limite", "cards against humanity", "trio", "cortex", "dixit odyssée",
@@ -1781,7 +1781,7 @@ const SPOKEN = {
          "rubik's", "speedcube", "jeu de cartes enfant", "jeu de tarot", "jeu de 54 cartes", "jeu de 32 cartes",
          "jetons de poker", "poker", "mallette de poker", "dés de jeu de rôle"],
     en: ["brain teaser puzzle", "skyjo", "codenames", "splendor", "ticket to ride", "exploding kittens", "unlock",
-         "the mind", "just one", "love letter", "pandemic", "wingspan", "king of tokyo", "bang", "yahtzee", "qwirkle",
+         "the mind game", "just one", "love letter", "pandemic", "wingspan", "king of tokyo", "bang", "yahtzee", "qwirkle",
          "rummikub", "pictionary", "taboo", "jenga", "connect 4", "connect four", "battleship", "operation game",
          "guess who", "mastermind", "hanabi", "cards against humanity", "kingdomino", "terraforming mars",
          "molkky", "memory game", "logic game", "strategy game", "two player game",
@@ -1789,7 +1789,7 @@ const SPOKEN = {
          "clementoni", "asmodee", "hasbro", "mattel", "500 piece puzzle", "2000 piece puzzle", "kids puzzle",
          "wasgij", "speedcube", "poker chips", "poker set"],
     es: ["rompecabezas de ingenio", "skyjo", "codenames", "splendor", "aventureros al tren", "exploding kittens",
-         "unlock", "the mind", "just one", "pandemic", "wingspan", "king of tokyo", "bang", "yahtzee", "qwirkle",
+         "unlock", "the mind game", "just one", "pandemic", "wingspan", "king of tokyo", "bang", "yahtzee", "qwirkle",
          "rummikub", "pictionary", "tabú", "jenga", "conecta 4", "hundir la flota", "operación", "quién es quién",
          "mastermind", "hanabi", "kingdomino", "terraforming mars", "molkky", "juego de memoria",
          "juego de lógica", "juego de estrategia", "juego para dos", "juego en familia", "noche de juegos",
@@ -2258,9 +2258,14 @@ export const INFO = {
            "ouvert", "ouverture", "fermeture", "fermé", "jusqu'à quelle heure", "à quelle heure vous ouvrez",
            "à quelle heure vous fermez", "ouvert le dimanche", "ouvert le samedi", "vous êtes ouvert"],
       en: ["opening hours", "opening time", "closing time", "what time do you open", "what time do you close",
+           "open till", "open until", "how late are you open", "how late do you stay open",
            "when do you open", "when do you close", "are you open", "open on sunday", "open on saturday"],
       es: ["horario", "horarios", "hora de apertura", "hora de cierre", "a qué hora abren", "a qué hora cierran",
-           "están abiertos", "abierto el domingo", "abierto el sábado"]
+           "están abiertos", "abierto el domingo", "abierto el sábado",
+           // « abren los domingos », la façon la plus courante de poser la
+           // question, ne correspondait à aucun mot-clé.
+           "abren", "cierran", "abren los domingos", "abren los sábados",
+           "cierran los domingos", "hasta qué hora", "hasta cuándo abren", "cuándo abren", "cuándo cierran"]
     },
     answer: {
       fr: "Ouvert du lundi au samedi, de 10 heures à 19 heures 30. Fermé le dimanche.",
@@ -2405,15 +2410,37 @@ export const INFO = {
            // vieux téléphone » partait sinon au rayon Téléphonie.
            "recycler mon téléphone", "recycler un téléphone", "recycler mon vieux téléphone",
            "recycler mon ordinateur", "recycler ma télé", "recycler mes cartouches",
-           "vieux téléphone", "vieux portable", "vieux ordinateur", "vieille imprimante"],
+           "vieux téléphone", "vieux portable", "vieux ordinateur", "vieille imprimante",
+           // « piles » seul est un mot-clé de la caisse, où le magasin vend des
+           // piles neuves. Ces formulations sont plus longues, donc elles
+           // l'emportent quand le client parle de piles à jeter.
+           "vieilles piles", "vieille pile", "piles vides", "pile vide", "piles mortes", "pile morte",
+           "jeter mes piles", "jeter des piles", "jeter les piles", "jeter mes ampoules",
+           "jeter mes cartouches", "jeter mon vieux", "jeter ma vieille", "jeter mon ancien",
+           // La recherche accepte le pluriel, pas la conjugaison : « je jette »
+           // doit être écrit à côté de « jeter », sinon « où je jette mes
+           // ampoules » repart au rayon des ampoules connectées.
+           "jette mes piles", "jette des piles", "jette les piles", "jette mes ampoules",
+           "jette mes cartouches", "jette mon vieux", "jette ma vieille", "jette mon ancien",
+           "piles à jeter", "piles à recycler", "poubelle à piles", "bac de recyclage",
+           "déchèterie", "dechetterie", "benne", "cartouches vides", "ampoules mortes"],
       en: ["recycling", "recycle", "where to recycle", "used batteries", "battery recycling", "battery bin",
            "collection point", "electronic waste", "e-waste", "old device", "old appliance", "throw away",
            "dispose of", "drop off my old", "old tv", "old computer", "old phone",
-           "recycle my phone", "recycle my computer", "recycle my old phone"],
+           "recycle my phone", "recycle my computer", "recycle my old phone",
+           // Même raison qu'en français : « batteries » seul mène à la caisse.
+           "old batteries", "dead batteries", "empty batteries", "flat batteries",
+           "throw away my batteries", "bin my batteries", "batteries to recycle",
+           "battery disposal", "recycling bin", "empty cartridges", "old bulbs"],
       es: ["reciclaje", "reciclar", "dónde reciclar", "pilas usadas", "pila usada", "contenedor de pilas",
            "punto de recogida", "residuos electrónicos", "aparato viejo", "aparatos viejos", "dónde tirar",
            "deshacerme", "televisor viejo", "ordenador viejo", "móvil viejo",
-           "reciclar mi móvil", "reciclar mi ordenador", "reciclar mi móvil viejo"]
+           "reciclar mi móvil", "reciclar mi ordenador", "reciclar mi móvil viejo",
+           // Même raison qu'en français : « pilas » seul lleva a la caja.
+           "pilas viejas", "pilas gastadas", "pilas muertas", "pila gastada",
+           "tirar las pilas", "tirar mis pilas", "dónde tiro las pilas",
+           "pilas para reciclar", "contenedor de reciclaje", "punto limpio",
+           "cartuchos vacíos", "bombillas viejas"]
     },
     answer: {
       fr: "Je ne sais pas où se déposent les vieux appareils et les piles usagées. Demandez à un vendeur, il vous renseignera.",

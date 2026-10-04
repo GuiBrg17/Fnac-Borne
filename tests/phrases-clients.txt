@@ -1100,4 +1100,43 @@ savRetrait|déposer mon téléphone en réparation
 savRetrait|reprendre mon ancien téléphone
 recycling|recycle my old phone|en
 recycling|reciclar mi móvil viejo|es
+recycling|où je jette mes vieilles piles
+recycling|je veux jeter mes piles
+recycling|vous reprenez les vieilles piles
+recycling|j'ai des piles à jeter
+recycling|où je mets mes piles vides
+recycling|des piles mortes
+recycling|où je jette mes cartouches vides
+recycling|où je jette mes ampoules
+recycling|une poubelle à piles
+recycling|la déchèterie
+savRetrait|je voudrais faire reprendre mon ancien téléphone
+caisse|je voudrais des piles
+caisse|des piles AA
+recycling|old batteries|en
+recycling|where do I throw away my batteries|en
+recycling|dead batteries|en
+caisse|I need some batteries|en
+recycling|pilas viejas|es
+recycling|dónde tiro las pilas|es
+caisse|necesito pilas|es
+# Mots courts d'une langue qui sont des mots courants d'une autre : la
+# recherche ne doit plus les attraper quand elle élargit aux trois langues.
+human|a gift for my son|en
+hours|open till late|en
+hours|are you open till 8|en
+null|never mind|en
+null|quiero uno de estos|es
+null|uno para mi hijo|es
+jeuxSociete|un Uno
+jeuxSociete|uno card game|en
+audio|le son de ma télé
+hours|abren los domingos|es
+hours|a qué hora cierran|es
+hours|hasta qué hora abren|es
+hours|cuándo abren|es
+# La recherche doit continuer de comprendre une langue qui n'est pas celle de l'écran.
+audio|je cherche un casque audio|en
+apple|busco un iPhone
+audio|where are the headphones
 telephonie|un téléphone android
