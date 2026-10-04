@@ -167,6 +167,7 @@ const matchersFor = (id, zone, place, keywords) =>
     words.filter((word) => clean(word)).map((word) => ({
       id, place, lang, word,
       re: phraseRe(word),
+      length: clean(word).length,
       weight: clean(word).length + (zone.boost || 0) + ((zone.strong || []).includes(word) ? 30 : 0),
       sound: phonetic(clean(word).replace(/ /g, ""))
     })));
@@ -199,10 +200,17 @@ function editDistance(a, b, max) {
   return previous[b.length];
 }
 
+// Un client peut parler une langue et lire l'écran dans une autre : quand la
+// langue affichée ne donne rien, on cherche dans toutes les langues. Mais un
+// mot-clé court d'une langue est souvent un mot courant d'une autre — « le son »
+// (audio) attrapait l'anglais « son », « uno » (le jeu) l'espagnol « uno ». Au
+// repli, on n'accepte donc que les mots-clés d'au moins cinq lettres.
+const MIN_AUTRE_LANGUE = 5;
+
 function exactMatches(query, lang) {
   const forms = variants(query);
   return MATCHERS
-    .filter((m) => (!lang || m.lang === lang) && forms.some((form) => m.re.test(form)))
+    .filter((m) => (lang ? m.lang === lang : m.length >= MIN_AUTRE_LANGUE) && forms.some((form) => m.re.test(form)))
     .sort((a, b) => b.weight - a.weight);
 }
 
