@@ -56,7 +56,6 @@
   "Pas de parking : il faut vous garer dans le quartier.": "fr/a9ad4c99722d.m4a",
   "Merci de nous l'avoir dit. Un vendeur peut vous aider.": "fr/c871a59900f9.m4a",
   "Mode accessibilité : texte agrandi, contraste renforcé. Pour l'ascenseur, touchez « Appeler un vendeur ».": "fr/89a20a938c4a.m4a",
-  "Je n'ai pas pu prévenir un vendeur. Adressez-vous à un membre de l'équipe.": "fr/965f1af9cfdb.m4a",
   "C'est noté, un vendeur arrive pour prendre votre commande.": "fr/039243c8f352.m4a",
   "Je ne peux pas répondre à ça. Dites-moi plutôt ce que vous cherchez.": "fr/67440212774f.m4a",
   "Le SAV et le retrait des colis se trouvent au sous-sol.": "fr/414a1dfa2a04.m4a",
@@ -90,7 +89,8 @@
   "Ce produit est disponible au rayon Apple, au sous-sol.": "fr/8709a5132c22.m4a",
   "Ce produit est disponible au rayon Jeux de société, au sous-sol.": "fr/fb1dd8d0ab8a.m4a",
   "Je ne peux pas répondre à cette question. Demandez à un vendeur, il vous renseignera.": "fr/efb73e5206cf.m4a",
-  "Oui, le magasin propose un wifi gratuit.": "fr/52b44729aed4.m4a"
+  "Oui, le magasin propose un wifi gratuit.": "fr/52b44729aed4.m4a",
+  "Adressez-vous à un vendeur du rayon, il vous aidera tout de suite.": "fr/68100580f75b.m4a"
  },
  "en": {
   "Sure, let's continue in English. What are you looking for?": "en/3539665560fd.m4a",
@@ -154,7 +154,6 @@
   "Yes. Tap “Call a staff member” and someone will take you there.": "en/dffc2fe4ee9c.m4a",
   "Phones and smartwatches: here on floor 0, from the staff. Other orders at the after-sales desk.": "en/58f35ea7d6f6.m4a",
   "Thank you for telling us. A member of staff can help you.": "en/39ac73a9735b.m4a",
-  "I couldn't reach a staff member. Please ask anyone from the team.": "en/64584b4585e7.m4a",
   "Done, a member of staff is coming to take your order.": "en/f5a25bc15d41.m4a",
   "I can't answer that. Tell me what you are looking for instead.": "en/7b6d16e3c318.m4a",
   "After-sales and order pickup are in the basement.": "en/faee0c5719de.m4a",
@@ -183,7 +182,8 @@
   "This product is in the Apple section, in the basement.": "en/bcec7b1aa9b0.m4a",
   "This product is in the Board games section, in the basement.": "en/3a4427a11a9d.m4a",
   "I can't answer that question. Please ask a member of staff.": "en/a9147ff9cdd3.m4a",
-  "Yes, the store has free wifi.": "en/3eca8a5b4fbc.m4a"
+  "Yes, the store has free wifi.": "en/3eca8a5b4fbc.m4a",
+  "Please ask a member of staff in the department, they will help you right away.": "en/9d9dbbd6a3e1.m4a"
  },
  "es": {
   "¡Hola y bienvenido a la Fnac Jeanne d'Arc! Dígame qué busca y le muestro la sección en el plano.": "es/71633b60c208.m4a",
@@ -248,7 +248,6 @@
   "Móviles y relojes inteligentes: aquí, en la planta 0, con los vendedores. Los demás pedidos, en posventa.": "es/1abeb57775ec.m4a",
   "Gracias por decírnoslo. Un vendedor puede ayudarle.": "es/fb439d565e3e.m4a",
   "Modo accesibilidad: texto más grande y más contraste. Para el ascensor, toque «Llamar a un vendedor».": "es/cc5e875654b5.m4a",
-  "No he podido avisar a un vendedor. Diríjase a alguien del equipo.": "es/b9319dda4467.m4a",
   "Anotado, un vendedor viene a tomar su pedido.": "es/a872270386d4.m4a",
   "La posventa y la recogida de pedidos están en el sótano.": "es/13953701ea1f.m4a",
   "Las cajas están en el sótano. No olvide su tarjeta Fnac.": "es/6cfed68d55b7.m4a",
@@ -276,6 +275,7 @@
   "Este producto está en la sección Apple, en el sótano.": "es/d6e917be4675.m4a",
   "Este producto está en la sección Juegos de mesa, en el sótano.": "es/f35170cdc0cd.m4a",
   "No puedo responder a esta pregunta. Pregunte a un vendedor.": "es/fb6edca4b89b.m4a",
-  "Sí, la tienda tiene wifi gratuito.": "es/510befe9b052.m4a"
+  "Sí, la tienda tiene wifi gratuito.": "es/510befe9b052.m4a",
+  "Diríjase a un vendedor de la sección, le atenderá enseguida.": "es/a2bf8b5acf78.m4a"
  }
 }

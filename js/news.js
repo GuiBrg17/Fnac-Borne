@@ -18,7 +18,7 @@ export const NEWS = [
   {
     title: "iPhone 18 Pro",
     text: "À partir de 859 € au lieu de 1 479 €, avec jusqu'à 620 € de valeur de rachat de votre ancien iPhone (exemple pour un iPhone 16 Pro 256 Go en état parfait). Rendez-vous au rayon Apple, au sous-sol.",
-    date: "Disponible le 18 septembre",
+    date: "Disponible en magasin",
     image: "assets/news/iphone-18.png"
   },
   {
