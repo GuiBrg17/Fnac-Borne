@@ -467,10 +467,26 @@ function appendToChat(node) {
   els.chat.scrollTo({ top: els.chat.scrollHeight, behavior: motionReduced() ? "auto" : "smooth" });
 }
 
+// Typographie française : une espace insécable avant les ponctuations doubles
+// et à l'intérieur des guillemets. Sans elle, le navigateur passe à la ligne
+// juste avant, et « Vous êtes toujours là ? » laisse son « ? » seul en bas.
+// Appliquée à l'affichage seulement : les textes de js/data.js ne changent pas,
+// donc les phrases enregistrées gardent leur nom de fichier.
+const FINE = "\u202F";      // espace fine insécable : avant ? ! ;
+const INSEC = "\u00A0";     // espace insécable : avant :, et dans les guillemets
+function typo(text) {
+  if (state.lang !== "fr" || typeof text !== "string") return text;
+  return text
+    .replace(/ ([?!;])/g, FINE + "$1")
+    .replace(/ (:)/g, INSEC + "$1")
+    .replace(/« /g, "«" + INSEC)
+    .replace(/ »/g, INSEC + "»");
+}
+
 function addMessage(role, text) {
   const message = document.createElement("p");
   message.className = `msg msg-${role}`;
-  message.textContent = text;
+  message.textContent = typo(text);
   appendToChat(message);
 }
 
@@ -668,7 +684,7 @@ function endVisit() {
   if (!state.visit.count || state.visit.surveyed) { exitToIdle(); return; }
   closeWarning();
   clearTimeout(inactivityTimer);
-  els.surveyTitle.textContent = t().surveyAsk;
+  els.surveyTitle.textContent = typo(t().surveyAsk);
   els.surveyButtons.hidden = false;
   els.survey.showModal();
   speak(t().surveyAsk);
@@ -687,7 +703,7 @@ function handleSurveyChoice(choice) {
   if (choice === "skip") { exitToIdle(); return; }
   answerSurvey(choice === "yes");
   if (choice === "yes") {
-    els.surveyTitle.textContent = t().surveyThanksYes;
+    els.surveyTitle.textContent = typo(t().surveyThanksYes);
     els.surveyButtons.hidden = true;
     speak(t().surveyThanksYes);
     surveyTimer = setTimeout(exitToIdle, 3200);
@@ -1049,9 +1065,9 @@ function applyLang() {
   document.documentElement.lang = state.lang;
   $$("#appScreen [data-i18n], dialog [data-i18n]").forEach((el) => {
     const value = d[el.dataset.i18n];
-    if (typeof value === "string") el.textContent = value;
+    if (typeof value === "string") el.textContent = typo(value);
   });
-  els.input.placeholder = d.placeholder;
+  els.input.placeholder = typo(d.placeholder);
   els.send.setAttribute("aria-label", d.send);
   $$("#langSwitch button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === state.lang)));
   renderTiles();
@@ -1114,7 +1130,7 @@ async function callVendor({ motif = null } = {}) {
 
 let toastTimer = null;
 function showToast(message) {
-  els.toast.textContent = message;
+  els.toast.textContent = typo(message);
   els.toast.classList.add("is-on");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => els.toast.classList.remove("is-on"), 4200);
@@ -1135,7 +1151,7 @@ let idleLang = "fr";
 function setIdleLang(lang) {
   idleLang = lang;
   const d = UI[lang];
-  $$("#idleScreen [data-i18n]").forEach((el) => { el.textContent = d[el.dataset.i18n]; });
+  $$("#idleScreen [data-i18n]").forEach((el) => { el.textContent = typo(d[el.dataset.i18n]); });
   $$(".idle-langs li").forEach((li) => li.classList.toggle("is-on", li.dataset.lang === lang));
   showOpening(lang);
 }
