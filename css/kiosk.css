@@ -1375,3 +1375,52 @@ html.a11y *, html.a11y *::before, html.a11y *::after {
   background: #c62828;
   display: none;
 }
+
+/* --- Emporter le plan sur son téléphone --------------------------------- */
+/* Le pied du plan est sur fond sombre : le bouton reprend les couleurs des
+   étapes de l'itinéraire, pas celles des boutons posés sur le jaune. */
+.take-map {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: auto;
+  min-height: 3rem;
+  padding: 0 1.2rem;
+  border: 0.13rem solid var(--yellow);
+  border-radius: 999px;
+  background: none;
+  color: var(--yellow);
+  font: inherit;
+  font-size: 1.02rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.take-map[hidden] { display: none; }
+.take-map svg { width: 1.35rem; height: 1.35rem; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.take-map:active { background: var(--yellow); color: var(--ink); }
+
+.take-map-dialog {
+  border: 0;
+  border-radius: var(--radius-xl);
+  padding: 2rem 2.4rem 1.6rem;
+  max-width: 30rem;
+  text-align: center;
+  background: var(--paper);
+  color: var(--ink);
+}
+.take-map-dialog::backdrop { background: rgba(18, 18, 18, 0.55); }
+.take-map-title { margin: 0 0 1rem; font-size: 1.7rem; font-weight: 900; font-stretch: 112%; }
+.take-map-qr { width: 15rem; height: 15rem; display: block; margin: 0 auto; }
+.take-map-zone { margin: 0.9rem 0 0; font-size: 1.25rem; font-weight: 800; }
+.take-map-help { margin: 0.5rem 0 1.4rem; font-size: 1rem; line-height: 1.35; color: var(--text-muted); }
+.take-map-close {
+  padding: 0.6rem 1.8rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+}

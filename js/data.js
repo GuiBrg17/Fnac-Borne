@@ -94,6 +94,10 @@ export const UI = {
     surveySkip: "Passer",
     surveyThanksYes: "Merci ! Bonne visite à la Fnac.",
     surveyThanksNo: "Merci de nous l'avoir dit. Un vendeur peut vous aider.",
+    takeMap: "Emporter le plan sur mon téléphone",
+    takeMapTitle: "Emportez le plan",
+    takeMapHelp: "Scannez ce code avec l'appareil photo de votre téléphone : le plan s'ouvre, avec le rayon déjà indiqué.",
+    takeMapClose: "Fermer",
     a11yOn: "Mode accessibilité : texte agrandi, contraste renforcé. Pour l'ascenseur, touchez « Appeler un vendeur ».",
     a11yOff: "Affichage normal."
   },
@@ -168,6 +172,10 @@ export const UI = {
     surveySkip: "Skip",
     surveyThanksYes: "Thank you! Enjoy your visit.",
     surveyThanksNo: "Thank you for telling us. A member of staff can help you.",
+    takeMap: "Take this map on my phone",
+    takeMapTitle: "Take the map with you",
+    takeMapHelp: "Scan this code with your phone camera: the map opens, with the department already marked.",
+    takeMapClose: "Close",
     a11yOn: "Accessibility mode: larger text and stronger contrast. If you can't use the stairs, there is a lift: tap “Call a staff member” and we'll take you there.",
     a11yOff: "Standard display."
   },
@@ -242,6 +250,10 @@ export const UI = {
     surveySkip: "Omitir",
     surveyThanksYes: "¡Gracias! Disfrute de su visita.",
     surveyThanksNo: "Gracias por decírnoslo. Un vendedor puede ayudarle.",
+    takeMap: "Llevarme el plano en el móvil",
+    takeMapTitle: "Llévese el plano",
+    takeMapHelp: "Escanee este código con la cámara del móvil: se abre el plano con la sección ya indicada.",
+    takeMapClose: "Cerrar",
     a11yOn: "Modo accesibilidad: texto más grande y más contraste. Para el ascensor, toque «Llamar a un vendedor».",
     a11yOff: "Vista normal."
   }

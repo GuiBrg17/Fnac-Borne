@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=111">
+<link rel="stylesheet" href="css/kiosk.css?v=112">
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=111"></script>
+<script type="module" src="js/app.js?v=112"></script>
 </head>
 <body class="is-idle">
 
@@ -220,9 +220,21 @@
         <li class="route-step" id="routeStairs"><svg><use href="#i-stairs"/></svg><span data-i18n="stepStairs">Escalier</span></li>
         <li class="route-step route-target"><svg id="routeIcon"><use href="#i-pin"/></svg><span id="routeTarget"></span></li>
       </ol>
+      <button type="button" class="take-map" id="takeMap" hidden>
+        <svg aria-hidden="true"><use href="#i-smartphone"/></svg><span data-i18n="takeMap">Emporter le plan sur mon téléphone</span>
+      </button>
     </footer>
   </section>
 </main>
+
+<!-- Plan emporté sur le téléphone : QR vers plan.html (tools/qr/plans.py) -->
+<dialog class="take-map-dialog" id="takeMapDialog" aria-labelledby="takeMapTitle">
+  <h2 class="take-map-title" id="takeMapTitle" data-i18n="takeMapTitle">Emportez le plan</h2>
+  <img class="take-map-qr" id="takeMapQr" src="" alt="" width="320" height="320">
+  <p class="take-map-zone" id="takeMapZone"></p>
+  <p class="take-map-help" data-i18n="takeMapHelp">Scannez ce code avec l'appareil photo de votre téléphone : le plan s'ouvre, avec le rayon déjà indiqué.</p>
+  <form method="dialog"><button class="take-map-close" data-i18n="takeMapClose">Fermer</button></form>
+</dialog>
 
 <!-- Détail de la carte Fnac+ (bouton « Plus d'informations ») -->
 <dialog class="card-detail" id="cardDialog" aria-labelledby="cardDetailTitle">

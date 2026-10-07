@@ -65,6 +65,7 @@ const els = {
   chat: $("#chatLog"), chips: $("#suggestions"), status: $("#status"), statusText: $("#statusText"),
   mic: $("#micButton"), micLabel: $("#micLabel"), form: $("#askForm"), input: $("#askInput"), send: $("#askSend"),
   vendor: $("#vendorButton"), a11y: $("#a11yButton"), end: $("#endButton"), logo: $("#logoButton"),
+  takeMap: $("#takeMap"), takeMapDialog: $("#takeMapDialog"), takeMapQr: $("#takeMapQr"), takeMapZone: $("#takeMapZone"),
   mapStage: $("#mapStage"), route: $("#route"), routeHint: $("#routeHint"), routeStairs: $("#routeStairs"),
   routeTarget: $("#routeTarget"), routeIcon: $("#routeIcon use"),
   warning: $("#idleWarning"), warningBody: $("#idleWarningBody"), warningButton: $("#idleWarningButton"),
@@ -1028,6 +1029,9 @@ function clearZone() {
 function renderRoute() {
   const id = state.zone;
   const showRoute = id && id !== "entree";
+  // « Emporter le plan » n'a de sens qu'une fois un rayon montré, et seulement
+  // pour les rayons qui existent sur le plan (la Fnac Variétés a sa propre fiche).
+  els.takeMap.hidden = !(id && ZONES[id]?.floors?.length);
   els.route.hidden = !showRoute;
   els.routeHint.hidden = !!showRoute;
   if (!showRoute) return;
@@ -1510,6 +1514,7 @@ function exitToIdle() {
   // Réglages du personnel laissés ouverts : on les ferme (les statistiques ne
   // doivent pas rester affichées devant les clients).
   if (els.settings.open) els.settings.close();
+  if (els.takeMapDialog.open) els.takeMapDialog.close();
   closeWarning();
   closeSurvey();
   closeChoices();
@@ -1817,6 +1822,16 @@ els.a11y.addEventListener("click", () => {
   reply(state.a11y ? t().a11yOn : t().a11yOff);
 });
 els.end.addEventListener("click", endVisit);
+els.takeMap.addEventListener("click", () => {
+  const id = state.zone;
+  if (!id || !ZONES[id]) return;
+  els.takeMapQr.src = `assets/qr-plan/${id}.svg${VERSION}`;
+  els.takeMapZone.textContent = zoneLabel(id);
+  els.takeMapDialog.showModal();
+  recordQuestion({ zone: id, lang: state.lang, source: "map" });
+});
+// La fenêtre ne doit pas rester ouverte devant le client suivant.
+els.takeMapDialog.addEventListener("close", () => { els.takeMapQr.removeAttribute("src"); });
 els.surveyButtons.addEventListener("click", (e) => {
   const button = e.target.closest("button[data-answer]");
   if (button) handleSurveyChoice(button.dataset.answer);

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!-- Plan emporté sur le téléphone, ouvert depuis le QR code de la borne.
+     © 2026 Fnac. Tous droits réservés. Auteur : Guillaume Branger.
+     Volontairement léger : ni voix, ni conversation, ni base de mots-clés —
+     juste le plan, pour s'ouvrir tout de suite sur le réseau du magasin. -->
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#EBB300">
+<title>Plan du magasin — Fnac Jeanne d'Arc</title>
+<link rel="icon" href="assets/fnac-logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/plan.css?v=112">
+</head>
+<body>
+  <header class="tete">
+    <span class="logo" role="img" aria-label="Fnac"></span>
+    <p class="magasin">Jeanne d'Arc · Toulouse</p>
+  </header>
+
+  <main>
+    <div class="etage" id="etage" hidden></div>
+    <div class="cadre">
+      <svg class="plan" id="plan" role="img" aria-label="Plan du magasin"></svg>
+    </div>
+    <p class="aide" id="aide">Vous êtes à l'entrée, le trajet part de là.</p>
+  </main>
+
+  <script type="module" src="js/plan-mobile.js?v=112"></script>
+</body>
+</html>

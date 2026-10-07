@@ -1,0 +1,145 @@
+/* =====================================================================
+   Plan emporté sur le téléphone (plan.html).
+   Reprend les couleurs de la borne, mais pensé pour un écran tenu à la
+   main : le plan prend toute la place, le reste tient en deux lignes.
+   ===================================================================== */
+:root {
+  --yellow: #EBB300;
+  --yellow-light: #F7DC80;
+  --ink: #121212;
+  --paper: #FFFFFF;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: "Arial Narrow", system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  /* encoches et barre du bas des téléphones */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.tete {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.75rem 1rem 0.5rem;
+  flex: 0 0 auto;
+}
+.logo {
+  flex: 0 0 auto;
+  width: 2.6rem;
+  aspect-ratio: 499 / 515;
+  background: var(--ink);
+  -webkit-mask: url("../assets/fnac-logo.svg") center / contain no-repeat;
+  mask: url("../assets/fnac-logo.svg") center / contain no-repeat;
+}
+.magasin { margin: 0; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.01em; }
+
+main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0 0.7rem 0.7rem;
+  gap: 0.55rem;
+}
+
+.etage {
+  align-self: flex-start;
+  margin-left: 0.3rem;
+  padding: 0.3rem 0.95rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--yellow);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+.etage.est-sous-sol { background: var(--ink); color: var(--yellow); }
+
+/* Le plan : fond sombre, comme sur la borne, et toute la hauteur libre. */
+.cadre {
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--ink);
+  border-radius: 1.1rem;
+  padding: 0.6rem;
+  box-shadow: 0 0.8rem 1.6rem -0.9rem rgba(60, 42, 0, 0.55);
+}
+.plan { width: 100%; height: 100%; display: block; overflow: visible; }
+
+.aide {
+  margin: 0 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.3;
+  flex: 0 0 auto;
+}
+
+/* --- Le plan lui-même : mêmes couleurs que sur la borne --------------- */
+.bm-floor {
+  fill: rgba(255, 255, 255, 0.045);
+  stroke: rgba(255, 255, 255, 0.42);
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.bm-shape {
+  fill: rgba(235, 179, 0, 0.3);
+  stroke: rgba(18, 18, 18, 0.5);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+.bm-counter { fill: rgba(247, 220, 128, 0.3); }
+.bm-entrance { fill: rgba(255, 255, 255, 0.3); }
+.bm-neutral { fill: rgba(255, 255, 255, 0.1); stroke: none; }
+.bm-elevator { fill: #2F6FEB; stroke: var(--paper); stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
+
+/* Le rayon cherché : plein jaune, le reste reste en retrait. */
+.bm-shape.is-hit {
+  fill: var(--yellow);
+  stroke: var(--paper);
+  stroke-width: 2.4px;
+}
+
+.bm-stairs-band { fill: rgba(247, 220, 128, 0.32); stroke: rgba(18, 18, 18, 0.5); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.bm-stairs line { stroke: rgba(18, 18, 18, 0.4); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.bm-stairs-arrow { fill: rgba(18, 18, 18, 0.65); stroke: none; }
+
+.bm-label {
+  fill: rgba(255, 255, 255, 0.62);
+  font-family: "Arial Narrow", system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: rgba(18, 18, 18, 0.75);
+  stroke-width: 2.5px;
+  pointer-events: none;
+}
+.bm-label.is-hit { fill: var(--yellow); font-size: 15px; }
+
+.bm-here-dot { fill: var(--yellow); stroke: var(--ink); stroke-width: 2px; vector-effect: non-scaling-stroke; }
+.bm-here-pulse { fill: rgba(235, 179, 0, 0.3); }
+.bm-here-text {
+  fill: var(--paper);
+  font-size: 11px;
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: rgba(18, 18, 18, 0.8);
+  stroke-width: 2.5px;
+}
+
+/* --- Le trajet : épaisseurs en unités du plan, pour suivre le zoom ---- */
+.route-casing { fill: none; stroke: var(--ink); stroke-width: 9px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.route-line { fill: none; stroke: var(--paper); stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.route-start { fill: var(--ink); stroke: var(--paper); stroke-width: 2px; vector-effect: non-scaling-stroke; }
+.route-end { fill: var(--yellow); stroke: var(--ink); stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
+
+/* Écran large (tablette, ou téléphone tourné) : on centre et on limite. */
+@media (min-width: 700px) {
+  main { max-width: 56rem; width: 100%; margin: 0 auto; }
+}
