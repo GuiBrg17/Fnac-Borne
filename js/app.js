@@ -66,6 +66,7 @@ const els = {
   mic: $("#micButton"), micLabel: $("#micLabel"), form: $("#askForm"), input: $("#askInput"), send: $("#askSend"),
   vendor: $("#vendorButton"), a11y: $("#a11yButton"), end: $("#endButton"), logo: $("#logoButton"),
   takeMap: $("#takeMap"), takeMapDialog: $("#takeMapDialog"), takeMapQr: $("#takeMapQr"), takeMapZone: $("#takeMapZone"),
+  newsEdit: $("#newsEdit"), newsStatus: $("#newsStatus"), newsReset: $("#newsReset"),
   mapStage: $("#mapStage"), route: $("#route"), routeHint: $("#routeHint"), routeStairs: $("#routeStairs"),
   routeTarget: $("#routeTarget"), routeIcon: $("#routeIcon use"),
   warning: $("#idleWarning"), warningBody: $("#idleWarningBody"), warningButton: $("#idleWarningButton"),
@@ -1168,6 +1169,20 @@ function showToast(message) {
 const IDLE_ORDER = ["fr", "en", "es"];
 const GREETING_MS = 5200;
 const NEWS_MS = 8500;
+// Les actualités de js/news.js sont le point de départ. Le magasin peut les
+// réécrire depuis les réglages (5 touches sur le logo) : elles sont alors
+// gardées sur cette borne, et « Revenir aux actualités d'origine » les efface.
+const IMAGES_NEWS = ["assets/news/iphone-18.png", "assets/news/call-of-duty-mw4.jpg", "assets/news/fnac-plus.png"];
+
+function actualites() {
+  const gardees = store.get("news", null);
+  if (!Array.isArray(gardees)) return NEWS;
+  const propres = gardees
+    .map((n) => ({ title: String(n.title || "").trim(), text: String(n.text || "").trim(),
+                   date: String(n.date || "").trim(), image: n.image || null }))
+    .filter((n) => n.title);
+  return propres.length ? propres : NEWS;
+}
 let idleStep = 0;
 let idleCycle = null;
 
@@ -1389,7 +1404,7 @@ let sideStep = 0;
 
 function startSideCycle() {
   clearTimeout(sideCycle);
-  const pubs = [showSideCard, ...NEWS.map((item) => () => showSideNews(item))];
+  const pubs = [showSideCard, ...actualites().map((item) => () => showSideNews(item))];
   if (pubs.length < 2) return;
   const next = () => {
     sideStep = (sideStep + 1) % pubs.length;
@@ -1897,6 +1912,8 @@ els.logo.addEventListener("click", () => {
     els.idleSeconds.value = settings.idleSeconds;
     els.micPatience.value = store.get("micPatience", "pose");
     els.micNear.value = store.get("micNear", "tout");
+    construireFormulaireNews();
+    els.newsStatus.textContent = store.get("news", null) ? "Actualités réglées sur cette borne." : "Actualités d'origine.";
     showThreshold();
     els.settings.showModal();
   }
@@ -1934,6 +1951,70 @@ function saveVendorSettings() {
   els.vendorStatus.textContent = how.length ? `Alertes envoyées par ${how.join(" et ")}.` : "Ni canal ni e-mail réglé : les alertes ne partent pas.";
   return true;
 }
+// --- Actualités modifiables depuis la borne ------------------------------
+function construireFormulaireNews() {
+  const valeurs = actualites();
+  els.newsEdit.textContent = "";
+  for (let i = 0; i < 3; i++) {
+    const n = valeurs[i] || { title: "", text: "", date: "", image: null };
+    const bloc = document.createElement("div");
+    bloc.className = "news-bloc";
+    bloc.innerHTML = `
+      <p class="news-num">Encadré ${i + 1}</p>
+      <label>Titre<input type="text" data-news="title" maxlength="60" autocomplete="off"></label>
+      <label>Texte<textarea data-news="text" rows="3" maxlength="400"></textarea></label>
+      <label>Mention (date, « en magasin »…)<input type="text" data-news="date" maxlength="40" autocomplete="off"></label>
+      <label>Image<select data-news="image"></select></label>`;
+    bloc.querySelector('[data-news="title"]').value = n.title;
+    bloc.querySelector('[data-news="text"]').value = n.text;
+    bloc.querySelector('[data-news="date"]').value = n.date;
+    const liste = bloc.querySelector('[data-news="image"]');
+    const aucune = document.createElement("option");
+    aucune.value = ""; aucune.textContent = "Aucune";
+    liste.append(aucune);
+    for (const chemin of IMAGES_NEWS) {
+      const o = document.createElement("option");
+      o.value = chemin;
+      o.textContent = chemin.split("/").pop();
+      liste.append(o);
+    }
+    liste.value = n.image && IMAGES_NEWS.includes(n.image) ? n.image : "";
+    for (const champ of bloc.querySelectorAll("input, textarea, select")) {
+      champ.addEventListener("change", enregistrerNews);
+    }
+    els.newsEdit.append(bloc);
+  }
+}
+
+function enregistrerNews() {
+  const blocs = [...els.newsEdit.querySelectorAll(".news-bloc")].map((b) => ({
+    title: b.querySelector('[data-news="title"]').value.trim(),
+    text: b.querySelector('[data-news="text"]').value.trim(),
+    date: b.querySelector('[data-news="date"]').value.trim(),
+    image: b.querySelector('[data-news="image"]').value || null
+  }));
+  const gardes = blocs.filter((n) => n.title);
+  if (!gardes.length) {
+    els.newsStatus.textContent = "Il faut au moins un encadré : les actualités d'origine restent affichées.";
+    store.set("news", null);
+  } else {
+    store.set("news", gardes);
+    els.newsStatus.textContent = `${gardes.length} encadré${gardes.length > 1 ? "s" : ""} enregistré${gardes.length > 1 ? "s" : ""}. L'écran d'accueil les montre dès maintenant.`;
+  }
+  sideStep = 0;
+  showSideCard();
+  startSideCycle();
+}
+
+els.newsReset.addEventListener("click", () => {
+  store.set("news", null);
+  construireFormulaireNews();
+  els.newsStatus.textContent = "Actualités d'origine rétablies.";
+  sideStep = 0;
+  showSideCard();
+  startSideCycle();
+});
+
 els.vendorTopic.addEventListener("change", saveVendorSettings);
 els.vendorEmails.addEventListener("change", saveVendorSettings);
 els.vendorTest.addEventListener("click", async () => {

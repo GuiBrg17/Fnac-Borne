@@ -1424,3 +1424,27 @@ html.a11y *, html.a11y *::before, html.a11y *::after {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* --- Actualités modifiables depuis les réglages ------------------------- */
+.news-edit { display: grid; gap: 1rem; margin: 0.6rem 0 0.9rem; }
+.news-bloc {
+  padding: 0.9rem 1rem 1rem;
+  border: 0.1rem solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--mist);
+  display: grid;
+  gap: 0.5rem;
+}
+.news-num { margin: 0; font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); }
+.news-bloc label { display: grid; gap: 0.25rem; font-size: 0.95rem; font-weight: 700; }
+.news-bloc input, .news-bloc textarea, .news-bloc select {
+  padding: 0.55rem 0.7rem;
+  border: 0.1rem solid var(--line);
+  border-radius: 0.6rem;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.news-bloc textarea { resize: vertical; min-height: 4rem; line-height: 1.35; }
