@@ -1155,4 +1155,14 @@ informatique|a wifi extender|en
 wifi|hay wifi|es
 wifi|wifi gratis|es
 informatique|un repetidor wifi|es
+# Produits annoncés sur l'écran d'accueil, et sorties d'octobre 2026
+# (relevées sur L'Éclaireur Fnac) : la borne doit savoir où les envoyer.
+audio|le Sony WH-1000XM4C
+audio|un WH-CH735N
+audio|le casque Sony WH-CH535
+gaming|Castlevania Belmont's Curse
+gaming|Ace Combat 8
+gaming|Star Wars Galactic Racer
+gaming|Call of Duty Modern Warfare 4
+gaming|Nintendo Switch Sports Resort
 telephonie|un téléphone android

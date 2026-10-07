@@ -23,14 +23,14 @@ export const NEWS = [
   },
   {
     title: "Call of Duty : Modern Warfare 4",
-    text: "Précommandez le prochain Call of Duty au rayon Jeux vidéo, au sous-sol. Nos vendeurs vous renseignent sur les éditions et les bonus de précommande.",
-    date: "Précommande ouverte",
+    text: "Dans les bacs le 23 octobre, sur PS5, Xbox Series, PC et Switch 2. Précommandez-le au rayon Jeux vidéo, au sous-sol : nos vendeurs vous renseignent sur les éditions et les bonus.",
+    date: "Sortie le 23 octobre",
     image: "assets/news/call-of-duty-mw4.jpg"
   },
   {
-    title: "iPhone Duo",
-    text: "Renseignez-vous au rayon Apple, au sous-sol.",
-    date: "Précommande dès le 16 octobre",
+    title: "Casques Sony : la gamme renouvelée",
+    text: "Le WH-1000XM4C revient en version modernisée, à partir de 249,99 €. La gamme s'ouvre avec le WH-CH535 à 49,99 € et le WH-CH735N, à réduction de bruit, à 99,99 €. Au rayon Son, au sous-sol.",
+    date: "En magasin",
     image: null
   }
 ];
