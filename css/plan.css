@@ -49,17 +49,60 @@ main {
   gap: 0.55rem;
 }
 
-.etage {
-  align-self: flex-start;
-  margin-left: 0.3rem;
-  padding: 0.3rem 0.95rem;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--yellow);
-  font-size: 0.95rem;
-  font-weight: 800;
+/* Étages et choix du rayon : une seule ligne, deux blocs, tout au pouce. */
+.commandes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+  margin: 0 0.3rem;
 }
-.etage.est-sous-sol { background: var(--ink); color: var(--yellow); }
+.etages { display: flex; gap: 0.25rem; padding: 0.2rem; border-radius: 999px; background: rgba(18, 18, 18, 0.12); }
+.etages button {
+  min-height: 2.4rem;
+  padding: 0 0.85rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.etages button.est-actif { background: var(--ink); color: var(--yellow); }
+
+.choix { position: relative; flex: 1 1 auto; min-width: 0; }
+.choix-titre {
+  position: absolute;
+  left: 0.9rem;
+  top: 0.18rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.choix-liste {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.85rem 2rem 0.2rem 0.85rem;
+  border: 0.12rem solid var(--ink);
+  border-radius: 0.9rem;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  /* la flèche du sélecteur, dessinée pour rester la même sur tous les téléphones */
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: calc(100% - 1.15rem) 1.35rem, calc(100% - 0.75rem) 1.35rem;
+  background-size: 0.4rem 0.4rem, 0.4rem 0.4rem;
+  background-repeat: no-repeat;
+}
 
 /* Le plan : fond sombre, comme sur la borne, et toute la hauteur libre. */
 .cadre {
