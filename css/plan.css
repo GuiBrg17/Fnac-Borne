@@ -39,6 +39,17 @@ body {
   mask: url("../assets/fnac-logo.svg") center / contain no-repeat;
 }
 .magasin { margin: 0; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.01em; }
+.horaires {
+  margin: 0 0 0 auto;
+  padding: 0.22rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.12);
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.horaires[hidden] { display: none; }
+.horaires.ferme-bientot { background: var(--ink); color: var(--yellow); }
 
 main {
   flex: 1 1 auto;

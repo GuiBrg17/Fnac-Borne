@@ -1045,9 +1045,30 @@ function renderRoute() {
 // =====================================================================
 // Suggestions, langue, accessibilité, vendeur
 // =====================================================================
+// Les six recherches fréquentes. Au début, celles de js/data.js ; dès que la
+// borne a vu passer assez de clients, les rayons qu'ils demandent vraiment —
+// ce qui suit le magasin et la saison sans que personne n'y touche.
+const MIN_QUESTIONS = 40;   // en dessous, les chiffres ne veulent encore rien dire
+
+function suggestionsDuMoment() {
+  const stats = readStats();
+  if ((stats.questions || 0) < MIN_QUESTIONS) return SUGGESTIONS;
+  // Un libellé tout fait (« Casques audio », « Retrait commande ») est plus
+  // parlant que le nom du rayon : on le reprend quand il existe.
+  const connues = new Map();
+  for (const s of SUGGESTIONS) if (!connues.has(s.zone)) connues.set(s.zone, s);
+  const classement = Object.entries(stats.byZone || {})
+    .filter(([id]) => ZONES[id] && ZONES[id].floors?.length && id !== "entree")
+    .sort((a, b) => b[1] - a[1])
+    .map(([id]) => connues.get(id) || { zone: id, icon: ZONES[id].icon || "pin", label: ZONES[id].label });
+  // Complété par les valeurs d'origine si le magasin est encore peu fréquenté.
+  const vues = new Set(classement.map((s) => s.zone));
+  return [...classement, ...SUGGESTIONS.filter((s) => !vues.has(s.zone))].slice(0, SUGGESTIONS.length);
+}
+
 function renderSuggestions() {
   els.chips.textContent = "";
-  for (const suggestion of SUGGESTIONS) {
+  for (const suggestion of suggestionsDuMoment()) {
     const chip = document.createElement("button");
     chip.type = "button";
     chip.className = "chip";

@@ -27,6 +27,28 @@ const MOTS = {
 const mots = MOTS[langue];
 document.documentElement.lang = langue;
 
+// Horaires : le client vient de scanner dans le magasin, donc il est ouvert.
+// On lui dit jusqu'à quand, et on le prévient si ça ferme bientôt.
+function montrerHoraires(horaires, textes) {
+  const el = document.querySelector("#horaires");
+  const maintenant = new Date();
+  const jour = horaires.days?.[maintenant.getDay()];
+  if (!jour) return;
+  const enMinutes = (h) => { const [a, b] = h.split(":").map(Number); return a * 60 + b; };
+  const minute = maintenant.getHours() * 60 + maintenant.getMinutes();
+  const [ouverture, fermeture] = jour.map(enMinutes);
+  if (minute < ouverture || minute >= fermeture) return;   // fermé : on n'affiche rien
+  const reste = fermeture - minute;
+  const [h, m] = jour[1].split(":").map(Number);
+  const heure = langue === "fr" ? (m ? `${h} h ${String(m).padStart(2, "0")}` : `${h} h`)
+    : langue === "en" ? `${h % 12 || 12}${m ? ":" + String(m).padStart(2, "0") : ""} ${h >= 12 ? "pm" : "am"}`
+    : jour[1];
+  const proche = reste <= (horaires.soonMinutes || 45);
+  el.textContent = proche ? textes.fermetureDans.replace("{m}", reste) : textes.ouvertJusqua.replace("{h}", heure);
+  el.classList.toggle("ferme-bientot", proche);
+  el.hidden = false;
+}
+
 const svg = document.querySelector("#plan");
 const aide = document.querySelector("#aide");
 const etagesEl = document.querySelector("#etages");
@@ -77,10 +99,11 @@ function choisir(id, { suivreEtage = true } = {}) {
 }
 
 try {
-  const data = await (await fetch(`assets/rayons.json?v=113`)).json();
+  const data = await (await fetch(`assets/rayons.json?v=114`)).json();
   rayons = data.rayons;
   textes = { ...data.textes[langue], lang: langue };
   etage = etageDe(cible);
+  if (data.horaires) montrerHoraires(data.horaires, textes);
 
   // Les deux étages
   for (const [valeur, libelle] of [["0", textes.floor0], ["-1", textes.floorM1]]) {

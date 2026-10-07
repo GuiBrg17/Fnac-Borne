@@ -3,7 +3,7 @@
 // de mots-clés ; un téléphone n'a pas à les télécharger.
 //   node tools/plan-mobile.mjs
 import { writeFileSync } from "node:fs";
-import { ZONES, UI } from "../js/data.js";
+import { ZONES, UI, OPENING } from "../js/data.js";
 
 const rayons = {};
 for (const [id, z] of Object.entries(ZONES)) {
@@ -19,11 +19,16 @@ for (const [id, z] of Object.entries(ZONES)) {
   rayons[id] = entree;
 }
 
+// Les phrases d'horaires sont des fonctions dans data.js : on en sort des
+// gabarits, « Ouvert jusqu'à {h} », que la page remplit elle-même.
 const textes = Object.fromEntries(["fr", "en", "es"].map((l) => [l, {
-  youAreHere: UI[l].youAreHere, floor0: UI[l].floor0, floorM1: UI[l].floorM1
+  youAreHere: UI[l].youAreHere, floor0: UI[l].floor0, floorM1: UI[l].floorM1,
+  ouvertJusqua: UI[l].hoursOpen("{h}"), fermetureDans: UI[l].hoursClosingSoon("{m}")
 }]));
 
-const sortie = { rayons, textes };
+const horaires = { days: OPENING.days, soonMinutes: OPENING.soonMinutes };
+
+const sortie = { rayons, textes, horaires };
 writeFileSync(new URL("../assets/rayons.json", import.meta.url), JSON.stringify(sortie) + "\n");
 const poids = JSON.stringify(sortie).length / 1024;
 console.log(`${Object.keys(rayons).length} rayons → assets/rayons.json (${poids.toFixed(1)} Ko)`);
