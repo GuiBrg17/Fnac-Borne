@@ -69,7 +69,9 @@ export const UI = {
     hoursClosedToday: (heure) => `Fermé · ouvre à ${heure}`,
     hoursTomorrow: "demain",
     // Encadré des horaires de fin d'année, construit depuis OPENING.special
-    // et OPENING.closed : il n'y a rien à saisir ici.
+    // et OPENING.closed : il n'y a rien à saisir ici. Comme les actualités du
+    // magasin, cet encadré reste en français, d'où l'absence de ces trois
+    // clés dans les deux autres langues.
     holidayTitle: "Horaires de fin d'année",
     holidayClosed: "Fermé",
     holidayClosedNote: (jours) => `Fermé ${jours}`,
@@ -154,9 +156,6 @@ export const UI = {
     hoursClosed: (quand, heure) => `Closed · opens ${quand} at ${heure}`,
     hoursClosedToday: (heure) => `Closed · opens at ${heure}`,
     hoursTomorrow: "tomorrow",
-    holidayTitle: "Holiday opening hours",
-    holidayClosed: "Closed",
-    holidayClosedNote: (jours) => `Closed ${jours}`,
     orderButton: "Ask a staff member to order it",
     orderConfirm: "Done, a member of staff is coming to take your order.",
     orderToast: "Staff notified · order",
@@ -235,9 +234,6 @@ export const UI = {
     hoursClosed: (quand, heure) => `Cerrado · abre ${quand} a las ${heure}`,
     hoursClosedToday: (heure) => `Cerrado · abre a las ${heure}`,
     hoursTomorrow: "mañana",
-    holidayTitle: "Horarios de fin de año",
-    holidayClosed: "Cerrado",
-    holidayClosedNote: (jours) => `Cerrado ${jours}`,
     orderButton: "Pedir a un vendedor que lo encargue",
     orderConfirm: "Anotado, un vendedor viene a tomar su pedido.",
     orderToast: "Vendedor avisado · pedido",
