@@ -26,7 +26,8 @@ const textes = Object.fromEntries(["fr", "en", "es"].map((l) => [l, {
   ouvertJusqua: UI[l].hoursOpen("{h}"), fermetureDans: UI[l].hoursClosingSoon("{m}")
 }]));
 
-const horaires = { days: OPENING.days, soonMinutes: OPENING.soonMinutes };
+const horaires = { days: OPENING.days, soonMinutes: OPENING.soonMinutes,
+                   closed: OPENING.closed, special: OPENING.special };
 
 const sortie = { rayons, textes, horaires };
 writeFileSync(new URL("../assets/rayons.json", import.meta.url), JSON.stringify(sortie) + "\n");

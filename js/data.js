@@ -1119,8 +1119,29 @@ export const ZONES = {
 export const OPENING = {
   days: [null, ["10:00", "19:30"], ["10:00", "19:30"], ["10:00", "19:30"],
          ["10:00", "19:30"], ["10:00", "19:30"], ["10:00", "19:30"]],
-  closed: [],
-  special: {},
+  closed: ["2026-12-25", "2027-01-01"],
+  // Horaires exceptionnels de fin d'année, relevés sur l'affiche du magasin.
+  // Les dimanches n'y figurent pas par hasard : ils priment sur days[0], qui
+  // est null le reste de l'année. Une fois les fêtes passées, vider ces deux
+  // listes : la semaine ordinaire reprend toute seule.
+  special: {
+    "2026-11-20": ["10:00", "20:00"],
+    "2026-11-21": ["10:00", "20:00"],
+    "2026-11-25": ["10:00", "20:30"],
+    "2026-11-26": ["10:00", "20:00"],
+    "2026-11-27": ["09:00", "20:00"],
+    "2026-11-28": ["09:00", "20:00"],
+    "2026-11-29": ["10:00", "19:00"],
+    "2026-12-06": ["11:00", "19:00"],
+    "2026-12-13": ["11:00", "19:00"],
+    "2026-12-20": ["11:00", "19:00"],
+    "2026-12-21": ["09:30", "20:00"],
+    "2026-12-22": ["09:30", "20:00"],
+    "2026-12-23": ["09:30", "20:00"],
+    "2026-12-24": ["09:00", "18:30"],
+    "2026-12-27": ["11:00", "19:00"],
+    "2026-12-31": ["10:00", "18:00"]
+  },
   // En dessous de ce nombre de minutes, la borne annonce la fermeture proche.
   soonMinutes: 45
 };
@@ -2275,10 +2296,13 @@ export const INFO = {
            "abren", "cierran", "abren los domingos", "abren los sábados",
            "cierran los domingos", "hasta qué hora", "hasta cuándo abren", "cuándo abren", "cuándo cierran"]
     },
+    // Pendant les fêtes, les dimanches sont ouverts : la réponse d'origine
+    // (« fermé le dimanche ») devenait fausse. À remettre en janvier, en même
+    // temps que OPENING.special.
     answer: {
-      fr: "Ouvert du lundi au samedi, de 10 heures à 19 heures 30. Fermé le dimanche.",
-      en: "Open Monday to Saturday, 10 am to 7.30 pm. Closed on Sundays.",
-      es: "Abrimos de lunes a sábado, de 10 a 19:30. Domingos cerrado."
+      fr: "Pendant les fêtes, le magasin ouvre aussi les dimanches, avec des horaires affichés à l'entrée. Il est fermé le 25 décembre et le 1er janvier. Le reste de l'année : du lundi au samedi, de 10 heures à 19 heures 30.",
+      en: "Over the holidays the store opens on Sundays too, with the daily times posted at the entrance. It is closed on 25 December and 1 January. The rest of the year: Monday to Saturday, 10 am to 7.30 pm.",
+      es: "En fiestas la tienda abre también los domingos; los horarios de cada día están en la entrada. Cierra el 25 de diciembre y el 1 de enero. El resto del año: de lunes a sábado, de 10 a 19:30."
     }
   },
   toilets: {

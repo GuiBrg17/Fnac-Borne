@@ -32,7 +32,10 @@ document.documentElement.lang = langue;
 function montrerHoraires(horaires, textes) {
   const el = document.querySelector("#horaires");
   const maintenant = new Date();
-  const jour = horaires.days?.[maintenant.getDay()];
+  // Mêmes exceptions que la borne : fermeture d'un jour férié, horaire de fête.
+  const cle = `${maintenant.getFullYear()}-${String(maintenant.getMonth() + 1).padStart(2, "0")}-${String(maintenant.getDate()).padStart(2, "0")}`;
+  if (horaires.closed?.includes(cle)) return;
+  const jour = horaires.special?.[cle] || horaires.days?.[maintenant.getDay()];
   if (!jour) return;
   const enMinutes = (h) => { const [a, b] = h.split(":").map(Number); return a * 60 + b; };
   const minute = maintenant.getHours() * 60 + maintenant.getMinutes();
