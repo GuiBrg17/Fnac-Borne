@@ -49,6 +49,8 @@ const els = {
   idleGreet: $("#idleGreet"),
   idleCardOffer: $("#idleCardOffer"), idleCardNews: $("#idleCardNews"), idleCardNewsImage: $("#idleCardNewsImage"),
   idleCardNewsTitle: $("#idleCardNewsTitle"), idleCardNewsText: $("#idleCardNewsText"), idleCardNewsDate: $("#idleCardNewsDate"),
+  idleCardHours: $("#idleCardHours"), idleCardHoursTitle: $("#idleCardHoursTitle"),
+  idleCardHoursList: $("#idleCardHoursList"), idleCardHoursNote: $("#idleCardHoursNote"),
   statsSummary: $("#statsSummary"), statsZones: $("#statsZones"), statsMisses: $("#statsMisses"), statsReset: $("#statsReset"),
   app: $("#appScreen"), signVideo: $("#signVideo"),
   idleHours: $("#idleHours"), storyButton: $("#idleStoryButton"), storyButtonLabel: $("#idleStoryButtonLabel"),
@@ -1194,6 +1196,8 @@ function setIdleLang(lang) {
   $$("#idleScreen [data-i18n]").forEach((el) => { el.textContent = typo(d[el.dataset.i18n]); });
   $$(".idle-langs li").forEach((li) => li.classList.toggle("is-on", li.dataset.lang === lang));
   showOpening(lang);
+  // La carte des horaires suit la langue affichée, comme la pastille du haut.
+  if (!els.idleCardHours.hidden) showSideHours(lang);
 }
 
 // =====================================================================
@@ -1389,13 +1393,86 @@ function showSideNews(item) {
     els.idleCardNewsImage.removeAttribute("src");
   }
   els.idleCardOffer.hidden = true;
+  els.idleCardHours.hidden = true;
   els.idleCardNews.hidden = false;
 }
 
 // La carte Fnac+ reprend sa place dans l'encadré.
 function showSideCard() {
   els.idleCardNews.hidden = true;
+  els.idleCardHours.hidden = true;
   els.idleCardOffer.hidden = false;
+}
+
+// =====================================================================
+// Carte des horaires de fin d'année, dans l'encadré de droite.
+//
+// Rien à saisir : elle lit OPENING.special et OPENING.closed. La pastille du
+// haut dit l'horaire du jour, cette carte dit les jours à venir — les deux ne
+// se répètent pas. Quand il n'y a plus de date devant soi, elle disparaît du
+// cycle, et le magasin n'a rien à défaire en janvier.
+// =====================================================================
+const HOLIDAY_MAX = 4;                       // lignes affichées, l'encadré est étroit
+
+// Les dates particulières à venir, triées, aujourd'hui exclu (il est déjà
+// dans la pastille du haut).
+function holidayDates(now = new Date()) {
+  const demain = dayKeyFor(now);
+  const jours = [
+    ...Object.entries(OPENING.special).map(([key, horaire]) => ({ key, horaire })),
+    ...OPENING.closed.map((key) => ({ key, horaire: null }))
+  ];
+  return jours.filter((j) => j.key > demain).sort((a, b) => a.key.localeCompare(b.key));
+}
+
+// « Dimanche 6 déc. », dans la langue affichée. Le jour est écrit en entier en
+// français, abrégé en anglais et en espagnol : ces deux langues placent le mois
+// avant le quantième et ajoutent une virgule, et « Wednesday, Dec 23 » passait
+// à la ligne dans l'encadré. La première lettre est mise en capitale ici, et
+// non en CSS : capitalize aurait aussi touché le mois (« 20 Déc. »).
+const holidayDay = (key, lang, capitale = true) => {
+  const date = new Date(`${key}T12:00:00`);
+  let jour = date.toLocaleDateString(lang, { weekday: lang === "fr" ? "long" : "short", day: "numeric", month: "short" });
+  // « vendredi 1 janv. » ne se dit pas : le premier du mois est un ordinal.
+  if (lang === "fr" && date.getDate() === 1) jour = jour.replace(/\b1\b/, "1er");
+  // En anglais, les noms de jour et de mois gardent leur capitale en milieu
+  // de phrase ; en français et en espagnol, non.
+  if (!capitale && lang !== "en") return jour.charAt(0).toLowerCase() + jour.slice(1);
+  return jour.charAt(0).toUpperCase() + jour.slice(1);
+};
+
+function showSideHours(lang = idleLang, now = new Date()) {
+  const t = UI[lang];
+  const jours = holidayDates(now);
+  els.idleCardHoursTitle.textContent = t.holidayTitle;
+  els.idleCardHoursList.textContent = "";
+  const montres = jours.slice(0, HOLIDAY_MAX);
+  for (const { key, horaire } of montres) {
+    const li = document.createElement("li");
+    if (!horaire) li.classList.add("is-closed");
+    const quand = document.createElement("span");
+    quand.textContent = typo(holidayDay(key, lang));
+    const quoi = document.createElement("span");
+    quoi.textContent = horaire
+      ? `${showHour(horaire[0], lang)} – ${showHour(horaire[1], lang)}`
+      : t.holidayClosed;
+    li.append(quand, quoi);
+    els.idleCardHoursList.append(li);
+  }
+  // Les fermetures qu'on n'a pas eu la place de montrer sont tout de même
+  // annoncées : c'est ce qu'un client a le plus besoin de savoir d'avance.
+  const restantes = jours.slice(HOLIDAY_MAX).filter((j) => !j.horaire);
+  const note = els.idleCardHoursNote.parentElement;
+  if (restantes.length) {
+    const liste = restantes.map((j) => holidayDay(j.key, lang, false)).join(lang === "fr" ? " et " : lang === "en" ? " and " : " y ");
+    els.idleCardHoursNote.textContent = typo(t.holidayClosedNote(liste));
+    note.hidden = false;
+  } else {
+    note.hidden = true;
+  }
+  els.idleCardOffer.hidden = true;
+  els.idleCardNews.hidden = true;
+  els.idleCardHours.hidden = false;
 }
 
 // L'encadré de droite tourne tout seul : carte Fnac+, puis les actualités.
@@ -1404,7 +1481,11 @@ let sideStep = 0;
 
 function startSideCycle() {
   clearTimeout(sideCycle);
-  const pubs = [showSideCard, ...actualites().map((item) => () => showSideNews(item))];
+  // Les horaires passent en premier : de toutes les cartes, c'est celle qui
+  // se périme. Hors période, holidayDates() est vide et elle n'entre pas.
+  const pubs = [showSideCard,
+    ...(holidayDates().length ? [() => showSideHours()] : []),
+    ...actualites().map((item) => () => showSideNews(item))];
   if (pubs.length < 2) return;
   const next = () => {
     sideStep = (sideStep + 1) % pubs.length;

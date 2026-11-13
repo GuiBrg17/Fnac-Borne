@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&display=swap">
-<link rel="stylesheet" href="css/kiosk.css?v=117">
+<link rel="stylesheet" href="css/kiosk.css?v=118">
 <!-- ?v=N : à incrémenter à chaque mise en ligne pour que les bornes
      rechargent les fichiers au lieu de garder leur copie en cache. -->
-<script type="module" src="js/app.js?v=117"></script>
+<script type="module" src="js/app.js?v=118"></script>
 </head>
 <body class="is-idle">
 
@@ -92,6 +92,14 @@
         <h2 class="idle-card-news-title" id="idleCardNewsTitle"></h2>
         <p class="idle-card-news-text" id="idleCardNewsText"></p>
         <p class="idle-card-news-date"><svg aria-hidden="true"><use href="#i-calendar"/></svg><span id="idleCardNewsDate"></span></p>
+      </article>
+      <!-- Les horaires de fin d'année, calculés depuis OPENING (js/data.js) :
+           la carte apparaît quand une date particulière approche et s'en va
+           d'elle-même quand il n'y en a plus. -->
+      <article class="idle-card-hours" id="idleCardHours" hidden>
+        <h2 class="idle-card-news-title" id="idleCardHoursTitle"></h2>
+        <ul class="idle-card-hours-list" id="idleCardHoursList"></ul>
+        <p class="idle-card-news-date"><svg aria-hidden="true"><use href="#i-calendar"/></svg><span id="idleCardHoursNote"></span></p>
       </article>
     </aside>
   </div>
