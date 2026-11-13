@@ -16,16 +16,16 @@
 // =====================================================================
 export const NEWS = [
   {
-    title: "iPhone 18 Pro",
-    text: "À partir de 859 € au lieu de 1 479 €, avec jusqu'à 620 € de valeur de rachat de votre ancien iPhone (exemple pour un iPhone 16 Pro 256 Go en état parfait). Rendez-vous au rayon Apple, au sous-sol.",
+    title: "iPhone Duo",
+    text: "Le premier iPhone pliable : 7,6 pouces déplié, 5,4 pouces une fois refermé, puce A20 Pro. À partir de 2 339 € en 256 Go. Venez le prendre en main au rayon Apple, au sous-sol.",
     date: "Disponible en magasin",
-    image: "assets/news/iphone-18.png"
+    image: null
   },
   {
-    title: "Call of Duty : Modern Warfare 4",
-    text: "Dans les bacs le 23 octobre, sur PS5, Xbox Series, PC et Switch 2. Précommandez-le au rayon Jeux vidéo, au sous-sol : nos vendeurs vous renseignent sur les éditions et les bonus.",
-    date: "Sortie le 23 octobre",
-    image: "assets/news/call-of-duty-mw4.jpg"
+    title: "Grand Theft Auto VI",
+    text: "Le 19 novembre sur PS5 et Xbox Series X|S, à partir de 79,99 €. Au rayon Jeux vidéo, au sous-sol : nos vendeurs vous renseignent sur les éditions et les bonus.",
+    date: "Sortie le 19 novembre",
+    image: null
   },
   {
     title: "Casques Sony : la gamme renouvelée",
