@@ -58,6 +58,7 @@ const els = {
   storyFigure: $("#storyFigure"), storyImage: $("#storyImage"), storyCaption: $("#storyCaption"),
   storyClose: $("#storyClose"),
   idleCard: $("#idleCard"), idleCardTag: $("#idleCardTag"), idleCardTitle: $("#idleCardTitle"),
+  idleCardPromo: $("#idleCardPromo"), cardDetailPromo: $("#cardDetailPromo"),
   idleCardPrice: $("#idleCardPrice"), idleCardList: $("#idleCardList"), idleCardFoot: $("#idleCardFoot"),
   idleCardPhoto: $("#idleCardPhoto"), idleCardButton: $("#idleCardButton"),
   cardDialog: $("#cardDialog"), cardDetailTitle: $("#cardDetailTitle"), cardDetailPrice: $("#cardDetailPrice"),
@@ -1315,12 +1316,25 @@ function closeStory() {
   if (els.storyDialog.open) els.storyDialog.close();
 }
 
+// Promotion de la carte Fnac+, si la date de fin n'est pas dépassée.
+let promoRendue = null;
+function cardPromo(now = new Date()) {
+  const promo = CARD?.promo;
+  if (!promo?.until) return null;
+  return dayKeyFor(now) <= promo.until ? promo : null;
+}
+
 // Encadré fixe à droite : la carte Fnac+, et sa fenêtre de détail.
 function showCard() {
   if (!CARD) { els.idleCard.hidden = true; return; }
-  els.idleCardTag.textContent = CARD.tag;
+  const promo = cardPromo();
+  els.idleCardTag.textContent = promo?.tag || CARD.tag;
   els.idleCardTitle.textContent = CARD.title;
-  els.idleCardPrice.textContent = CARD.price;
+  els.idleCardPrice.textContent = promo?.price || CARD.price;
+  els.idleCardPromo.textContent = promo?.note || "";
+  els.idleCardPromo.hidden = !promo?.note;
+  els.idleCard.classList.toggle("is-promo", Boolean(promo));
+  promoRendue = Boolean(promo);
   els.idleCardFoot.textContent = CARD.foot;
   els.idleCardList.textContent = "";
   for (const point of CARD.points || []) {
@@ -1339,7 +1353,9 @@ function showCard() {
   if (!detail) return;
   els.idleCardButton.textContent = CARD.button || "Plus d'informations";
   els.cardDetailTitle.textContent = CARD.detailTitle || CARD.title;
-  els.cardDetailPrice.textContent = CARD.detailPrice || CARD.price;
+  els.cardDetailPrice.textContent = promo?.price || CARD.detailPrice || CARD.price;
+  els.cardDetailPromo.textContent = promo?.note || "";
+  els.cardDetailPromo.hidden = !promo?.note;
   els.cardDetailSections.textContent = "";
   for (const section of CARD.sections) {
     const bloc = document.createElement("section");
@@ -1396,8 +1412,13 @@ function showSideNews(item) {
   els.idleCardNews.hidden = false;
 }
 
-// La carte Fnac+ reprend sa place dans l'encadré.
+// La carte Fnac+ reprend sa place dans l'encadré. showCard() n'est jouée qu'au
+// démarrage : on la rejoue le jour où la promotion prend fin, sinon une borne
+// restée allumée toute la nuit afficherait au matin un prix que la caisse ne
+// fait plus.
 function showSideCard() {
+  const promo = Boolean(cardPromo());
+  if (promoRendue !== promo) { showCard(); promoRendue = promo; }
   els.idleCardNews.hidden = true;
   els.idleCardHours.hidden = true;
   els.idleCard.classList.remove("is-holiday");

@@ -82,6 +82,16 @@ export const CARD = {
   tag: "Avez-vous la carte ?",
   title: "Carte Fnac+",
   price: "14,99 € pour 3 ans",
+  // Promotion en cours. Le jour qui suit « until », le prix d'origine revient
+  // de lui-même : une borne ne doit pas annoncer un tarif que la caisse ne
+  // fait plus. Pour arrêter l'offre plus tôt, avancer la date ; pour la
+  // supprimer, effacer ce bloc.
+  promo: {
+    until: "2026-11-30",
+    tag: "Black Friday",
+    price: "7,99 € pour 3 ans",
+    note: "Au lieu de 14,99 €, jusqu'au 30 novembre"
+  },
   image: "assets/news/fnac-plus.png",
   points: [
     "5 % de remise en magasin : livres, high-tech, jeux, photo, papeterie",
