@@ -375,6 +375,9 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   color: var(--yellow);
 }
 .idle-card-news-date svg { width: 1.1rem; height: 1.1rem; }
+/* display: flex ci-dessus l'emporte sur l'attribut hidden : sans cette
+   ligne, masquer la note laissait son icône de calendrier toute seule. */
+.idle-card-news-date[hidden] { display: none; }
 
 /* Horaires de fin d'année : la date à gauche, son horaire calé à droite.
    Les heures sont en chiffres de largeur fixe, sinon la colonne tremble
@@ -385,11 +388,15 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
-  font-size: 1rem;
+  /* Dix-huit lignes dans une colonne étroite : la taille suit la largeur de
+     l'écran, pour qu'une borne verticale ne coupe pas « Mercredi 25 nov. ». */
+  font-size: clamp(0.76rem, 0.78vw + 0.42rem, 1rem);
   font-weight: 600;
   line-height: 1.2;
 }
-.idle-card-hours-list li > span:first-child { white-space: nowrap; }
+/* La date peut passer à la ligne si la colonne est vraiment étroite ;
+   l'horaire, lui, reste d'un seul tenant. */
+.idle-card-hours-list li > span:last-child { white-space: nowrap; }
 .idle-card-hours-list li > span:last-child {
   margin-left: auto;
   flex: none;

@@ -1412,7 +1412,11 @@ function showSideCard() {
 // se répètent pas. Quand il n'y a plus de date devant soi, elle disparaît du
 // cycle, et le magasin n'a rien à défaire en janvier.
 // =====================================================================
-const HOLIDAY_MAX = 4;                       // lignes affichées, l'encadré est étroit
+// Toute la période tient dans l'encadré : dix-huit dates y sont lisibles,
+// même sur l'écran le plus court. Le plafond n'est là que pour le jour où
+// le magasin en saisirait beaucoup plus ; les fermetures qui ne passeraient
+// pas sont alors rappelées en note.
+const HOLIDAY_MAX = 20;
 
 // Les dates particulières à venir, triées, aujourd'hui exclu (il est déjà
 // dans la pastille du haut).
