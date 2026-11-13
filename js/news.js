@@ -26,12 +26,6 @@ export const NEWS = [
     text: "Le 19 novembre sur PS5 et Xbox Series X|S, à partir de 79,99 €. Au rayon Jeux vidéo, au sous-sol : nos vendeurs vous renseignent sur les éditions et les bonus.",
     date: "Sortie le 19 novembre",
     image: "assets/news/gta-6.jpg"
-  },
-  {
-    title: "Casques Sony : la gamme renouvelée",
-    text: "Le WH-1000XM4C revient en version modernisée, à partir de 249,99 €. La gamme s'ouvre avec le WH-CH535 à 49,99 € et le WH-CH735N, à réduction de bruit, à 99,99 €. Au rayon Son, au sous-sol.",
-    date: "En magasin",
-    image: null
   }
 ];
 

@@ -1175,7 +1175,10 @@ const NEWS_MS = 8500;
 // Les actualités de js/news.js sont le point de départ. Le magasin peut les
 // réécrire depuis les réglages (5 touches sur le logo) : elles sont alors
 // gardées sur cette borne, et « Revenir aux actualités d'origine » les efface.
-const IMAGES_NEWS = ["assets/news/iphone-18.png", "assets/news/call-of-duty-mw4.jpg", "assets/news/fnac-plus.png"];
+// Visuels proposés dans le menu des réglages. À tenir à jour avec le contenu
+// réel de assets/news/ : une image absente de cette liste revient à « Aucune »
+// dans le formulaire, et s'efface si le magasin enregistre sans y toucher.
+const IMAGES_NEWS = ["assets/news/iphone-duo.png", "assets/news/gta-6.jpg", "assets/news/fnac-plus.png"];
 
 function actualites() {
   const gardees = store.get("news", null);
