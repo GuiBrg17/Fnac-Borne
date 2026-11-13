@@ -19,13 +19,13 @@ export const NEWS = [
     title: "iPhone Duo",
     text: "Le premier iPhone pliable : 7,6 pouces déplié, 5,4 pouces une fois refermé, puce A20 Pro. À partir de 2 339 € en 256 Go. Venez le prendre en main au rayon Apple, au sous-sol.",
     date: "Disponible en magasin",
-    image: null
+    image: "assets/news/iphone-duo.png"
   },
   {
     title: "Grand Theft Auto VI",
     text: "Le 19 novembre sur PS5 et Xbox Series X|S, à partir de 79,99 €. Au rayon Jeux vidéo, au sous-sol : nos vendeurs vous renseignent sur les éditions et les bonus.",
     date: "Sortie le 19 novembre",
-    image: null
+    image: "assets/news/gta-6.jpg"
   },
   {
     title: "Casques Sony : la gamme renouvelée",

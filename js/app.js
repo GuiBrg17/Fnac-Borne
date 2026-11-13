@@ -1392,6 +1392,7 @@ function showSideNews(item) {
   }
   els.idleCardOffer.hidden = true;
   els.idleCardHours.hidden = true;
+  els.idleCard.classList.remove("is-holiday");
   els.idleCardNews.hidden = false;
 }
 
@@ -1399,6 +1400,7 @@ function showSideNews(item) {
 function showSideCard() {
   els.idleCardNews.hidden = true;
   els.idleCardHours.hidden = true;
+  els.idleCard.classList.remove("is-holiday");
   els.idleCardOffer.hidden = false;
 }
 
@@ -1473,6 +1475,7 @@ function showSideHours(now = new Date()) {
   els.idleCardOffer.hidden = true;
   els.idleCardNews.hidden = true;
   els.idleCardHours.hidden = false;
+  els.idleCard.classList.add("is-holiday");
 }
 
 // L'encadré de droite tourne tout seul : carte Fnac+, puis les actualités.

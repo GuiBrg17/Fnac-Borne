@@ -339,7 +339,9 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   cursor: pointer;
 }
 .idle-card-button[hidden] { display: none; }
-.idle-card-offer[hidden], .idle-card-news[hidden] { display: none; }
+/* display: grid plus bas l'emporte sur l'attribut hidden : sans ces trois
+   sélecteurs, les fiches s'empilent au lieu de se relayer. */
+.idle-card-offer[hidden], .idle-card-news[hidden], .idle-card-hours[hidden] { display: none; }
 /* Fondu quand l'encadré passe d'une publicité à la suivante. */
 .idle-card { transition: opacity 0.42s ease; }
 .idle-card.is-swapping { opacity: 0; }
@@ -381,8 +383,19 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 
 /* Horaires de fin d'année : la date à gauche, son horaire calé à droite.
    Les heures sont en chiffres de largeur fixe, sinon la colonne tremble
-   d'une ligne à l'autre. */
+   d'une ligne à l'autre.
+
+   Cette fiche-là quitte le noir des autres pour un vert sapin, avec un filet
+   doré en tête : on doit voir au premier coup d'œil que l'encadré ne parle
+   plus d'un produit. Contrastes mesurés, de 6,2:1 pour l'or sur le haut du
+   dégradé — le titre, lui, est blanc à 10,4:1 — jusqu'à 14:1 pour les dates. */
+.idle-card.is-holiday {
+  background: linear-gradient(170deg, #15492F 0%, #0B2419 100%);
+  border-top: 7px solid #F2C14E;
+}
 .idle-card-hours { display: grid; gap: 0.7rem; }
+.idle-card-hours .idle-card-news-title { color: #FFFFFF; }
+.idle-card-hours .idle-card-news-date { color: #F2C14E; }
 .idle-card-hours-list { display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
 .idle-card-hours-list li {
   display: flex;
@@ -397,18 +410,20 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 /* La date peut passer à la ligne si la colonne est vraiment étroite ;
    l'horaire, lui, reste d'un seul tenant. */
 .idle-card-hours-list li > span:last-child { white-space: nowrap; }
+.idle-card-hours-list li > span:first-child { color: #EFEDE6; }
 .idle-card-hours-list li > span:last-child {
   margin-left: auto;
   flex: none;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
-  color: var(--yellow);
+  color: #F2C14E;
 }
-/* Jour de fermeture : c'est ce qu'on doit repérer d'un coup d'œil. */
+/* Jour de fermeture : c'est ce qu'on doit repérer d'un coup d'œil. Le rouge
+   est éclairci pour que l'encre reste lisible dessus (7,4:1). */
 .idle-card-hours-list li.is-closed > span:last-child {
   padding: 0.05rem 0.5rem;
   border-radius: 999px;
-  background: var(--yellow);
+  background: #FF7A6B;
   color: var(--ink);
   font-weight: 900;
   text-transform: uppercase;
