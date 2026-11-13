@@ -59,7 +59,7 @@ const els = {
   storyClose: $("#storyClose"),
   idleCard: $("#idleCard"), idleCardTag: $("#idleCardTag"), idleCardTitle: $("#idleCardTitle"),
   idleCardPromo: $("#idleCardPromo"), cardDetailPromo: $("#cardDetailPromo"),
-  idleCardDeal: $("#idleCardDeal"), idleCardWas: $("#idleCardWas"), idleCardOff: $("#idleCardOff"),
+  idleCardDeal: $("#idleCardDeal"), idleCardWas: $("#idleCardWas"),
   idleCardPrice: $("#idleCardPrice"), idleCardList: $("#idleCardList"), idleCardFoot: $("#idleCardFoot"),
   idleCardPhoto: $("#idleCardPhoto"), idleCardButton: $("#idleCardButton"),
   cardDialog: $("#cardDialog"), cardDetailTitle: $("#cardDetailTitle"), cardDetailPrice: $("#cardDetailPrice"),
@@ -1323,18 +1323,6 @@ function closeStory() {
 // Promotion de la carte Fnac+, si la date de fin n'est pas dépassée.
 let promoRendue = null;
 
-// « −47 % », calculé sur les deux prix plutôt que recopié : le jour où le
-// magasin change le tarif de l'offre, le pourcentage suit. Sans ancien prix
-// lisible, pas de pastille — mieux vaut rien qu'un chiffre faux.
-function promoRemise(promo) {
-  const nombre = (texte) => {
-    const trouve = String(texte ?? "").match(/(\d+(?:[.,]\d+)?)/);
-    return trouve ? Number(trouve[1].replace(",", ".")) : null;
-  };
-  const neuf = nombre(promo.price), avant = nombre(promo.was);
-  if (!neuf || !avant || neuf >= avant) return null;
-  return `\u2212${Math.round((1 - neuf / avant) * 100)}\u202F%`;
-}
 function cardPromo(now = new Date()) {
   const promo = CARD?.promo;
   if (!promo?.until) return null;
@@ -1364,11 +1352,8 @@ function showCard() {
   } else {
     els.idleCardPrice.textContent = CARD.price;
   }
-  const remise = promo ? promoRemise(promo) : null;
   els.idleCardWas.textContent = promo?.was || "";
-  els.idleCardOff.textContent = remise || "";
-  els.idleCardOff.hidden = !remise;
-  els.idleCardDeal.hidden = !promo?.was && !remise;
+  els.idleCardDeal.hidden = !promo?.was;
   els.idleCardPromo.textContent = promo?.note || "";
   els.idleCardPromo.hidden = !promo?.note;
   els.idleCard.classList.toggle("is-promo", Boolean(promo));
@@ -1394,9 +1379,8 @@ function showCard() {
   els.cardDetailPrice.textContent = promo
     ? `${promo.price} ${promo.unit || ""}`.trim()
     : CARD.detailPrice || CARD.price;
-  const detailRemise = promo ? promoRemise(promo) : null;
   els.cardDetailPromo.textContent = promo
-    ? [promo.was && `au lieu de ${promo.was}`, detailRemise, promo.note].filter(Boolean).join(" \u00B7 ")
+    ? [promo.was && `au lieu de ${promo.was}`, promo.note].filter(Boolean).join(" \u00B7 ")
     : "";
   els.cardDetailPromo.hidden = !promo;
   els.cardDetailSections.textContent = "";
