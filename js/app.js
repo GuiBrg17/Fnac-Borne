@@ -59,6 +59,7 @@ const els = {
   storyClose: $("#storyClose"),
   idleCard: $("#idleCard"), idleCardTag: $("#idleCardTag"), idleCardTitle: $("#idleCardTitle"),
   idleCardPromo: $("#idleCardPromo"), cardDetailPromo: $("#cardDetailPromo"),
+  idleCardDeal: $("#idleCardDeal"), idleCardWas: $("#idleCardWas"), idleCardOff: $("#idleCardOff"),
   idleCardPrice: $("#idleCardPrice"), idleCardList: $("#idleCardList"), idleCardFoot: $("#idleCardFoot"),
   idleCardPhoto: $("#idleCardPhoto"), idleCardButton: $("#idleCardButton"),
   cardDialog: $("#cardDialog"), cardDetailTitle: $("#cardDetailTitle"), cardDetailPrice: $("#cardDetailPrice"),
@@ -1321,6 +1322,19 @@ function closeStory() {
 
 // Promotion de la carte Fnac+, si la date de fin n'est pas dépassée.
 let promoRendue = null;
+
+// « −47 % », calculé sur les deux prix plutôt que recopié : le jour où le
+// magasin change le tarif de l'offre, le pourcentage suit. Sans ancien prix
+// lisible, pas de pastille — mieux vaut rien qu'un chiffre faux.
+function promoRemise(promo) {
+  const nombre = (texte) => {
+    const trouve = String(texte ?? "").match(/(\d+(?:[.,]\d+)?)/);
+    return trouve ? Number(trouve[1].replace(",", ".")) : null;
+  };
+  const neuf = nombre(promo.price), avant = nombre(promo.was);
+  if (!neuf || !avant || neuf >= avant) return null;
+  return `\u2212${Math.round((1 - neuf / avant) * 100)}\u202F%`;
+}
 function cardPromo(now = new Date()) {
   const promo = CARD?.promo;
   if (!promo?.until) return null;
@@ -1333,7 +1347,28 @@ function showCard() {
   const promo = cardPromo();
   els.idleCardTag.textContent = promo?.tag || CARD.tag;
   els.idleCardTitle.textContent = CARD.title;
-  els.idleCardPrice.textContent = promo?.price || CARD.price;
+  // En promotion, le montant est écrit plus gros que sa durée : « 7,99 € pour
+  // 3 ans » d'un seul tenant renvoyait « ans » à la ligne tout seul.
+  els.idleCardPrice.textContent = "";
+  if (promo) {
+    const montant = document.createElement("span");
+    montant.className = "price-big";
+    montant.textContent = promo.price;
+    els.idleCardPrice.append(montant);
+    if (promo.unit) {
+      const duree = document.createElement("span");
+      duree.className = "price-unit";
+      duree.textContent = ` ${promo.unit}`;
+      els.idleCardPrice.append(duree);
+    }
+  } else {
+    els.idleCardPrice.textContent = CARD.price;
+  }
+  const remise = promo ? promoRemise(promo) : null;
+  els.idleCardWas.textContent = promo?.was || "";
+  els.idleCardOff.textContent = remise || "";
+  els.idleCardOff.hidden = !remise;
+  els.idleCardDeal.hidden = !promo?.was && !remise;
   els.idleCardPromo.textContent = promo?.note || "";
   els.idleCardPromo.hidden = !promo?.note;
   els.idleCard.classList.toggle("is-promo", Boolean(promo));
@@ -1356,9 +1391,14 @@ function showCard() {
   if (!detail) return;
   els.idleCardButton.textContent = CARD.button || "Plus d'informations";
   els.cardDetailTitle.textContent = CARD.detailTitle || CARD.title;
-  els.cardDetailPrice.textContent = promo?.price || CARD.detailPrice || CARD.price;
-  els.cardDetailPromo.textContent = promo?.note || "";
-  els.cardDetailPromo.hidden = !promo?.note;
+  els.cardDetailPrice.textContent = promo
+    ? `${promo.price} ${promo.unit || ""}`.trim()
+    : CARD.detailPrice || CARD.price;
+  const detailRemise = promo ? promoRemise(promo) : null;
+  els.cardDetailPromo.textContent = promo
+    ? [promo.was && `au lieu de ${promo.was}`, detailRemise, promo.note].filter(Boolean).join(" \u00B7 ")
+    : "";
+  els.cardDetailPromo.hidden = !promo;
   els.cardDetailSections.textContent = "";
   for (const section of CARD.sections) {
     const bloc = document.createElement("section");

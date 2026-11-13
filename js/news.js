@@ -83,8 +83,10 @@ export const CARD = {
   promo: {
     until: "2026-11-30",
     tag: "Black Friday",
-    price: "7,99 € pour 3 ans",
-    note: "Au lieu de 14,99 €, jusqu'au 30 novembre"
+    price: "7,99 €",
+    unit: "pour 3 ans",
+    was: "14,99 €",          // l'écart des deux donne le « −47 % » affiché
+    note: "Jusqu'au 30 novembre"
   },
   image: "assets/news/fnac-plus.png",
   points: [

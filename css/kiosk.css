@@ -323,8 +323,35 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
 .idle-card-tag { margin: 0; font-size: 1rem; font-weight: 700; color: var(--yellow); }
 .idle-card-title { margin: 0; font-size: clamp(1.9rem, 2.6vw, 2.6rem); font-weight: 900; font-stretch: 118%; line-height: 1; }
 .idle-card-price { margin: 0 0 0.4rem; font-size: 1.25rem; font-weight: 800; }
-/* Promotion : l'étiquette devient une pastille, et le prix d'avant reste écrit
-   sous le nouveau — un prix barré seul laisse toujours un doute. */
+/* Promotion : filet jaune en tête comme la fiche des horaires a le sien, prix
+   grossi, et sur la ligne suivante l'ancien tarif barré puis la remise en
+   pastille rouge. Le pourcentage est ce qui s'attrape de loin ; le prix barré
+   seul laisse toujours un doute sur ce qu'on paie. */
+.idle-card.is-promo { border-top: 7px solid var(--yellow); }
+/* La ligne de remise allonge la fiche d'une trentaine de pixels, et sur un
+   écran 1080 la carte venait alors mordre sur « Notre histoire ». La photo
+   cède la place plutôt que le texte. */
+.idle-card.is-promo .idle-card-photo { max-height: min(9.5rem, 13vh); }
+.idle-card-deal {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.idle-card-deal[hidden] { display: none; }
+.idle-card-deal s { opacity: 0.6; text-decoration-thickness: 2px; }
+.idle-card-deal strong {
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  background: #FF7A6B;
+  color: var(--ink);
+  font-weight: 900;
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
+}
+.idle-card-deal strong[hidden] { display: none; }
 .idle-card.is-promo .idle-card-tag {
   justify-self: start;
   padding: 0.15rem 0.7rem;
@@ -336,7 +363,21 @@ svg { width: 1.3rem; height: 1.3rem; flex: none; fill: none; stroke: currentColo
   letter-spacing: 0.03em;
   font-size: 0.9rem;
 }
-.idle-card.is-promo .idle-card-price { margin-bottom: 0.1rem; color: var(--yellow); font-size: 1.55rem; }
+.idle-card.is-promo .idle-card-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.1rem;
+  margin-bottom: 0.15rem;
+  color: var(--yellow);
+  line-height: 1.05;
+}
+.idle-card.is-promo .price-big {
+  font-size: clamp(1.8rem, 2.3vw, 2.4rem);
+  font-weight: 900;
+  font-stretch: 112%;
+}
+.idle-card.is-promo .price-unit { font-size: 1.1rem; font-weight: 800; }
 .idle-card-promo { margin: 0 0 0.4rem; font-size: 0.92rem; font-weight: 600; opacity: 0.8; }
 .idle-card-promo[hidden] { display: none; }
 .idle-card-list { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.45rem; font-size: 1rem; font-weight: 500; line-height: 1.35; }
